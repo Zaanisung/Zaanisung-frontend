@@ -465,8 +465,14 @@ export default function App() {
         <Login
           onLogin={(user) => {
             setCustomerUser(user);
-            setView({ type: "customer", page: "shop" });
-            setCustomerTab("shop");
+            if (user.role === "ADMIN") {
+              setIsAdminLoggedIn(true);
+              setView({ type: "admin", page: "dashboard" });
+              setAdminTab("dashboard");
+            } else {
+              setView({ type: "customer", page: "shop" });
+              setCustomerTab("shop");
+            }
           }}
           onNavigateToRegister={() => setView({ type: "customer", page: "register" })}
           onContinueAsGuest={() => {
