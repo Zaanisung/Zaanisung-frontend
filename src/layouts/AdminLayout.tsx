@@ -1,5 +1,6 @@
 import React from "react";
 import { AdminTab } from "../types";
+import { Logo } from "../components/Logo";
 import {
   LayoutDashboard,
   Boxes,
@@ -47,12 +48,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Admin Header */}
         <div className="pb-6 border-b border-[#1E1E24]">
           <div className="flex items-center justify-between">
-            <h2
-              className="text-lg tracking-[0.2em] font-light italic text-white"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              ZAANISUNG
-            </h2>
+            <div className="flex items-center gap-3">
+              <Logo className="h-9 w-9" />
+              <h2
+                className="text-lg tracking-[0.2em] font-light italic text-white"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                ZAANISUNG
+              </h2>
+            </div>
             <span className="text-[9px] uppercase tracking-widest bg-[#D4AF37] text-black px-1.5 py-0.5 font-bold">
               ADMIN
             </span>
@@ -152,6 +156,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         {/* Mobile Admin Header */}
         <header className="md:hidden sticky top-0 z-30 bg-[#0A0A0C] border-b border-[#1E1E24] px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2">
+            <Logo className="h-8 w-8" />
             <h2
               className="text-base tracking-[0.2em] font-light italic text-white"
               style={{ fontFamily: "Georgia, serif" }}

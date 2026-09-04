@@ -13,6 +13,7 @@ import * as api from "./api";
 import { getErrorMessage } from "./api";
 import { CustomerLayout } from "./layouts/CustomerLayout";
 import { AdminLayout } from "./layouts/AdminLayout";
+import { Landing } from "./pages/Landing";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Shop } from "./pages/Shop";
@@ -41,7 +42,7 @@ export default function App() {
   const [customerUser, setCustomerUser] = useState<CustomerUser | null>(null);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
-  const [view, setView] = useState<AppView>({ type: "customer", page: "shop" });
+  const [view, setView] = useState<AppView>({ type: "landing" });
   const [customerTab, setCustomerTab] = useState<CustomerTab>("shop");
   const [adminTab, setAdminTab] = useState<AdminTab>("dashboard");
 
@@ -90,6 +91,7 @@ export default function App() {
         _id: p._id,
         id: p._id,
         name: p.name,
+        description: p.description,
         price: p.price,
         imageUrl: p.imageUrl || "",
         stock: p.stock,
@@ -215,7 +217,7 @@ export default function App() {
         products: productsPayload,
         delivery: {
           address: orderData.deliveryAddress,
-          city: "Accra",
+          city: "Tamale",
           phone: orderData.customerPhone,
         },
         payment: {
@@ -278,7 +280,7 @@ export default function App() {
   };
 
   // Admin: Add Product
-  const handleAddProduct = async (newProd: { name: string; price: number; imageUrl: string; stock: number }) => {
+  const handleAddProduct = async (newProd: { name: string; description?: string; price: number; imageUrl: string; stock: number }) => {
     try {
       await api.createProduct(newProd);
       fetchProducts();
@@ -294,6 +296,7 @@ export default function App() {
     try {
       await api.updateProduct(updated._id, {
         name: updated.name,
+        description: updated.description ?? null,
         price: updated.price,
         imageUrl: updated.imageUrl || null,
         stock: updated.stock,
@@ -454,12 +457,48 @@ export default function App() {
     );
   }
 
+  // ─── RENDER LANDING (public, standalone) ─────────────────────────
+  if (view.type === "landing") {
+    return (
+      <Landing
+        products={products}
+        currentUser={customerUser}
+        isLoadingProducts={isLoadingProducts}
+        onCreateAccount={(user) => {
+          setCustomerUser(user);
+        }}
+        onLogin={(user) => {
+          setCustomerUser(user);
+          if (user.role === "ADMIN") {
+            setIsAdminLoggedIn(true);
+            setView({ type: "admin", page: "dashboard" });
+            setAdminTab("dashboard");
+          }
+        }}
+        onStartShopping={() => {
+          setCustomerTab("shop");
+          setView({ type: "customer", page: "shop" });
+        }}
+        onBrowseShop={() => {
+          setCustomerTab("shop");
+          setView({ type: "customer", page: "shop" });
+        }}
+        onGoToLogin={() => {
+          setView({ type: "customer", page: "login" });
+        }}
+      />
+    );
+  }
+
   // ─── RENDER CUSTOMER VIEWS ───────────────────────────────────────
   return (
     <CustomerLayout
       activeTab={customerTab}
       onChangeTab={handleCustomerTabChange}
       cartCount={totalCartCount}
+      onNavigateHome={() => {
+        setView({ type: "landing" });
+      }}
     >
       {view.page === "login" && (
         <Login

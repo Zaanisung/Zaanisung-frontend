@@ -82,6 +82,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product.name}
           </h3>
 
+          {product.description && (
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
+              {product.description}
+            </p>
+          )}
+
           <div className="flex items-baseline justify-between mt-1">
             <span className="text-base sm:text-lg font-bold font-mono text-[#D4AF37]">
               {product.price.toFixed(2)} GHS

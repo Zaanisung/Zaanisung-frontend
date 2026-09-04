@@ -2,6 +2,7 @@ export type Product = {
   _id: string;
   id: string;
   name: string;
+  description?: string;
   price: number;
   imageUrl: string;
   stock: number;
@@ -59,6 +60,7 @@ export type CustomerTab = "shop" | "orders" | "cart" | "account";
 export type AdminTab = "dashboard" | "inventory" | "orders" | "account";
 
 export type AppView =
+  | { type: "landing" }
   | { type: "customer"; page: "login" }
   | { type: "customer"; page: "register" }
   | { type: "customer"; page: "shop" }

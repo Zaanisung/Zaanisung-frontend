@@ -16,6 +16,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
   onUpdate,
 }) => {
   const [name, setName] = useState(product.name);
+  const [description, setDescription] = useState(product.description || "");
   const [price, setPrice] = useState(product.price.toString());
   const [stock, setStock] = useState(product.stock.toString());
   const [imageUrl, setImageUrl] = useState(product.imageUrl);
@@ -55,6 +56,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
     onUpdate({
       ...product,
       name: name.trim(),
+      description: description.trim() || undefined,
       price: numPrice,
       stock: numStock,
       imageUrl: imageUrl.trim() || product.imageUrl,
@@ -145,6 +147,23 @@ export const EditProduct: React.FC<EditProductProps> = ({
             onChange={(e) => setName(e.target.value)}
             required
           />
+
+          {/* Description */}
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[#52525B] dark:text-[#A1A1AA] block">
+              Short Description
+              <span className="normal-case font-normal text-gray-500 ml-2">
+                ({description.length}/160 · optional)
+              </span>
+            </label>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value.slice(0, 160))}
+              placeholder="e.g. A bold amber-oud blend with a warm, smoky dry-down."
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-[#141416] text-[#18181B] dark:text-[#F4F4F5] placeholder-gray-400 rounded-none border border-gray-200 dark:border-[#2C2C32] transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+            />
+          </div>
 
           {/* Price & Stock */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

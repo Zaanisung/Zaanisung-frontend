@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { Logo } from "../components/Logo";
 import { CustomerUser } from "../types";
 import * as api from "../api";
 import { getErrorMessage } from "../api";
@@ -63,7 +64,8 @@ export const Register: React.FC<RegisterProps> = ({
   return (
     <div className="w-full max-w-md mx-auto py-4 sm:py-8">
       {/* Brand Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 flex flex-col items-center">
+        <Logo className="h-16 w-16 mb-3" />
         <h2
           className="text-2xl sm:text-3xl font-light italic tracking-widest text-gray-900 dark:text-gray-100"
           style={{ fontFamily: "Georgia, serif" }}

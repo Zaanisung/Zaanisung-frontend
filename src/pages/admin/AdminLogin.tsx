@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Logo } from "../../components/Logo";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../api";
 import { getErrorMessage } from "../../api";
@@ -55,7 +56,8 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           Back to Customer Store
         </button>
 
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 flex flex-col items-center">
+          <Logo className="h-14 w-14 mb-3" />
           <h1
             className="text-2xl font-light italic tracking-[0.2em] text-white"
             style={{ fontFamily: "Georgia, serif" }}

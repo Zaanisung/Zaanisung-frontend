@@ -76,6 +76,7 @@ export async function getMe(): Promise<{ user: AuthUser }> {
 export interface Product {
   _id: string;
   name: string;
+  description?: string;
   price: number;
   imageUrl?: string;
   stock: number;
@@ -94,6 +95,7 @@ export async function getProduct(id: string): Promise<{ product: Product }> {
 
 export async function createProduct(data: {
   name: string;
+  description?: string;
   price: number;
   imageUrl?: string;
   stock: number;
@@ -106,7 +108,7 @@ export async function createProduct(data: {
 
 export async function updateProduct(
   id: string,
-  data: Partial<{ name: string; price: number; imageUrl: string | null; stock: number; isActive: boolean }>
+  data: Partial<{ name: string; description: string | null; price: number; imageUrl: string | null; stock: number; isActive: boolean }>
 ): Promise<{ product: Product }> {
   return request(`/products/${id}`, {
     method: "PATCH",

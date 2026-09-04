@@ -1,6 +1,8 @@
 import React from "react";
 import { CustomerTab } from "../types";
 import { BottomNav } from "../components/BottomNav";
+import { Logo } from "../components/Logo";
+import { Footer } from "../components/Footer";
 import { ShoppingBag } from "lucide-react";
 
 export interface CustomerLayoutProps {
@@ -8,6 +10,7 @@ export interface CustomerLayoutProps {
   activeTab: CustomerTab;
   onChangeTab: (tab: CustomerTab) => void;
   cartCount: number;
+  onNavigateHome?: () => void;
 }
 
 export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
@@ -15,6 +18,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   activeTab,
   onChangeTab,
   cartCount,
+  onNavigateHome,
 }) => {
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0B0E] text-gray-900 dark:text-[#F4F4F6] transition-colors">
@@ -23,17 +27,21 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
         <div className="flex items-center space-x-6 lg:space-x-8">
           <button
             type="button"
-            onClick={() => onChangeTab("shop")}
-            className="text-left focus:outline-none"
+            onClick={() => (onNavigateHome ? onNavigateHome() : onChangeTab("shop"))}
+            className="text-left focus:outline-none flex items-center gap-3"
+            aria-label="Zaanisung home"
           >
-            <h1
-              className="text-xl sm:text-2xl tracking-[0.2em] font-light italic text-white hover:text-[#D4AF37] transition-colors"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
-              ZAANISUNG
-            </h1>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] block font-semibold">
-              Ent. GH Fragrances
+            <Logo className="h-9 w-9 sm:h-10 sm:w-10" />
+            <span className="hidden sm:block">
+              <span
+                className="text-xl sm:text-2xl tracking-[0.2em] font-light italic text-white hover:text-[#D4AF37] transition-colors block leading-none"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                ZAANISUNG
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] block font-semibold mt-1">
+                Ent. GH Fragrances
+              </span>
             </span>
           </button>
 
@@ -93,18 +101,22 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
         {children}
       </main>
 
-      {/* Geometric Balance Minimal Footer */}
-      <footer className="border-t border-gray-200 dark:border-[#1E1E26] bg-white dark:bg-[#0A0A0C] px-4 sm:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">
-        <div className="flex flex-wrap items-center gap-4 sm:gap-8 justify-center sm:justify-start">
-          <span>&copy; {new Date().getFullYear()} Zaanisung Ent. GH</span>
-          <span>Accra, Ghana</span>
-          <span>Artisanal Perfumery</span>
-        </div>
-        <div className="flex items-center space-x-2 text-gray-800 dark:text-gray-200 font-bold">
-          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Store Open</span>
-        </div>
-      </footer>
+      {/* Footer */}
+      <Footer
+        onNavigate={(target) => {
+          if (target === "about") {
+            onNavigateHome?.();
+          } else if (target === "shop") {
+            onChangeTab("shop");
+          } else if (target === "orders") {
+            onChangeTab("orders");
+          } else if (target === "account") {
+            onChangeTab("account");
+          } else if (target === "home") {
+            onNavigateHome?.();
+          }
+        }}
+      />
 
       {/* Mobile Bottom Navigation Bar */}
       <BottomNav

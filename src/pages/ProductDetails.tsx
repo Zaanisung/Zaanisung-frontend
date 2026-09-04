@@ -96,6 +96,12 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
               {product.name}
             </h1>
 
+            {product.description && (
+              <p className="mt-3 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                {product.description}
+              </p>
+            )}
+
             {/* Volume and price */}
             <div className="flex items-baseline gap-3 pt-2 border-t border-gray-100 dark:border-[#22222A]">
               <span className="text-2xl sm:text-3xl lg:text-4xl font-bold font-mono text-[#D4AF37]">
