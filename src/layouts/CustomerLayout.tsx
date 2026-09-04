@@ -8,7 +8,6 @@ export interface CustomerLayoutProps {
   activeTab: CustomerTab;
   onChangeTab: (tab: CustomerTab) => void;
   cartCount: number;
-  onOpenAdmin: () => void;
 }
 
 export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
@@ -16,7 +15,6 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   activeTab,
   onChangeTab,
   cartCount,
-  onOpenAdmin,
 }) => {
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0B0E] text-gray-900 dark:text-[#F4F4F6] transition-colors">
@@ -71,7 +69,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
           </nav>
         </div>
 
-        {/* Right actions: Cart and Admin button */}
+        {/* Right actions: Cart */}
         <div className="flex items-center space-x-3 sm:space-x-5">
           {/* Cart button (Desktop & Mobile) */}
           <button
@@ -86,15 +84,6 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
                 {cartCount > 99 ? "99+" : cartCount}
               </span>
             )}
-          </button>
-
-          {/* Admin Panel button (44px min touch target) */}
-          <button
-            type="button"
-            onClick={onOpenAdmin}
-            className="text-[10px] sm:text-[11px] uppercase tracking-widest bg-[#D4AF37] hover:bg-[#C29E2E] text-black px-3 sm:px-4 py-2 sm:py-2.5 font-bold min-h-[44px] inline-flex items-center justify-center transition-colors shadow-xs"
-          >
-            Admin Portal
           </button>
         </div>
       </header>

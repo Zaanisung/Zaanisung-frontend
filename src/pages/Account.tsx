@@ -1,20 +1,18 @@
 import React from "react";
 import { CustomerUser } from "../types";
 import { Button } from "../components/Button";
-import { User, Phone, Mail, LogOut, Shield } from "lucide-react";
+import { User, Phone, Mail, LogOut } from "lucide-react";
 
 export interface AccountProps {
   user: CustomerUser | null;
   onLogout: () => void;
   onNavigateToLogin: () => void;
-  onSwitchToAdmin: () => void;
 }
 
 export const Account: React.FC<AccountProps> = ({
   user,
   onLogout,
   onNavigateToLogin,
-  onSwitchToAdmin,
 }) => {
   if (!user) {
     return (
@@ -85,18 +83,6 @@ export const Account: React.FC<AccountProps> = ({
               <span>{user.email}</span>
             </div>
           )}
-        </div>
-
-        {/* Admin Portal Quick Switch */}
-        <div className="pt-6 border-t border-gray-100 dark:border-[#202028]">
-          <button
-            type="button"
-            onClick={onSwitchToAdmin}
-            className="w-full min-h-[44px] px-4 py-2.5 text-xs uppercase tracking-wider font-semibold border border-gray-200 dark:border-[#2C2C38] hover:border-black dark:hover:border-white text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-[#181820] flex items-center justify-center space-x-2 transition-colors"
-          >
-            <Shield className="w-4 h-4 text-[#D4AF37]" />
-            <span>Switch to Admin Inventory Portal</span>
-          </button>
         </div>
 
         {/* Logout Action */}

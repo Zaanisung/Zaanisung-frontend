@@ -460,9 +460,6 @@ export default function App() {
       activeTab={customerTab}
       onChangeTab={handleCustomerTabChange}
       cartCount={totalCartCount}
-      onOpenAdmin={() => {
-        setView({ type: "admin", page: isAdminLoggedIn ? "dashboard" : "login" });
-      }}
     >
       {view.page === "login" && (
         <Login
@@ -569,9 +566,6 @@ export default function App() {
             setView({ type: "customer", page: "login" });
           }}
           onNavigateToLogin={() => setView({ type: "customer", page: "login" })}
-          onSwitchToAdmin={() => {
-            setView({ type: "admin", page: isAdminLoggedIn ? "dashboard" : "login" });
-          }}
         />
       )}
     </CustomerLayout>
