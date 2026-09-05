@@ -58,11 +58,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   return (
     <div className="w-full flex flex-col gap-5 sm:gap-6">
       {/* Mobile-First Fluid Header & Search */}
-      <div className="flex flex-col gap-4 border-b border-gray-200 dark:border-[#22222A] pb-4">
+      <div className="flex flex-col gap-5 pb-4">
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3">
           <div>
             <h2
-              className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-gray-900 dark:text-gray-100"
+              className="text-2xl sm:text-3xl md:text-4xl font-light tracking-tight text-black dark:text-white"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
               Curated Fragrances
@@ -74,19 +74,19 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
           {/* Search bar - Fluid & touch accessible */}
           <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/45 dark:text-white/45 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search fragrance name..."
-              className="w-full pl-9 pr-9 py-2.5 text-sm bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#262632] text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:border-[#D4AF37] dark:focus:border-[#D4AF37] transition-colors"
+              className="w-full pl-9 pr-9 py-2.5 text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:border-[#D4AF37] dark:focus:border-[#D4AF37] transition-colors"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-black dark:hover:text-white"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -107,7 +107,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                 className={`min-h-[36px] px-3.5 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border ${
                   activeFilter === opt.id
                     ? "bg-[#D4AF37] text-black border-[#D4AF37] font-bold shadow-xs"
-                    : "bg-white dark:bg-[#15151A] text-gray-600 dark:text-gray-400 border-gray-200 dark:border-[#282832] hover:border-black dark:hover:border-white"
+                    : "bg-white dark:bg-white/5 text-black/60 border-black/10 dark:border-white/15 hover:border-black dark:hover:border-white"
                 }`}
               >
                 {opt.label}
@@ -116,14 +116,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           </div>
 
           {/* Mobile Display Toggle: 2-col vs 1-col large showcase */}
-          <div className="flex items-center gap-1 bg-gray-100 dark:bg-[#17171F] p-1 border border-gray-200 dark:border-[#262632] sm:hidden flex-shrink-0">
+          <div className="flex items-center gap-1 bg-white dark:bg-white/10 p-1 border border-black/10 dark:border-white/15 sm:hidden flex-shrink-0">
             <button
               type="button"
               onClick={() => setMobileLayout("grid")}
               className={`p-1.5 min-h-[32px] min-w-[32px] flex items-center justify-center transition-colors ${
                 mobileLayout === "grid"
-                  ? "bg-white dark:bg-[#252530] text-black dark:text-white shadow-xs"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-white/10 text-black dark:text-white shadow-xs"
+                  : "text-black/45 dark:text-white/45"
               }`}
               title="2 Columns"
               aria-label="2 Columns grid"
@@ -135,8 +135,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               onClick={() => setMobileLayout("showcase")}
               className={`p-1.5 min-h-[32px] min-w-[32px] flex items-center justify-center transition-colors ${
                 mobileLayout === "showcase"
-                  ? "bg-white dark:bg-[#252530] text-black dark:text-white shadow-xs"
-                  : "text-gray-400"
+                  ? "bg-white dark:bg-white/10 text-black dark:text-white shadow-xs"
+                  : "text-black/45 dark:text-white/45"
               }`}
               title="Large Showcase"
               aria-label="Large Showcase view"
@@ -147,9 +147,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
 
         {/* Results summary counter */}
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between text-xs text-black/50 dark:text-white/60">
           <span>
-            Showing <strong className="text-gray-900 dark:text-gray-100">{filteredProducts.length}</strong> {filteredProducts.length === 1 ? "perfume" : "perfumes"}
+            Showing <strong className="text-black dark:text-white">{filteredProducts.length}</strong> {filteredProducts.length === 1 ? "perfume" : "perfumes"}
           </span>
           {activeFilter !== "ALL" && (
             <button
@@ -167,12 +167,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       {isLoading ? (
         <div className="py-24 flex flex-col items-center justify-center text-center">
           <div className="w-10 h-10 border-2 border-[#D4AF37] border-t-transparent animate-spin mb-4"></div>
-          <p className="text-gray-500 dark:text-gray-400 font-medium text-xs uppercase tracking-widest">
+          <p className="text-black/50 dark:text-white/50 font-medium text-xs uppercase tracking-widest">
             Loading perfumes...
           </p>
         </div>
       ) : error ? (
-        <div className="p-8 bg-white dark:bg-[#141418] border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8">
+        <div className="p-8 bg-white dark:bg-white/5 border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8">
           <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-3" />
           <p className="text-sm text-red-700 dark:text-red-400 font-medium mb-4">{error}</p>
           {onRetry && (
@@ -185,19 +185,19 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           )}
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="py-16 px-6 bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#22222A] text-center flex flex-col items-center max-w-md mx-auto">
+        <div className="py-16 px-6 bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-center flex flex-col items-center max-w-md mx-auto">
           <div className="w-12 h-12 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] mb-4">
             <span className="text-xl font-light" style={{ fontFamily: "Georgia, serif" }}>Z</span>
           </div>
           <h3
-            className="text-lg font-normal text-gray-900 dark:text-gray-100 mb-1"
+            className="text-lg font-normal text-black dark:text-white mb-1"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             {searchQuery || activeFilter !== "ALL"
               ? "No matching fragrances found"
               : "No perfumes available yet."}
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-6">
+          <p className="text-xs text-black/50 dark:text-white/50 mb-6">
             {searchQuery || activeFilter !== "ALL"
               ? "Try adjusting your search terms or filter selection."
               : "New handcrafted batches are being prepared in our workshop."}

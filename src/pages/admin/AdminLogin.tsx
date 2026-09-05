@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../api";
 import { getErrorMessage } from "../../api";
@@ -9,11 +10,15 @@ import { getErrorMessage } from "../../api";
 export interface AdminLoginProps {
   onLoginSuccess: () => void;
   onReturnToStorefront: () => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
 }
 
 export const AdminLogin: React.FC<AdminLoginProps> = ({
   onLoginSuccess,
   onReturnToStorefront,
+  isDark,
+  onToggleTheme,
 }) => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -45,12 +50,15 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-[#E4E4E7] flex flex-col justify-center items-center px-4 py-12">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center px-4 py-12">
+    <div className="fixed top-4 right-4">
+      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+    </div>
+    <div className="w-full max-w-sm">
         <button
           type="button"
           onClick={onReturnToStorefront}
-          className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-400 hover:text-white mb-8 transition-colors font-semibold"
+          className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white mb-8 transition-colors font-semibold"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Customer Store
@@ -59,7 +67,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <div className="text-center mb-8 flex flex-col items-center">
           <Logo className="h-14 w-14 mb-3" />
           <h1
-            className="text-2xl font-light italic tracking-[0.2em] text-white"
+            className="text-2xl font-light italic tracking-[0.2em] text-black dark:text-white"
             style={{ fontFamily: "Georgia, serif" }}
           >
             ZAANISUNG
@@ -67,12 +75,12 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           <div className="inline-block bg-[#D4AF37] text-black text-[9px] uppercase tracking-widest px-2 py-0.5 font-bold mt-2">
             Admin Inventory Portal
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-black/50 dark:text-white/50 mt-2">
             Restricted to Zaanisung staff & inventory managers
           </p>
         </div>
 
-        <div className="bg-[#121216] border border-[#22222A] p-6 sm:p-8">
+        <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium">

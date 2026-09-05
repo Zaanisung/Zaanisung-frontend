@@ -17,31 +17,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-[11px] font-semibold uppercase tracking-widest text-[#52525B] dark:text-[#A1A1AA]"
+            className="text-[11px] font-semibold uppercase tracking-widest text-black/60 dark:text-white/60"
           >
             {label}
           </label>
         )}
         <div className="relative flex items-center">
           {prefixIcon && (
-            <div className="absolute left-3.5 text-[#71717A] pointer-events-none flex items-center">
+            <div className="absolute left-3.5 text-black/45 dark:text-white/45 pointer-events-none flex items-center">
               {prefixIcon}
             </div>
           )}
           <input
             ref={ref}
             id={inputId}
-            className={`w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-[#141416] text-[#18181B] dark:text-[#F4F4F5] placeholder-gray-400 rounded-none border transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] ${
+            className={`w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] ${
               prefixIcon ? "pl-10" : ""
             } ${suffixIcon ? "pr-10" : ""} ${
               error
                 ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "border-gray-200 dark:border-[#2C2C32]"
+                : "border-black/10 dark:border-white/15"
             } ${className}`}
             {...props}
           />
           {suffixIcon && (
-            <div className="absolute right-3.5 text-[#71717A] flex items-center">
+            <div className="absolute right-3.5 text-black/45 dark:text-white/45 flex items-center">
               {suffixIcon}
             </div>
           )}
@@ -50,7 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <p className="text-xs text-red-600 font-medium">{error}</p>
         )}
         {!error && helperText && (
-          <p className="text-xs text-[#71717A]">{helperText}</p>
+          <p className="text-xs text-black/45 dark:text-white/45">{helperText}</p>
         )}
       </div>
     );

@@ -29,8 +29,8 @@ export interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#0A0A0C] text-[#A1A1AA] border-t border-[#1C1C24]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <footer className="bg-white dark:bg-black text-black/60 dark:text-white/60">
+      <div className="w-full px-4 sm:px-8 lg:px-12 py-12 sm:py-16">
         {/* Top: column layout on mobile, 4-col split on desktop */}
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {/* Brand + description */}
@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Logo className="h-10 w-10" />
               <div>
                 <span
-                  className="text-white text-lg tracking-[0.2em] font-light italic block leading-none"
+                  className="text-black dark:text-white text-lg tracking-[0.2em] font-light italic block leading-none"
                   style={{ fontFamily: "Georgia, serif" }}
                 >
                   ZAANISUNG
@@ -63,7 +63,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="w-10 h-10 flex items-center justify-center border border-[#2A2A32] text-[#A1A1AA] hover:text-white hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all"
+                  className="w-10 h-10 flex items-center justify-center border border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>
@@ -73,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
+            <h3 className="text-black dark:text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
               Explore
             </h3>
             <ul className="space-y-3">
@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <button
                     type="button"
                     onClick={() => onNavigate?.(link.action)}
-                    className="text-sm text-[#A1A1AA] hover:text-[#D4AF37] transition-colors text-left"
+                    className="text-sm text-black/60 dark:text-white/60 hover:text-[#D4AF37] transition-colors text-left"
                   >
                     {link.label}
                   </button>
@@ -93,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Company Info */}
           <div>
-            <h3 className="text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
+            <h3 className="text-black dark:text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
               Company
             </h3>
             <ul className="space-y-4 text-sm">
@@ -122,10 +122,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Newsletter / CTA */}
           <div>
-            <h3 className="text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
+            <h3 className="text-black dark:text-white text-xs uppercase tracking-[0.2em] font-bold mb-5">
               Stay in the loop
             </h3>
-            <p className="text-sm text-[#A1A1AA] mb-4">
+            <p className="text-sm text-black/60 dark:text-white/60 mb-4">
               Be first to know about new drops and exclusive offers.
             </p>
             <form
@@ -136,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 type="email"
                 placeholder="you@email.com"
                 aria-label="Email address"
-                className="flex-1 min-w-0 px-3 py-2.5 text-sm bg-transparent border border-[#2A2A32] text-white placeholder-[#5C5C66] focus:outline-none focus:border-[#D4AF37] transition-colors"
+                className="flex-1 min-w-0 px-3 py-2.5 text-sm bg-transparent border border-black/10 dark:border-white/15 text-black dark:text-white placeholder-black/40 focus:outline-none focus:border-[#D4AF37] transition-colors"
               />
               <button
                 type="submit"
@@ -150,13 +150,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[#1C1C24]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-[#5C5C66]">
+      <div className="bg-white dark:bg-black">
+        <div className="w-full px-4 sm:px-8 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
           <span>&copy; {new Date().getFullYear()} Zaanisung Ent. GH. All rights reserved.</span>
           <div className="flex items-center gap-6">
             <span>Tamale, Ghana</span>
-            <div className="flex items-center gap-2 text-[#4ADE80]">
-              <span className="w-2 h-2 rounded-full bg-[#4ADE80]"></span>
+            <div className="flex items-center gap-2 text-[#D4AF37]">
+              <span className="w-2 h-2 rounded-full bg-[#D4AF37]"></span>
               <span>Store Open</span>
             </div>
           </div>

@@ -51,27 +51,27 @@ export const Restock: React.FC<RestockProps> = ({
       <button
         type="button"
         onClick={onBack}
-        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-400 hover:text-white font-semibold mb-6 transition-colors"
+        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white font-semibold mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </button>
 
-      <div className="bg-[#121216] border border-[#1E1E24] p-6 sm:p-8">
-        <div className="border-b border-[#1E1E24] pb-4 mb-6">
-          <div className="flex items-center space-x-2 text-emerald-400 mb-1">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
+        <div className="pb-2 mb-6">
+          <div className="flex items-center space-x-2 text-[#D4AF37] mb-1">
             <RefreshCw className="w-4 h-4" />
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Inventory Inflow
             </span>
           </div>
           <h2
-            className="text-xl sm:text-2xl font-light text-white"
+            className="text-xl sm:text-2xl font-light text-black dark:text-white"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Restock Inventory
           </h2>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-black/50 dark:text-white/50 mt-1">
             Replenish perfume bottle counts from new workshop batches
           </p>
         </div>
@@ -84,13 +84,13 @@ export const Restock: React.FC<RestockProps> = ({
 
         {isSuccess ? (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 bg-emerald-950 border border-emerald-700 text-emerald-400 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center mx-auto">
               <Check className="w-6 h-6 stroke-[3]" />
             </div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-base font-semibold text-black dark:text-white">
               Inventory Replenished
             </h3>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-black/45 dark:text-white/45">
               New stock count applied to store. Redirecting...
             </p>
           </div>
@@ -98,7 +98,7 @@ export const Restock: React.FC<RestockProps> = ({
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Pick Product */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
                 Select Fragrance to Restock
               </label>
               <select
@@ -107,7 +107,7 @@ export const Restock: React.FC<RestockProps> = ({
                   setSelectedProductId(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-[#1A1A22] border border-[#2D2D38] text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
               >
                 {products.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -119,20 +119,20 @@ export const Restock: React.FC<RestockProps> = ({
 
             {/* Current vs New stock preview */}
             {selectedProduct && (
-              <div className="p-3.5 bg-[#181820] border border-[#262632] grid grid-cols-2 gap-4 text-xs">
+              <div className="p-3.5 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 grid grid-cols-2 gap-4 text-xs">
                 <div>
-                  <span className="text-gray-400 uppercase tracking-wider text-[10px] block">
+                  <span className="text-black/45 dark:text-white/45 uppercase tracking-wider text-[10px] block">
                     Current Stock
                   </span>
-                  <span className="font-mono text-base font-bold text-gray-200">
+                  <span className="font-mono text-base font-bold text-black/40 dark:text-white/40">
                     {currentStock} bottles
                   </span>
                 </div>
                 <div>
-                  <span className="text-emerald-400 uppercase tracking-wider text-[10px] block font-bold">
+                  <span className="text-[#D4AF37] uppercase tracking-wider text-[10px] block font-bold">
                     Projected New Stock
                   </span>
-                  <span className="font-mono text-base font-bold text-emerald-300">
+                  <span className="font-mono text-base font-bold text-[#D4AF37]">
                     {newProjectedStock} bottles
                   </span>
                 </div>
@@ -141,7 +141,7 @@ export const Restock: React.FC<RestockProps> = ({
 
             {/* Enter Quantity Added */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
                 Quantity Added (Bottles)
               </label>
               <input
@@ -152,7 +152,7 @@ export const Restock: React.FC<RestockProps> = ({
                   setQuantityAdded(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-[#1A1A22] border border-[#2D2D38] text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
                 placeholder="10"
                 required
               />
@@ -160,7 +160,7 @@ export const Restock: React.FC<RestockProps> = ({
 
             {/* Fast Quick-add buttons */}
             <div className="flex items-center space-x-2">
-              <span className="text-[10px] uppercase tracking-wider text-gray-500">
+              <span className="text-[10px] uppercase tracking-wider text-black/50 dark:text-white/50">
                 Quick:
               </span>
               {[5, 10, 20, 50].map((count) => (
@@ -168,7 +168,7 @@ export const Restock: React.FC<RestockProps> = ({
                   key={count}
                   type="button"
                   onClick={() => setQuantityAdded(count.toString())}
-                  className="px-2.5 py-1 text-[11px] font-mono bg-[#1A1A22] hover:bg-[#252530] text-gray-300 border border-[#2D2D38]"
+                  className="px-2.5 py-1 text-[11px] font-mono bg-white dark:bg-white/5 hover:bg-[#F5F5F5] dark:hover:bg-white/10 text-black/60 dark:text-white/60 border border-black/10 dark:border-white/15"
                 >
                   +{count}
                 </button>
@@ -176,7 +176,7 @@ export const Restock: React.FC<RestockProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-4 border-t border-[#1E1E24] flex space-x-3">
+            <div className="pt-5 flex space-x-3">
               <Button
                 type="submit"
                 variant="primary"
@@ -190,7 +190,7 @@ export const Restock: React.FC<RestockProps> = ({
                 variant="outline"
                 size="lg"
                 onClick={onBack}
-                className="border-[#2D2D38] text-gray-300 hover:text-white"
+                className="border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
               >
                 Cancel
               </Button>

@@ -3,6 +3,7 @@ import { Product } from "../../types";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { ArrowLeft, Upload, Image as ImageIcon } from "lucide-react";
+import { compressImage } from "../../utils/image";
 
 export interface AddProductProps {
   onBack: () => void;
@@ -20,16 +21,21 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (loadEvt) => {
-        if (typeof loadEvt.target?.result === "string") {
-          setImageUrl(loadEvt.target.result);
-        }
-      };
-      reader.readAsDataURL(file);
+      try {
+        const dataUrl = await compressImage(file);
+        setImageUrl(dataUrl);
+      } catch {
+        const reader = new FileReader();
+        reader.onload = (loadEvt) => {
+          if (typeof loadEvt.target?.result === "string") {
+            setImageUrl(loadEvt.target.result);
+          }
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
 
@@ -64,21 +70,21 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
       <button
         type="button"
         onClick={onBack}
-        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-400 hover:text-white font-semibold mb-6 transition-colors"
+        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white font-semibold mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Inventory
       </button>
 
-      <div className="bg-[#121216] border border-[#1E1E24] p-6 sm:p-8">
-        <div className="border-b border-[#1E1E24] pb-4 mb-6">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
+        <div className="pb-2 mb-6">
           <h2
-            className="text-xl sm:text-2xl font-light text-white"
+            className="text-xl sm:text-2xl font-light text-black dark:text-white"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Add New Fragrance
           </h2>
-          <p className="text-xs uppercase tracking-widest text-gray-400 mt-1">
+          <p className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 mt-1">
             Short inventory intake form
           </p>
         </div>
@@ -92,11 +98,11 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Image Upload / Preview */}
           <div className="space-y-2">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
               Perfume Image
             </label>
             <div className="flex items-center space-x-4">
-              <div className="w-20 h-24 bg-[#181820] border border-[#2B2B38] overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="w-20 h-24 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 overflow-hidden flex items-center justify-center flex-shrink-0">
                 {imageUrl ? (
                   <img
                     src={imageUrl}
@@ -104,7 +110,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <ImageIcon className="w-6 h-6 text-gray-600" />
+                  <ImageIcon className="w-6 h-6 text-black/60 dark:text-white/60" />
                 )}
               </div>
 
@@ -119,12 +125,12 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold bg-[#1C1C24] hover:bg-[#282834] text-white border border-[#30303E] flex items-center space-x-2 transition-colors"
+                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold bg-white dark:bg-white/5 hover:bg-[#F5F5F5] dark:hover:bg-white/10 text-black dark:text-white border border-black/10 dark:border-white/15 flex items-center space-x-2 transition-colors"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>Upload Image File</span>
                 </button>
-                <p className="text-[10px] text-gray-500">
+                <p className="text-[10px] text-black/50 dark:text-white/50">
                   Or paste an image link below:
                 </p>
                 <input
@@ -132,7 +138,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-3 py-1.5 text-xs bg-[#0A0A0E] border border-[#262632] text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full px-3 py-1.5 text-xs bg-white dark:bg-black border border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 focus:outline-none focus:border-[#D4AF37]"
                 />
               </div>
             </div>
@@ -150,9 +156,9 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-[#52525B] dark:text-[#A1A1AA] block">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-black/60 dark:text-white/60 block">
               Short Description
-              <span className="normal-case font-normal text-gray-500 ml-2">
+              <span className="normal-case font-normal text-black/50 dark:text-white/50 ml-2">
                 ({description.length}/160 · optional)
               </span>
             </label>
@@ -161,9 +167,9 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value.slice(0, 160))}
               placeholder="e.g. A bold amber-oud blend with a warm, smoky dry-down."
-              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-[#141416] text-[#18181B] dark:text-[#F4F4F5] placeholder-gray-400 rounded-none border border-gray-200 dark:border-[#2C2C32] transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border border-black/10 dark:border-white/15 transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
             />
-            <p className="text-[10px] text-gray-500">One line shown on product cards and the landing page.</p>
+            <p className="text-[10px] text-black/50 dark:text-white/50">One line shown on product cards and the landing page.</p>
           </div>
 
           {/* Price & Stock in 2 cols */}
@@ -192,7 +198,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
           </div>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-[#1E1E24] flex space-x-3">
+          <div className="pt-5 flex space-x-3">
             <Button
               type="submit"
               variant="primary"
@@ -206,7 +212,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
               variant="outline"
               size="lg"
               onClick={onBack}
-              className="border-[#2D2D38] text-gray-300 hover:text-white"
+              className="border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
             >
               Cancel
             </Button>

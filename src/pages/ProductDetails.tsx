@@ -41,15 +41,15 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
       <button
         type="button"
         onClick={onBack}
-        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-semibold transition-colors"
+        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/50 dark:text-white/50 hover:text-black dark:text-white/60 dark:hover:text-white font-semibold transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Fragrances
       </button>
 
-      <div className="bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#23232C] overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
         {/* Large Prominent Perfume Image Frame */}
-        <div className="relative aspect-[3/4] sm:aspect-[4/5] md:aspect-auto min-h-[340px] sm:min-h-[420px] md:min-h-[520px] bg-[#F5F4F0] dark:bg-[#1A1A22] flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-gray-200 dark:border-[#23232C]">
+        <div className="relative aspect-square bg-white dark:bg-white/5 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15">
           <img
             src={product.imageUrl}
             alt={product.name}
@@ -63,7 +63,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 Sold Out
               </span>
             ) : isLowStock ? (
-              <span className="bg-amber-600 text-white text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-md">
+              <span className="bg-[#D4AF37] text-black text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-md">
                 Only {product.stock} Left in Stock
               </span>
             ) : (
@@ -90,35 +90,35 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
             </div>
 
             <h1
-              className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 dark:text-gray-100 leading-tight"
+              className="text-2xl sm:text-3xl lg:text-4xl font-light text-black dark:text-white leading-tight"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
               {product.name}
             </h1>
 
             {product.description && (
-              <p className="mt-3 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="mt-3 text-sm sm:text-base text-black/60 dark:text-white/60 leading-relaxed">
                 {product.description}
               </p>
             )}
 
             {/* Volume and price */}
-            <div className="flex items-baseline gap-3 pt-2 border-t border-gray-100 dark:border-[#22222A]">
+            <div className="flex items-baseline gap-3 pt-2">
               <span className="text-2xl sm:text-3xl lg:text-4xl font-bold font-mono text-[#D4AF37]">
                 {product.price.toFixed(2)} GHS
               </span>
-              <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              <span className="text-xs uppercase tracking-wider text-black/50 dark:text-white/60">
                 • 100ml Extrait de Parfum
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed pt-2">
+            <p className="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed pt-2">
               Distilled in small, artisanal batches with aged agarwood oils, rare florals, and botanical resinous bases. Formulated for long-lasting sillage that endures throughout West African climates.
             </p>
 
             {/* Fragrance Accords Chips */}
             <div className="pt-2">
-              <span className="text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 font-bold block mb-2">
+              <span className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-2">
                 Olfactory Profile
               </span>
               <div className="flex flex-wrap gap-2">
@@ -126,7 +126,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                   (accord) => (
                     <span
                       key={accord}
-                      className="px-2.5 py-1 bg-gray-100 dark:bg-[#1C1C24] text-gray-700 dark:text-gray-300 text-[11px] border border-gray-200 dark:border-[#2C2C38]"
+                      className="px-2.5 py-1 bg-white dark:bg-white/5 text-black/70 dark:text-white/70 text-[11px] border border-black/10 dark:border-white/15"
                     >
                       {accord}
                     </span>
@@ -136,7 +136,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
             </div>
 
             {/* Luxury Assurance Highlights */}
-            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-gray-100 dark:border-[#22222A] text-[11px] text-gray-500 dark:text-gray-400">
+            <div className="grid grid-cols-2 gap-3 pt-4 text-[11px] text-black/50 dark:text-white/60">
               <div className="flex items-center space-x-2">
                 <Droplet className="w-3.5 h-3.5 text-[#D4AF37]" />
                 <span>35% Pure Perfume Oil</span>
@@ -150,18 +150,18 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 <span>100% Authentic Batch</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span className="w-2 h-2 rounded-full bg-[#D4AF37]/100"></span>
                 <span>Ready for Dispatch</span>
               </div>
             </div>
           </div>
 
           {/* Quantity & Buy Section */}
-          <div className="space-y-5 pt-4 border-t border-gray-200 dark:border-[#22222A]">
+          <div className="space-y-5 pt-5">
             {!isOutOfStock && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-[11px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">
+                  <label className="text-[11px] uppercase tracking-widest text-black/50 dark:text-white/50 font-semibold">
                     Select Quantity (Bottles)
                   </label>
                   <span className="text-xs font-mono font-bold text-[#D4AF37]">
@@ -170,31 +170,31 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 </div>
 
                 <div className="flex items-center space-x-3">
-                  <div className="inline-flex items-center border border-gray-300 dark:border-[#2E2E3C] bg-white dark:bg-[#181820]">
+                  <div className="inline-flex items-center border border-black/20 dark:border-white/15 bg-white dark:bg-white/10">
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       disabled={quantity <= 1}
-                      className="w-12 h-12 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#22222C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                      className="w-12 h-12 flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-[#F5F5F5] dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                       aria-label="Decrease quantity"
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="w-12 text-center text-base font-bold text-gray-900 dark:text-gray-100 font-mono">
+                    <span className="w-12 text-center text-base font-bold text-black dark:text-white font-mono">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.min(maxAvailable, quantity + 1))}
                       disabled={quantity >= maxAvailable}
-                      className="w-12 h-12 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#22222C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                      className="w-12 h-12 flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-[#F5F5F5] dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                       aria-label="Increase quantity"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <span className="text-xs text-gray-400 dark:text-gray-500">
+                  <span className="text-xs text-black/45 dark:text-white/50">
                     Max: {maxAvailable} bottles
                   </span>
                 </div>
@@ -203,8 +203,8 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 
             {/* Primary Action Buttons */}
             {isOutOfStock ? (
-              <div className="p-4 bg-gray-50 dark:bg-[#181820] border border-gray-200 dark:border-[#2E2E3C] text-center">
-                <p className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-semibold">
+              <div className="p-4 bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 text-center">
+                <p className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 font-semibold">
                   This fragrance is currently sold out in all Ghana workshops.
                 </p>
               </div>
@@ -229,7 +229,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 >
                   {isAdded ? (
                     <span className="flex items-center justify-center gap-2">
-                      <Check className="w-4 h-4 text-emerald-500 stroke-[2.5]" />
+                      <Check className="w-4 h-4 text-[#D4AF37] stroke-[2.5]" />
                       Added to Bag
                     </span>
                   ) : (

@@ -73,16 +73,16 @@ export const Checkout: React.FC<CheckoutProps> = ({
       <button
         type="button"
         onClick={onBackToCart}
-        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-semibold transition-colors"
+        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/50 dark:text-white/50 hover:text-black dark:text-white/60 dark:hover:text-white font-semibold transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Bag
       </button>
 
-      <div className="bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#22222A] p-5 sm:p-8 shadow-xs">
-        <div className="border-b border-gray-200 dark:border-[#22222A] pb-4 mb-6">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-5 sm:p-8 shadow-xs">
+        <div className="pb-2 mb-6">
           <h2
-            className="text-2xl sm:text-3xl font-light text-gray-900 dark:text-gray-100"
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Express Checkout
@@ -100,23 +100,23 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Order Summary Overview */}
-          <div className="bg-gray-50 dark:bg-[#181820] p-4 border border-gray-200 dark:border-[#262632]">
-            <h3 className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-3">
+          <div className="bg-white dark:bg-white/10 p-4 border border-black/10 dark:border-white/15">
+            <h3 className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 font-bold mb-3">
               Order Summary ({items.length} {items.length === 1 ? "Fragrance" : "Fragrances"})
             </h3>
             <div className="space-y-2 text-sm">
               {items.map((i, idx) => (
                 <div key={idx} className="flex justify-between text-xs sm:text-sm">
-                  <span className="text-gray-700 dark:text-gray-300">
+                  <span className="text-black/70 dark:text-white/80">
                     {i.quantity}x {i.name}
                   </span>
-                  <span className="font-semibold text-gray-900 dark:text-gray-100 font-mono">
+                  <span className="font-semibold text-black dark:text-white font-mono">
                     {(i.price * i.quantity).toFixed(2)} GHS
                   </span>
                 </div>
               ))}
-              <div className="pt-3 border-t border-gray-200 dark:border-[#2C2C38] flex justify-between font-bold text-sm sm:text-base">
-                <span className="uppercase tracking-wider text-gray-900 dark:text-gray-100">Total Due</span>
+              <div className="pt-3 flex justify-between font-bold text-sm sm:text-base">
+                <span className="uppercase tracking-wider text-black dark:text-white">Total Due</span>
                 <span className="text-[#D4AF37] font-mono">{total.toFixed(2)} GHS</span>
               </div>
             </div>
@@ -124,7 +124,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
           {/* Delivery Details */}
           <div className="space-y-4">
-            <h3 className="text-xs uppercase tracking-widest text-gray-900 dark:text-gray-100 font-bold flex items-center gap-1.5">
+            <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-1.5">
               <span>Delivery Details</span>
             </h3>
 
@@ -148,7 +148,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
             />
 
             <div className="w-full flex flex-col gap-1 text-left">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-[#52525B] dark:text-[#A1A1AA]">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/60 dark:text-white/60">
                 Delivery Address
               </label>
               <textarea
@@ -156,7 +156,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 onChange={(e) => setAddress(e.target.value)}
                 rows={2}
                 placeholder="House Number, Street Name, Landmark, Area (e.g. Ring Road Central, Accra)"
-                className="w-full p-3 text-sm bg-white dark:bg-[#141416] text-[#18181B] dark:text-[#F4F4F5] placeholder-gray-400 border border-gray-200 dark:border-[#2C2C32] focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+                className="w-full p-3 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 border border-black/10 dark:border-white/15 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
                 required
               />
             </div>
@@ -164,7 +164,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
           {/* Payment Method */}
           <div className="space-y-3">
-            <h3 className="text-xs uppercase tracking-widest text-gray-900 dark:text-gray-100 font-bold">
+            <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
               Payment Method
             </h3>
 
@@ -185,8 +185,8 @@ export const Checkout: React.FC<CheckoutProps> = ({
                     onClick={() => setPaymentMethod(pm.id)}
                     className={`p-3.5 text-left border min-h-[48px] transition-all ${
                       isSelected
-                        ? "border-[#D4AF37] bg-[#D4AF37]/10 text-gray-900 dark:text-gray-100 font-semibold"
-                        : "border-gray-200 dark:border-[#282832] text-gray-700 dark:text-gray-300 bg-white dark:bg-[#16161C] hover:border-gray-400"
+                        ? "border-[#D4AF37] bg-[#D4AF37]/10 text-black font-semibold"
+                        : "border-black/10 dark:border-white/15 text-black/70 bg-white dark:bg-white/5 hover:border-black/30"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -200,7 +200,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                         <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
                       )}
                     </div>
-                    <span className="text-[11px] text-gray-500 dark:text-gray-400 block">
+                    <span className="text-[11px] text-black/50 dark:text-white/50 block">
                       {pm.desc}
                     </span>
                   </button>
@@ -209,8 +209,8 @@ export const Checkout: React.FC<CheckoutProps> = ({
             </div>
 
             {paymentMethod === "Mobile Money" && (
-              <div className="p-4 bg-gray-50 dark:bg-[#181820] border border-gray-200 dark:border-[#2C2C38] mt-3 space-y-3">
-                <label className="text-[11px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold block">
+              <div className="p-4 bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 mt-3 space-y-3">
+                <label className="text-[11px] uppercase tracking-widest text-black/50 dark:text-white/50 font-bold block">
                   Select Mobile Money Network
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -222,7 +222,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                       className={`min-h-[44px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border transition-all ${
                         momoNetwork === net
                           ? "border-[#D4AF37] bg-[#D4AF37] text-black shadow-xs"
-                          : "border-gray-200 dark:border-[#323240] bg-white dark:bg-[#15151A] text-gray-700 dark:text-gray-300"
+                          : "border-black/10 dark:border-white/15 bg-white dark:bg-white/5 text-black/70 dark:text-white/80"
                       }`}
                     >
                       {net}
@@ -241,7 +241,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
           </div>
 
           {/* Place Order Primary Action */}
-          <div className="pt-4 border-t border-gray-200 dark:border-[#22222A]">
+          <div className="pt-5">
             <Button
               type="submit"
               variant="primary"
@@ -251,7 +251,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
             >
               Confirm & Place Order — {total.toFixed(2)} GHS
             </Button>
-            <div className="flex items-center justify-center space-x-1.5 text-gray-400 text-[11px] mt-3 uppercase tracking-wider">
+            <div className="flex items-center justify-center space-x-1.5 text-black/45 dark:text-white/45 text-[11px] mt-3 uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>Safe & Secure Ghanaian Checkout</span>
             </div>

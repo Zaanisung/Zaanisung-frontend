@@ -35,6 +35,15 @@ import { Restock } from "./pages/admin/Restock";
 import { AdminOrders } from "./pages/admin/Orders";
 import { AdminAccount } from "./pages/admin/Account";
 
+const THEME_KEY = "zaanisung-theme";
+
+function getInitialDark(): boolean {
+  if (typeof window === "undefined") return false;
+  const stored = window.localStorage.getItem(THEME_KEY);
+  if (stored === "light" || stored === "dark") return stored === "dark";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -51,21 +60,31 @@ export default function App() {
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState<string | null>(null);
 
-  // Dark mode detection
+  // Theme: manual toggle persists; otherwise follows OS/browser preference
+  const [isDark, setIsDark] = useState<boolean>(getInitialDark);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const applyTheme = (e: MediaQueryList | MediaQueryListEvent) => {
-      if (e.matches) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+    const applySystemTheme = (e: MediaQueryList | MediaQueryListEvent) => {
+      if (!window.localStorage.getItem(THEME_KEY)) setIsDark(e.matches);
     };
-    applyTheme(mediaQuery);
-    mediaQuery.addEventListener("change", applyTheme);
-    return () => mediaQuery.removeEventListener("change", applyTheme);
+    applySystemTheme(mediaQuery);
+    mediaQuery.addEventListener("change", applySystemTheme);
+    return () => mediaQuery.removeEventListener("change", applySystemTheme);
   }, []);
+
+  const handleToggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      window.localStorage.setItem(THEME_KEY, next ? "dark" : "light");
+      return next;
+    });
+  };
 
   // Check auth on mount
   useEffect(() => {
@@ -343,6 +362,8 @@ export default function App() {
     if (!isAdminLoggedIn) {
       return (
         <AdminLogin
+          isDark={isDark}
+          onToggleTheme={handleToggleTheme}
           onLoginSuccess={() => {
             setIsAdminLoggedIn(true);
             setView({ type: "admin", page: "dashboard" });
@@ -360,6 +381,8 @@ export default function App() {
       <AdminLayout
         activeTab={adminTab}
         onChangeTab={handleAdminTabChange}
+        isDark={isDark}
+        onToggleTheme={handleToggleTheme}
         pendingOrdersCount={pendingOrdersCount}
         onNavigateTo={(targetPage) => {
           if (targetPage === "add-product") setView({ type: "admin", page: "add-product" });
@@ -406,7 +429,7 @@ export default function App() {
         {view.page === "edit-product" &&
           (() => {
             const prodToEdit = products.find((p) => p.id === view.productId);
-            if (!prodToEdit) return <div className="text-gray-400">Perfume not found.</div>;
+            if (!prodToEdit) return <div className="text-black/45 dark:text-white/45">Perfume not found.</div>;
             return (
               <EditProduct
                 product={prodToEdit}
@@ -464,6 +487,8 @@ export default function App() {
         products={products}
         currentUser={customerUser}
         isLoadingProducts={isLoadingProducts}
+        isDark={isDark}
+        onToggleTheme={handleToggleTheme}
         onCreateAccount={(user) => {
           setCustomerUser(user);
         }}
@@ -486,6 +511,11 @@ export default function App() {
         onGoToLogin={() => {
           setView({ type: "customer", page: "login" });
         }}
+        onSelectProduct={(p) =>
+          setView({ type: "customer", page: "product-details", productId: p.id })
+        }
+        onAddToCart={(p) => handleAddToCart(p, 1)}
+        recentlyAddedId={recentlyAddedId}
       />
     );
   }
@@ -496,6 +526,8 @@ export default function App() {
       activeTab={customerTab}
       onChangeTab={handleCustomerTabChange}
       cartCount={totalCartCount}
+      isDark={isDark}
+      onToggleTheme={handleToggleTheme}
       onNavigateHome={() => {
         setView({ type: "landing" });
       }}
@@ -547,7 +579,7 @@ export default function App() {
       {view.page === "product-details" &&
         (() => {
           const product = products.find((p) => p.id === view.productId);
-          if (!product) return <div className="py-12 text-center text-gray-500">Fragrance not found.</div>;
+          if (!product) return <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>;
           return (
             <ProductDetails
               product={product}
@@ -585,7 +617,7 @@ export default function App() {
       {view.page === "order-confirmation" &&
         (() => {
           const order = orders.find((o) => o.id === view.orderId) || lastConfirmedOrder;
-          if (!order) return <div className="py-12 text-center"><p className="text-gray-500">No order found.</p></div>;
+          if (!order) return <div className="py-12 text-center"><p className="text-black/50 dark:text-white/50">No order found.</p></div>;
           return (
             <OrderConfirmation
               order={order}

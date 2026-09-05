@@ -69,27 +69,27 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
       <button
         type="button"
         onClick={onBack}
-        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-gray-400 hover:text-white font-semibold mb-6 transition-colors"
+        className="min-h-[44px] inline-flex items-center text-xs uppercase tracking-widest text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white font-semibold mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </button>
 
-      <div className="bg-[#121216] border border-[#1E1E24] p-6 sm:p-8">
-        <div className="border-b border-[#1E1E24] pb-4 mb-6">
-          <div className="flex items-center space-x-2 text-amber-400 mb-1">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
+        <div className="pb-2 mb-6">
+          <div className="flex items-center space-x-2 text-[#D4AF37] mb-1">
             <TrendingUp className="w-4 h-4" />
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Physical Walk-In Sale
             </span>
           </div>
           <h2
-            className="text-xl sm:text-2xl font-light text-white"
+            className="text-xl sm:text-2xl font-light text-black dark:text-white"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Record In-Store Sale
           </h2>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-black/50 dark:text-white/50 mt-1">
             Instantly log physical retail sale & deduct from stock
           </p>
         </div>
@@ -102,13 +102,13 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
         {isSuccess ? (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 bg-emerald-950 border border-emerald-700 text-emerald-400 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center mx-auto">
               <Check className="w-6 h-6 stroke-[3]" />
             </div>
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-base font-semibold text-black dark:text-white">
               Sale Recorded Successfully
             </h3>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-black/45 dark:text-white/45">
               Stock automatically updated. Redirecting...
             </p>
           </div>
@@ -116,7 +116,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Pick Product */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
                 Select Fragrance
               </label>
               <select
@@ -125,7 +125,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                   setSelectedProductId(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-[#1A1A22] border border-[#2D2D38] text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
               >
                 {products.map((p) => (
                   <option key={p.id} value={p.id} disabled={p.stock <= 0}>
@@ -138,9 +138,9 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
             {/* Selected Product summary pill */}
             {selectedProduct && (
-              <div className="p-3 bg-[#181820] border border-[#262632] flex items-center justify-between text-xs">
-                <span className="text-gray-400">Available Shelf Stock:</span>
-                <span className="font-mono font-bold text-white">
+              <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between text-xs">
+                <span className="text-black/45 dark:text-white/45">Available Shelf Stock:</span>
+                <span className="font-mono font-bold text-black dark:text-white">
                   {selectedProduct.stock} bottles
                 </span>
               </div>
@@ -148,7 +148,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
             {/* Enter Quantity */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
                 Quantity Sold
               </label>
               <input
@@ -160,7 +160,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                   setQuantity(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-[#1A1A22] border border-[#2D2D38] text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
                 placeholder="1"
                 required
               />
@@ -168,7 +168,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
             {/* Payment Method */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 block">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-black/45 dark:text-white/45 block">
                 Payment Collected
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -179,8 +179,8 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                     onClick={() => setPaymentMethod(method)}
                     className={`min-h-[44px] px-2 text-[10px] uppercase tracking-wider font-semibold border transition-colors ${
                       paymentMethod === method
-                        ? "border-[#D4AF37] bg-[#D4AF37]/15 text-white"
-                        : "border-[#2D2D38] text-gray-400 bg-[#1A1A22] hover:text-white"
+                        ? "border-[#D4AF37] bg-[#D4AF37]/15 text-black dark:text-white"
+                        : "border-black/10 dark:border-white/15 text-black/45 dark:text-white/45 bg-white dark:bg-white/5 hover:text-black dark:hover:text-white"
                     }`}
                   >
                     {method === "Cash on Delivery" ? "Cash" : method}
@@ -190,8 +190,8 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
             </div>
 
             {/* Total Due */}
-            <div className="pt-4 border-t border-[#1E1E24] flex items-center justify-between text-sm">
-              <span className="text-xs uppercase tracking-widest text-gray-400">
+            <div className="pt-5 flex items-center justify-between text-sm">
+              <span className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45">
                 Total Collected
               </span>
               <span className="text-xl font-mono font-bold text-[#D4AF37]">
@@ -215,7 +215,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                 variant="outline"
                 size="lg"
                 onClick={onBack}
-                className="border-[#2D2D38] text-gray-300 hover:text-white"
+                className="border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
               >
                 Cancel
               </Button>

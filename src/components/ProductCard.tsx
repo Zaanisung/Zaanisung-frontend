@@ -22,12 +22,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <article
       id={`product-card-${product.id}`}
       onClick={() => onSelect(product)}
-      className={`group relative flex flex-col bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#23232C] hover:border-[#D4AF37] dark:hover:border-[#D4AF37] shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden ${
+      className={`group relative flex flex-col bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-[#D4AF37] dark:hover:border-[#D4AF37] shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden ${
         isOutOfStock ? "opacity-80" : ""
       }`}
     >
       {/* Full-Bleed Hero Image Container - Large and prominent */}
-      <div className="relative w-full aspect-[3/4] min-h-[220px] sm:min-h-[260px] md:min-h-[280px] bg-[#F5F4F0] dark:bg-[#1A1A22] overflow-hidden">
+      <div className="relative w-full aspect-square bg-white dark:bg-white/5 overflow-hidden">
         <img
           src={product.imageUrl}
           alt={product.name}
@@ -36,7 +36,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         />
 
         {/* Subtle Dark Gradient Overlay at top & bottom for high legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-black/25 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity" />
 
         {/* Stock Status Badge - Geometric Luxury Tag */}
         <div className="absolute top-2.5 right-2.5 z-10">
@@ -45,7 +45,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               Sold Out
             </span>
           ) : isLowStock ? (
-            <span className="inline-block bg-amber-600/95 text-white text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold shadow-xs">
+            <span className="inline-block bg-[#D4AF37] text-black text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold shadow-xs">
               Only {product.stock} Left
             </span>
           ) : (
@@ -70,20 +70,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Product Information - Fluid & Mobile-First padding */}
-      <div className="p-3.5 sm:p-4 md:p-4.5 flex flex-col flex-1 justify-between gap-3 bg-white dark:bg-[#131317]">
+      <div className="p-3.5 sm:p-4 md:p-4.5 flex flex-col flex-1 justify-between gap-3 bg-white dark:bg-white/5">
         <div>
           <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold block mb-1">
             Eau de Parfum
           </span>
           <h3
-            className="font-brand-serif text-sm sm:text-base md:text-lg font-normal text-gray-900 dark:text-gray-100 leading-snug line-clamp-1 group-hover:text-[#D4AF37] transition-colors"
+            className="font-brand-serif text-sm sm:text-base md:text-lg font-normal text-black dark:text-white leading-snug line-clamp-1 group-hover:text-[#D4AF37] transition-colors"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             {product.name}
           </h3>
 
           {product.description && (
-            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
+            <p className="mt-1 text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
               {product.description}
             </p>
           )}
@@ -92,7 +92,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-base sm:text-lg font-bold font-mono text-[#D4AF37]">
               {product.price.toFixed(2)} GHS
             </span>
-            <span className="text-[10px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            <span className="text-[10px] uppercase tracking-wider text-black/50 dark:text-white/60">
               100 ml
             </span>
           </div>
@@ -110,10 +110,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           }}
           className={`w-full min-h-[44px] py-2.5 px-3 text-[11px] sm:text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 border select-none active:scale-[0.98] ${
             isOutOfStock
-              ? "border-gray-200 dark:border-[#262630] text-gray-400 dark:text-gray-600 bg-gray-50 dark:bg-[#18181F] cursor-not-allowed"
+              ? "border-black/10 dark:border-white/15 text-black/45 bg-white dark:bg-white/10 cursor-not-allowed"
               : isAdded
               ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-xs"
-              : "border-gray-900 dark:border-gray-200 text-gray-900 dark:text-gray-100 hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-black dark:hover:border-[#D4AF37]"
+              : "border-black dark:border-black/10 text-black hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-black dark:hover:border-[#D4AF37]"
           }`}
         >
           {isOutOfStock ? (

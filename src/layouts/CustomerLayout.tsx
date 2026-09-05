@@ -3,6 +3,7 @@ import { CustomerTab } from "../types";
 import { BottomNav } from "../components/BottomNav";
 import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
+import { ThemeToggle } from "../components/ThemeToggle";
 import { ShoppingBag } from "lucide-react";
 
 export interface CustomerLayoutProps {
@@ -10,6 +11,8 @@ export interface CustomerLayoutProps {
   activeTab: CustomerTab;
   onChangeTab: (tab: CustomerTab) => void;
   cartCount: number;
+  isDark: boolean;
+  onToggleTheme: () => void;
   onNavigateHome?: () => void;
 }
 
@@ -18,12 +21,14 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   activeTab,
   onChangeTab,
   cartCount,
+  isDark,
+  onToggleTheme,
   onNavigateHome,
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0B0B0E] text-gray-900 dark:text-[#F4F4F6] transition-colors">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white transition-colors">
       {/* Geometric Balance Header */}
-      <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 lg:px-10 h-16 sm:h-20 border-b border-gray-800 dark:border-[#1C1C24] bg-[#0A0A0C] text-white shadow-xs">
+      <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 lg:px-10 h-16 sm:h-20 border-b border-black/60 dark:border-white/15 bg-white dark:bg-black text-black dark:text-white shadow-xs">
         <div className="flex items-center space-x-6 lg:space-x-8">
           <button
             type="button"
@@ -34,7 +39,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
             <Logo className="h-9 w-9 sm:h-10 sm:w-10" />
             <span className="hidden sm:block">
               <span
-                className="text-xl sm:text-2xl tracking-[0.2em] font-light italic text-white hover:text-[#D4AF37] transition-colors block leading-none"
+                className="text-xl sm:text-2xl tracking-[0.2em] font-light italic text-black dark:text-white hover:text-[#D4AF37] transition-colors block leading-none"
                 style={{ fontFamily: "Georgia, serif" }}
               >
                 ZAANISUNG
@@ -46,12 +51,12 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 text-xs uppercase tracking-widest text-gray-400">
+          <nav className="hidden md:flex space-x-6 text-xs uppercase tracking-widest text-black/45 dark:text-white/45">
             <button
               type="button"
               onClick={() => onChangeTab("shop")}
               className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "shop" ? "text-[#D4AF37] font-bold" : "hover:text-white"
+                activeTab === "shop" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
               }`}
             >
               Shop
@@ -60,7 +65,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
               type="button"
               onClick={() => onChangeTab("orders")}
               className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "orders" ? "text-[#D4AF37] font-bold" : "hover:text-white"
+                activeTab === "orders" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
               }`}
             >
               Orders
@@ -69,7 +74,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
               type="button"
               onClick={() => onChangeTab("account")}
               className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "account" ? "text-[#D4AF37] font-bold" : "hover:text-white"
+                activeTab === "account" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
               }`}
             >
               Account
@@ -79,11 +84,12 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
         {/* Right actions: Cart */}
         <div className="flex items-center space-x-3 sm:space-x-5">
+          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
           {/* Cart button (Desktop & Mobile) */}
           <button
             type="button"
             onClick={() => onChangeTab("cart")}
-            className="relative p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-white hover:text-[#D4AF37] transition-colors"
+            className="relative p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-black dark:text-white hover:text-[#D4AF37] transition-colors"
             aria-label="Open cart"
           >
             <ShoppingBag className="w-5 h-5" />
@@ -97,7 +103,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
       </header>
 
       {/* Main Page Area - Fluid responsive max-w with adaptive background */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 pb-28 md:pb-12 bg-[#FBFBFA] dark:bg-[#0B0B0E]">
+      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-28 md:pb-12 bg-white dark:bg-black">
         {children}
       </main>
 

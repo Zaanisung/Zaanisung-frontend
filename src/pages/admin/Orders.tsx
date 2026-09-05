@@ -39,21 +39,21 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
   return (
     <div className="w-full space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1E1E24] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
           <h2
-            className="text-2xl sm:text-3xl font-light text-white"
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Sales & Orders Log
           </h2>
-          <p className="text-xs uppercase tracking-widest text-gray-400 mt-1">
+          <p className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 mt-1">
             Online Store Orders vs Physical Walk-In Sales
           </p>
         </div>
 
         {/* Source Filter Switcher */}
-        <div className="inline-flex p-1 bg-[#121216] border border-[#22222A]">
+        <div className="inline-flex p-1 bg-white dark:bg-white/5 border border-black/10 dark:border-white/15">
           {(["ALL", "ONLINE", "PHYSICAL"] as const).map((source) => (
             <button
               key={source}
@@ -62,7 +62,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
               className={`min-h-[38px] px-3 text-[10px] uppercase tracking-wider font-bold transition-colors ${
                 filterSource === source
                   ? "bg-[#D4AF37] text-black"
-                  : "text-gray-400 hover:text-white"
+                  : "text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white"
               }`}
             >
               {source === "ALL" ? "All Sales" : source === "ONLINE" ? "Online Orders" : "Walk-in Sales"}
@@ -73,19 +73,19 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
 
       {/* Search Input */}
       <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/50 dark:text-white/50 pointer-events-none" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by Order ID, fragrance, or customer..."
-          className="w-full pl-9 pr-8 min-h-[44px] bg-[#121216] border border-[#22222A] text-white text-xs placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+          className="w-full pl-9 pr-8 min-h-[44px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white text-xs placeholder-black/50 focus:outline-none focus:border-[#D4AF37]"
         />
         {searchQuery && (
           <button
             type="button"
             onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white"
           >
             <X className="w-4 h-4" />
           </button>
@@ -94,8 +94,8 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
 
       {/* Empty State */}
       {filteredOrders.length === 0 && (
-        <div className="py-16 text-center bg-[#121216] border border-[#1E1E24] p-6">
-          <p className="text-sm text-gray-400">
+        <div className="py-16 text-center bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6">
+          <p className="text-sm text-black/45 dark:text-white/45">
             No sales or orders match the current criteria.
           </p>
         </div>
@@ -109,28 +109,28 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
           return (
             <div
               key={order.id}
-              className="bg-[#121216] border border-[#1E1E24] hover:border-[#2B2B36] p-4 sm:p-5 transition-colors"
+              className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-black/10 dark:hover:border-white/15 p-4 sm:p-5 transition-colors"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1E1E24] pb-3 mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-sm font-bold text-white">
+                  <span className="font-mono text-sm font-bold text-black dark:text-white">
                     {order.id}
                   </span>
 
                   {/* High visibility SOURCE BADGE: ONLINE vs PHYSICAL */}
                   {isPhysical ? (
-                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-purple-950/80 text-purple-300 border border-purple-800 text-[10px] font-bold uppercase tracking-wider">
-                      <Store className="w-3 h-3 text-purple-400" />
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-[#D4AF37] text-black border border-[#D4AF37]/40 text-[10px] font-bold uppercase tracking-wider">
+                      <Store className="w-3 h-3 text-black dark:text-white" />
                       <span>Physical Store</span>
                     </span>
                   ) : (
-                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-blue-950/80 text-blue-300 border border-blue-800 text-[10px] font-bold uppercase tracking-wider">
-                      <ShoppingCart className="w-3 h-3 text-blue-400" />
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-black dark:bg-white text-white dark:text-black border border-white/30 dark:border-black/30 text-[10px] font-bold uppercase tracking-wider">
+                      <ShoppingCart className="w-3 h-3 text-[#D4AF37]" />
                       <span>Online Order</span>
                     </span>
                   )}
 
-                  <span className="text-gray-500 text-xs">
+                  <span className="text-black/50 dark:text-white/50 text-xs">
                     {order.createdAt || "Recent"}
                   </span>
                 </div>
@@ -144,7 +144,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
                   <select
                     value={order.status}
                     onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
-                    className="min-h-[36px] bg-[#1A1A22] border border-[#2E2E3C] text-xs uppercase tracking-wider font-semibold text-white px-2 py-1 focus:outline-none focus:border-[#D4AF37]"
+                    className="min-h-[36px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-xs uppercase tracking-wider font-semibold text-black dark:text-white px-2 py-1 focus:outline-none focus:border-[#D4AF37]"
                   >
                     {allStatuses.map((st) => (
                       <option key={st} value={st}>
@@ -158,30 +158,30 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
               {/* Items in order */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold block">
+                  <span className="text-[10px] uppercase tracking-widest text-black/50 dark:text-white/50 font-bold block">
                     Fragrances Deducted:
                   </span>
-                  <p className="text-gray-300 font-medium">
+                  <p className="text-black/60 dark:text-white/60 font-medium">
                     {order.items.map((it) => `${it.quantity}x ${it.name} (${it.price.toFixed(2)} GHS)`).join(", ")}
                   </p>
                 </div>
 
                 {/* Customer / Dispatch Details */}
-                <div className="text-left sm:text-right text-gray-400 text-[11px] space-y-0.5">
+                <div className="text-left sm:text-right text-black/45 dark:text-white/45 text-[11px] space-y-0.5">
                   <p>
-                    <span className="text-gray-500 uppercase tracking-wider">Customer:</span>{" "}
-                    <span className="text-white font-medium">{order.customerName || "Store Walk-In"}</span>
+                    <span className="text-black/50 dark:text-white/50 uppercase tracking-wider">Customer:</span>{" "}
+                    <span className="text-black dark:text-white font-medium">{order.customerName || "Store Walk-In"}</span>
                   </p>
                   {order.customerPhone && (
                     <p>
-                      <span className="text-gray-500 uppercase tracking-wider">Phone:</span>{" "}
+                      <span className="text-black/50 dark:text-white/50 uppercase tracking-wider">Phone:</span>{" "}
                       <span>{order.customerPhone}</span>
                     </p>
                   )}
                   {order.paymentMethod && (
                     <p>
-                      <span className="text-gray-500 uppercase tracking-wider">Payment:</span>{" "}
-                      <span className="text-amber-300">{order.paymentMethod}</span>
+                      <span className="text-black/50 dark:text-white/50 uppercase tracking-wider">Payment:</span>{" "}
+                      <span className="text-[#D4AF37]">{order.paymentMethod}</span>
                     </p>
                   )}
                 </div>

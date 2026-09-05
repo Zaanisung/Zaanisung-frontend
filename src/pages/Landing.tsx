@@ -19,16 +19,23 @@ import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { ProductCard } from "../components/ProductCard";
+import { ThemeToggle } from "../components/ThemeToggle";
 
 export interface LandingProps {
   products: Product[];
   currentUser: CustomerUser | null;
   isLoadingProducts: boolean;
+  isDark: boolean;
+  onToggleTheme: () => void;
   onCreateAccount: (user: CustomerUser) => void;
   onLogin: (user: CustomerUser) => void;
   onStartShopping: () => void;
   onBrowseShop: () => void;
   onGoToLogin: () => void;
+  onSelectProduct: (product: Product) => void;
+  onAddToCart: (product: Product, e: React.MouseEvent) => void;
+  recentlyAddedId?: string | null;
 }
 
 const SESSION_KEY = "zaanisung_landing";
@@ -37,11 +44,16 @@ export const Landing: React.FC<LandingProps> = ({
   products,
   currentUser,
   isLoadingProducts,
+  isDark,
+  onToggleTheme,
   onCreateAccount,
   onLogin,
   onStartShopping,
   onBrowseShop,
   onGoToLogin,
+  onSelectProduct,
+  onAddToCart,
+  recentlyAddedId,
 }) => {
   const [mode, setMode] = useState<"signup" | "login">("signup");
   const [hasAccount, setHasAccount] = useState<boolean>(
@@ -117,12 +129,12 @@ export const Landing: React.FC<LandingProps> = ({
   const showForm = !isLoggedIn && !justCreated;
 
   return (
-    <div className="min-h-screen bg-[#0B0B0E] text-[#F4F4F6]">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* ─── Landing Header ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 border-b border-[#1C1C24] bg-[#0A0A0C]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between">
+      <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/80 dark:bg-black backdrop-blur-md">
+        <div className="w-full px-4 sm:px-8 lg:px-12 h-16 sm:h-[72px] flex items-center justify-between">
           <Logo className="h-9 w-9 sm:h-10 sm:w-10" showWordmark />
-          <nav className="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest text-gray-400">
+          <nav className="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest text-black/45 dark:text-white/45">
             <a
               href="#collections"
               className="hover:text-[#D4AF37] transition-colors min-h-[44px] inline-flex items-center"
@@ -151,6 +163,7 @@ export const Landing: React.FC<LandingProps> = ({
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             {isLoggedIn ? (
               <Button variant="primary" size="sm" onClick={onStartShopping}>
                 Enter Store <ArrowRight className="w-4 h-4 ml-1" />
@@ -170,29 +183,26 @@ export const Landing: React.FC<LandingProps> = ({
 
       {/* ─── HERO ───────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden">
-        {/* Decorative glows */}
-        <div className="pointer-events-none absolute -top-32 -right-32 w-[420px] h-[420px] rounded-full bg-[#D4AF37]/10 blur-3xl" />
-        <div className="pointer-events-none absolute top-1/3 -left-40 w-[400px] h-[400px] rounded-full bg-purple-700/10 blur-3xl" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
           {/* Left: Copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex flex-col justify-center"
           >
-            <span className="inline-flex items-center gap-2 border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 mb-6">
+            <span className="inline-flex items-center gap-2 border border-[#D4AF37]/40 bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] font-bold px-3 py-1.5 mb-6 self-start">
               <Sparkles className="w-3.5 h-3.5" />
               Zaanisung Ent. GH
             </span>
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.05] tracking-tight"
+              className="text-5xl sm:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Fragrance that
-              <span className="block italic text-[#D4AF37] mt-1">endures.</span>
+              <span className="block italic text-[#D4AF37] mt-2">endures.</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-[#A1A1AA] leading-relaxed max-w-xl">
+            <p className="mt-6 text-base sm:text-lg text-black/60 dark:text-white/60 leading-relaxed max-w-2xl">
               Hand-crafted in Tamale, Ghana. Zaanisung bottles bold, long-lasting
               scent that moves with you — from the market to the metropolis.
             </p>
@@ -213,22 +223,22 @@ export const Landing: React.FC<LandingProps> = ({
             </div>
 
             {/* Trust badges */}
-            <div className="mt-10 grid grid-cols-3 gap-4 border-t border-[#1C1C24] pt-8 text-center sm:text-left">
+            <div className="mt-12 grid grid-cols-3 gap-4 text-center sm:text-left">
               <div>
                 <Gem className="w-5 h-5 text-[#D4AF37] mx-auto sm:mx-0" />
-                <p className="text-xs text-[#A1A1AA] mt-2 leading-snug">
+                <p className="text-xs text-black/60 dark:text-white/60 mt-2 leading-snug">
                   Premium Oils
                 </p>
               </div>
               <div>
                 <ShieldCheck className="w-5 h-5 text-[#D4AF37] mx-auto sm:mx-0" />
-                <p className="text-xs text-[#A1A1AA] mt-2 leading-snug">
+                <p className="text-xs text-black/60 dark:text-white/60 mt-2 leading-snug">
                   Authentic &<br />Verified
                 </p>
               </div>
               <div>
                 <Truck className="w-5 h-5 text-[#D4AF37] mx-auto sm:mx-0" />
-                <p className="text-xs text-[#A1A1AA] mt-2 leading-snug">
+                <p className="text-xs text-black/60 dark:text-white/60 mt-2 leading-snug">
                   Nationwide<br />Delivery
                 </p>
               </div>
@@ -241,9 +251,9 @@ export const Landing: React.FC<LandingProps> = ({
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="relative"
+            className="relative flex flex-col"
           >
-            <div className="rounded-lg border border-[#22222C] bg-[#101014]/90 backdrop-blur-xl p-8 sm:p-10 shadow-2xl">
+            <div className="rounded-lg border border-black/10 dark:border-white/15 bg-white/90 dark:bg-white/5 backdrop-blur-xl p-8 sm:p-10 shadow-2xl flex-1 flex flex-col justify-center">
               {showForm ? (
                 <>
                   <span className="inline-flex items-center gap-2 text-[#D4AF37] text-[10px] uppercase tracking-[0.25em] font-bold mb-3">
@@ -251,12 +261,12 @@ export const Landing: React.FC<LandingProps> = ({
                     Join Zaanisung
                   </span>
                   <h2
-                    className="text-2xl sm:text-3xl font-light text-white"
+                    className="text-2xl sm:text-3xl font-light text-black dark:text-white"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
                     {mode === "signup" ? "Create your account" : "Welcome back"}
                   </h2>
-                  <p className="text-sm text-[#A1A1AA] mt-2 mb-6">
+                  <p className="text-sm text-black/60 dark:text-white/60 mt-2 mb-6">
                     {mode === "signup"
                       ? "Your personal fragrance concierge. Save, order and track effortlessly."
                       : "Sign in to access your orders and favourites."}
@@ -311,11 +321,11 @@ export const Landing: React.FC<LandingProps> = ({
                     </Button>
                   </form>
 
-                  <div className="mt-6 pt-5 border-t border-[#20202A]">
+                  <div className="mt-6 pt-2">
                     <button
                       type="button"
                       onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setError(null); }}
-                      className="text-xs text-[#A1A1AA] hover:text-[#D4AF37] transition-colors"
+                      className="text-xs text-black/60 dark:text-white/60 hover:text-[#D4AF37] transition-colors"
                     >
                       {mode === "signup" ? (
                         <>Already have an account? <span className="font-bold underline">Sign in</span></>
@@ -331,12 +341,12 @@ export const Landing: React.FC<LandingProps> = ({
                     <CheckCircle2 className="w-7 h-7 text-[#D4AF37]" />
                   </div>
                   <h2
-                    className="text-2xl sm:text-3xl font-light text-white"
+                    className="text-2xl sm:text-3xl font-light text-black dark:text-white"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
                     {isLoggedIn ? `Welcome, ${currentUser.name.split(" ")[0]}` : justCreated ? "You're all set" : "Welcome back"}
                   </h2>
-                  <p className="text-sm text-[#A1A1AA] mt-3 mb-8">
+                  <p className="text-sm text-black/60 dark:text-white/60 mt-3 mb-8">
                     {isLoggedIn
                       ? "Your store is ready — explore the latest drops."
                       : "Start exploring our artisanal fragrance collection."}
@@ -347,7 +357,7 @@ export const Landing: React.FC<LandingProps> = ({
                   <button
                     type="button"
                     onClick={onBrowseShop}
-                    className="mt-4 text-[11px] uppercase tracking-widest text-[#A1A1AA] hover:text-white font-semibold min-h-[44px]"
+                    className="mt-4 text-[11px] uppercase tracking-widest text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-semibold min-h-[44px]"
                   >
                     Browse the Collection
                   </button>
@@ -356,10 +366,10 @@ export const Landing: React.FC<LandingProps> = ({
             </div>
 
             {/* Floating tag */}
-            <div className="hidden lg:flex absolute -bottom-5 -left-6 items-center gap-2 border border-[#22222C] bg-[#0A0A0C] px-4 py-3 rounded shadow-xl">
+            <div className="hidden lg:flex absolute -bottom-5 -left-6 items-center gap-2 border border-black/10 dark:border-white/15 bg-white dark:bg-black px-4 py-3 rounded shadow-xl">
               <Star className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
-              <span className="text-xs text-[#A1A1AA]">
-                Rated <span className="text-white font-bold">4.9/5</span> by shoppers across Ghana
+              <span className="text-xs text-black/60 dark:text-white/60">
+                Rated <span className="text-black dark:text-white font-bold">4.9/5</span> by shoppers across Ghana
               </span>
             </div>
           </motion.div>
@@ -367,8 +377,8 @@ export const Landing: React.FC<LandingProps> = ({
       </section>
 
       {/* ─── FEATURED COLLECTIONS ───────────────────────────────────── */}
-      <section id="collections" className="bg-[#0E0E12] border-y border-[#1C1C24]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section id="collections" className="bg-white dark:bg-black">
+        <div className="w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] px-4 sm:px-8 lg:px-12 py-16 sm:py-24 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -379,7 +389,7 @@ export const Landing: React.FC<LandingProps> = ({
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-bold">Selected for you</span>
               <h2
-                className="text-3xl sm:text-4xl font-light mt-2 text-white"
+                className="text-3xl sm:text-4xl font-light mt-2 text-black dark:text-white"
                 style={{ fontFamily: "Georgia, serif" }}
               >
                 Signature Collection
@@ -388,7 +398,7 @@ export const Landing: React.FC<LandingProps> = ({
             <button
               type="button"
               onClick={onBrowseShop}
-              className="text-xs uppercase tracking-widest text-[#A1A1AA] hover:text-[#D4AF37] transition-colors min-h-[44px] flex items-center gap-2"
+              className="text-xs uppercase tracking-widest text-black/60 dark:text-white/60 hover:text-[#D4AF37] transition-colors min-h-[44px] flex items-center gap-2"
             >
               View All <ArrowRight className="w-4 h-4" />
             </button>
@@ -397,51 +407,30 @@ export const Landing: React.FC<LandingProps> = ({
           {isLoadingProducts ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse aspect-[3/4] bg-[#16161C] rounded" />
+                <div key={i} className="animate-pulse aspect-square bg-white dark:bg-white/5 rounded" />
               ))}
             </div>
           ) : featured.length === 0 ? (
-            <p className="text-sm text-[#71717A] py-10">
+            <p className="text-sm text-black/45 dark:text-white/45 py-10">
               New fragrances are being prepared. Check back soon.
             </p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6">
               {featured.map((product, i) => (
-                <motion.button
+                <motion.div
                   key={product._id}
-                  type="button"
-                  onClick={onBrowseShop}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.06 }}
-                  className="group relative overflow-hidden rounded-lg bg-[#121218] border border-[#1E1E26] text-left"
                 >
-                  <div className="aspect-[3/4] overflow-hidden bg-[#16161C]">
-                    {product.imageUrl ? (
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Gem className="w-8 h-8 text-[#3F3F46]" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="p-4">
-                    <h3 className="text-sm font-semibold text-white truncate">{product.name}</h3>
-                    {product.description && (
-                      <p className="text-xs text-[#71717A] mt-1 line-clamp-2">{product.description}</p>
-                    )}
-                    <p className="text-[#D4AF37] font-bold mt-2 text-sm">
-                      GH₵ {product.price.toLocaleString()}
-                    </p>
-                  </div>
-                </motion.button>
+                  <ProductCard
+                    product={product}
+                    onSelect={onSelectProduct}
+                    onAddToCart={onAddToCart}
+                    isAdded={recentlyAddedId === product.id}
+                  />
+                </motion.div>
               ))}
             </div>
           )}
@@ -449,28 +438,29 @@ export const Landing: React.FC<LandingProps> = ({
       </section>
 
       {/* ─── ABOUT (split-screen) ───────────────────────────────────── */}
-      <section id="about" className="bg-[#0B0B0E]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section id="about" className="bg-white dark:bg-black">
+        <div className="w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="flex flex-col justify-center"
           >
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-bold">Our Story</span>
             <h2
-              className="text-3xl sm:text-4xl font-light mt-2 text-white leading-snug"
+              className="text-3xl sm:text-4xl font-light mt-2 text-black dark:text-white leading-snug"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Born in the North.
               <span className="block italic text-[#D4AF37]">Worn everywhere.</span>
             </h2>
-            <p className="mt-6 text-[#A1A1AA] leading-relaxed">
+            <p className="mt-6 text-black/60 dark:text-white/60 leading-relaxed">
               Zaanisung is an artisanal fragrance house rooted in Tamale, Ghana.
               We blend rare oils and extracts into bold, long-lasting compositions
               inspired by the warmth of the savanna and the energy of Ghanaian life.
             </p>
-            <p className="mt-4 text-[#A1A1AA] leading-relaxed">
+            <p className="mt-4 text-black/60 dark:text-white/60 leading-relaxed">
               Every bottle is curated, numbered and finished by hand — a piece of
               Ghana you can wear, to keep and to gift.
             </p>
@@ -482,8 +472,8 @@ export const Landing: React.FC<LandingProps> = ({
                 { value: "500+", label: "Happy Customers" },
               ].map((stat) => (
                 <div key={stat.label} className="border-l-2 border-[#D4AF37] pl-4">
-                  <p className="text-2xl sm:text-3xl font-light text-white">{stat.value}</p>
-                  <p className="text-[11px] uppercase tracking-widest text-[#71717A] mt-1">{stat.label}</p>
+                  <p className="text-2xl sm:text-3xl font-light text-black dark:text-white">{stat.value}</p>
+                  <p className="text-[11px] uppercase tracking-widest text-black/45 dark:text-white/45 mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -498,7 +488,7 @@ export const Landing: React.FC<LandingProps> = ({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 gap-4"
+            className="grid grid-cols-2 gap-5 auto-rows-fr"
           >
             {[
               { q: "\"The last scent I bought lasts all day. Truly premium.\"", a: "Akosua K.", role: "Accra" },
@@ -508,7 +498,7 @@ export const Landing: React.FC<LandingProps> = ({
             ].map((t, i) => (
               <div
                 key={i}
-                className={`rounded-lg border border-[#1E1E26] bg-[#101014] p-6 ${
+                className={`rounded-lg border border-black/10 dark:border-white/15 bg-white dark:bg-white/5 p-6 sm:p-8 flex flex-col justify-center min-h-[200px] lg:min-h-[240px] ${
                   i % 2 === 1 ? "lg:translate-y-6" : ""
                 }`}
               >
@@ -517,9 +507,9 @@ export const Landing: React.FC<LandingProps> = ({
                     <Star key={s} className="w-3.5 h-3.5 fill-current" />
                   ))}
                 </div>
-                <p className="text-sm text-[#C9C9D2] leading-relaxed">"{t.q}"</p>
-                <p className="mt-4 text-xs text-[#71717A]">
-                  — <span className="text-white font-semibold">{t.a}</span>, {t.role}
+                <p className="text-sm text-black/85 dark:text-white/85 leading-relaxed">"{t.q}"</p>
+                <p className="mt-4 text-xs text-black/45 dark:text-white/45">
+                  — <span className="text-black dark:text-white font-semibold">{t.a}</span>, {t.role}
                 </p>
               </div>
             ))}
@@ -528,23 +518,23 @@ export const Landing: React.FC<LandingProps> = ({
       </section>
 
       {/* ─── CRAFT / WHY US (split-screen) ──────────────────────────── */}
-      <section id="craft" className="bg-[#0E0E12] border-y border-[#1C1C24]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section id="craft" className="bg-white dark:bg-black">
+        <div className="w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] px-4 sm:px-8 lg:px-12 py-16 sm:py-24 flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-2xl mx-auto mb-14"
+            className="text-center max-w-3xl mx-auto mb-14"
           >
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-bold">The Craft</span>
             <h2
-              className="text-3xl sm:text-4xl font-light mt-2 text-white"
+              className="text-3xl sm:text-4xl font-light mt-2 text-black dark:text-white"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Why Zaanisung
             </h2>
-            <p className="mt-4 text-[#A1A1AA]">
+            <p className="mt-4 text-black/60 dark:text-white/60">
               Everything we do is designed around a single promise — scent that
               lasts as long as the memory you make with it.
             </p>
@@ -565,13 +555,13 @@ export const Landing: React.FC<LandingProps> = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="group rounded-lg border border-[#1E1E26] bg-[#101014] p-7 hover:border-[#D4AF37]/50 hover:bg-[#14141A] transition-all"
+                  className="group rounded-lg border border-black/10 dark:border-white/15 bg-white dark:bg-white/5 p-7 sm:p-9 hover:border-[#D4AF37]/50 hover:bg-white dark:hover:bg-white/5 transition-all lg:min-h-[300px] flex flex-col justify-center"
                 >
-                  <div className="w-12 h-12 flex items-center justify-center border border-[#D4AF37]/40 bg-[#D4AF37]/10 mb-5 group-hover:rotate-6 transition-transform">
+                  <div className="w-12 h-12 flex items-center justify-center border border-[#D4AF37]/40 bg-[#D4AF37]/10 mb-6 group-hover:rotate-6 transition-transform">
                     <Icon className="w-5 h-5 text-[#D4AF37]" />
                   </div>
-                  <h3 className="text-white font-semibold tracking-wide">{f.title}</h3>
-                  <p className="text-sm text-[#A1A1AA] mt-2 leading-relaxed">{f.text}</p>
+                  <h3 className="text-black dark:text-white font-semibold tracking-wide">{f.title}</h3>
+                  <p className="text-sm sm:text-base text-black/60 dark:text-white/60 mt-2.5 leading-relaxed">{f.text}</p>
                 </motion.div>
               );
             })}
@@ -580,9 +570,9 @@ export const Landing: React.FC<LandingProps> = ({
       </section>
 
       {/* ─── CTA BANNER ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-[#0B0B0E]">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 via-transparent to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 text-center relative">
+      <section className="relative overflow-hidden bg-white dark:bg-black">
+        <div className="pointer-events-none absolute inset-0" />
+        <div className="w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-72px)] px-4 sm:px-8 lg:px-12 py-20 sm:py-24 text-center relative flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -590,12 +580,12 @@ export const Landing: React.FC<LandingProps> = ({
             transition={{ duration: 0.6 }}
           >
             <h2
-              className="text-3xl sm:text-5xl font-light text-white leading-tight"
+              className="text-3xl sm:text-5xl font-light text-black dark:text-white leading-tight"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Ready to find your signature scent?
             </h2>
-            <p className="mt-4 text-[#A1A1AA] max-w-xl mx-auto">
+            <p className="mt-4 text-black/60 dark:text-white/60 max-w-2xl mx-auto">
               Create a free account to browse, save and order our exclusive
               collection — delivered anywhere in Ghana.
             </p>

@@ -30,19 +30,19 @@ export const Button: React.FC<ButtonProps> = ({
       "bg-[#D4AF37] hover:bg-[#C29E2E] text-black font-bold border border-[#D4AF37]",
     // Clean deep black luxury button
     dark:
-      "bg-[#0A0A0A] hover:bg-[#202020] text-white border border-[#222222]",
+      "bg-white dark:bg-black hover:bg-[#F5F5F5] dark:hover:bg-white/10 text-black dark:text-white border border-black/10 dark:border-white/15",
     // Secondary white button with crisp border
     secondary:
-      "bg-white hover:bg-[#F4F4F5] text-[#18181B] border border-gray-200",
+      "bg-white hover:bg-white text-black border border-black/10 dark:bg-black dark:hover:bg-black/80 dark:text-white dark:border-white/15",
     // Minimal outline with gold hover
     outline:
       "bg-transparent hover:bg-black hover:text-white text-black border border-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black",
     // Ghost
     ghost:
-      "bg-transparent hover:bg-black/5 text-[#18181B] dark:text-[#E4E4E7] dark:hover:bg-white/10 border-transparent",
+      "bg-transparent hover:bg-black/5 text-black dark:text-white dark:hover:bg-white/10 border-transparent",
     // Danger
     danger:
-      "bg-red-600 hover:bg-red-700 text-white font-bold border border-red-700",
+      "bg-red-600 hover:bg-red-700 text-black dark:text-white font-bold border border-red-700",
   };
 
   return (

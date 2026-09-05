@@ -13,56 +13,56 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
 }) => {
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
-      <div className="border-b border-[#1E1E24] pb-4">
+      <div className="pb-2">
         <h2
-          className="text-2xl font-light text-white"
+          className="text-2xl font-light text-black dark:text-white"
           style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
         >
           Admin Portal Settings
         </h2>
-        <p className="text-xs uppercase tracking-widest text-gray-400 mt-1">
+        <p className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 mt-1">
           Zaanisung Ent. GH Management
         </p>
       </div>
 
-      <div className="bg-[#121216] border border-[#1E1E24] p-6 space-y-6">
-        <div className="flex items-center space-x-4 border-b border-[#1E1E24] pb-6">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 space-y-6">
+        <div className="flex items-center space-x-4 pb-6">
           <div className="w-14 h-14 bg-[#D4AF37] text-black flex items-center justify-center font-bold text-xl">
             A
           </div>
           <div>
-            <h3 className="font-semibold text-base text-white">Administrator</h3>
-            <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 border border-emerald-800 inline-block mt-0.5">
+            <h3 className="font-semibold text-base text-black dark:text-white">Administrator</h3>
+            <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-bold bg-[#D4AF37]/10 px-2 py-0.5 border border-[#D4AF37]/40 inline-block mt-0.5">
               Full Stock Control
             </span>
           </div>
         </div>
 
         <div className="space-y-3 text-xs">
-          <div className="p-3 bg-[#181820] border border-[#242430] flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-gray-300">
+          <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between">
+            <div className="flex items-center space-x-2 text-black/60 dark:text-white/60">
               <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
               <span>Permission Tier</span>
             </div>
-            <span className="text-white font-mono font-bold">Owner / Manager</span>
+            <span className="text-black dark:text-white font-mono font-bold">Owner / Manager</span>
           </div>
 
-          <div className="p-3 bg-[#181820] border border-[#242430] flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-gray-300">
-              <KeyRound className="w-4 h-4 text-gray-400" />
+          <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between">
+            <div className="flex items-center space-x-2 text-black/60 dark:text-white/60">
+              <KeyRound className="w-4 h-4 text-black/45 dark:text-white/45" />
               <span>Authentication</span>
             </div>
-            <span className="text-gray-400">Passcode Protected</span>
+            <span className="text-black/45 dark:text-white/45">Passcode Protected</span>
           </div>
         </div>
 
-        <div className="pt-4 border-t border-[#1E1E24] space-y-3">
+        <div className="pt-5 space-y-3">
           <Button
             type="button"
             variant="outline"
             size="md"
             onClick={onReturnToStore}
-            className="w-full border-[#2E2E3C] text-gray-300 hover:text-white flex items-center justify-center gap-2"
+            className="w-full border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center gap-2"
           >
             <Store className="w-4 h-4 text-[#D4AF37]" />
             <span>Switch to Customer Storefront</span>

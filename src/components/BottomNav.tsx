@@ -23,7 +23,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   return (
     <nav
       id="customer-bottom-nav"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A] border-t border-[#222222] pb-safe"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-black border-t border-black/10 dark:border-white/15 pb-safe"
       aria-label="Customer Mobile Navigation"
     >
       <div className="grid grid-cols-4 h-16 max-w-md mx-auto px-1">
@@ -37,7 +37,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               type="button"
               onClick={() => onChangeTab(tab.id)}
               className={`flex flex-col items-center justify-center min-h-[44px] h-full relative transition-colors ${
-                isActive ? "text-[#D4AF37]" : "text-gray-400 hover:text-white"
+                isActive ? "text-[#D4AF37]" : "text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white"
               }`}
             >
               <div className="relative">
@@ -50,7 +50,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               </div>
               <span
                 className={`text-[10px] uppercase tracking-widest mt-1 ${
-                  isActive ? "text-[#D4AF37] font-bold" : "text-gray-400"
+                  isActive ? "text-[#D4AF37] font-bold" : "text-black/45 dark:text-white/45"
                 }`}
               >
                 {tab.label}

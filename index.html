@@ -12,8 +12,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("zaanisung-theme"); } catch (e) {}
+        var dark =
+          stored === "dark" ||
+          (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      })();
+    </script>
   </head>
-  <body class="bg-[#FAFAFA] dark:bg-[#0B0B0E] text-[#18181B] dark:text-[#F4F4F6] antialiased selection:bg-[#D4AF37]/20 selection:text-[#18181B] dark:selection:text-white">
+  <body class="bg-white dark:bg-black text-black dark:text-white antialiased selection:bg-[#D4AF37]/20 selection:text-black dark:selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

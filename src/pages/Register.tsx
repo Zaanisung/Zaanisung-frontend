@@ -67,7 +67,7 @@ export const Register: React.FC<RegisterProps> = ({
       <div className="text-center mb-8 flex flex-col items-center">
         <Logo className="h-16 w-16 mb-3" />
         <h2
-          className="text-2xl sm:text-3xl font-light italic tracking-widest text-gray-900 dark:text-gray-100"
+          className="text-2xl sm:text-3xl font-light italic tracking-widest text-black dark:text-white"
           style={{ fontFamily: "Georgia, serif" }}
         >
           ZAANISUNG
@@ -75,13 +75,13 @@ export const Register: React.FC<RegisterProps> = ({
         <p className="text-xs uppercase tracking-[0.2em] text-[#D4AF37] font-semibold mt-1">
           Create Customer Account
         </p>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+        <p className="text-xs text-black/50 dark:text-white/50 mt-2">
           One-tap checkout and order tracking
         </p>
       </div>
 
       {/* Register Form */}
-      <div className="bg-white dark:bg-[#131317] border border-gray-200 dark:border-[#22222A] p-6 sm:p-8 shadow-xs">
+      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-xs">
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
@@ -135,11 +135,11 @@ export const Register: React.FC<RegisterProps> = ({
           </Button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-gray-100 dark:border-[#202028] text-center">
+        <div className="mt-4 text-center">
           <button
             type="button"
             onClick={onNavigateToLogin}
-            className="text-xs text-gray-800 dark:text-gray-200 hover:text-[#D4AF37] dark:hover:text-[#D4AF37] font-medium min-h-[44px] inline-flex items-center justify-center transition-colors"
+            className="text-xs text-black/85 dark:text-white/85 hover:text-[#D4AF37] dark:hover:text-[#D4AF37] font-medium min-h-[44px] inline-flex items-center justify-center transition-colors"
           >
             Already have an account? <span className="underline ml-1 font-bold">Sign in</span>
           </button>
