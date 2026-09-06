@@ -201,8 +201,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           className={cn(
             "grid gap-4 sm:gap-6",
             mobileLayout === "showcase"
-              ? "grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-              : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+              ? "grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+              : "grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
           )}
         >
           {filteredProducts.map((product) => (

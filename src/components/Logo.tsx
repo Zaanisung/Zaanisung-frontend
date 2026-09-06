@@ -1,11 +1,17 @@
 import React from "react";
+import { cn } from "../utils/cn";
 
 export interface LogoProps {
   className?: string;
   showWordmark?: boolean;
+  wordmarkClassName?: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = "h-9 w-9", showWordmark = false }) => {
+export const Logo: React.FC<LogoProps> = ({
+  className = "h-9 w-9",
+  showWordmark = false,
+  wordmarkClassName = "",
+}) => {
   return (
     <div className="flex items-center gap-2">
       <img
@@ -16,7 +22,10 @@ export const Logo: React.FC<LogoProps> = ({ className = "h-9 w-9", showWordmark 
       />
       {showWordmark && (
         <span
-          className="text-lg tracking-[0.2em] font-light italic text-black dark:text-white font-brand-serif"
+          className={cn(
+            "text-lg tracking-[0.16em] font-light italic text-black dark:text-white font-brand-serif",
+            wordmarkClassName
+          )}
         >
           ZAANISUNG
         </span>

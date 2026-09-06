@@ -169,18 +169,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       {/* Main admin column */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
-        <header className="md:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Logo className="h-8 w-8" />
-            <h2 className="font-brand-serif text-base tracking-[0.14em] font-light italic text-ink dark:text-white">
+        <header className="md:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex items-center justify-between gap-2 flex-nowrap">
+          <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+            <Logo className="h-8 w-8 shrink-0" />
+            <h2 className="font-brand-serif text-base tracking-[0.14em] font-light italic text-ink dark:text-white hidden min-[420px]:inline">
               ZAANISUNG
             </h2>
-            <span className="text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold">
+            <span className="text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
               ADMIN
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             <button
               type="button"

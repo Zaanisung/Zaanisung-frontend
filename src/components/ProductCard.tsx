@@ -29,8 +29,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         isOutOfStock && "opacity-80"
       )}
     >
-      {/* Full-bleed perfume image */}
-      <div className="relative w-full aspect-square bg-white dark:bg-white/5 overflow-hidden">
+      {/* Signature top hairline */}
+      <div className="absolute top-0 left-0 right-0 hairline-gold z-20" aria-hidden="true" />
+
+      {/* Full-bleed perfume image — wider 4:3 framing */}
+      <div className="relative w-full aspect-[4/3] bg-white dark:bg-white/5 overflow-hidden">
         <img
           src={product.imageUrl}
           alt={product.name}
@@ -38,7 +41,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/10 pointer-events-none opacity-70 group-hover:opacity-50 transition-opacity duration-300" />
 
         {/* Stock status badge */}
         <div className="absolute top-3 right-3 z-10">
@@ -47,7 +50,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               Sold Out
             </span>
           ) : isLowStock ? (
-            <span className="inline-block bg-gold text-ink text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold">
+            <span className="inline-block bg-gold text-ink text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold shadow-gold-glow">
               Only {product.stock} Left
             </span>
           ) : (
@@ -65,20 +68,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         </div>
 
-        {/* Gold corner accent */}
-        <div className="absolute bottom-0 right-0 w-8 h-8 overflow-hidden pointer-events-none">
-          <div className="w-12 h-12 bg-gold transform rotate-45 translate-x-6 translate-y-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Size chip + gold corner accent */}
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className="inline-block px-2 py-1 bg-black/55 text-cream/90 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold border border-white/15 backdrop-blur-sm">
+            100 ml
+          </span>
+        </div>
+
+        <div className="absolute bottom-0 right-0 w-9 h-9 overflow-hidden pointer-events-none">
+          <div className="w-14 h-14 bg-gold transform rotate-45 translate-x-7 translate-y-7 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
 
       {/* Product information */}
-      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-3">
-        <div className="flex flex-col gap-1 flex-1">
+      <div className="p-4 sm:p-5 flex flex-col flex-1 gap-3.5">
+        <div className="flex flex-col gap-1.5 flex-1">
           <span className="eyebrow text-gold text-opacity-90 block">
             Eau de Parfum
           </span>
           <h3
-            className="font-brand-serif text-[0.9375rem] sm:text-base md:text-lg font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors"
+            className="font-brand-serif text-base sm:text-lg font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors"
             title={product.name}
           >
             {product.name}
@@ -89,15 +98,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {product.description}
             </p>
           )}
+        </div>
 
-          <div className="flex items-baseline justify-between mt-auto pt-2">
-            <span className="text-base sm:text-lg font-bold font-mono text-gold">
-              {product.price.toFixed(2)} GHS
-            </span>
-            <span className="text-[10px] uppercase tracking-wider text-black/50 dark:text-white/60">
-              100 ml
-            </span>
-          </div>
+        <div className="hairline-black" aria-hidden="true" />
+
+        <div className="flex items-baseline justify-between mt-auto">
+          <span className="text-base sm:text-lg font-bold font-mono text-gold">
+            {product.price.toFixed(2)} GHS
+          </span>
+          <span className="text-[10px] uppercase tracking-wider text-black/45 dark:text-white/55">
+            Extrait Oil
+          </span>
         </div>
 
         {/* Action button */}

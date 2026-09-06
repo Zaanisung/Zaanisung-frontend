@@ -37,12 +37,12 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
       {/* Glass header */}
       <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl shadow-hairline-inset">
         <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
-        <div className="w-full px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-6 lg:space-x-8">
+        <div className="w-full px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between gap-3 flex-nowrap">
+          <div className="flex items-center space-x-6 lg:space-x-8 min-w-0">
             <button
               type="button"
               onClick={() => (onNavigateHome ? onNavigateHome() : onChangeTab("shop"))}
-              className="text-left focus:outline-none flex items-center gap-3"
+              className="text-left focus:outline-none flex items-center gap-3 shrink-0"
               aria-label="Zaanisung home"
             >
               <Logo className="h-10 w-10 sm:h-11 sm:w-11" />
@@ -83,7 +83,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
             <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             <button
               type="button"

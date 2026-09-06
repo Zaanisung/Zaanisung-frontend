@@ -146,8 +146,12 @@ export const Landing: React.FC<LandingProps> = ({
       {/* ─── Header ─────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/70 dark:bg-black/55 backdrop-blur-xl">
         <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
-        <div className="w-full px-4 sm:px-8 lg:px-12 h-16 sm:h-[72px] flex items-center justify-between">
-          <Logo className="h-9 w-9 sm:h-10 sm:w-10" showWordmark />
+        <div className="w-full px-3 sm:px-8 lg:px-12 h-16 sm:h-[72px] flex items-center justify-between gap-3 flex-nowrap">
+          <Logo
+            className="h-9 w-9 sm:h-10 sm:w-10 shrink-0"
+            showWordmark
+            wordmarkClassName="hidden min-[480px]:inline text-base sm:text-lg tracking-[0.16em]"
+          />
 
           <nav className="hidden md:flex items-center space-x-9 text-xs uppercase tracking-[0.18em] font-semibold text-black/55 dark:text-white/55">
             {navLinks.map((link) => (
@@ -170,11 +174,11 @@ export const Landing: React.FC<LandingProps> = ({
             </button>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             {isLoggedIn ? (
               <Button variant="primary" size="md" onClick={onStartShopping}>
-                Enter Store <ArrowRight className="w-4 h-4 ml-1" />
+                Enter Store <ArrowRight className="w-4 h-4 ml-1 hidden min-[380px]:inline" />
               </Button>
             ) : (
               <Button variant="outline" size="md" onClick={onGoToLogin}>
@@ -452,7 +456,7 @@ export const Landing: React.FC<LandingProps> = ({
           {isLoadingProducts ? (
             <div className="flex gap-5 overflow-hidden">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="shrink-0 w-[74%] min-[480px]:w-[46%] md:w-[31%] aspect-[3/4] animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10" />
+                <div key={i} className="shrink-0 w-[74%] min-[480px]:w-[46%] md:w-[31%] aspect-[4/3] animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10" />
               ))}
             </div>
           ) : featured.length === 0 ? (
