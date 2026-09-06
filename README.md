@@ -68,30 +68,43 @@ use `../run-all.sh` from the project root to launch the full stack.
 
 Copy `.env.example` to `.env` and fill in values. `.env` is git-ignored.
 
+## Documentation
+
+- [Architecture](./docs/ARCHITECTURE.md) — layers, folder structure, conventions
+- [Routing](./docs/ROUTING.md) — the `AppView` state-machine navigation model
+- [Data Layer](./docs/DATA-LAYER.md) — `services/`, `apiClient`, typed endpoints
+- [Components](./docs/COMPONENTS.md) — shared components + `ui/` primitives
+- [Design System](./docs/DESIGN-SYSTEM.md) — tokens, surfaces, interaction rules
+
 ## Project Layout
 
 ```
 src/
-  api/           HTTP client for the backend API
-  components/    Shared UI: Button, Input, Logo, ProductCard, ProductGrid,
-                 CartItem, Footer, BottomNav, ThemeToggle
+  services/      HTTP client + typed endpoint functions (apiClient, *.service)
+  types/         Shared domain types (Product, Order, User, nav) via barrel
+  components/
+    ui/          Reusable primitives (SearchInput, StatusBadge, EmptyState, ...)
+    ...          Button, Input, Logo, ProductCard, ProductGrid, CartItem, ...
   layouts/       CustomerLayout (storefront chrome) and AdminLayout (app chrome)
   pages/         Storefront pages (Landing, Shop, Cart, Checkout, Orders, ...)
   pages/admin/   Admin portal pages (Dashboard, Inventory, Orders, Account, ...)
-  types.ts       Shared domain types (Product, Order, User, tabs/views)
+  router.tsx     Pure view renderer: AppView → page component
   App.tsx        Root: auth state, cart/order logic, theme, view routing
   main.tsx       Entry point
 ```
 
 ## View Routing
 
-Routing is state-based in `App.tsx` (`view` + `customerTab` + `adminTab`), not
-a URL router. Key flows:
+Routing is state-based — `src/types/nav.ts` defines the `AppView` union, `App.tsx`
+owns the current view, and `src/router.tsx` (`AppRouter`) renders the matching page
+inside the appropriate layout. It is **not** a URL router. Key flows:
 
 - `landing` → public hero + sign-up/login card
 - `customer/*` → rendered inside `CustomerLayout`
 - `admin/*` → gated by `isAdminLoggedIn`, rendered inside `AdminLayout`
 - `AdminLogin` sits outside both layouts
+
+See [docs/ROUTING.md](./docs/ROUTING.md) for the full view table and extension steps.
 
 ## Brand Assets
 

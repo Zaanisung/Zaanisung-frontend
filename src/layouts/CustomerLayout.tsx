@@ -5,6 +5,7 @@ import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { ShoppingBag } from "lucide-react";
+import { cn } from "../utils/cn";
 
 export interface CustomerLayoutProps {
   children: React.ReactNode;
@@ -16,6 +17,12 @@ export interface CustomerLayoutProps {
   onNavigateHome?: () => void;
 }
 
+const TABS: { id: CustomerTab; label: string }[] = [
+  { id: "shop", label: "Shop" },
+  { id: "orders", label: "Orders" },
+  { id: "account", label: "Account" },
+];
+
 export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   children,
   activeTab,
@@ -26,91 +33,83 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   onNavigateHome,
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-black text-black dark:text-white transition-colors">
-      {/* Geometric Balance Header */}
-      <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 lg:px-10 h-16 sm:h-20 border-b border-black/60 dark:border-white/15 bg-white dark:bg-black text-black dark:text-white shadow-xs">
-        <div className="flex items-center space-x-6 lg:space-x-8">
-          <button
-            type="button"
-            onClick={() => (onNavigateHome ? onNavigateHome() : onChangeTab("shop"))}
-            className="text-left focus:outline-none flex items-center gap-3"
-            aria-label="Zaanisung home"
-          >
-            <Logo className="h-9 w-9 sm:h-10 sm:w-10" />
-            <span className="hidden sm:block">
-              <span
-                className="text-xl sm:text-2xl tracking-[0.2em] font-light italic text-black dark:text-white hover:text-[#D4AF37] transition-colors block leading-none"
-                style={{ fontFamily: "Georgia, serif" }}
-              >
-                ZAANISUNG
+    <div className="min-h-screen flex flex-col bg-cream dark:bg-black text-ink dark:text-white transition-colors">
+      {/* Glass header */}
+      <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl shadow-hairline-inset">
+        <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
+        <div className="w-full px-4 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
+          <div className="flex items-center space-x-6 lg:space-x-8">
+            <button
+              type="button"
+              onClick={() => (onNavigateHome ? onNavigateHome() : onChangeTab("shop"))}
+              className="text-left focus:outline-none flex items-center gap-3"
+              aria-label="Zaanisung home"
+            >
+              <Logo className="h-10 w-10 sm:h-11 sm:w-11" />
+              <span className="hidden sm:block">
+                <span className="font-brand-serif text-xl sm:text-2xl tracking-[0.16em] font-light italic text-ink dark:text-white hover:text-gold transition-colors block leading-none">
+                  ZAANISUNG
+                </span>
+                <span className="eyebrow text-gold block mt-1.5">
+                  Ent. GH Fragrances
+                </span>
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#D4AF37] block font-semibold mt-1">
-                Ent. GH Fragrances
-              </span>
-            </span>
-          </button>
+            </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 text-xs uppercase tracking-widest text-black/45 dark:text-white/45">
-            <button
-              type="button"
-              onClick={() => onChangeTab("shop")}
-              className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "shop" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
-              }`}
-            >
-              Shop
-            </button>
-            <button
-              type="button"
-              onClick={() => onChangeTab("orders")}
-              className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "orders" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
-              }`}
-            >
-              Orders
-            </button>
-            <button
-              type="button"
-              onClick={() => onChangeTab("account")}
-              className={`min-h-[44px] inline-flex items-center transition-colors ${
-                activeTab === "account" ? "text-[#D4AF37] font-bold" : "hover:text-black dark:hover:text-white"
-              }`}
-            >
-              Account
-            </button>
-          </nav>
-        </div>
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center space-x-8" aria-label="Primary">
+              {TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => onChangeTab(tab.id)}
+                  className={cn(
+                    "relative min-h-[44px] inline-flex items-center text-xs uppercase tracking-[0.18em] font-semibold transition-colors",
+                    activeTab === tab.id
+                      ? "text-ink dark:text-white"
+                      : "text-black/50 dark:text-white/50 hover:text-ink dark:hover:text-white"
+                  )}
+                >
+                  {tab.label}
+                  <span
+                    className={cn(
+                      "absolute bottom-0 left-0 right-0 h-[2px] bg-gold transition-transform origin-left",
+                      activeTab === tab.id ? "scale-x-100" : "scale-x-0"
+                    )}
+                  />
+                </button>
+              ))}
+            </nav>
+          </div>
 
-        {/* Right actions: Cart */}
-        <div className="flex items-center space-x-3 sm:space-x-5">
-          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-          {/* Cart button (Desktop & Mobile) */}
-          <button
-            type="button"
-            onClick={() => onChangeTab("cart")}
-            className="relative p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-black dark:text-white hover:text-[#D4AF37] transition-colors"
-            aria-label="Open cart"
-          >
-            <ShoppingBag className="w-5 h-5" />
-            {cartCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 bg-[#D4AF37] text-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                {cartCount > 99 ? "99+" : cartCount}
-              </span>
-            )}
-          </button>
+          {/* Right actions */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+            <button
+              type="button"
+              onClick={() => onChangeTab("cart")}
+              className="relative p-2 min-h-[44px] min-w-[44px] flex items-center justify-center text-ink dark:text-white hover:text-gold transition-colors border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.06] backdrop-blur-md"
+              aria-label="Open cart"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] min-w-5 h-5 px-1 rounded-full flex items-center justify-center font-bold">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Main Page Area - Fluid responsive max-w with adaptive background */}
-      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-28 md:pb-12 bg-white dark:bg-black">
+      {/* Main page area */}
+      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-24 md:pb-14">
         {children}
       </main>
 
-      {/* Footer */}
       <Footer
         onNavigate={(target) => {
-          if (target === "about") {
+          if (target === "about" || target === "home") {
             onNavigateHome?.();
           } else if (target === "shop") {
             onChangeTab("shop");
@@ -118,18 +117,11 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
             onChangeTab("orders");
           } else if (target === "account") {
             onChangeTab("account");
-          } else if (target === "home") {
-            onNavigateHome?.();
           }
         }}
       />
 
-      {/* Mobile Bottom Navigation Bar */}
-      <BottomNav
-        activeTab={activeTab}
-        onChangeTab={onChangeTab}
-        cartCount={cartCount}
-      />
+      <BottomNav activeTab={activeTab} onChangeTab={onChangeTab} cartCount={cartCount} />
     </div>
   );
 };

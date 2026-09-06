@@ -16,8 +16,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "h-9 w-9", showWordmark 
       />
       {showWordmark && (
         <span
-          className="text-lg tracking-[0.2em] font-light italic text-black dark:text-white"
-          style={{ fontFamily: "Georgia, serif" }}
+          className="text-lg tracking-[0.2em] font-light italic text-black dark:text-white font-brand-serif"
         >
           ZAANISUNG
         </span>

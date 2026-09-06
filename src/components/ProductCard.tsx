@@ -1,6 +1,7 @@
 import React from "react";
 import { Product } from "../types";
 import { Plus, Check, Eye } from "lucide-react";
+import { cn } from "../utils/cn";
 
 export interface ProductCardProps {
   product: Product;
@@ -22,74 +23,75 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <article
       id={`product-card-${product.id}`}
       onClick={() => onSelect(product)}
-      className={`group relative flex flex-col bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-[#D4AF37] dark:hover:border-[#D4AF37] shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer overflow-hidden ${
-        isOutOfStock ? "opacity-80" : ""
-      }`}
+      className={cn(
+        "group relative flex flex-col h-full border transition-all duration-300 cursor-pointer overflow-hidden",
+        "surface-glass corner-frame hover:shadow-gold-glow hover:-translate-y-1",
+        isOutOfStock && "opacity-80"
+      )}
     >
-      {/* Full-Bleed Hero Image Container - Large and prominent */}
+      {/* Full-bleed perfume image */}
       <div className="relative w-full aspect-square bg-white dark:bg-white/5 overflow-hidden">
         <img
           src={product.imageUrl}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-cover object-center group-hover:scale-106 transition-transform duration-500 ease-out"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
         />
 
-        {/* Subtle Dark Gradient Overlay at top & bottom for high legibility */}
-        <div className="absolute inset-0 bg-black/25 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
-        {/* Stock Status Badge - Geometric Luxury Tag */}
-        <div className="absolute top-2.5 right-2.5 z-10">
+        {/* Stock status badge */}
+        <div className="absolute top-3 right-3 z-10">
           {isOutOfStock ? (
-            <span className="inline-block bg-black/90 dark:bg-black text-white text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold backdrop-blur-xs border border-white/20">
+            <span className="inline-block bg-ink/90 text-cream text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold border border-white/20">
               Sold Out
             </span>
           ) : isLowStock ? (
-            <span className="inline-block bg-[#D4AF37] text-black text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold shadow-xs">
+            <span className="inline-block bg-gold text-ink text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold">
               Only {product.stock} Left
             </span>
           ) : (
-            <span className="inline-block bg-black/80 dark:bg-black/90 text-white text-[9px] sm:text-[10px] px-2 py-0.5 uppercase tracking-wider font-medium backdrop-blur-xs border border-white/10">
+            <span className="inline-block bg-ink/70 text-cream text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-wider font-medium border border-white/10 backdrop-blur-sm">
               In Stock
             </span>
           )}
         </div>
 
-        {/* Quick View hint on desktop hover */}
-        <div className="hidden sm:flex absolute inset-0 items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <span className="px-3.5 py-1.5 bg-black/85 text-white text-[10px] uppercase tracking-widest font-bold border border-white/20 flex items-center gap-1.5 backdrop-blur-xs shadow-lg">
-            <Eye className="w-3.5 h-3.5 text-[#D4AF37]" />
+        {/* Quick view hint */}
+        <div className="hidden sm:flex absolute inset-0 items-center justify-center bg-ink/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <span className="px-3.5 py-1.5 bg-ink/85 text-cream text-[10px] uppercase tracking-widest font-bold border border-gold/40 flex items-center gap-1.5 backdrop-blur-sm shadow-lift">
+            <Eye className="w-3.5 h-3.5 text-gold" />
             <span>View Fragrance</span>
           </span>
         </div>
 
-        {/* Gold Accent Corner geometry */}
+        {/* Gold corner accent */}
         <div className="absolute bottom-0 right-0 w-8 h-8 overflow-hidden pointer-events-none">
-          <div className="w-12 h-12 bg-[#D4AF37] transform rotate-45 translate-x-6 translate-y-6 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+          <div className="w-12 h-12 bg-gold transform rotate-45 translate-x-6 translate-y-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
 
-      {/* Product Information - Fluid & Mobile-First padding */}
-      <div className="p-3.5 sm:p-4 md:p-4.5 flex flex-col flex-1 justify-between gap-3 bg-white dark:bg-white/5">
-        <div>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4AF37] font-semibold block mb-1">
+      {/* Product information */}
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1 justify-between gap-3">
+        <div className="flex flex-col gap-1 flex-1">
+          <span className="eyebrow text-gold text-opacity-90 block">
             Eau de Parfum
           </span>
           <h3
-            className="font-brand-serif text-sm sm:text-base md:text-lg font-normal text-black dark:text-white leading-snug line-clamp-1 group-hover:text-[#D4AF37] transition-colors"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="font-brand-serif text-[0.9375rem] sm:text-base md:text-lg font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors"
+            title={product.name}
           >
             {product.name}
           </h3>
 
           {product.description && (
-            <p className="mt-1 text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+            <p className="mt-0.5 text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
               {product.description}
             </p>
           )}
 
-          <div className="flex items-baseline justify-between mt-1">
-            <span className="text-base sm:text-lg font-bold font-mono text-[#D4AF37]">
+          <div className="flex items-baseline justify-between mt-auto pt-2">
+            <span className="text-base sm:text-lg font-bold font-mono text-gold">
               {product.price.toFixed(2)} GHS
             </span>
             <span className="text-[10px] uppercase tracking-wider text-black/50 dark:text-white/60">
@@ -98,23 +100,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Action Button - 44px+ min touch target */}
+        {/* Action button */}
         <button
           type="button"
           disabled={isOutOfStock}
           onClick={(e) => {
             e.stopPropagation();
-            if (!isOutOfStock) {
-              onAddToCart(product, e);
-            }
+            if (!isOutOfStock) onAddToCart(product, e);
           }}
-          className={`w-full min-h-[44px] py-2.5 px-3 text-[11px] sm:text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 border select-none active:scale-[0.98] ${
+          className={cn(
+            "w-full min-h-[46px] py-2.5 px-3 text-[11px] sm:text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 border select-none active:scale-[0.98]",
             isOutOfStock
-              ? "border-black/10 dark:border-white/15 text-black/45 bg-white dark:bg-white/10 cursor-not-allowed"
+              ? "border-black/10 dark:border-white/15 text-black/45 dark:text-white/45 bg-white/60 dark:bg-white/[0.08] cursor-not-allowed"
               : isAdded
-              ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-xs"
-              : "border-black dark:border-black/10 text-black hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-black dark:hover:border-[#D4AF37]"
-          }`}
+                ? "bg-gold text-ink border-gold shadow-gold-glow"
+                : "border-ink/60 dark:border-white/25 text-ink dark:text-white hover:bg-gold hover:text-ink hover:border-gold dark:hover:bg-gold dark:hover:text-ink dark:hover:border-gold"
+          )}
         >
           {isOutOfStock ? (
             <span>Sold Out</span>

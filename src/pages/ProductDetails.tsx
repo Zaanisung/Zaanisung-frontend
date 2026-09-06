@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Product } from "../types";
 import { Button } from "../components/Button";
-import { ArrowLeft, Plus, Minus, Check, Sparkles, Droplet, ShieldCheck, Truck } from "lucide-react";
+import { QuantityStepper } from "../components/ui/QuantityStepper";
+import { ArrowLeft, Check, Sparkles, Droplet, ShieldCheck, Truck } from "lucide-react";
 
 export interface ProductDetailsProps {
   product: Product;
@@ -47,7 +48,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
         Back to Fragrances
       </button>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+      <div className="relative overflow-hidden surface-glass-strong corner-frame-static corner-frame shadow-lift grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
         {/* Large Prominent Perfume Image Frame */}
         <div className="relative aspect-square bg-white dark:bg-white/5 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15">
           <img
@@ -63,7 +64,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 Sold Out
               </span>
             ) : isLowStock ? (
-              <span className="bg-[#D4AF37] text-black text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-md">
+              <span className="bg-gold text-black text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-md">
                 Only {product.stock} Left in Stock
               </span>
             ) : (
@@ -75,14 +76,14 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 
           {/* Gold brand corner */}
           <div className="absolute bottom-0 right-0 w-10 h-10 overflow-hidden pointer-events-none">
-            <div className="w-16 h-16 bg-[#D4AF37] transform rotate-45 translate-x-8 translate-y-8"></div>
+            <div className="w-16 h-16 bg-gold transform rotate-45 translate-x-8 translate-y-8"></div>
           </div>
         </div>
 
         {/* Product Details & Purchase Actions */}
         <div className="p-5 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2 text-[#D4AF37]">
+            <div className="flex items-center space-x-2 text-gold">
               <Sparkles className="w-4 h-4" />
               <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-bold">
                 Zaanisung Master Collection
@@ -90,8 +91,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
             </div>
 
             <h1
-              className="text-2xl sm:text-3xl lg:text-4xl font-light text-black dark:text-white leading-tight"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              className="text-2xl sm:text-3xl lg:text-4xl font-light text-black dark:text-white leading-tight font-brand-serif"
             >
               {product.name}
             </h1>
@@ -104,7 +104,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 
             {/* Volume and price */}
             <div className="flex items-baseline gap-3 pt-2">
-              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold font-mono text-[#D4AF37]">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold font-mono text-gold">
                 {product.price.toFixed(2)} GHS
               </span>
               <span className="text-xs uppercase tracking-wider text-black/50 dark:text-white/60">
@@ -126,7 +126,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                   (accord) => (
                     <span
                       key={accord}
-                      className="px-2.5 py-1 bg-white dark:bg-white/5 text-black/70 dark:text-white/70 text-[11px] border border-black/10 dark:border-white/15"
+                      className="px-2.5 py-1 bg-gold/8 dark:bg-gold/10 text-black/70 dark:text-gold-100 text-[11px] border border-gold/30"
                     >
                       {accord}
                     </span>
@@ -138,19 +138,19 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
             {/* Luxury Assurance Highlights */}
             <div className="grid grid-cols-2 gap-3 pt-4 text-[11px] text-black/50 dark:text-white/60">
               <div className="flex items-center space-x-2">
-                <Droplet className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <Droplet className="w-3.5 h-3.5 text-gold" />
                 <span>35% Pure Perfume Oil</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Truck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <Truck className="w-3.5 h-3.5 text-gold" />
                 <span>Express Ghana Delivery</span>
               </div>
               <div className="flex items-center space-x-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-gold" />
                 <span>100% Authentic Batch</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="w-2 h-2 rounded-full bg-[#D4AF37]/100"></span>
+                <span className="w-2 h-2 rounded-full bg-gold/100"></span>
                 <span>Ready for Dispatch</span>
               </div>
             </div>
@@ -164,35 +164,20 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                   <label className="text-[11px] uppercase tracking-widest text-black/50 dark:text-white/50 font-semibold">
                     Select Quantity (Bottles)
                   </label>
-                  <span className="text-xs font-mono font-bold text-[#D4AF37]">
+                  <span className="text-xs font-mono font-bold text-gold">
                     Total: {(product.price * quantity).toFixed(2)} GHS
                   </span>
                 </div>
 
                 <div className="flex items-center space-x-3">
-                  <div className="inline-flex items-center border border-black/20 dark:border-white/15 bg-white dark:bg-white/10">
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      disabled={quantity <= 1}
-                      className="w-12 h-12 flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-[#F5F5F5] dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
-                    <span className="w-12 text-center text-base font-bold text-black dark:text-white font-mono">
-                      {quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(Math.min(maxAvailable, quantity + 1))}
-                      disabled={quantity >= maxAvailable}
-                      className="w-12 h-12 flex items-center justify-center text-black/70 dark:text-white/70 hover:bg-[#F5F5F5] dark:hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                      aria-label="Increase quantity"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <QuantityStepper
+                    quantity={quantity}
+                    max={maxAvailable}
+                    min={1}
+                    variant="gold"
+                    onDecrease={() => setQuantity(Math.max(1, quantity - 1))}
+                    onIncrease={() => setQuantity(Math.min(maxAvailable, quantity + 1))}
+                  />
 
                   <span className="text-xs text-black/45 dark:text-white/50">
                     Max: {maxAvailable} bottles
@@ -203,7 +188,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 
             {/* Primary Action Buttons */}
             {isOutOfStock ? (
-              <div className="p-4 bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 text-center">
+              <div className="p-4 surface-glass-tint text-center">
                 <p className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 font-semibold">
                   This fragrance is currently sold out in all Ghana workshops.
                 </p>
@@ -229,7 +214,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 >
                   {isAdded ? (
                     <span className="flex items-center justify-center gap-2">
-                      <Check className="w-4 h-4 text-[#D4AF37] stroke-[2.5]" />
+                      <Check className="w-4 h-4 text-gold stroke-[2.5]" />
                       Added to Bag
                     </span>
                   ) : (

@@ -75,17 +75,19 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
         Back
       </button>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
-        <div className="pb-2 mb-6">
-          <div className="flex items-center space-x-2 text-[#D4AF37] mb-1">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
+
+        <div className="relative pb-2 mb-6">
+          <div className="flex items-center space-x-2 text-gold mb-1">
             <TrendingUp className="w-4 h-4" />
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Physical Walk-In Sale
             </span>
           </div>
           <h2
-            className="text-xl sm:text-2xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-xl sm:text-2xl font-light text-black dark:text-white font-brand-serif"
           >
             Record In-Store Sale
           </h2>
@@ -102,7 +104,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
         {isSuccess ? (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 bg-gold/10 border border-gold text-gold flex items-center justify-center mx-auto">
               <Check className="w-6 h-6 stroke-[3]" />
             </div>
             <h3 className="text-base font-semibold text-black dark:text-white">
@@ -125,7 +127,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                   setSelectedProductId(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold"
               >
                 {products.map((p) => (
                   <option key={p.id} value={p.id} disabled={p.stock <= 0}>
@@ -138,7 +140,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
 
             {/* Selected Product summary pill */}
             {selectedProduct && (
-              <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between text-xs">
+              <div className="p-3 surface-glass-tint flex items-center justify-between text-xs">
                 <span className="text-black/45 dark:text-white/45">Available Shelf Stock:</span>
                 <span className="font-mono font-bold text-black dark:text-white">
                   {selectedProduct.stock} bottles
@@ -160,7 +162,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                   setQuantity(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-[#D4AF37]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold"
                 placeholder="1"
                 required
               />
@@ -179,7 +181,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
                     onClick={() => setPaymentMethod(method)}
                     className={`min-h-[44px] px-2 text-[10px] uppercase tracking-wider font-semibold border transition-colors ${
                       paymentMethod === method
-                        ? "border-[#D4AF37] bg-[#D4AF37]/15 text-black dark:text-white"
+                        ? "border-gold bg-gold/15 text-black dark:text-white"
                         : "border-black/10 dark:border-white/15 text-black/45 dark:text-white/45 bg-white dark:bg-white/5 hover:text-black dark:hover:text-white"
                     }`}
                   >
@@ -194,7 +196,7 @@ export const RecordSale: React.FC<RecordSaleProps> = ({
               <span className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45">
                 Total Collected
               </span>
-              <span className="text-xl font-mono font-bold text-[#D4AF37]">
+              <span className="text-xl font-mono font-bold text-gold">
                 {totalAmount.toFixed(2)} GHS
               </span>
             </div>

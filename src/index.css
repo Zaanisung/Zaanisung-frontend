@@ -2,6 +2,31 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* Brand palette — gold / black / white, sharp geometric luxury */
+  --color-gold: #d4af37;
+  --color-gold-100: #f5eccf;
+  --color-gold-300: #e9d483;
+  --color-gold-600: #c29e2e;
+  --color-gold-700: #a4881f;
+  --color-gold-900: #6b5a14;
+
+  --color-ink: #0a0a0a;
+  --color-ink-900: #101010;
+  --color-ink-800: #171717;
+  --color-cream: #f3efe6;
+
+  /* Type scale */
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-brand-serif: "Playfair Display", Georgia, serif;
+  --font-display: "Cinzel", "Playfair Display", Georgia, serif;
+
+  /* Elevated shadows */
+  --shadow-lift: 0 24px 60px -24px rgba(0, 0, 0, 0.28);
+  --shadow-gold-glow: 0 0 0 1px rgba(212, 175, 55, 0.22), 0 18px 48px -18px rgba(212, 175, 55, 0.45);
+  --shadow-hairline-inset: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
 @layer base {
   :root {
     color-scheme: light;
@@ -11,20 +36,202 @@
     color-scheme: dark;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
+    background-color: #f6f3ec;
+    text-rendering: optimizeLegibility;
   }
 
-  .font-brand-serif {
-    font-family: 'Playfair Display', Georgia, serif;
+  .dark body {
+    background-color: #070707;
   }
 
-  .font-luxury-display {
-    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  :where(section[id]) {
+    scroll-margin-top: 5rem;
   }
 }
 
+/* ─── Glassmorphic surfaces (sharp-cornered, translucent, blurred) ─── */
+@layer components {
+  .surface-glass {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    box-shadow: var(--shadow-hairline-inset);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  }
+
+  .dark .surface-glass {
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .surface-glass-strong {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(10, 10, 10, 0.1);
+    box-shadow: var(--shadow-hairline-inset);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  }
+
+  .dark .surface-glass-strong {
+    background: rgba(13, 13, 13, 0.6);
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .surface-glass-tint {
+    background: rgba(212, 175, 55, 0.07);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .surface-ink {
+    background: rgba(10, 10, 10, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px) saturate(1.3);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  }
+
+  /* Gold gradient headline treatment */
+  .gold-gradient-text {
+    background: linear-gradient(105deg, #a4881f 0%, #e9d483 38%, #d4af37 62%, #b8932a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Small uppercase section label */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* Hairline gold divider */
+  .hairline-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.65), transparent);
+  }
+
+  .hairline-black {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(10, 10, 10, 0.14), transparent);
+  }
+
+  .dark .hairline-black {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+  }
+
+  /* Sharp gold corner brackets — the "geometric luxury" signature */
+  .corner-frame {
+    position: relative;
+  }
+
+  .corner-frame::before,
+  .corner-frame::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 0 solid rgba(212, 175, 55, 0.55);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .corner-frame::before {
+    top: -1px;
+    left: -1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .corner-frame::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .corner-frame:hover::before {
+    top: -6px;
+    left: -6px;
+  }
+
+  .corner-frame:hover::after {
+    bottom: -6px;
+    right: -6px;
+  }
+
+  .corner-frame-static::before,
+  .corner-frame-static::after {
+    border-color: rgba(212, 175, 55, 0.7);
+  }
+
+  /* Ambient glow orbs for immersive, layered backgrounds */
+  .orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .orb-gold {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.16), rgba(212, 175, 55, 0) 66%);
+  }
+
+  .orb-gold-strong {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0) 70%);
+  }
+
+  .orb-gold-faint {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0) 62%);
+  }
+
+  .orb-ink {
+    background: radial-gradient(circle, rgba(10, 10, 10, 0.28), rgba(10, 10, 10, 0) 66%);
+  }
+
+  .dark .orb-ink {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.07), rgba(212, 175, 55, 0) 60%);
+  }
+
+  /* Architectural lattice — very faint blueprint grid */
+  .lux-grid {
+    background-image:
+      linear-gradient(to right, rgba(10, 10, 10, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 10, 10, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .dark .lux-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  }
+
+  .lux-grid-fade {
+    mask-image: radial-gradient(120% 120% at 50% 0%, black 55%, transparent 100%);
+    -webkit-mask-image: radial-gradient(120% 120% at 50% 0%, black 55%, transparent 100%);
+  }
+}
+
+/* Custom utilities that don't map from @theme namespaces */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

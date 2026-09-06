@@ -1,39 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   Product,
-  OrderItem,
   Order,
+  OrderItem,
   OrderStatus,
   CustomerUser,
   CustomerTab,
   AdminTab,
   AppView,
 } from "./types";
-import * as api from "./api";
-import { getErrorMessage } from "./api";
-import { CustomerLayout } from "./layouts/CustomerLayout";
-import { AdminLayout } from "./layouts/AdminLayout";
-import { Landing } from "./pages/Landing";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
-import { Shop } from "./pages/Shop";
-import { ProductDetails } from "./pages/ProductDetails";
-import { Cart } from "./pages/Cart";
-import { Checkout } from "./pages/Checkout";
-import { OrderConfirmation } from "./pages/OrderConfirmation";
-import { Orders } from "./pages/Orders";
-import { Account } from "./pages/Account";
-
-// Admin Pages
-import { AdminLogin } from "./pages/admin/AdminLogin";
-import { Dashboard } from "./pages/admin/Dashboard";
-import { Inventory } from "./pages/admin/Inventory";
-import { AddProduct } from "./pages/admin/AddProduct";
-import { EditProduct } from "./pages/admin/EditProduct";
-import { RecordSale } from "./pages/admin/RecordSale";
-import { Restock } from "./pages/admin/Restock";
-import { AdminOrders } from "./pages/admin/Orders";
-import { AdminAccount } from "./pages/admin/Account";
+import * as api from "./services";
+import { getErrorMessage } from "./services";
+import { AppRouter } from "./router";
+import type {
+  PlaceOrderData,
+  PhysicalSaleData,
+  NewProductData,
+} from "./router";
 
 const THEME_KEY = "zaanisung-theme";
 
@@ -85,6 +68,10 @@ export default function App() {
       return next;
     });
   };
+
+  const handleNavigate = useCallback((nextView: AppView) => {
+    setView(nextView);
+  }, []);
 
   // Check auth on mount
   useEffect(() => {
@@ -154,7 +141,7 @@ export default function App() {
     } catch { /* silent */ }
   }, [customerUser, isAdminLoggedIn]);
 
-  // Customer tab sync
+  // Navigation helpers
   const handleCustomerTabChange = (tab: CustomerTab) => {
     setCustomerTab(tab);
     if (tab === "shop") setView({ type: "customer", page: "shop" });
@@ -163,13 +150,71 @@ export default function App() {
     else if (tab === "account") setView({ type: "customer", page: "account" });
   };
 
-  // Admin tab sync
   const handleAdminTabChange = (tab: AdminTab) => {
     setAdminTab(tab);
     if (tab === "dashboard") setView({ type: "admin", page: "dashboard" });
     else if (tab === "inventory") setView({ type: "admin", page: "inventory" });
     else if (tab === "orders") setView({ type: "admin", page: "orders" });
     else if (tab === "account") setView({ type: "admin", page: "account" });
+  };
+
+  const handleStartShopping = () => {
+    setCustomerTab("shop");
+    setView({ type: "customer", page: "shop" });
+  };
+
+  const handleContinueAsGuest = handleStartShopping;
+
+  const handleGoToLogin = () => {
+    setView({ type: "customer", page: "login" });
+  };
+
+  const handleCreateAccount = (user: CustomerUser) => {
+    setCustomerUser(user);
+  };
+
+  const handleRegister = (user: CustomerUser) => {
+    setCustomerUser(user);
+    handleStartShopping();
+  };
+
+  const handleLandingLogin = (user: CustomerUser) => {
+    setCustomerUser(user);
+    if (user.role === "ADMIN") {
+      setIsAdminLoggedIn(true);
+      setView({ type: "admin", page: "dashboard" });
+      setAdminTab("dashboard");
+    }
+  };
+
+  const handleLogin = (user: CustomerUser) => {
+    setCustomerUser(user);
+    if (user.role === "ADMIN") {
+      setIsAdminLoggedIn(true);
+      setView({ type: "admin", page: "dashboard" });
+      setAdminTab("dashboard");
+    } else {
+      handleStartShopping();
+    }
+  };
+
+  const handleAdminLoginSuccess = () => {
+    setIsAdminLoggedIn(true);
+    setView({ type: "admin", page: "dashboard" });
+    setAdminTab("dashboard");
+  };
+
+  const handleAdminLogout = () => {
+    api.logoutUser().catch(() => {});
+    setIsAdminLoggedIn(false);
+    setCustomerUser(null);
+    handleStartShopping();
+  };
+
+  const handleCustomerLogout = async () => {
+    await api.logoutUser().catch(() => {});
+    setCustomerUser(null);
+    setView({ type: "customer", page: "login" });
   };
 
   // Cart operations
@@ -218,14 +263,7 @@ export default function App() {
   };
 
   // Place order
-  const handlePlaceOrder = async (orderData: {
-    items: OrderItem[];
-    total: number;
-    customerName: string;
-    customerPhone: string;
-    deliveryAddress: string;
-    paymentMethod: string;
-  }) => {
+  const handlePlaceOrder = async (orderData: PlaceOrderData) => {
     try {
       const productsPayload = orderData.items.map((item) => ({
         productId: item.productId || "",
@@ -272,13 +310,7 @@ export default function App() {
   };
 
   // Admin: Record Physical Sale
-  const handleConfirmPhysicalSale = async (data: {
-    productId: string;
-    productName: string;
-    price: number;
-    quantity: number;
-    paymentMethod: string;
-  }) => {
+  const handleConfirmPhysicalSale = async (data: PhysicalSaleData) => {
     try {
       await api.recordPhysicalSale(data.productId, data.quantity);
       fetchProducts();
@@ -299,7 +331,7 @@ export default function App() {
   };
 
   // Admin: Add Product
-  const handleAddProduct = async (newProd: { name: string; description?: string; price: number; imageUrl: string; stock: number }) => {
+  const handleAddProduct = async (newProd: NewProductData) => {
     try {
       await api.createProduct(newProd);
       fetchProducts();
@@ -357,294 +389,48 @@ export default function App() {
     (o) => o.status === "PENDING"
   ).length;
 
-  // ─── RENDER ADMIN VIEWS ──────────────────────────────────────────
-  if (view.type === "admin") {
-    if (!isAdminLoggedIn) {
-      return (
-        <AdminLogin
-          isDark={isDark}
-          onToggleTheme={handleToggleTheme}
-          onLoginSuccess={() => {
-            setIsAdminLoggedIn(true);
-            setView({ type: "admin", page: "dashboard" });
-            setAdminTab("dashboard");
-          }}
-          onReturnToStorefront={() => {
-            setView({ type: "customer", page: "shop" });
-            setCustomerTab("shop");
-          }}
-        />
-      );
-    }
-
-    return (
-      <AdminLayout
-        activeTab={adminTab}
-        onChangeTab={handleAdminTabChange}
-        isDark={isDark}
-        onToggleTheme={handleToggleTheme}
-        pendingOrdersCount={pendingOrdersCount}
-        onNavigateTo={(targetPage) => {
-          if (targetPage === "add-product") setView({ type: "admin", page: "add-product" });
-          else if (targetPage === "record-sale") setView({ type: "admin", page: "record-sale" });
-          else if (targetPage === "restock") setView({ type: "admin", page: "restock" });
-        }}
-        onReturnToStorefront={() => {
-          setView({ type: "customer", page: "shop" });
-          setCustomerTab("shop");
-        }}
-      >
-        {view.page === "dashboard" && (
-          <Dashboard
-            products={products}
-            orders={orders}
-            onNavigateTo={(target) => {
-              if (target === "inventory") { setView({ type: "admin", page: "inventory" }); setAdminTab("inventory"); }
-              else if (target === "orders") { setView({ type: "admin", page: "orders" }); setAdminTab("orders"); }
-              else if (target === "add-product") setView({ type: "admin", page: "add-product" });
-              else if (target === "record-sale") setView({ type: "admin", page: "record-sale" });
-              else if (target === "restock") setView({ type: "admin", page: "restock" });
-            }}
-          />
-        )}
-
-        {view.page === "inventory" && (
-          <Inventory
-            products={products}
-            onAddProduct={() => setView({ type: "admin", page: "add-product" })}
-            onEditProduct={(id) => setView({ type: "admin", page: "edit-product", productId: id })}
-            onRemoveProduct={handleRemoveProduct}
-            onQuickSale={(id) => setView({ type: "admin", page: "record-sale", initialProductId: id })}
-            onQuickRestock={(id) => setView({ type: "admin", page: "restock", initialProductId: id })}
-          />
-        )}
-
-        {view.page === "add-product" && (
-          <AddProduct
-            onBack={() => { setView({ type: "admin", page: "inventory" }); setAdminTab("inventory"); }}
-            onSave={handleAddProduct}
-          />
-        )}
-
-        {view.page === "edit-product" &&
-          (() => {
-            const prodToEdit = products.find((p) => p.id === view.productId);
-            if (!prodToEdit) return <div className="text-black/45 dark:text-white/45">Perfume not found.</div>;
-            return (
-              <EditProduct
-                product={prodToEdit}
-                onBack={() => { setView({ type: "admin", page: "inventory" }); setAdminTab("inventory"); }}
-                onUpdate={handleUpdateProduct}
-              />
-            );
-          })()}
-
-        {view.page === "record-sale" && (
-          <RecordSale
-            products={products}
-            initialProductId={view.initialProductId}
-            onBack={() => { setView({ type: "admin", page: "dashboard" }); setAdminTab("dashboard"); }}
-            onConfirmSale={handleConfirmPhysicalSale}
-          />
-        )}
-
-        {view.page === "restock" && (
-          <Restock
-            products={products}
-            initialProductId={view.initialProductId}
-            onBack={() => { setView({ type: "admin", page: "dashboard" }); setAdminTab("dashboard"); }}
-            onConfirmRestock={handleConfirmRestock}
-          />
-        )}
-
-        {view.page === "orders" && (
-          <AdminOrders orders={orders} onUpdateStatus={handleUpdateOrderStatus} />
-        )}
-
-        {view.page === "account" && (
-          <AdminAccount
-            onLogout={() => {
-              api.logoutUser().catch(() => {});
-              setIsAdminLoggedIn(false);
-              setCustomerUser(null);
-              setView({ type: "customer", page: "shop" });
-              setCustomerTab("shop");
-            }}
-            onReturnToStore={() => {
-              setView({ type: "customer", page: "shop" });
-              setCustomerTab("shop");
-            }}
-          />
-        )}
-      </AdminLayout>
-    );
-  }
-
-  // ─── RENDER LANDING (public, standalone) ─────────────────────────
-  if (view.type === "landing") {
-    return (
-      <Landing
-        products={products}
-        currentUser={customerUser}
-        isLoadingProducts={isLoadingProducts}
-        isDark={isDark}
-        onToggleTheme={handleToggleTheme}
-        onCreateAccount={(user) => {
-          setCustomerUser(user);
-        }}
-        onLogin={(user) => {
-          setCustomerUser(user);
-          if (user.role === "ADMIN") {
-            setIsAdminLoggedIn(true);
-            setView({ type: "admin", page: "dashboard" });
-            setAdminTab("dashboard");
-          }
-        }}
-        onStartShopping={() => {
-          setCustomerTab("shop");
-          setView({ type: "customer", page: "shop" });
-        }}
-        onBrowseShop={() => {
-          setCustomerTab("shop");
-          setView({ type: "customer", page: "shop" });
-        }}
-        onGoToLogin={() => {
-          setView({ type: "customer", page: "login" });
-        }}
-        onSelectProduct={(p) =>
-          setView({ type: "customer", page: "product-details", productId: p.id })
-        }
-        onAddToCart={(p) => handleAddToCart(p, 1)}
-        recentlyAddedId={recentlyAddedId}
-      />
-    );
-  }
-
-  // ─── RENDER CUSTOMER VIEWS ───────────────────────────────────────
   return (
-    <CustomerLayout
-      activeTab={customerTab}
-      onChangeTab={handleCustomerTabChange}
-      cartCount={totalCartCount}
+    <AppRouter
+      view={view}
+      products={products}
+      orders={orders}
+      cart={cart}
+      customerUser={customerUser}
+      isAdminLoggedIn={isAdminLoggedIn}
+      customerTab={customerTab}
+      adminTab={adminTab}
+      isLoadingProducts={isLoadingProducts}
+      productsError={productsError}
+      recentlyAddedId={recentlyAddedId}
+      lastConfirmedOrder={lastConfirmedOrder}
+      pendingOrdersCount={pendingOrdersCount}
+      totalCartCount={totalCartCount}
       isDark={isDark}
       onToggleTheme={handleToggleTheme}
-      onNavigateHome={() => {
-        setView({ type: "landing" });
-      }}
-    >
-      {view.page === "login" && (
-        <Login
-          onLogin={(user) => {
-            setCustomerUser(user);
-            if (user.role === "ADMIN") {
-              setIsAdminLoggedIn(true);
-              setView({ type: "admin", page: "dashboard" });
-              setAdminTab("dashboard");
-            } else {
-              setView({ type: "customer", page: "shop" });
-              setCustomerTab("shop");
-            }
-          }}
-          onNavigateToRegister={() => setView({ type: "customer", page: "register" })}
-          onContinueAsGuest={() => {
-            setView({ type: "customer", page: "shop" });
-            setCustomerTab("shop");
-          }}
-        />
-      )}
-
-      {view.page === "register" && (
-        <Register
-          onRegister={(user) => {
-            setCustomerUser(user);
-            setView({ type: "customer", page: "shop" });
-            setCustomerTab("shop");
-          }}
-          onNavigateToLogin={() => setView({ type: "customer", page: "login" })}
-        />
-      )}
-
-      {view.page === "shop" && (
-        <Shop
-          products={products}
-          isLoading={isLoadingProducts}
-          error={productsError}
-          onRetry={fetchProducts}
-          onSelectProduct={(p) => setView({ type: "customer", page: "product-details", productId: p.id })}
-          onAddToCart={(p) => handleAddToCart(p, 1)}
-          recentlyAddedId={recentlyAddedId}
-        />
-      )}
-
-      {view.page === "product-details" &&
-        (() => {
-          const product = products.find((p) => p.id === view.productId);
-          if (!product) return <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>;
-          return (
-            <ProductDetails
-              product={product}
-              onBack={() => setView({ type: "customer", page: "shop" })}
-              onAddToCart={(p, qty) => handleAddToCart(p, qty)}
-              onBuyNow={(p, qty) => {
-                handleAddToCart(p, qty);
-                setView({ type: "customer", page: "checkout" });
-              }}
-            />
-          );
-        })()}
-
-      {view.page === "cart" && (
-        <Cart
-          items={cart}
-          products={products}
-          onUpdateQuantity={handleUpdateCartQuantity}
-          onRemoveItem={handleRemoveCartItem}
-          onProceedToCheckout={() => setView({ type: "customer", page: "checkout" })}
-          onContinueShopping={() => { setView({ type: "customer", page: "shop" }); setCustomerTab("shop"); }}
-        />
-      )}
-
-      {view.page === "checkout" && (
-        <Checkout
-          items={cart}
-          defaultName={customerUser?.name || ""}
-          defaultPhone={customerUser?.phone || ""}
-          onBackToCart={() => setView({ type: "customer", page: "cart" })}
-          onPlaceOrder={handlePlaceOrder}
-        />
-      )}
-
-      {view.page === "order-confirmation" &&
-        (() => {
-          const order = orders.find((o) => o.id === view.orderId) || lastConfirmedOrder;
-          if (!order) return <div className="py-12 text-center"><p className="text-black/50 dark:text-white/50">No order found.</p></div>;
-          return (
-            <OrderConfirmation
-              order={order}
-              onViewOrder={() => { setView({ type: "customer", page: "orders" }); setCustomerTab("orders"); }}
-              onContinueShopping={() => { setView({ type: "customer", page: "shop" }); setCustomerTab("shop"); }}
-            />
-          );
-        })()}
-
-      {view.page === "orders" && (
-        <Orders
-          orders={orders}
-          onContinueShopping={() => { setView({ type: "customer", page: "shop" }); setCustomerTab("shop"); }}
-        />
-      )}
-
-      {view.page === "account" && (
-        <Account
-          user={customerUser}
-          onLogout={async () => {
-            await api.logoutUser().catch(() => {});
-            setCustomerUser(null);
-            setView({ type: "customer", page: "login" });
-          }}
-          onNavigateToLogin={() => setView({ type: "customer", page: "login" })}
-        />
-      )}
-    </CustomerLayout>
+      onNavigate={handleNavigate}
+      onCustomerTabChange={handleCustomerTabChange}
+      onAdminTabChange={handleAdminTabChange}
+      onAddToCart={handleAddToCart}
+      onUpdateCartQuantity={handleUpdateCartQuantity}
+      onRemoveCartItem={handleRemoveCartItem}
+      onPlaceOrder={handlePlaceOrder}
+      onConfirmPhysicalSale={handleConfirmPhysicalSale}
+      onConfirmRestock={handleConfirmRestock}
+      onAddProduct={handleAddProduct}
+      onUpdateProduct={handleUpdateProduct}
+      onRemoveProduct={handleRemoveProduct}
+      onUpdateOrderStatus={handleUpdateOrderStatus}
+      onCreateAccount={handleCreateAccount}
+      onRegister={handleRegister}
+      onLogin={handleLogin}
+      onLandingLogin={handleLandingLogin}
+      onContinueAsGuest={handleContinueAsGuest}
+      onStartShopping={handleStartShopping}
+      onGoToLogin={handleGoToLogin}
+      onRetryProducts={fetchProducts}
+      onAdminLoginSuccess={handleAdminLoginSuccess}
+      onAdminLogout={handleAdminLogout}
+      onCustomerLogout={handleCustomerLogout}
+    />
   );
 }

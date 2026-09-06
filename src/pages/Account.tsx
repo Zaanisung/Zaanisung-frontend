@@ -16,17 +16,19 @@ export const Account: React.FC<AccountProps> = ({
 }) => {
   if (!user) {
     return (
-      <div className="w-full max-w-md mx-auto py-16 px-6 bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-center flex flex-col items-center shadow-xs">
-        <div className="w-14 h-14 bg-white dark:bg-white/5 flex items-center justify-center text-black/45 dark:text-white/45 mb-4 border border-black/10 dark:border-white/15">
+      <div className="relative overflow-hidden w-full max-w-md mx-auto py-16 px-6 surface-glass-strong corner-frame-static corner-frame text-center flex flex-col items-center shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+        <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint" aria-hidden="true"></div>
+
+        <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40">
           <User className="w-6 h-6 stroke-[1.5]" />
         </div>
         <h2
-          className="text-xl font-light text-black dark:text-white mb-1"
-          style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          className="relative text-xl font-light text-black dark:text-white mb-1 font-brand-serif"
         >
           Customer Account
         </h2>
-        <p className="text-xs text-black/50 dark:text-white/50 mb-6">
+        <p className="relative text-xs text-black/50 dark:text-white/50 mb-6">
           Sign in to view saved shipping info and previous orders.
         </p>
         <Button
@@ -34,7 +36,7 @@ export const Account: React.FC<AccountProps> = ({
           variant="primary"
           size="lg"
           onClick={onNavigateToLogin}
-          className="w-full font-bold"
+          className="relative w-full font-bold"
         >
           Sign In
         </Button>
@@ -46,25 +48,27 @@ export const Account: React.FC<AccountProps> = ({
     <div className="w-full max-w-md mx-auto space-y-6">
       <div className="pb-2">
         <h2
-          className="text-2xl font-light text-black dark:text-white"
-          style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          className="text-2xl font-light text-black dark:text-white font-brand-serif"
         >
           Customer Account
         </h2>
-        <p className="text-[11px] uppercase tracking-widest text-[#D4AF37] font-semibold mt-1">
+        <p className="text-[11px] uppercase tracking-widest text-gold font-semibold mt-1">
           Zaanisung Ent. GH Profile
         </p>
       </div>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-xs space-y-6">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift space-y-6">
+        <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
+
         {/* Customer Avatar & Name */}
-        <div className="flex items-center space-x-4 pb-6">
-          <div className="w-14 h-14 bg-black dark:bg-white/5 text-[#D4AF37] border border-[#D4AF37]/50 flex items-center justify-center text-lg font-bold">
+        <div className="relative flex items-center space-x-4 pb-6">
+          <div className="w-14 h-14 bg-black dark:bg-white/5 text-gold border border-gold/50 flex items-center justify-center text-lg font-bold">
             {user.name.charAt(0).toUpperCase()}
           </div>
           <div>
             <h3 className="font-semibold text-base text-black dark:text-white">{user.name}</h3>
-            <span className="text-[11px] uppercase tracking-wider text-[#D4AF37] dark:text-[#D4AF37] font-bold bg-[#D4AF37]/10 dark:bg-[#D4AF37]/10 px-2 py-0.5 border border-[#D4AF37]/40 dark:border-[#D4AF37]/40 inline-block mt-0.5">
+            <span className="text-[11px] uppercase tracking-wider text-gold dark:text-gold font-bold bg-gold/10 dark:bg-gold/10 px-2 py-0.5 border border-gold/40 dark:border-gold/40 inline-block mt-0.5">
               Verified Customer
             </span>
           </div>

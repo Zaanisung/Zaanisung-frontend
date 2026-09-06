@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from "react";
 import type { Product } from "../../types";
 import { Button } from "../../components/Button";
+import { SearchInput } from "../../components/ui/SearchInput";
+import { ProductImage } from "../../components/ui/ProductImage";
 import {
   PlusCircle,
-  Search,
   Edit2,
   Trash2,
-  X,
 } from "lucide-react";
 
 export interface InventoryProps {
@@ -40,8 +40,7 @@ export const Inventory: React.FC<InventoryProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
           <h2
-            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif"
           >
             Perfume Inventory
           </h2>
@@ -63,30 +62,19 @@ export const Inventory: React.FC<InventoryProps> = ({
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/50 dark:text-white/50 pointer-events-none" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Filter inventory by name..."
-          className="w-full pl-9 pr-8 min-h-[44px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white text-xs placeholder-black/50 focus:outline-none focus:border-[#D4AF37] transition-colors"
-        />
-        {searchQuery && (
-          <button
-            type="button"
-            onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        )}
-      </div>
+      <SearchInput
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="Filter inventory by name..."
+        ariaLabel="Filter inventory"
+        className="w-full max-w-md"
+      />
 
       {/* Empty State */}
       {filteredProducts.length === 0 && (
-        <div className="py-16 text-center bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6">
-          <p className="text-sm text-black/45 dark:text-white/45 mb-4">
+        <div className="relative overflow-hidden surface-glass-strong p-6 text-center py-16 shadow-lift">
+          <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+          <p className="relative text-sm text-black/45 dark:text-white/45 mb-4">
             {searchQuery
               ? `No perfumes matching "${searchQuery}".`
               : "No perfumes in the inventory catalog yet."}
@@ -103,9 +91,10 @@ export const Inventory: React.FC<InventoryProps> = ({
       )}
 
       {/* Desktop Table View */}
-      <div className="hidden md:block bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 overflow-hidden">
-        <table className="w-full text-left text-xs sm:text-sm">
-          <thead className="bg-[#F5F5F5] dark:bg-white/10 text-black/45 dark:text-white/45 uppercase tracking-widest text-[10px]">
+      <div className="relative hidden md:block surface-glass-strong overflow-hidden shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+        <table className="relative w-full text-left text-xs sm:text-sm">
+          <thead className="bg-cream dark:bg-white/10 text-black/45 dark:text-white/45 uppercase tracking-widest text-[10px]">
             <tr>
               <th className="py-3.5 px-4 font-semibold">Fragrance</th>
               <th className="py-3.5 px-4 font-semibold">Price</th>
@@ -123,10 +112,10 @@ export const Inventory: React.FC<InventoryProps> = ({
                 <tr key={p.id} className="hover:bg-white dark:hover:bg-white/5 transition-colors">
                   <td className="py-3 px-4">
                     <div className="flex items-center space-x-3">
-                      <img
+                      <ProductImage
                         src={p.imageUrl}
                         alt={p.name}
-                        className="w-10 h-12 object-cover border border-black/10 dark:border-white/15 bg-white dark:bg-black"
+                        className="w-10 h-12 border border-black/10 dark:border-white/15 bg-white dark:bg-black"
                       />
                       <div>
                         <span className="font-semibold text-black dark:text-white block">
@@ -139,7 +128,7 @@ export const Inventory: React.FC<InventoryProps> = ({
                     </div>
                   </td>
 
-                  <td className="py-3 px-4 font-mono font-bold text-[#D4AF37]">
+                  <td className="py-3 px-4 font-mono font-bold text-gold">
                     {p.price.toFixed(2)} GHS
                   </td>
 
@@ -153,11 +142,11 @@ export const Inventory: React.FC<InventoryProps> = ({
                         Out of Stock
                       </span>
                     ) : isLow ? (
-                      <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/40">
+                      <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-gold/10 text-gold border border-gold/40">
                         Low Stock ({p.stock})
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/40">
+                      <span className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-gold/10 text-gold border border-gold/40">
                         In Stock
                       </span>
                     )}
@@ -168,7 +157,7 @@ export const Inventory: React.FC<InventoryProps> = ({
                       <button
                         type="button"
                         onClick={() => onQuickSale(p.id)}
-                        className="min-h-[36px] px-2.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-[#D4AF37] hover:bg-[#D4AF37]/10 border border-[#D4AF37]/30 transition-colors"
+                        className="min-h-[36px] px-2.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-gold hover:bg-gold/10 border border-gold/30 transition-colors"
                         title="Record physical sale"
                       >
                         Sale
@@ -177,7 +166,7 @@ export const Inventory: React.FC<InventoryProps> = ({
                       <button
                         type="button"
                         onClick={() => onQuickRestock(p.id)}
-                        className="min-h-[36px] px-2.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-[#D4AF37] hover:bg-[#D4AF37]/10 border border-[#D4AF37]/40 transition-colors"
+                        className="min-h-[36px] px-2.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-gold hover:bg-gold/10 border border-gold/40 transition-colors"
                         title="Restock units"
                       >
                         Restock
@@ -218,13 +207,15 @@ export const Inventory: React.FC<InventoryProps> = ({
           return (
             <div
               key={p.id}
-              className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-4 flex flex-col space-y-3"
+              className="relative overflow-hidden surface-glass-strong p-4 flex flex-col space-y-3 shadow-lift"
             >
-              <div className="flex items-center space-x-3">
-                <img
+              <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+
+              <div className="relative flex items-center space-x-3">
+                <ProductImage
                   src={p.imageUrl}
                   alt={p.name}
-                  className="w-14 h-16 object-cover border border-black/10 dark:border-white/15 bg-white dark:bg-black flex-shrink-0"
+                  className="w-14 h-16 border border-black/10 dark:border-white/15 bg-white dark:bg-black flex-shrink-0"
                 />
 
                 <div className="flex-1 min-w-0">
@@ -237,17 +228,17 @@ export const Inventory: React.FC<InventoryProps> = ({
                         Out
                       </span>
                     ) : isLow ? (
-                      <span className="px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-[#D4AF37]/10 text-[#D4AF37]">
+                      <span className="px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-gold/10 text-gold">
                         Low ({p.stock})
                       </span>
                     ) : (
-                      <span className="px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-[#D4AF37]/10 text-[#D4AF37]">
+                      <span className="px-1.5 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-gold/10 text-gold">
                         {p.stock} units
                       </span>
                     )}
                   </div>
 
-                  <p className="font-mono font-bold text-[#D4AF37] text-sm mt-1">
+                  <p className="font-mono font-bold text-gold text-sm mt-1">
                     {p.price.toFixed(2)} GHS
                   </p>
                   <p className="text-[11px] text-black/45 dark:text-white/45">Stock: {p.stock} bottles</p>
@@ -259,7 +250,7 @@ export const Inventory: React.FC<InventoryProps> = ({
                 <button
                   type="button"
                   onClick={() => onQuickSale(p.id)}
-                  className="min-h-[44px] text-[10px] uppercase tracking-wider font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/40 flex items-center justify-center"
+                  className="min-h-[44px] text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/15 border border-gold/40 flex items-center justify-center"
                 >
                   Sale
                 </button>
@@ -267,7 +258,7 @@ export const Inventory: React.FC<InventoryProps> = ({
                 <button
                   type="button"
                   onClick={() => onQuickRestock(p.id)}
-                  className="min-h-[44px] text-[10px] uppercase tracking-wider font-bold text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/40 flex items-center justify-center"
+                  className="min-h-[44px] text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center justify-center"
                 >
                   Restock
                 </button>

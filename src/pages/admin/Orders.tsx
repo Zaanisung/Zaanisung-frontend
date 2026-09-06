@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Order, OrderStatus } from "../../types";
-import { Search, ShoppingCart, Store, X } from "lucide-react";
+import { SearchInput } from "../../components/ui/SearchInput";
+import { ShoppingCart, Store } from "lucide-react";
 
 export interface AdminOrdersProps {
   orders: Order[];
@@ -42,8 +43,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
           <h2
-            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif"
           >
             Sales & Orders Log
           </h2>
@@ -53,7 +53,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
         </div>
 
         {/* Source Filter Switcher */}
-        <div className="inline-flex p-1 bg-white dark:bg-white/5 border border-black/10 dark:border-white/15">
+        <div className="inline-flex p-1 surface-glass">
           {(["ALL", "ONLINE", "PHYSICAL"] as const).map((source) => (
             <button
               key={source}
@@ -61,7 +61,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
               onClick={() => setFilterSource(source)}
               className={`min-h-[38px] px-3 text-[10px] uppercase tracking-wider font-bold transition-colors ${
                 filterSource === source
-                  ? "bg-[#D4AF37] text-black"
+                  ? "bg-gold text-black"
                   : "text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white"
               }`}
             >
@@ -72,30 +72,19 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
       </div>
 
       {/* Search Input */}
-      <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/50 dark:text-white/50 pointer-events-none" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search by Order ID, fragrance, or customer..."
-          className="w-full pl-9 pr-8 min-h-[44px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white text-xs placeholder-black/50 focus:outline-none focus:border-[#D4AF37]"
-        />
-        {searchQuery && (
-          <button
-            type="button"
-            onClick={() => setSearchQuery("")}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        )}
-      </div>
+      <SearchInput
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="Search by Order ID, fragrance, or customer..."
+        ariaLabel="Search orders"
+        className="w-full max-w-md"
+      />
 
       {/* Empty State */}
       {filteredOrders.length === 0 && (
-        <div className="py-16 text-center bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6">
-          <p className="text-sm text-black/45 dark:text-white/45">
+        <div className="relative overflow-hidden surface-glass-strong p-6 text-center py-14 shadow-lift">
+          <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+          <p className="relative text-sm text-black/45 dark:text-white/45">
             No sales or orders match the current criteria.
           </p>
         </div>
@@ -109,9 +98,10 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
           return (
             <div
               key={order.id}
-              className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-black/10 dark:hover:border-white/15 p-4 sm:p-5 transition-colors"
+              className="relative overflow-hidden surface-glass-strong hover:border-gold/50 hover:shadow-lift p-4 sm:p-5 transition-all"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-3">
+              <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+              <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-mono text-sm font-bold text-black dark:text-white">
                     {order.id}
@@ -119,13 +109,13 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
 
                   {/* High visibility SOURCE BADGE: ONLINE vs PHYSICAL */}
                   {isPhysical ? (
-                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-[#D4AF37] text-black border border-[#D4AF37]/40 text-[10px] font-bold uppercase tracking-wider">
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-gold text-black border border-gold/40 text-[10px] font-bold uppercase tracking-wider">
                       <Store className="w-3 h-3 text-black dark:text-white" />
                       <span>Physical Store</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-black dark:bg-white text-white dark:text-black border border-white/30 dark:border-black/30 text-[10px] font-bold uppercase tracking-wider">
-                      <ShoppingCart className="w-3 h-3 text-[#D4AF37]" />
+                      <ShoppingCart className="w-3 h-3 text-gold" />
                       <span>Online Order</span>
                     </span>
                   )}
@@ -136,7 +126,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
                 </div>
 
                 <div className="flex items-center space-x-3">
-                  <span className="text-base font-mono font-bold text-[#D4AF37]">
+                  <span className="text-base font-mono font-bold text-gold">
                     {order.total.toFixed(2)} GHS
                   </span>
 
@@ -144,7 +134,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
                   <select
                     value={order.status}
                     onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
-                    className="min-h-[36px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-xs uppercase tracking-wider font-semibold text-black dark:text-white px-2 py-1 focus:outline-none focus:border-[#D4AF37]"
+                    className="min-h-[36px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-xs uppercase tracking-wider font-semibold text-black dark:text-white px-2 py-1 focus:outline-none focus:border-gold"
                   >
                     {allStatuses.map((st) => (
                       <option key={st} value={st}>
@@ -156,7 +146,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
               </div>
 
               {/* Items in order */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
                   <span className="text-[10px] uppercase tracking-widest text-black/50 dark:text-white/50 font-bold block">
                     Fragrances Deducted:
@@ -181,7 +171,7 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
                   {order.paymentMethod && (
                     <p>
                       <span className="text-black/50 dark:text-white/50 uppercase tracking-wider">Payment:</span>{" "}
-                      <span className="text-[#D4AF37]">{order.paymentMethod}</span>
+                      <span className="text-gold">{order.paymentMethod}</span>
                     </p>
                   )}
                 </div>

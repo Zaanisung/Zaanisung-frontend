@@ -16,33 +16,31 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none tracking-wide whitespace-nowrap active:scale-[0.99] uppercase text-xs";
+    "inline-flex items-center justify-center font-semibold transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none tracking-[0.06em] whitespace-nowrap active:scale-[0.99] uppercase text-xs min-h-[44px]";
 
   const sizeStyles = {
-    sm: "min-h-[40px] px-3.5 py-1.5",
+    sm: "min-h-[40px] px-4 py-1.5",
     md: "min-h-[44px] px-5 py-2.5",
-    lg: "min-h-[48px] px-6 py-3 text-sm",
+    lg: "min-h-[50px] px-7 py-3 text-[0.8125rem]",
   };
 
   const variantStyles = {
-    // Luxury gold CTA with crisp geometric borders
+    // Luxury gold CTA — luminous gradient, sharp geometric borders
     primary:
-      "bg-[#D4AF37] hover:bg-[#C29E2E] text-black font-bold border border-[#D4AF37]",
-    // Clean deep black luxury button
+      "border border-gold-700/70 bg-[linear-gradient(180deg,#e0bd4c_0%,#d4af37_45%,#c29e2e_100%)] text-ink hover:shadow-[0_16px_36px_-14px_rgba(212,175,55,0.85)] hover:brightness-[1.04] shadow-[0_10px_26px_-14px_rgba(212,175,55,0.7)]",
+    // Clean deep-black luxury surface
     dark:
-      "bg-white dark:bg-black hover:bg-[#F5F5F5] dark:hover:bg-white/10 text-black dark:text-white border border-black/10 dark:border-white/15",
-    // Secondary white button with crisp border
+      "bg-ink text-cream hover:bg-ink-800 border border-ink dark:bg-white dark:text-ink dark:hover:bg-cream dark:border-white",
+    // Translucent glass surface with crisp border
     secondary:
-      "bg-white hover:bg-white text-black border border-black/10 dark:bg-black dark:hover:bg-black/80 dark:text-white dark:border-white/15",
+      "surface-glass-strong text-ink dark:text-white hover:border-gold/60",
     // Minimal outline with gold hover
     outline:
-      "bg-transparent hover:bg-black hover:text-white text-black border border-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black",
-    // Ghost
+      "bg-transparent hover:bg-ink hover:text-cream text-ink border border-ink dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-ink",
     ghost:
-      "bg-transparent hover:bg-black/5 text-black dark:text-white dark:hover:bg-white/10 border-transparent",
-    // Danger
+      "bg-transparent hover:bg-black/5 text-ink dark:text-white dark:hover:bg-white/10 border-transparent",
     danger:
-      "bg-red-600 hover:bg-red-700 text-black dark:text-white font-bold border border-red-700",
+      "bg-red-600 hover:bg-red-700 text-white font-bold border border-red-700",
   };
 
   return (

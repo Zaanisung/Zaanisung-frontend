@@ -15,8 +15,7 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
     <div className="w-full max-w-md mx-auto space-y-6">
       <div className="pb-2">
         <h2
-          className="text-2xl font-light text-black dark:text-white"
-          style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          className="text-2xl font-light text-black dark:text-white font-brand-serif"
         >
           Admin Portal Settings
         </h2>
@@ -25,29 +24,32 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
         </p>
       </div>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 space-y-6">
-        <div className="flex items-center space-x-4 pb-6">
-          <div className="w-14 h-14 bg-[#D4AF37] text-black flex items-center justify-center font-bold text-xl">
+      <div className="relative overflow-hidden surface-glass-strong p-6 shadow-lift space-y-6">
+        <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
+
+        <div className="relative flex items-center space-x-4 pb-6">
+          <div className="w-14 h-14 bg-gold text-black flex items-center justify-center font-bold text-xl">
             A
           </div>
           <div>
             <h3 className="font-semibold text-base text-black dark:text-white">Administrator</h3>
-            <span className="text-[10px] uppercase tracking-wider text-[#D4AF37] font-bold bg-[#D4AF37]/10 px-2 py-0.5 border border-[#D4AF37]/40 inline-block mt-0.5">
+            <span className="text-[10px] uppercase tracking-wider text-gold font-bold bg-gold/10 px-2 py-0.5 border border-gold/40 inline-block mt-0.5">
               Full Stock Control
             </span>
           </div>
         </div>
 
-        <div className="space-y-3 text-xs">
-          <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between">
+        <div className="relative space-y-3 text-xs">
+          <div className="p-3 surface-glass-tint flex items-center justify-between">
             <div className="flex items-center space-x-2 text-black/60 dark:text-white/60">
-              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+              <ShieldCheck className="w-4 h-4 text-gold" />
               <span>Permission Tier</span>
             </div>
             <span className="text-black dark:text-white font-mono font-bold">Owner / Manager</span>
           </div>
 
-          <div className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between">
+          <div className="p-3 surface-glass-tint flex items-center justify-between">
             <div className="flex items-center space-x-2 text-black/60 dark:text-white/60">
               <KeyRound className="w-4 h-4 text-black/45 dark:text-white/45" />
               <span>Authentication</span>
@@ -64,7 +66,7 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
             onClick={onReturnToStore}
             className="w-full border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center gap-2"
           >
-            <Store className="w-4 h-4 text-[#D4AF37]" />
+            <Store className="w-4 h-4 text-gold" />
             <span>Switch to Customer Storefront</span>
           </Button>
 

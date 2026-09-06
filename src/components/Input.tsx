@@ -13,11 +13,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
 
     return (
-      <div className="w-full flex flex-col gap-1 text-left">
+      <div className="w-full flex flex-col gap-1.5 text-left">
         {label && (
           <label
             htmlFor={inputId}
-            className="text-[11px] font-semibold uppercase tracking-widest text-black/60 dark:text-white/60"
+            className="eyebrow text-black/55 dark:text-white/55"
           >
             {label}
           </label>
@@ -31,12 +31,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             id={inputId}
-            className={`w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] ${
+            className={`w-full min-h-[46px] px-3.5 py-2.5 text-sm bg-white/70 dark:bg-white/[0.06] text-ink dark:text-white placeholder-ink/35 dark:placeholder-white/35 border focus:outline-none transition-colors ${
               prefixIcon ? "pl-10" : ""
             } ${suffixIcon ? "pr-10" : ""} ${
               error
                 ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "border-black/10 dark:border-white/15"
+                : "border-black/15 dark:border-white/15 focus:border-gold focus:ring-1 focus:ring-gold"
             } ${className}`}
             {...props}
           />

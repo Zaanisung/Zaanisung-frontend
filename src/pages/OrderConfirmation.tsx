@@ -1,6 +1,7 @@
 import React from "react";
 import { Order } from "../types";
 import { Button } from "../components/Button";
+import { StatusBadge } from "../components/ui/StatusBadge";
 import { Check } from "lucide-react";
 
 export interface OrderConfirmationProps {
@@ -16,24 +17,27 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
 }) => {
   return (
     <div className="w-full max-w-lg mx-auto py-6 px-4">
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-xs text-center">
+      <div className="relative overflow-hidden surface-glass-strong corner-frame-static corner-frame p-6 sm:p-10 shadow-lift text-center">
+        <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+        <div className="absolute -top-28 -left-24 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
+        <div className="absolute -bottom-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
+
         {/* Geometric Check Icon Frame */}
-        <div className="w-16 h-16 bg-[#D4AF37]/15 border border-[#D4AF37]/40 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-[#D4AF37] stroke-[2.5]" />
+        <div className="relative w-16 h-16 bg-gold/15 border border-gold/40 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-8 h-8 text-gold stroke-[2.5]" />
         </div>
 
         <h2
-          className="text-2xl sm:text-3xl font-light text-black dark:text-white mb-2"
-          style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          className="text-2xl sm:text-3xl font-light text-black dark:text-white mb-2 font-brand-serif"
         >
           Order Confirmed
         </h2>
-        <p className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 mb-8">
+        <p className="relative text-xs uppercase tracking-widest text-black/50 dark:text-white/50 mb-8">
           Thank you for choosing Zaanisung Ent. GH
         </p>
 
         {/* Order Reference Card */}
-        <div className="bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 p-5 mb-8 text-left space-y-3 text-xs sm:text-sm">
+        <div className="relative surface-glass-tint p-5 mb-8 text-left space-y-3 text-xs sm:text-sm">
           <div className="flex justify-between">
             <span className="uppercase tracking-widest text-black/50 dark:text-white/50 text-[11px]">Order Reference</span>
             <span className="font-mono font-bold text-black dark:text-white">{order.id}</span>
@@ -41,14 +45,12 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
 
           <div className="flex justify-between">
             <span className="uppercase tracking-widest text-black/50 dark:text-white/50 text-[11px]">Total Paid/Due</span>
-            <span className="font-bold font-mono text-[#D4AF37]">{order.total.toFixed(2)} GHS</span>
+            <span className="font-bold font-mono text-gold">{order.total.toFixed(2)} GHS</span>
           </div>
 
           <div className="flex justify-between">
             <span className="uppercase tracking-widest text-black/50 dark:text-white/50 text-[11px]">Status</span>
-            <span className="px-2 py-0.5 bg-black dark:bg-white text-white dark:text-black text-[10px] uppercase tracking-wider font-bold">
-              {order.status}
-            </span>
+            <StatusBadge status={order.status} size="sm" />
           </div>
 
           {order.paymentMethod && (
@@ -60,7 +62,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="space-y-3">
+        <div className="relative space-y-3">
           <Button
             type="button"
             variant="primary"

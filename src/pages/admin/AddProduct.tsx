@@ -76,11 +76,13 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
         Back to Inventory
       </button>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
-        <div className="pb-2 mb-6">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
+
+        <div className="relative pb-2 mb-6">
           <h2
-            className="text-xl sm:text-2xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-xl sm:text-2xl font-light text-black dark:text-white font-brand-serif"
           >
             Add New Fragrance
           </h2>
@@ -102,7 +104,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
               Perfume Image
             </label>
             <div className="flex items-center space-x-4">
-              <div className="w-20 h-24 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 overflow-hidden flex items-center justify-center flex-shrink-0">
+              <div className="w-20 h-24 surface-glass-tint border-gold/30 overflow-hidden flex items-center justify-center flex-shrink-0">
                 {imageUrl ? (
                   <img
                     src={imageUrl}
@@ -125,7 +127,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold bg-white dark:bg-white/5 hover:bg-[#F5F5F5] dark:hover:bg-white/10 text-black dark:text-white border border-black/10 dark:border-white/15 flex items-center space-x-2 transition-colors"
+                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold text-gold bg-gold/10 hover:bg-gold/20 border border-gold/40 flex items-center space-x-2 transition-colors"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>Upload Image File</span>
@@ -138,7 +140,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-3 py-1.5 text-xs bg-white dark:bg-black border border-black/10 dark:border-white/15 text-black/60 dark:text-white/60 focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full px-3 py-1.5 text-xs surface-glass text-black/60 dark:text-white/60 focus:outline-none focus:border-gold"
                 />
               </div>
             </div>
@@ -167,7 +169,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value.slice(0, 160))}
               placeholder="e.g. A bold amber-oud blend with a warm, smoky dry-down."
-              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border border-black/10 dark:border-white/15 transition-colors focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border border-black/10 dark:border-white/15 transition-colors focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
             />
             <p className="text-[10px] text-black/50 dark:text-white/50">One line shown on product cards and the landing page.</p>
           </div>

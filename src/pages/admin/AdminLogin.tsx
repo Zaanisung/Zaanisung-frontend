@@ -4,8 +4,8 @@ import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { ArrowLeft } from "lucide-react";
-import * as api from "../../api";
-import { getErrorMessage } from "../../api";
+import * as api from "../../services";
+import { getErrorMessage } from "../../services";
 
 export interface AdminLoginProps {
   onLoginSuccess: () => void;
@@ -50,11 +50,15 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center px-4 py-12">
-    <div className="fixed top-4 right-4">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
+    <div className="absolute inset-0 lux-grid lux-grid-fade opacity-60" aria-hidden="true"></div>
+    <div className="absolute top-20 right-24 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
+    <div className="absolute -bottom-24 left-1/4 w-80 h-80 orb orb-gold-faint" aria-hidden="true"></div>
+
+    <div className="fixed top-4 right-4 z-20">
       <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
     </div>
-    <div className="w-full max-w-sm">
+    <div className="relative w-full max-w-sm z-10">
         <button
           type="button"
           onClick={onReturnToStorefront}
@@ -67,12 +71,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <div className="text-center mb-8 flex flex-col items-center">
           <Logo className="h-14 w-14 mb-3" />
           <h1
-            className="text-2xl font-light italic tracking-[0.2em] text-black dark:text-white"
-            style={{ fontFamily: "Georgia, serif" }}
+            className="text-2xl font-light italic tracking-[0.2em] text-black dark:text-white font-brand-serif"
           >
             ZAANISUNG
           </h1>
-          <div className="inline-block bg-[#D4AF37] text-black text-[9px] uppercase tracking-widest px-2 py-0.5 font-bold mt-2">
+          <div className="inline-block bg-gold text-black text-[9px] uppercase tracking-widest px-2 py-0.5 font-bold mt-2">
             Admin Inventory Portal
           </div>
           <p className="text-xs text-black/50 dark:text-white/50 mt-2">
@@ -80,8 +83,9 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           </p>
         </div>
 
-        <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-6 sm:p-8">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="relative overflow-hidden surface-glass-strong corner-frame-static corner-frame p-6 sm:p-8 shadow-lift">
+          <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+          <form onSubmit={handleSubmit} className="relative space-y-4">
             {error && (
               <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium">
                 {error}

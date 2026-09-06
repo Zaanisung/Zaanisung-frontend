@@ -79,15 +79,17 @@ export const Checkout: React.FC<CheckoutProps> = ({
         Back to Bag
       </button>
 
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-5 sm:p-8 shadow-xs">
-        <div className="pb-2 mb-6">
+      <div className="relative overflow-hidden surface-glass-strong p-5 sm:p-8 shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+        <div className="absolute -top-28 -right-28 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
+
+        <div className="relative pb-2 mb-6">
           <h2
-            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif"
           >
             Express Checkout
           </h2>
-          <p className="text-[11px] uppercase tracking-widest text-[#D4AF37] font-semibold mt-1">
+          <p className="text-[11px] uppercase tracking-widest text-gold font-semibold mt-1">
             Zaanisung Ent. GH Fast Direct Order
           </p>
         </div>
@@ -100,7 +102,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Order Summary Overview */}
-          <div className="bg-white dark:bg-white/10 p-4 border border-black/10 dark:border-white/15">
+          <div className="relative overflow-hidden surface-glass-tint p-4">
             <h3 className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 font-bold mb-3">
               Order Summary ({items.length} {items.length === 1 ? "Fragrance" : "Fragrances"})
             </h3>
@@ -117,7 +119,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
               ))}
               <div className="pt-3 flex justify-between font-bold text-sm sm:text-base">
                 <span className="uppercase tracking-wider text-black dark:text-white">Total Due</span>
-                <span className="text-[#D4AF37] font-mono">{total.toFixed(2)} GHS</span>
+                <span className="text-gold font-mono">{total.toFixed(2)} GHS</span>
               </div>
             </div>
           </div>
@@ -125,6 +127,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
           {/* Delivery Details */}
           <div className="space-y-4">
             <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-3 bg-gold inline-block"></span>
               <span>Delivery Details</span>
             </h3>
 
@@ -156,7 +159,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 onChange={(e) => setAddress(e.target.value)}
                 rows={2}
                 placeholder="House Number, Street Name, Landmark, Area (e.g. Ring Road Central, Accra)"
-                className="w-full p-3 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 border border-black/10 dark:border-white/15 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+                className="w-full p-3 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 border border-black/10 dark:border-white/15 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
                 required
               />
             </div>
@@ -164,7 +167,8 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
           {/* Payment Method */}
           <div className="space-y-3">
-            <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
+            <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-3 bg-gold inline-block"></span>
               Payment Method
             </h3>
 
@@ -185,19 +189,19 @@ export const Checkout: React.FC<CheckoutProps> = ({
                     onClick={() => setPaymentMethod(pm.id)}
                     className={`p-3.5 text-left border min-h-[48px] transition-all ${
                       isSelected
-                        ? "border-[#D4AF37] bg-[#D4AF37]/10 text-black font-semibold"
+                        ? "border-gold bg-gold/10 text-black font-semibold"
                         : "border-black/10 dark:border-white/15 text-black/70 bg-white dark:bg-white/5 hover:border-black/30"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center space-x-1.5">
-                        <Icon className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <Icon className="w-3.5 h-3.5 text-gold" />
                         <span className="text-xs uppercase tracking-wider font-bold">
                           {pm.label}
                         </span>
                       </div>
                       {isSelected && (
-                        <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                        <CheckCircle2 className="w-4 h-4 text-gold" />
                       )}
                     </div>
                     <span className="text-[11px] text-black/50 dark:text-white/50 block">
@@ -209,8 +213,8 @@ export const Checkout: React.FC<CheckoutProps> = ({
             </div>
 
             {paymentMethod === "Mobile Money" && (
-              <div className="p-4 bg-white dark:bg-white/10 border border-black/10 dark:border-white/15 mt-3 space-y-3">
-                <label className="text-[11px] uppercase tracking-widest text-black/50 dark:text-white/50 font-bold block">
+              <div className="p-4 surface-glass-tint mt-3 space-y-3">
+                <label className="text-[11px] uppercase tracking-widest text-gold font-bold block">
                   Select Mobile Money Network
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -221,7 +225,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                       onClick={() => setMomoNetwork(net)}
                       className={`min-h-[44px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border transition-all ${
                         momoNetwork === net
-                          ? "border-[#D4AF37] bg-[#D4AF37] text-black shadow-xs"
+                          ? "border-gold bg-gold text-black shadow-xs"
                           : "border-black/10 dark:border-white/15 bg-white dark:bg-white/5 text-black/70 dark:text-white/80"
                       }`}
                     >
@@ -252,7 +256,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
               Confirm & Place Order — {total.toFixed(2)} GHS
             </Button>
             <div className="flex items-center justify-center space-x-1.5 text-black/45 dark:text-white/45 text-[11px] mt-3 uppercase tracking-wider">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-gold" />
               <span>Safe & Secure Ghanaian Checkout</span>
             </div>
           </div>

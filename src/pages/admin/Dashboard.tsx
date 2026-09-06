@@ -37,8 +37,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 pb-2">
         <div>
           <h2
-            className="text-2xl sm:text-3xl font-light text-black dark:text-white"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif"
           >
             Inventory Overview
           </h2>
@@ -52,27 +51,27 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-[#D4AF37] bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 border border-[#D4AF37]/40 flex items-center space-x-1.5 transition-colors"
+            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-gold/15 hover:bg-gold/25 border border-gold/40 flex items-center space-x-1.5 transition-colors"
           >
-            <TrendingUp className="w-4 h-4 text-[#D4AF37]" />
+            <TrendingUp className="w-4 h-4 text-gold" />
             <span>Record Sale</span>
           </button>
 
           <button
             type="button"
             onClick={() => onNavigateTo("restock")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-[#D4AF37] bg-[#D4AF37]/10 hover:bg-[#D4AF37]/10 border border-[#D4AF37]/40 flex items-center space-x-1.5 transition-colors"
+            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-gold/10 hover:bg-gold/10 border border-gold/40 flex items-center space-x-1.5 transition-colors"
           >
-            <RefreshCw className="w-4 h-4 text-[#D4AF37]" />
+            <RefreshCw className="w-4 h-4 text-gold" />
             <span>Restock</span>
           </button>
 
           <button
             type="button"
             onClick={() => onNavigateTo("add-product")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-black dark:text-white bg-white dark:bg-white/5 hover:bg-[#F5F5F5] dark:hover:bg-white/10 border border-black/10 dark:border-white/15 flex items-center space-x-1.5 transition-colors"
+            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-black dark:text-white bg-white dark:bg-white/5 hover:bg-cream dark:hover:bg-white/10 border border-black/10 dark:border-white/15 flex items-center space-x-1.5 transition-colors"
           >
-            <PlusCircle className="w-4 h-4 text-[#D4AF37]" />
+            <PlusCircle className="w-4 h-4 text-gold" />
             <span>+ Add Perfume</span>
           </button>
         </div>
@@ -83,13 +82,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Total Products */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-[#D4AF37]/50 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-colors group"
+          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Total Perfumes
             </span>
-            <Boxes className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-[#D4AF37] transition-colors" />
+            <Boxes className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
           </div>
           <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
             {totalProducts}
@@ -102,19 +101,19 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Low Stock Count */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className={`bg-white dark:bg-white/5 border p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-colors group ${
+          className={`relative overflow-hidden surface-glass-strong hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group ${
             lowStockProducts.length > 0
-              ? "border-[#D4AF37]/40 bg-[#D4AF37]/10 hover:border-[#D4AF37]"
-              : "border-black/10 dark:border-white/15"
+              ? "border-gold/50 bg-gold/8 hover:border-gold"
+              : "hover:border-gold/60"
           }`}
         >
-          <div className="flex items-center justify-between text-[#D4AF37] mb-2">
+          <div className="flex items-center justify-between text-gold mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Low Stock
             </span>
             <AlertTriangle className="w-4 h-4" />
           </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-[#D4AF37]">
+          <div className="text-2xl sm:text-3xl font-mono font-bold text-gold">
             {lowStockProducts.length}
           </div>
           <span className="text-[10px] text-black/50 dark:text-white/50 mt-2 block">
@@ -125,10 +124,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Out of Stock Count */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className={`bg-white dark:bg-white/5 border p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-colors group ${
+          className={`relative overflow-hidden surface-glass-strong hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group ${
             outOfStockProducts.length > 0
-              ? "border-red-900/40 bg-red-950/10 hover:border-red-600"
-              : "border-black/10 dark:border-white/15"
+              ? "border-red-900/50 bg-red-950/10 hover:border-red-600"
+              : "hover:border-gold/60"
           }`}
         >
           <div className="flex items-center justify-between text-red-500 mb-2">
@@ -148,13 +147,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Today's Orders / Sales */}
         <div
           onClick={() => onNavigateTo("orders")}
-          className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-[#D4AF37]/50 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-colors group"
+          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Today's Volume
             </span>
-            <TrendingUp className="w-4 h-4 text-[#D4AF37]" />
+            <TrendingUp className="w-4 h-4 text-gold" />
           </div>
           <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
             {todayOrders.length}{" "}
@@ -170,15 +169,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Pending Orders */}
         <div
           onClick={() => onNavigateTo("orders")}
-          className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 hover:border-[#D4AF37]/50 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-colors group col-span-2 sm:col-span-1"
+          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group col-span-2 sm:col-span-1"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Pending Orders
             </span>
-            <Clock className="w-4 h-4 text-[#D4AF37]" />
+            <Clock className="w-4 h-4 text-gold" />
           </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-[#D4AF37]">
+          <div className="text-2xl sm:text-3xl font-mono font-bold text-gold">
             {pendingOrders.length}
           </div>
           <span className="text-[10px] text-black/50 dark:text-white/50 mt-2 block">
@@ -189,26 +188,27 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* Critical Stock Alerts */}
       {(lowStockProducts.length > 0 || outOfStockProducts.length > 0) && (
-        <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="relative overflow-hidden surface-glass-strong p-5 shadow-lift">
+          <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+          <div className="relative flex items-center justify-between mb-4">
             <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-[#D4AF37]" />
+              <AlertTriangle className="w-4 h-4 text-gold" />
               <span>Fragrances Requiring Stock Replenishment</span>
             </h3>
             <button
               type="button"
               onClick={() => onNavigateTo("restock")}
-              className="text-xs text-[#D4AF37] hover:underline uppercase tracking-wider font-semibold"
+              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold"
             >
               Restock Now →
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[...outOfStockProducts, ...lowStockProducts].slice(0, 6).map((item) => (
               <div
                 key={item.id}
-                className="p-3 bg-[#F5F5F5] dark:bg-white/10 border border-black/10 dark:border-white/15 flex items-center justify-between"
+                className="p-3 surface-glass-tint flex items-center justify-between"
               >
                 <div className="flex items-center space-x-3 min-w-0">
                   <img
@@ -231,7 +231,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                       item.stock <= 0
                         ? "bg-red-950 text-red-300 border border-red-800"
-                        : "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/40"
+                        : "bg-gold/10 text-gold border border-gold/40"
                     }`}
                   >
                     {item.stock <= 0 ? "0 stock" : `${item.stock} left`}
@@ -244,21 +244,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
       )}
 
       {/* Recent Orders Overview */}
-      <div className="bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 p-5">
-        <div className="flex items-center justify-between mb-4">
+      <div className="relative overflow-hidden surface-glass-strong p-5 shadow-lift">
+        <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+        <div className="relative flex items-center justify-between mb-4">
           <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
             Recent Orders & Recorded Sales
           </h3>
           <button
             type="button"
             onClick={() => onNavigateTo("orders")}
-            className="text-xs text-[#D4AF37] hover:underline uppercase tracking-wider font-semibold"
+            className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold"
           >
             View All ({orders.length}) →
           </button>
         </div>
 
-        <div className="flex flex-col">
+        <div className="relative flex flex-col divide-y divide-black/10 dark:divide-white/10">
           {orders.slice(0, 4).map((o) => (
             <div
               key={o.id}
@@ -271,7 +272,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     className={`text-[9px] uppercase tracking-wider px-1.5 py-0.2 font-bold ${
                       o.source === "ONLINE"
                         ? "bg-black dark:bg-white text-white dark:text-black border border-white/30 dark:border-black/30"
-                        : "bg-[#D4AF37] text-black border border-[#D4AF37]/40"
+                        : "bg-gold text-black border border-gold/40"
                     }`}
                   >
                     {o.source || "ONLINE"}
@@ -283,7 +284,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
 
               <div className="text-right flex-shrink-0">
-                <span className="font-bold text-[#D4AF37]">
+                <span className="font-bold text-gold">
                   {o.total.toFixed(2)} GHS
                 </span>
                 <span className="text-[10px] uppercase tracking-wider text-black/50 dark:text-white/50 block">
