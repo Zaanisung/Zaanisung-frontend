@@ -235,6 +235,10 @@
     display: none;
   }
 }
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
 /* ── Loaders (text-free) ───────────────────────────── */
 @keyframes loader-bounce {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }

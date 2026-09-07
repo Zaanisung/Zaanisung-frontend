@@ -305,6 +305,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({
         onStartShopping={onStartShopping}
         onBrowseShop={onStartShopping}
         onGoToLogin={onGoToLogin}
+        onOpenDashboard={onOpenDashboard}
         onSelectProduct={(p) =>
           onNavigate({ type: "customer", page: "product-details", productId: p.id })
         }
@@ -330,6 +331,7 @@ export const AppRouter: React.FC<AppRouterProps> = ({
         isDark={isDark}
         onToggleTheme={onToggleTheme}
         onReturnToStorefront={() => onNavigate({ type: "landing" })}
+        onLogout={onCustomerLogout}
       >
         {view.page === "overview" && (
           <Overview

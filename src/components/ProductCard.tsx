@@ -8,6 +8,7 @@ export interface ProductCardProps {
   onSelect: (product: Product) => void;
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
   isAdded?: boolean;
+  compact?: boolean;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -15,6 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onSelect,
   onAddToCart,
   isAdded = false,
+  compact = false,
 }) => {
   const isOutOfStock = product.stock <= 0;
   const isLowStock = product.stock > 0 && product.stock <= 3;
@@ -81,19 +83,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Product information */}
-      <div className="p-4 sm:p-5 flex flex-col flex-1 gap-3.5">
+      <div
+        className={cn(
+          "flex flex-col flex-1 gap-2.5",
+          compact ? "p-3.5" : "p-4 sm:p-5"
+        )}
+      >
         <div className="flex flex-col gap-1.5 flex-1">
           <span className="eyebrow text-gold text-opacity-90 block">
             Eau de Parfum
           </span>
           <h3
-            className="font-brand-serif text-base sm:text-lg font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors"
+            className={cn(
+              "font-brand-serif font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors",
+              compact ? "text-sm" : "text-base sm:text-lg"
+            )}
             title={product.name}
           >
             {product.name}
           </h3>
 
-          {product.description && (
+          {!compact && product.description && (
             <p className="mt-0.5 text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
               {product.description}
             </p>
@@ -103,12 +113,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="hairline-black" aria-hidden="true" />
 
         <div className="flex items-baseline justify-between mt-auto">
-          <span className="text-base sm:text-lg font-bold font-mono text-gold">
+          <span className={cn("font-bold font-mono text-gold", compact ? "text-sm" : "text-base sm:text-lg")}>
             {product.price.toFixed(2)} GHS
           </span>
-          <span className="text-[10px] uppercase tracking-wider text-black/45 dark:text-white/55">
-            Extrait Oil
-          </span>
+          {!compact && (
+            <span className="text-[10px] uppercase tracking-wider text-black/45 dark:text-white/55">
+              Extrait Oil
+            </span>
+          )}
         </div>
 
         {/* Action button */}

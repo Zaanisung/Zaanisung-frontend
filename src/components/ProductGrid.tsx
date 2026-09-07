@@ -29,7 +29,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<PriceFilter>("ALL");
-  const [mobileLayout, setMobileLayout] = useState<"grid" | "showcase">("grid");
+  const [mobileLayout, setMobileLayout] = useState<"grid" | "showcase">("showcase");
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -108,8 +108,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors",
               mobileLayout === "grid" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
             )}
-            title="2 Columns"
-            aria-label="2 Columns grid"
+            title="Compact Grid"
+            aria-label="Compact grid view"
           >
             <LayoutGrid className="w-4 h-4" />
           </button>
@@ -120,8 +120,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors",
               mobileLayout === "showcase" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
             )}
-            title="Large Showcase"
-            aria-label="Large Showcase view"
+            title="Large Cards"
+            aria-label="Large cards view"
           >
             <Square className="w-4 h-4" />
           </button>
@@ -210,6 +210,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               onSelect={onSelectProduct}
               onAddToCart={onAddToCart}
               isAdded={recentlyAddedId === product.id}
+              compact={mobileLayout === "grid"}
             />
           ))}
         </div>

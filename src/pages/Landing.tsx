@@ -36,6 +36,7 @@ export interface LandingProps {
   onStartShopping: () => void;
   onBrowseShop: () => void;
   onGoToLogin: () => void;
+  onOpenDashboard?: () => void;
   onSelectProduct: (product: Product) => void;
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
   recentlyAddedId?: string | null;
@@ -66,6 +67,7 @@ export const Landing: React.FC<LandingProps> = ({
   onStartShopping,
   onBrowseShop,
   onGoToLogin,
+  onOpenDashboard,
   onSelectProduct,
   onAddToCart,
   recentlyAddedId,
@@ -391,7 +393,12 @@ export const Landing: React.FC<LandingProps> = ({
                       : "Start exploring our artisanal fragrance collection."}
                   </p>
 
-                  <Button variant="primary" size="lg" onClick={onStartShopping} className="w-full">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={isLoggedIn && onOpenDashboard ? onOpenDashboard : onStartShopping}
+                    className="w-full"
+                  >
                     {isLoggedIn ? "Continue to Dashboard" : "Start Shopping"} <ArrowRight className="w-4 h-4 ml-1.5" />
                   </Button>
 
