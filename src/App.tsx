@@ -8,6 +8,10 @@ import {
   CustomerTab,
   AdminTab,
   AppView,
+  FullUser,
+  AppNotification,
+  Address,
+  PaymentMethod,
 } from "./types";
 import * as api from "./services";
 import { getErrorMessage } from "./services";
@@ -27,12 +31,46 @@ function getInitialDark(): boolean {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
+function normalizeFullUser(user: FullUser): FullUser {
+  return {
+    ...user,
+    phone: user.phone || "",
+    addresses: Array.isArray(user.addresses) ? user.addresses : [],
+    paymentMethods: Array.isArray(user.paymentMethods) ? user.paymentMethods : [],
+    notificationPrefs: user.notificationPrefs || {
+      orderUpdates: true,
+      promotions: false,
+      sms: true,
+      email: true,
+    },
+  };
+}
+
+function toFullUser(u: CustomerUser): FullUser {
+  return normalizeFullUser({
+    id: u.id,
+    name: u.name,
+    email: u.email,
+    phone: u.phone || "",
+    role: u.role,
+    isEmailVerified: false,
+    isPhoneVerified: false,
+    passwordMustChange: false,
+    addresses: [],
+    paymentMethods: [],
+  });
+}
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [cart, setCart] = useState<OrderItem[]>([]);
-  const [customerUser, setCustomerUser] = useState<CustomerUser | null>(null);
+  const [customerUser, setCustomerUser] = useState<FullUser | null>(null);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   const [view, setView] = useState<AppView>({ type: "landing" });
   const [customerTab, setCustomerTab] = useState<CustomerTab>("shop");
@@ -75,17 +113,29 @@ export default function App() {
 
   // Check auth on mount
   useEffect(() => {
-    api.getMe().then(({ user }) => {
-      setCustomerUser({
-        id: user.id,
-        name: user.name,
-        phone: user.phone || "",
-        email: user.email,
-        role: user.role,
-      });
-      if (user.role === "ADMIN") setIsAdminLoggedIn(true);
-    }).catch(() => {});
+    api
+      .getMeProfile()
+      .then(({ user }) => {
+        setCustomerUser(normalizeFullUser(user));
+        if (user.role === "ADMIN") setIsAdminLoggedIn(true);
+      })
+      .catch(() => {});
   }, []);
+
+  // Fetch notifications for the signed-in user
+  const fetchNotifications = useCallback(async () => {
+    try {
+      const { notifications: items } = await api.getNotifications();
+      setNotifications(Array.isArray(items) ? items : []);
+    } catch {
+      /* silent */
+    }
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (customerUser) fetchNotifications();
+  }, [customerUser, fetchNotifications]);
 
   // Fetch products
   const fetchProducts = useCallback(async () => {
@@ -170,16 +220,16 @@ export default function App() {
   };
 
   const handleCreateAccount = (user: CustomerUser) => {
-    setCustomerUser(user);
+    setCustomerUser(toFullUser(user));
   };
 
   const handleRegister = (user: CustomerUser) => {
-    setCustomerUser(user);
+    setCustomerUser(toFullUser(user));
     handleStartShopping();
   };
 
   const handleLandingLogin = (user: CustomerUser) => {
-    setCustomerUser(user);
+    setCustomerUser(toFullUser(user));
     if (user.role === "ADMIN") {
       setIsAdminLoggedIn(true);
       setView({ type: "admin", page: "dashboard" });
@@ -188,7 +238,7 @@ export default function App() {
   };
 
   const handleLogin = (user: CustomerUser) => {
-    setCustomerUser(user);
+    setCustomerUser(toFullUser(user));
     if (user.role === "ADMIN") {
       setIsAdminLoggedIn(true);
       setView({ type: "admin", page: "dashboard" });
@@ -214,7 +264,174 @@ export default function App() {
   const handleCustomerLogout = async () => {
     await api.logoutUser().catch(() => {});
     setCustomerUser(null);
+    setNotifications([]);
     setView({ type: "customer", page: "login" });
+  };
+
+  // ─── CUSTOMER DASHBOARD ─────────────────────────────────────────
+  const handleOpenDashboard = () => {
+    setView({ type: "dashboard", page: "overview" });
+  };
+
+  const handleUpdateProfile = async (data: {
+    name?: string;
+    phone?: string;
+    email?: string;
+  }) => {
+    setUpdatingProfile(true);
+    setProfileError(null);
+    setProfileMessage(null);
+    try {
+      const { user } = await api.updateProfile(data);
+      setCustomerUser(normalizeFullUser(user));
+      setProfileMessage("Changes saved.");
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not update your profile."));
+    } finally {
+      setUpdatingProfile(false);
+    }
+  };
+
+  const handleChangePassword = async (data: {
+    currentPassword: string;
+    newPassword: string;
+  }) => {
+    setChangingPassword(true);
+    setProfileError(null);
+    setProfileMessage(null);
+    try {
+      const { user } = await api.changePassword(data);
+      setCustomerUser(normalizeFullUser(user));
+      setProfileMessage("Password updated.");
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not update your password."));
+    } finally {
+      setChangingPassword(false);
+    }
+  };
+
+  const handleAddAddress = async (
+    data: Omit<Address, "_id" | "isDefault"> & { isDefault?: boolean }
+  ) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.addAddress(data);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not add the address."));
+    }
+  };
+
+  const handleUpdateAddress = async (id: string, data: Partial<Omit<Address, "_id">>) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.updateAddress(id, data);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not update the address."));
+    }
+  };
+
+  const handleDeleteAddress = async (id: string) => {
+    if (!window.confirm("Remove this address?")) return;
+    setProfileError(null);
+    try {
+      const { user } = await api.deleteAddress(id);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not remove the address."));
+    }
+  };
+
+  const handleSetDefaultAddress = async (id: string) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.setDefaultAddress(id);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not set the default address."));
+    }
+  };
+
+  const handleAddPaymentMethod = async (
+    data: Omit<PaymentMethod, "_id" | "isDefault"> & { isDefault?: boolean }
+  ) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.addPaymentMethod(data);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not add the payment method."));
+    }
+  };
+
+  const handleDeletePaymentMethod = async (id: string) => {
+    if (!window.confirm("Remove this payment method?")) return;
+    setProfileError(null);
+    try {
+      const { user } = await api.deletePaymentMethod(id);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not remove the payment method."));
+    }
+  };
+
+  const handleSetDefaultPaymentMethod = async (id: string) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.setDefaultPaymentMethod(id);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not set the default payment method."));
+    }
+  };
+
+  const handleUpdateAppearance = async (data: {
+    theme?: "light" | "dark" | "system";
+    accentColor?: string;
+  }) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.updateAppearance(data);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not update your appearance."));
+    }
+  };
+
+  const handleUpdateNotificationPrefs = async (data: {
+    orderUpdates?: boolean;
+    promotions?: boolean;
+    sms?: boolean;
+    email?: boolean;
+  }) => {
+    setProfileError(null);
+    try {
+      const { user } = await api.updateNotificationPrefs(data);
+      setCustomerUser(normalizeFullUser(user));
+    } catch (err) {
+      setProfileError(getErrorMessage(err, "Could not update your preferences."));
+    }
+  };
+
+  const handleMarkNotificationRead = async (id: string) => {
+    try {
+      const { notification } = await api.markNotificationRead(id);
+      setNotifications((prev) =>
+        prev.map((n) => (n._id === id ? { ...n, readAt: notification.readAt } : n))
+      );
+    } catch {
+      /* silent */
+    }
+  };
+
+  const handleMarkAllNotificationsRead = async () => {
+    try {
+      await api.markAllNotificationsRead();
+      setNotifications((prev) => prev.map((n) => ({ ...n, readAt: n.readAt || new Date().toISOString() })));
+    } catch {
+      /* silent */
+    }
   };
 
   // Cart operations
@@ -276,6 +493,7 @@ export default function App() {
           address: orderData.deliveryAddress,
           city: "Tamale",
           phone: orderData.customerPhone,
+          ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
         },
         payment: {
           method: orderData.paymentMethod,
@@ -431,6 +649,25 @@ export default function App() {
       onAdminLoginSuccess={handleAdminLoginSuccess}
       onAdminLogout={handleAdminLogout}
       onCustomerLogout={handleCustomerLogout}
+      notifications={notifications}
+      updatingProfile={updatingProfile}
+      changingPassword={changingPassword}
+      profileError={profileError}
+      profileMessage={profileMessage}
+      onOpenDashboard={handleOpenDashboard}
+      onUpdateProfile={handleUpdateProfile}
+      onChangePassword={handleChangePassword}
+      onAddAddress={handleAddAddress}
+      onUpdateAddress={handleUpdateAddress}
+      onDeleteAddress={handleDeleteAddress}
+      onSetDefaultAddress={handleSetDefaultAddress}
+      onAddPaymentMethod={handleAddPaymentMethod}
+      onDeletePaymentMethod={handleDeletePaymentMethod}
+      onSetDefaultPaymentMethod={handleSetDefaultPaymentMethod}
+      onUpdateAppearance={handleUpdateAppearance}
+      onUpdateNotificationPrefs={handleUpdateNotificationPrefs}
+      onMarkNotificationRead={handleMarkNotificationRead}
+      onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
     />
   );
 }

@@ -4,9 +4,10 @@
 
 ## Overview
 
-Mobile-first React SPA for Zaanisung Ent. GH — a perfume resale e-commerce storefront
-plus a dedicated admin portal. The app is intentionally dependency-light (no
-`react-router`): navigation is a typed **view-state machine** driven from `App.tsx`.
+Mobile-first React SPA for Zaanisung Ent. GH — a perfume resale e-commerce
+storefront, a logged-in customer dashboard, and a dedicated admin portal. The app
+is intentionally dependency-light (no `react-router`): navigation is a typed
+**view-state machine** driven from `App.tsx`.
 
 - **Runtime:** React 19
 - **Build:** Vite 8
@@ -24,41 +25,51 @@ src/
 ├── App.tsx                # Single source of truth for state + effects
 ├── router.tsx             # Pure view renderer (AppView → component)
 ├── types/
-│   ├── nav.ts             # AppView, CustomerTab, AdminTab
+│   ├── nav.ts             # AppView, CustomerTab, AdminTab, DashboardPage
 │   ├── product.ts         # Product (+ selection types)
-│   ├── order.ts           # Order, OrderItem, statuses
-│   ├── user.ts            # AuthUser, DashboardData…
+│   ├── order.ts           # Order, OrderItem, statuses (+ delivery.digitalAddress)
+│   ├── user.ts            # FullUser, AuthUser/CustomerUser, Address, PaymentMethod,
+│   │                      #   NotificationPrefs, AppNotification
 │   └── index.ts           # Barrel
 ├── services/
 │   ├── apiClient.ts       # fetch wrapper + error normalization
-│   ├── auth.service.ts    # register/login/logout/me
+│   ├── auth.service.ts    # register/login/logout/me + change-password
 │   ├── product.service.ts # catalog + admin product CRUD
 │   ├── order.service.ts   # customer order endpoints
 │   ├── inventory.service.ts # restock / record-sale / adjust / history
 │   ├── admin.service.ts   # all-orders + status updates + dashboard KPIs
+│   ├── profile.service.ts # profile, addresses, payment methods, appearance,
+│   │                      #   preferences, change-password, Paystack init/verify
+│   ├── notification.service.ts # notification list + mark read / read-all
 │   └── index.ts           # Barrel
 ├── components/
-│   ├── ui/                # Reusable primitives (SearchInput, StatusBadge…)
+│   ├── ui/                # Reusable primitives (SearchInput, StatusBadge, Loader,
+│   │                      #   Fallback/Skeleton, EmptyState…)
 │   ├── Button.tsx         # Shared button system
 │   ├── Input.tsx          # Shared form input
 │   ├── ProductCard.tsx    # Catalog card
 │   ├── ProductGrid.tsx    # Grid + filters, search, sort
 │   └── …                  # Logo, Carousel, theme toggle, nav pieces
 ├── layouts/
-│   ├── CustomerLayout.tsx # Customer chrome (header/bottom nav/footer)
-│   └── AdminLayout.tsx    # Admin chrome (sidebar/header)
+│   ├── CustomerLayout.tsx      # Customer chrome (header/bottom nav/footer)
+│   ├── UserDashboardLayout.tsx # Customer dashboard chrome (sidebar, NO footer)
+│   └── AdminLayout.tsx         # Admin chrome (sidebar/header)
 ├── pages/
 │   ├── Landing.tsx        # Marketing landing
 │   ├── Login.tsx / Register.tsx
 │   ├── Shop.tsx / ProductDetails.tsx
 │   ├── Cart.tsx / Checkout.tsx / OrderConfirmation.tsx / Orders.tsx
-│   ├── Account.tsx
+│   ├── Account.tsx        # public account (with "Go to Dashboard")
+│   ├── dashboard/         # Overview, Addresses, PaymentMethods, Notifications,
+│   │                      #   Settings (+ their .test.tsx files)
 │   └── admin/             # AdminLogin, Dashboard, Inventory, AddProduct,
-│                          # EditProduct, RecordSale, Restock, Orders, Account
+│                          #   EditProduct, RecordSale, Restock, Orders, Account
 ├── utils/
 │   ├── cn.ts              # className joiner (no Tailwind conflict merging)
 │   └── image.ts
-├── index.css              # Design tokens + component classes
+├── test/
+│   └── setup.ts           # jest-dom matchers for Vitest
+├── index.css              # Design tokens + component classes (incl. loaders/skeletons)
 └── (App.tsx)              # State owner
 ```
 
@@ -96,6 +107,18 @@ file — use the tokens. See [DESIGN-SYSTEM.md](./DESIGN-SYSTEM.md).
 3. Error messages always come from `getErrorMessage(...)`, never raw fetch output.
 4. Dark mode uses `.dark` on `<html>` toggled by the single source of truth in App.
 5. Admin role is verified server-side; the frontend only hides/permits UX.
+6. User-facing errors are deliberately vague; loaders are text-free (see
+   `components/ui/Loader.tsx` and `components/ui/Fallback.tsx`).
+7. The customer dashboard layout (sidebar, **no footer**) hosts account self-service;
+   the footer only exists on public storefront pages.
+
+## Testing
+
+Vitest + React Testing Library (jsdom) run via `npm test` / `npm run test:watch`
+(config in `vite.config.ts`, setup in `src/test/setup.ts`). Tests live beside their
+components/pages: `components/ui/Loader.test.tsx`, `components/ui/Fallback.test.tsx`,
+`pages/dashboard/Addresses.test.tsx`, `pages/dashboard/Notifications.test.tsx`
+(19 tests).
 
 ## See Also
 

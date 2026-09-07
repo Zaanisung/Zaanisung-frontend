@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Product } from "../types";
 import { ProductCard } from "./ProductCard";
 import { SearchInput } from "./ui/SearchInput";
+import { Loader } from "./ui/Loader";
 import { AlertCircle, LayoutGrid, Square } from "lucide-react";
 import { cn } from "../utils/cn";
 
@@ -149,11 +150,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
       {/* Loading */}
       {isLoading ? (
-        <div className="py-24 flex flex-col items-center justify-center text-center">
-          <div className="w-10 h-10 border-2 border-gold border-t-transparent animate-spin mb-4"></div>
-          <p className="text-black/50 dark:text-white/50 font-medium text-xs uppercase tracking-widest">
-            Loading perfumes...
-          </p>
+        <div className="py-24 flex items-center justify-center">
+          <Loader variant="circles" size="lg" />
         </div>
       ) : error ? (
         <div className="p-8 bg-white dark:bg-white/5 border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8">

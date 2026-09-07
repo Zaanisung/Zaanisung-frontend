@@ -27,6 +27,19 @@ export type AppView =
   | { type: "customer"; page: "order-confirmation"; orderId: string }
   | { type: "customer"; page: "orders" }
   | { type: "customer"; page: "account" }
+  | { type: "dashboard"; page: "overview" }
+  | { type: "dashboard"; page: "profile" }
+  | { type: "dashboard"; page: "security" }
+  | { type: "dashboard"; page: "settings" }
+  | { type: "dashboard"; page: "addresses" }
+  | { type: "dashboard"; page: "payment-methods" }
+  | { type: "dashboard"; page: "notifications" }
+  | { type: "dashboard"; page: "orders" }
+  | { type: "dashboard"; page: "shop" }
+  | { type: "dashboard"; page: "cart" }
+  | { type: "dashboard"; page: "checkout" }
+  | { type: "dashboard"; page: "order-confirmation"; orderId: string }
+  | { type: "dashboard"; page: "product-details"; productId: string }
   | { type: "admin"; page: "login" }
   | { type: "admin"; page: "dashboard" }
   | { type: "admin"; page: "inventory" }
@@ -38,6 +51,8 @@ export type AppView =
   | { type: "admin"; page: "account" };
 ```
 
+`DashboardPage` (`src/types/nav.ts`) is the discriminated union of dashboard pages;
+the `dashboard` view is a logged-in counterpart to the public customer screens.
 TypeScript exhaustiveness means adding a screen in `AppView` forces an update to
 `AppRouter` — navigation can never silently drop a route.
 
@@ -51,6 +66,13 @@ TypeScript exhaustiveness means adding a screen in `AppView` forces an update to
 | `customer` `product-details?productId`       | `pages/ProductDetails`                     |
 | `customer` `cart` / `checkout` / `orders` / `account` | `pages/Cart` / `Checkout` / `Orders` / `Account` |
 | `customer` `order-confirmation?orderId`      | `pages/OrderConfirmation`                  |
+| `dashboard` `overview`                       | `pages/dashboard/Overview`                 |
+| `dashboard` `addresses`                      | `pages/dashboard/Addresses`                |
+| `dashboard` `payment-methods`                | `pages/dashboard/PaymentMethods`           |
+| `dashboard` `notifications`                  | `pages/dashboard/Notifications`            |
+| `dashboard` `settings`                       | `pages/dashboard/Settings`                 |
+| `dashboard` `shop` / `product-details` / `cart` / `checkout` / `order-confirmation` / `orders` | **Reused** storefront pages (`Shop`, `ProductDetails`, `Cart`, `Checkout`, `OrderConfirmation`, `Orders`) |
+| all other `dashboard` pages                  | under `UserDashboardLayout` (sidebar, no footer) |
 | `admin` `login`                              | `pages/admin/AdminLogin` (no layout)       |
 | `admin` others                               | `pages/admin/*` under `AdminLayout`        |
 | `admin` `edit-product?productId`             | `pages/admin/EditProduct`                  |
@@ -71,7 +93,7 @@ children receive a stable, fully-wired interface.
 
 ## Behaviors That Must Not Regress
 
-These are intentional asymmetries encoded in App’s handlers:
+These are intentional asymmetries encoded in App's handlers:
 
 | Event            | Where it lands                            |
 | ---------------- | ----------------------------------------- |
@@ -80,7 +102,14 @@ These are intentional asymmetries encoded in App’s handlers:
 | Register         | account created → shop                    |
 | Admin login      | admin dashboard                           |
 | Start shopping   | from landing hero → shop                  |
+| "Go to Dashboard"| public `Account` page → `dashboard` `overview` (via `onOpenDashboard`) |
 | Customer logout / Admin logout | clears auth and returns to landing / admin login |
+
+**Login into the dashboard:** the "Go to Dashboard" button on the public account
+page (`pages/Account.tsx`) routes into `{ type: "dashboard", page: "overview" }`
+wrapped in `UserDashboardLayout`. The dashboard reuses the storefront Shop / Cart /
+Checkout / Orders / ProductDetails / OrderConfirmation pages within its own sidebar
+shell, so shopping flows started inside the dashboard stay there.
 
 ## Extending Navigation
 

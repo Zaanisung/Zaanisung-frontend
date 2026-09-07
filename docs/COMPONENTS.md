@@ -78,6 +78,36 @@ a product thumbnail has no bespoke hover treatment (e.g. cart, admin inventory).
 The branded empty pane: glass surface, gold hairline, corner brackets, faint gold
 orb, optional icon/title/message/action.
 
+### `Loader`
+
+```tsx
+<Loader variant="dots" | "squares" | "circles" size="sm" | "md" | "lg" />
+<PageLoader variant="squares" />   // full-bleed centred, page-level async
+```
+**Text-free by design** — pure motion, no words. Always renders `role="status"`
+with an `aria-label="Loading"`. Three dot-based variants animate in gold via the
+`loader-*` keyframes: `dots` (bounce), `squares` and `circles` (scale pulse).
+Never attach visible copy to a loader; if context is needed, put it in the page.
+
+### `ErrorFallback`
+
+```tsx
+<ErrorFallback title="Something went wrong" hint="Please try again in a moment." onRetry={…} />
+```
+Vague by design — it never shows internal details, only a generic title/hint and an
+optional **Try again** retry button (rendered only when `onRetry` is provided).
+
+### `Skeleton` / `SkeletonText` / `SkeletonCard`
+
+```tsx
+<Skeleton className="h-4 w-1/3" />
+<SkeletonText lines={2} />
+<SkeletonCard />
+```
+Shimmer placeholders built on the `.skeleton` token in `src/index.css` (with a
+`.dark` variant). `SkeletonCard` composes a bordered block + title bar + text lines
+for repeatable list/feed loading states. All are `aria-hidden="true"`.
+
 ## Shared Components
 
 - **`Button`** (`components/Button.tsx`) — variants `primary | secondary | gold |
@@ -97,6 +127,10 @@ orb, optional icon/title/message/action.
 
 - **`CustomerLayout`** — header (logo, theme toggle, minimised cart/orders),
   `BottomNav` on mobile, `Footer`.
+- **`UserDashboardLayout`** — customer dashboard chrome: desktop sidebar
+  (Overview, Orders, Addresses, Payment Methods, Notifications, Settings) plus a
+  mobile header/bottom nav. **No footer** — it only exists on public pages. Wired
+  by `AppRouter` to the `dashboard/*` views.
 - **`AdminLayout`** — admin header/sidebar (Dashboard, Inventory, Orders, Account),
   stateless, wired by `AppRouter`.
 
@@ -109,6 +143,9 @@ orb, optional icon/title/message/action.
 | Order status display| `StatusBadge`                   |
 | Product thumbnail   | `ProductImage` (unless custom hover) |
 | Empty list/screen   | `EmptyState`                    |
+| Loading state       | `Loader` / `PageLoader` (text-free) |
+| Loading placeholder | `Skeleton` / `SkeletonText` / `SkeletonCard` |
+| Error screen        | `ErrorFallback` (vague, optional retry) |
 | CTA / form actions  | `Button`                        |
 | Form fields         | `Input`                         |
 

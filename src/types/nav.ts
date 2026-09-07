@@ -1,6 +1,21 @@
 export type CustomerTab = "shop" | "orders" | "cart" | "account";
 export type AdminTab = "dashboard" | "inventory" | "orders" | "account";
 
+export type DashboardPage =
+  | "overview"
+  | "shop"
+  | "cart"
+  | "checkout"
+  | "product-details"
+  | "order-confirmation"
+  | "orders"
+  | "addresses"
+  | "payment-methods"
+  | "notifications"
+  | "settings"
+  | "profile"
+  | "security";
+
 export type AppView =
   | { type: "landing" }
   | { type: "customer"; page: "login" }
@@ -12,6 +27,19 @@ export type AppView =
   | { type: "customer"; page: "order-confirmation"; orderId: string }
   | { type: "customer"; page: "orders" }
   | { type: "customer"; page: "account" }
+  | { type: "dashboard"; page: "overview" }
+  | { type: "dashboard"; page: "profile" }
+  | { type: "dashboard"; page: "security" }
+  | { type: "dashboard"; page: "settings" }
+  | { type: "dashboard"; page: "addresses" }
+  | { type: "dashboard"; page: "payment-methods" }
+  | { type: "dashboard"; page: "notifications" }
+  | { type: "dashboard"; page: "orders" }
+  | { type: "dashboard"; page: "shop" }
+  | { type: "dashboard"; page: "cart" }
+  | { type: "dashboard"; page: "checkout" }
+  | { type: "dashboard"; page: "order-confirmation"; orderId: string }
+  | { type: "dashboard"; page: "product-details"; productId: string }
   | { type: "admin"; page: "login" }
   | { type: "admin"; page: "dashboard" }
   | { type: "admin"; page: "inventory" }

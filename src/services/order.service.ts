@@ -16,6 +16,7 @@ export interface Order {
     address: string;
     city: string;
     phone: string;
+    digitalAddress?: string;
   };
   payment: {
     method: string;
@@ -28,7 +29,7 @@ export interface Order {
 
 export async function placeOrder(data: {
   products: { productId: string; quantity: number }[];
-  delivery: { address: string; city: string; phone: string };
+  delivery: { address: string; city: string; phone: string; digitalAddress?: string };
   payment: { method: string; reference?: string };
 }): Promise<{ order: Order }> {
   return request("/orders", {

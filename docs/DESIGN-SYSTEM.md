@@ -53,6 +53,17 @@ raw hex color classes. Accent via `text-gold`, `border-gold`, `bg-gold/…`.
   sections (typically with a fading mask).
 - `shadow-lift` and `shadow-gold-glow` — elevation and gold glow elevations.
 
+## Motion & Loading States
+
+- `.loader-dot` — 3 gold dots, `loader-bounce` (translate + opacity).
+- `.loader-circle` / `.loader-square` — 3 gold marks, `loader-spin-dot` scale pulse.
+- `.skeleton` — shimmer via `shimmer` keyframes (grey in light mode, white-tinted
+  in `.dark`). Composed by `Skeleton`, `SkeletonText`, `SkeletonCard`.
+
+**Rule:** loading indicators are **text-free** (see `ui/Loader.tsx`) — never pair a
+loader with visible copy; put context on the page instead. Error feedback is always
+vague (`ui/Fallback.tsx`), never internal detail.
+
 ## Dark Mode
 
 Toggled by `.dark` on `<html>` (state lives in `App.tsx`, `ThemeToggle` toggles it).

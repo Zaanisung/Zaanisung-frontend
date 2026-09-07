@@ -32,22 +32,31 @@ lint/typecheck; UI code must not do ad-hoc `error.message` reads.
 | `order.service.ts`     | `placeOrder`, `getMyOrders`, `getMyOrder`              | `/orders*` (customer, authed)  |
 | `inventory.service.ts` | `restockProduct`, `recordPhysicalSale`, `adjustStock`, `getStockHistory` | `/admin/inventory*` |
 | `admin.service.ts`     | `getAllOrders`, `updateOrderStatus`, `getDashboard`    | `/admin/orders*`, `/admin/dashboard` |
+| `profile.service.ts`   | `getMeProfile`, `updateProfile`, `addAddress`, `updateAddress`, `deleteAddress`, `setDefaultAddress`, `addPaymentMethod`, `setDefaultPaymentMethod`, `deletePaymentMethod`, `updateAppearance`, `updateNotificationPrefs`, `changePassword`, `initializePayment`, `verifyPayment` | `/me*`, `/auth/change-password`, `/payments/*` |
+| `notification.service.ts` | `getNotifications`, `markNotificationRead`, `markAllNotificationsRead` | `/notifications*` |
 
 All functions return the backend's raw payload (`{ products }`, `{ order }`,
-`{ orders }`, `{ movements }`, `{ user }`, …) typed against `src/types/`.
+`{ orders }`, `{ movements }`, `{ user }`, `{ notifications }`, …) typed against
+`src/types/`.
+
+`profile.service.ts` powers the customer dashboard — profile/address/payment-method
+editing, appearance and notification prefs, password change, and the Paystack
+initialize/verify flow.
 
 ## Types Boundary (`src/types/`)
 
 | Module        | Contents                                                      |
 | ------------- | ------------------------------------------------------------- |
-| `nav.ts`      | `AppView`, `CustomerTab`, `AdminTab`                          |
+| `nav.ts`      | `AppView`, `CustomerTab`, `AdminTab`, `DashboardPage`         |
 | `product.ts`  | `Product`, related selection/detail types                     |
-| `order.ts`    | `Order`, `OrderItem`, `OrderStatus` literal union             |
-| `user.ts`     | `AuthUser`, `DashboardData`, auth payloads                    |
+| `order.ts`    | `Order`, `OrderItem`, `OrderStatus` literal union; `delivery.digitalAddress` optional |
+| `user.ts`     | `FullUser`, `CustomerUser`, `Address`, `PaymentMethod`, `NotificationPrefs`, `AppNotification`, `GhanaRegion` |
 | `index.ts`    | Barrel — pages should import from `"../types"` (the barrel)   |
 
 `OrderStatus` mirrors the backend enum so `StatusBadge` and admin controls share one
-source of truth on the client.
+source of truth on the client. `FullUser` mirrors the backend user payload including
+`addresses` (with the Ghana Post `digitalAddress`), `paymentMethods`,
+`notificationPrefs`, `isEmailVerified`/`isPhoneVerified`, and `passwordMustChange`.
 
 ## Conventions
 

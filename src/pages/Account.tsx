@@ -1,18 +1,20 @@
 import React from "react";
 import { CustomerUser } from "../types";
 import { Button } from "../components/Button";
-import { User, Phone, Mail, LogOut } from "lucide-react";
+import { User, Phone, Mail, LogOut, LayoutDashboard, ArrowRight } from "lucide-react";
 
 export interface AccountProps {
   user: CustomerUser | null;
   onLogout: () => void;
   onNavigateToLogin: () => void;
+  onOpenDashboard?: () => void;
 }
 
 export const Account: React.FC<AccountProps> = ({
   user,
   onLogout,
   onNavigateToLogin,
+  onOpenDashboard,
 }) => {
   if (!user) {
     return (
@@ -88,6 +90,23 @@ export const Account: React.FC<AccountProps> = ({
             </div>
           )}
         </div>
+
+        {/* Dashboard action */}
+        {onOpenDashboard && (
+          <div className="pt-2">
+            <Button
+              type="button"
+              variant="primary"
+              size="md"
+              onClick={onOpenDashboard}
+              className="w-full flex items-center justify-center gap-2 font-bold"
+            >
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Go to Dashboard</span>
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
 
         {/* Logout Action */}
         <div className="pt-2">

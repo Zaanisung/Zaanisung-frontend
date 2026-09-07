@@ -15,6 +15,7 @@ export interface CheckoutProps {
     customerName: string;
     customerPhone: string;
     deliveryAddress: string;
+    digitalAddress?: string;
     paymentMethod: string;
   }) => void;
 }
@@ -29,6 +30,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
   const [name, setName] = useState(defaultName);
   const [phone, setPhone] = useState(defaultPhone);
   const [address, setAddress] = useState("");
+  const [digitalAddress, setDigitalAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"Mobile Money" | "Cash on Delivery" | "Other">("Mobile Money");
   const [momoNumber, setMomoNumber] = useState(defaultPhone);
   const [momoNetwork, setMomoNetwork] = useState("MTN MoMo");
@@ -51,6 +53,10 @@ export const Checkout: React.FC<CheckoutProps> = ({
       setError("Please provide your delivery address (House/Street/Location).");
       return;
     }
+    if (digitalAddress.trim() && !/^[A-Za-z]{2}-\d{4}-\d{4}$/.test(digitalAddress.trim())) {
+      setError("Please enter a valid Ghana digital address, e.g. NT-0000-0000.");
+      return;
+    }
 
     setIsSubmitting(true);
     setError(null);
@@ -63,6 +69,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
         customerName: name.trim(),
         customerPhone: phone.trim(),
         deliveryAddress: address.trim(),
+        digitalAddress: digitalAddress.trim() ? digitalAddress.trim().toUpperCase() : undefined,
         paymentMethod: paymentMethod === "Mobile Money" ? `${paymentMethod} (${momoNetwork})` : paymentMethod,
       });
     }, 600);
@@ -163,6 +170,15 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 required
               />
             </div>
+
+            <Input
+              label="Ghana Digital Address (optional)"
+              type="text"
+              value={digitalAddress}
+              onChange={(e) => setDigitalAddress(e.target.value)}
+              placeholder="e.g. NT-0000-0000 (Ghana Post)"
+              helperText="Ghana Post digital address for precise courier routing"
+            />
           </div>
 
           {/* Payment Method */}

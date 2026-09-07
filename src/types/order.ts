@@ -23,6 +23,7 @@ export type Order = {
     address: string;
     city: string;
     phone: string;
+    digitalAddress?: string;
   };
   payment?: {
     method: string;
