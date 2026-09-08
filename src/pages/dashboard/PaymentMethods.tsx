@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import type { PaymentMethod, PaymentMethodType } from "../../types/user";
 import { EmptyState } from "../../components/ui/EmptyState";
-import { Loader } from "../../components/ui/Loader";
+import { Modal } from "../../components/ui/Modal";
+import { Dropdown } from "../../components/ui/Dropdown";
+import { Popover } from "../../components/ui/Popover";
 import { PaymentMethodLogo } from "../../components/PaymentMethodLogo";
 import {
   Plus,
   Trash2,
   Star,
-  X,
   CreditCard,
+  Smartphone,
+  Building2,
+  Banknote,
+  MoreVertical,
 } from "lucide-react";
 
 export interface PaymentMethodsProps {
@@ -33,9 +38,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   onDeletePaymentMethod,
   onSetDefaultPaymentMethod,
 }) => {
-  const [showForm, setShowForm] = useState(false);
-  const [loading] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   const [type, setType] = useState<PaymentMethodType>("MOBILE_MONEY");
   const [provider, setProvider] = useState("");
   const [label, setLabel] = useState("");
@@ -58,7 +61,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
     setBankName("");
     setAccountNumber("");
     setAccountName("");
-    setShowForm(false);
+    setShowModal(false);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -104,7 +107,14 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   };
 
   const inputClass =
-    "w-full min-h-[44px] px-3 py-2 text-sm bg-white dark:bg-white/5 border border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:border-gold transition-colors";
+    "w-full min-h-[44px] px-4 py-2.5 rounded-lg text-sm surface-glass-strong border border-black/15 dark:border-white/20 text-ink dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]";
+
+  const typeOptions = [
+    { value: "MOBILE_MONEY", label: "Mobile Money", icon: <Smartphone className="w-4 h-4" /> },
+    { value: "CARD", label: "Card", icon: <CreditCard className="w-4 h-4" /> },
+    { value: "BANK", label: "Bank Transfer", icon: <Building2 className="w-4 h-4" /> },
+    { value: "CASH", label: "Cash on Delivery", icon: <Banknote className="w-4 h-4" /> },
+  ];
 
   return (
     <div className="w-full space-y-6">
@@ -117,153 +127,238 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             Payment Methods
           </h2>
         </div>
-        {!showForm && (
-          <button
-            type="button"
-            onClick={() => setShowForm(true)}
-            className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center gap-2"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Method</span>
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => setShowModal(true)}
+          className="min-h-[44px] rounded-lg px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-2 shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add Method</span>
+        </button>
       </div>
 
-      {showForm && (
-        <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
-              New Payment Method
-            </h3>
+      {paymentMethods.length === 0 ? (
+        <EmptyState
+          icon={<CreditCard className="w-16 h-16 text-gold" />}
+          title="No Payment Methods Yet"
+          description="Add a payment method to complete your purchases faster."
+          action={
             <button
               type="button"
-              onClick={resetForm}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-black/45 dark:text-white/45 hover:text-black dark:hover:text-white transition-colors"
+              onClick={() => setShowModal(true)}
+              className="min-h-[44px] rounded-lg px-5 py-2.5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms]"
             >
-              <X className="w-4 h-4" />
+              Add Your First Method
             </button>
+          }
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {paymentMethods.map((pm) => (
+            <div
+              key={pm._id}
+              className="surface-glass-strong rounded-xl border border-black/10 dark:border-white/15 p-5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                  <PaymentMethodLogo
+                    className="w-12 h-8 rounded-lg flex-shrink-0"
+                    provider={pm.provider}
+                    type={pm.type}
+                    details={pm.details}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-medium text-ink dark:text-white">
+                        {pm.label}
+                      </span>
+                      {pm.isDefault && (
+                        <span className="inline-flex items-center gap-1 rounded-lg px-2 py-0.5 bg-gold/10 text-gold text-[10px] uppercase tracking-wider font-bold">
+                          <Star className="w-3 h-3 fill-gold" />
+                          Default
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-black/50 dark:text-white/50 mb-0.5">
+                      {typeLabels[pm.type]}
+                    </p>
+                    <p className="text-xs text-black/70 dark:text-white/70 font-mono">
+                      {maskDetails(pm)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action menu */}
+                <Popover
+                  trigger={
+                    <button
+                      type="button"
+                      className="min-h-[36px] min-w-[36px] rounded-lg flex items-center justify-center text-black/45 dark:text-white/45 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-[400ms]"
+                      aria-label="Payment method options"
+                    >
+                      <MoreVertical className="w-4 h-4" />
+                    </button>
+                  }
+                  content={
+                    <div className="py-1 min-w-[160px]">
+                      {!pm.isDefault && (
+                        <button
+                          type="button"
+                          onClick={() => onSetDefaultPaymentMethod(pm._id)}
+                          className="w-full px-4 py-2.5 text-left text-sm text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-white flex items-center gap-2 transition-all duration-[400ms]"
+                        >
+                          <Star className="w-4 h-4" />
+                          <span>Set as Default</span>
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (window.confirm("Remove this payment method?")) {
+                            onDeletePaymentMethod(pm._id);
+                          }
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2 transition-all duration-[400ms]"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
+                  }
+                  position="bottom"
+                  align="end"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Add Payment Method Modal */}
+      <Modal
+        isOpen={showModal}
+        onClose={resetForm}
+        title="Add Payment Method"
+        size="lg"
+      >
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Payment Type Dropdown */}
+          <Dropdown
+            label="Payment Type"
+            options={typeOptions}
+            value={type}
+            onChange={(value) => setType(value as PaymentMethodType)}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
+                Provider
+              </label>
+              <input
+                type="text"
+                value={provider}
+                onChange={(e) => setProvider(e.target.value)}
+                placeholder="e.g. MTN, Visa, GCB"
+                required
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
+                Label
+              </label>
+              <input
+                type="text"
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
+                placeholder="e.g. Personal, Business"
+                required
+                className={inputClass}
+              />
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Conditional fields based on type */}
+          {type === "MOBILE_MONEY" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                  Type
-                </label>
-                <select
-                  value={type}
-                  onChange={(e) => setType(e.target.value as PaymentMethodType)}
-                  className={inputClass}
-                >
-                  <option value="MOBILE_MONEY">Mobile Money</option>
-                  <option value="CARD">Card</option>
-                  <option value="BANK">Bank Transfer</option>
-                  <option value="CASH">Cash on Delivery</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                  Provider
+                  Network
                 </label>
                 <input
                   type="text"
-                  value={provider}
-                  onChange={(e) => setProvider(e.target.value)}
-                  placeholder="e.g. MTN, Visa"
+                  value={momoNetwork}
+                  onChange={(e) => setMomoNetwork(e.target.value)}
+                  placeholder="MTN MoMo, Telecel Cash, AT Money"
                   required
                   className={inputClass}
                 />
               </div>
               <div>
                 <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                  Label
+                  Mobile Number
                 </label>
                 <input
-                  type="text"
-                  value={label}
-                  onChange={(e) => setLabel(e.target.value)}
-                  placeholder="e.g. Personal"
+                  type="tel"
+                  value={momoNumber}
+                  onChange={(e) => setMomoNumber(e.target.value)}
+                  placeholder="+233 24 000 0000"
                   required
                   className={inputClass}
                 />
               </div>
             </div>
+          )}
 
-            {type === "MOBILE_MONEY" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                    Network
-                  </label>
-                  <input
-                    type="text"
-                    value={momoNetwork}
-                    onChange={(e) => setMomoNetwork(e.target.value)}
-                    placeholder="e.g. MTN, Vodafone, AirtelTigo"
-                    required
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                    Mobile Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={momoNumber}
-                    onChange={(e) => setMomoNumber(e.target.value)}
-                    required
-                    className={inputClass}
-                  />
-                </div>
+          {type === "CARD" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
+                  Card Brand
+                </label>
+                <input
+                  type="text"
+                  value={cardBrand}
+                  onChange={(e) => setCardBrand(e.target.value)}
+                  placeholder="Visa, Mastercard, Amex"
+                  required
+                  className={inputClass}
+                />
               </div>
-            )}
-
-            {type === "CARD" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                    Card Brand
-                  </label>
-                  <input
-                    type="text"
-                    value={cardBrand}
-                    onChange={(e) => setCardBrand(e.target.value)}
-                    placeholder="e.g. Visa, Mastercard"
-                    required
-                    className={inputClass}
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                    Last 4 Digits
-                  </label>
-                  <input
-                    type="text"
-                    value={cardLast4}
-                    onChange={(e) => setCardLast4(e.target.value)}
-                    maxLength={4}
-                    required
-                    className={inputClass}
-                  />
-                </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
+                  Last 4 Digits
+                </label>
+                <input
+                  type="text"
+                  value={cardLast4}
+                  onChange={(e) => setCardLast4(e.target.value)}
+                  placeholder="1234"
+                  maxLength={4}
+                  required
+                  className={inputClass}
+                />
               </div>
-            )}
+            </div>
+          )}
 
-            {type === "BANK" && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
-                    Bank Name
-                  </label>
-                  <input
-                    type="text"
-                    value={bankName}
-                    onChange={(e) => setBankName(e.target.value)}
-                    required
-                    className={inputClass}
-                  />
-                </div>
+          {type === "BANK" && (
+            <div className="space-y-4">
+              <div>
+                <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
+                  Bank Name
+                </label>
+                <input
+                  type="text"
+                  value={bankName}
+                  onChange={(e) => setBankName(e.target.value)}
+                  placeholder="e.g. GCB Bank, Ecobank"
+                  required
+                  className={inputClass}
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-1.5">
                     Account Number
@@ -272,6 +367,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                     type="text"
                     value={accountNumber}
                     onChange={(e) => setAccountNumber(e.target.value)}
+                    placeholder="1234567890"
                     required
                     className={inputClass}
                   />
@@ -284,115 +380,34 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
                     type="text"
                     value={accountName}
                     onChange={(e) => setAccountName(e.target.value)}
+                    placeholder="John Doe"
                     required
                     className={inputClass}
                   />
                 </div>
               </div>
-            )}
-
-            <div className="flex items-center gap-3 pt-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 disabled:opacity-50 transition-colors flex items-center gap-2"
-              >
-                {loading && <Loader variant="dots" size="sm" />}
-                <span>Add Method</span>
-              </button>
-              <button
-                type="button"
-                onClick={resetForm}
-                className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-              >
-                Cancel
-              </button>
             </div>
-          </form>
-        </div>
-      )}
+          )}
 
-      {paymentMethods.length === 0 && !showForm ? (
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <EmptyState
-            icon={<CreditCard className="w-6 h-6 stroke-[1.5]" />}
-            title="No payment methods saved"
-            message="Add a payment method to speed up checkout."
-            action={
-              <button
-                type="button"
-                onClick={() => setShowForm(true)}
-                className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Payment Method</span>
-              </button>
-            }
-          />
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {paymentMethods.map((pm) => (
-            <div
-              key={pm._id}
-              className={`border bg-white/60 dark:bg-white/[0.03] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${
-                pm.isDefault
-                  ? "border-gold/50 bg-gold/5"
-                  : "border-black/10 dark:border-white/15"
-              }`}
+          <div className="hairline-black my-4" />
+
+          <div className="flex items-center gap-3 pt-2">
+            <button
+              type="submit"
+              className="flex-1 min-h-[48px] rounded-lg px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)] hover:scale-[1.02] active:scale-[0.98]"
             >
-              <div className="flex items-center gap-4">
-                <PaymentMethodLogo
-                  className="w-10 h-7 flex-shrink-0 overflow-hidden rounded"
-                  provider={pm.provider}
-                  type={pm.type}
-                  details={pm.details}
-                />
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-black dark:text-white">
-                      {pm.label}
-                    </span>
-                    {pm.isDefault && (
-                      <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold bg-gold/15 text-gold border border-gold/40 flex items-center gap-1">
-                        <Star className="w-2.5 h-2.5 fill-gold" />
-                        Default
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-black/50 dark:text-white/50 mt-0.5">
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-black/40 dark:text-white/40 mr-2">
-                      {typeLabels[pm.type]}
-                    </span>
-                    {maskDetails(pm)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 flex-shrink-0">
-                {!pm.isDefault && (
-                  <button
-                    type="button"
-                    onClick={() => onSetDefaultPaymentMethod(pm._id)}
-                    className="min-h-[36px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold border border-gold/40 hover:bg-gold/10 transition-colors flex items-center gap-1"
-                  >
-                    <Star className="w-3 h-3" />
-                    Make default
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => onDeletePaymentMethod(pm._id)}
-                  className="min-h-[36px] px-3 text-[10px] uppercase tracking-wider font-bold text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors flex items-center gap-1"
-                >
-                  <Trash2 className="w-3 h-3" />
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+              Add Payment Method
+            </button>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="min-h-[48px] rounded-lg px-5 text-xs uppercase tracking-wider font-bold text-black/70 dark:text-white/70 surface-glass-strong border border-black/15 dark:border-white/20 hover:border-black/25 dark:hover:border-white/30 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

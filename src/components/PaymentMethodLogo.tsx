@@ -42,8 +42,15 @@ interface LogoProps {
 
 const MTNMoMoLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="MTN MoMo">
-    <rect width="48" height="30" rx="3" fill="#FFCC00" />
-    <text x="24" y="21" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="13" fill="#1B1B1B">
+    <rect width="48" height="30" rx="4" fill="#FFCB05" />
+    <rect width="48" height="30" rx="4" fill="url(#mtnGradient)" />
+    <defs>
+      <linearGradient id="mtnGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#FFCB05", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#F5B800", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="20" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="12" fill="#1B1B1B" letterSpacing="0.5">
       MoMo
     </text>
   </svg>
@@ -51,26 +58,44 @@ const MTNMoMoLogo: React.FC<LogoProps> = ({ className }) => (
 
 const TelecelLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Telecel">
-    <rect width="48" height="30" rx="3" fill="#E4002B" />
-    <text x="24" y="21" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="11" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#telecelGradient)" />
+    <defs>
+      <linearGradient id="telecelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#E4002B", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#C00024", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="20" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="10" fill="#fff" letterSpacing="0.3">
       Telecel
     </text>
   </svg>
 );
 
 const AirtelTigoLogo: React.FC<LogoProps> = ({ className }) => (
-  <svg viewBox="0 0 48 30" className={className} role="img" aria-label="AirtelTigo">
-    <rect width="48" height="30" rx="3" fill="#ED1C24" />
-    <text x="24" y="21" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="10" fill="#fff">
-      AirtelTigo
+  <svg viewBox="0 0 48 30" className={className} role="img" aria-label="AT Money">
+    <rect width="48" height="30" rx="4" fill="url(#atGradient)" />
+    <defs>
+      <linearGradient id="atGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#ED1C24", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#D01820", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="20" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="11" fill="#fff" letterSpacing="0.5">
+      AT
     </text>
   </svg>
 );
 
 const VisaLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Visa">
-    <rect width="48" height="30" rx="3" fill="#1A1F71" />
-    <text x="24" y="20" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontStyle="italic" fontSize="18" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#visaGradient)" />
+    <defs>
+      <linearGradient id="visaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#1A1F71", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#14185A", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontStyle="italic" fontSize="16" fill="#fff" letterSpacing="1">
       VISA
     </text>
   </svg>
@@ -78,16 +103,23 @@ const VisaLogo: React.FC<LogoProps> = ({ className }) => (
 
 const MastercardLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Mastercard">
-    <rect width="48" height="30" rx="3" fill="#fff" />
-    <circle cx="20" cy="15" r="9" fill="#EB001B" opacity="0.9" />
-    <circle cx="28" cy="15" r="9" fill="#F79E1B" opacity="0.9" />
+    <rect width="48" height="30" rx="4" fill="#F5F5F5" />
+    <circle cx="19" cy="15" r="8" fill="#EB001B" />
+    <circle cx="29" cy="15" r="8" fill="#F79E1B" />
+    <path d="M24 9.5c1.5 1.4 2.5 3.4 2.5 5.5s-1 4.1-2.5 5.5c-1.5-1.4-2.5-3.4-2.5-5.5s1-4.1 2.5-5.5z" fill="#FF5F00" />
   </svg>
 );
 
 const AmexLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="American Express">
-    <rect width="48" height="30" rx="3" fill="#2E77BC" />
-    <text x="24" y="20" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="12" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#amexGradient)" />
+    <defs>
+      <linearGradient id="amexGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#2E77BC", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#1F5A94", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="11" fill="#fff" letterSpacing="0.8">
       AMEX
     </text>
   </svg>
@@ -95,8 +127,14 @@ const AmexLogo: React.FC<LogoProps> = ({ className }) => (
 
 const CashLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Cash on Delivery">
-    <rect width="48" height="30" rx="3" fill="#2F7D32" />
-    <text x="24" y="20" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="11" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#cashGradient)" />
+    <defs>
+      <linearGradient id="cashGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#2E7D32", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#1B5E20", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="10" fill="#fff" letterSpacing="0.5">
       CASH
     </text>
   </svg>
@@ -104,8 +142,14 @@ const CashLogo: React.FC<LogoProps> = ({ className }) => (
 
 const BankLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Bank Transfer">
-    <rect width="48" height="30" rx="3" fill="#5B6770" />
-    <text x="24" y="20" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="10" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#bankGradient)" />
+    <defs>
+      <linearGradient id="bankGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#5B6770", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#455A64", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="9" fill="#fff" letterSpacing="0.5">
       BANK
     </text>
   </svg>
@@ -113,8 +157,15 @@ const BankLogo: React.FC<LogoProps> = ({ className }) => (
 
 const CardLogo: React.FC<LogoProps> = ({ className }) => (
   <svg viewBox="0 0 48 30" className={className} role="img" aria-label="Card">
-    <rect width="48" height="30" rx="3" fill="#8A6D3B" />
-    <text x="24" y="20" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="11" fill="#fff">
+    <rect width="48" height="30" rx="4" fill="url(#cardGradient)" />
+    <defs>
+      <linearGradient id="cardGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#8A6D3B", stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: "#6B5530", stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <rect x="8" y="12" width="32" height="6" rx="1" fill="#fff" opacity="0.3" />
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="10" fill="#fff" letterSpacing="0.5">
       CARD
     </text>
   </svg>
