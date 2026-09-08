@@ -3,6 +3,7 @@ import { DashboardPage } from "../types";
 import { Logo } from "../components/Logo";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { Loader } from "../components/ui/Loader";
+import { ErrorBoundary } from "../components/ui/Fallback";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -110,7 +111,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "hidden md:flex flex-col bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out",
+          "hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out",
           collapsed ? "w-[76px]" : "w-[260px] lg:w-[280px]"
         )}
         aria-label="Dashboard sidebar"
@@ -148,11 +149,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
                   collapsed && "justify-center"
                 )}
               >
-                <div className="p-[3px] bg-gradient-to-b from-gold to-gold-700 flex-shrink-0">
-                  <div className="bg-ink p-[3px]">
-                    <Logo className="h-8 w-8" />
-                  </div>
-                </div>
+                <Logo className="h-8 w-8 flex-shrink-0" />
                 <div className={cn(collapsed && "hidden")}>
                   <h2 className="font-brand-serif text-lg tracking-[0.14em] font-light italic text-cream leading-none">
                     ZAANISUNG
@@ -350,11 +347,11 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
         {/* Page content */}
         <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-24 md:pb-12">
           {loading ? (
-            <div className="flex items-start justify-center py-20" role="status">
-              <Loader variant="squares" size="lg" />
+            <div className="flex items-center justify-center py-20" role="status">
+              <Loader variant="ring" size="lg" />
             </div>
           ) : (
-            children
+            <ErrorBoundary>{children}</ErrorBoundary>
           )}
         </main>
       </div>

@@ -147,7 +147,7 @@ export const Carousel = <T,>({
                 onClick={() => scrollByUnit(-1)}
                 disabled={!canGoPrev}
                 aria-label="Previous slide"
-                className="min-w-[44px] min-h-[40px] px-2 inline-flex items-center justify-center border border-black/15 dark:border-white/20 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:border-gold transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                className="min-w-[44px] min-h-[40px] px-2 inline-flex items-center justify-center rounded-lg border border-black/15 dark:border-white/20 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:border-gold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -181,7 +181,7 @@ export const Carousel = <T,>({
                 onClick={() => scrollByUnit(1)}
                 disabled={!canGoNext}
                 aria-label="Next slide"
-                className="min-w-[44px] min-h-[40px] px-2 inline-flex items-center justify-center border border-black/15 dark:border-white/20 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:border-gold transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                className="min-w-[44px] min-h-[40px] px-2 inline-flex items-center justify-center rounded-lg border border-black/15 dark:border-white/20 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:border-gold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

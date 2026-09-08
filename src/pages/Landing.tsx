@@ -179,9 +179,22 @@ export const Landing: React.FC<LandingProps> = ({
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             {isLoggedIn ? (
-              <Button variant="primary" size="md" onClick={onStartShopping}>
-                Enter Store <ArrowRight className="w-4 h-4 ml-1 hidden min-[380px]:inline" />
-              </Button>
+              <>
+                {onOpenDashboard && (
+                  <button
+                    type="button"
+                    onClick={onOpenDashboard}
+                    aria-label={`My Dashboard (${currentUser.name})`}
+                    title="My Dashboard"
+                    className="relative h-11 w-11 flex items-center justify-center rounded-full bg-ink dark:bg-gold text-cream dark:text-ink font-bold text-sm border-2 border-gold/70 dark:border-ink hover:border-gold transition-colors"
+                  >
+                    {currentUser.name.charAt(0).toUpperCase()}
+                  </button>
+                )}
+                <Button variant="primary" size="md" onClick={onStartShopping}>
+                  Enter Store <ArrowRight className="w-4 h-4 ml-1 hidden min-[380px]:inline" />
+                </Button>
+              </>
             ) : (
               <Button variant="outline" size="md" onClick={onGoToLogin}>
                 Sign In
@@ -268,7 +281,7 @@ export const Landing: React.FC<LandingProps> = ({
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
             className="relative flex flex-col lg:max-w-lg w-full justify-self-end lg:justify-self-center"
           >
-            <div className="surface-glass-strong corner-frame corner-frame-static p-7 sm:p-9 flex flex-col justify-center shadow-lift">
+            <div className="surface-glass-strong rounded-2xl p-7 sm:p-9 flex flex-col justify-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
               {showForm ? (
                 <>
                   <div className="mb-6">
@@ -560,7 +573,7 @@ export const Landing: React.FC<LandingProps> = ({
               <div
                 key={i}
                 className={cn(
-                  "surface-glass corner-frame p-6 sm:p-7 flex flex-col justify-center min-h-[210px] lg:min-h-[240px] transition-transform duration-300 hover:-translate-y-1",
+                  "surface-glass rounded-xl p-6 sm:p-7 flex flex-col justify-center min-h-[210px] lg:min-h-[240px] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-1 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_12px_40px_-10px_rgba(212,175,55,0.25)]",
                   i % 2 === 1 && "lg:translate-y-8 lg:hover:translate-y-7"
                 )}
               >
@@ -617,7 +630,7 @@ export const Landing: React.FC<LandingProps> = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
-                  className="surface-glass corner-frame group p-7 sm:p-8 hover:shadow-gold-glow transition-all lg:min-h-[300px] flex flex-col justify-center hover:-translate-y-1.5"
+                  className="surface-glass rounded-xl group p-7 sm:p-8 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] lg:min-h-[300px] flex flex-col justify-center hover:-translate-y-1.5 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]"
                 >
                   <div className="w-12 h-12 flex items-center justify-center border border-gold/40 bg-gold/10 mb-6 group-hover:bg-gold/15 transition-colors">
                     <Icon className="w-5 h-5 text-gold" />
@@ -648,7 +661,7 @@ export const Landing: React.FC<LandingProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="surface-glass-strong corner-frame corner-frame-static max-w-4xl mx-auto px-6 sm:px-14 py-14 sm:py-16 shadow-lift"
+            className="surface-glass-strong rounded-2xl max-w-4xl mx-auto px-6 sm:px-14 py-14 sm:py-16 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]"
           >
             <span className="eyebrow text-gold">Begin your ritual</span>
             <h2 className="font-brand-serif text-3xl sm:text-5xl font-light leading-tight mt-4 text-balance">

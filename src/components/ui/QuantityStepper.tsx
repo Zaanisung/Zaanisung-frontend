@@ -33,10 +33,11 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
   return (
     <div
       className={cn(
-        "inline-flex items-center",
+        "inline-flex items-center rounded-lg overflow-hidden",
+        "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
         isGold
-          ? "border border-gold/40 bg-gold/8 dark:bg-gold/10"
-          : "border border-black/20 dark:border-white/15 bg-white dark:bg-white/5",
+          ? "border border-gold/40 surface-glass-tint"
+          : "border border-black/15 dark:border-white/15 surface-glass",
         className
       )}
     >

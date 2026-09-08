@@ -10,16 +10,16 @@ export interface StatusBadgeProps {
 }
 
 const STATUS_TONES: Record<OrderBadgeStatus, string> = {
-  PENDING: "bg-gold text-black border border-gold",
-  CONFIRMED: "bg-white dark:bg-black text-black dark:text-white border border-black/15 dark:border-white/30",
-  SHIPPED: "bg-black dark:bg-white text-white dark:text-black",
-  DELIVERED: "bg-gold text-black border border-gold",
-  CANCELLED: "bg-red-950 text-red-300 border border-red-800",
+  PENDING: "bg-gold/90 text-ink border border-gold/30 shadow-[0_0_0_1px_rgba(212,175,55,0.15)]",
+  CONFIRMED: "surface-glass-strong text-ink dark:text-cream border border-black/15 dark:border-white/20",
+  SHIPPED: "bg-ink dark:bg-cream text-cream dark:text-ink border border-ink/80 dark:border-cream/80",
+  DELIVERED: "bg-gold/90 text-ink border border-gold/30 shadow-[0_0_0_1px_rgba(212,175,55,0.15)]",
+  CANCELLED: "bg-red-950/80 text-red-300 border border-red-800/60 backdrop-blur-sm",
 };
 
 const SIZE_CLASSES: Record<NonNullable<StatusBadgeProps["size"]>, string> = {
-  sm: "px-2.5 py-0.5 text-[10px] tracking-wider",
-  md: "px-3 py-1 text-xs tracking-widest",
+  sm: "px-2.5 py-1 text-[10px] tracking-wider rounded-lg",
+  md: "px-3 py-1.5 text-xs tracking-widest rounded-xl",
 };
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({

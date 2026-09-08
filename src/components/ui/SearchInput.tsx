@@ -28,7 +28,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       aria-label={ariaLabel}
-      className="w-full pl-9 pr-8 min-h-[44px] surface-glass text-black dark:text-white text-xs placeholder-black/50 focus:outline-none focus:border-gold transition-colors"
+      className="w-full pl-9 pr-10 min-h-[44px] rounded-xl surface-glass-strong text-ink dark:text-white text-sm placeholder-black/40 dark:placeholder-white/40 border border-black/10 dark:border-white/15 focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold/50 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
     />
     {value && (
       <button

@@ -241,21 +241,23 @@ export const Addresses: React.FC<AddressesProps> = ({
       )}
 
       {addresses.length === 0 && !showForm ? (
-        <EmptyState
-          icon={<MapPin className="w-6 h-6 stroke-[1.5]" />}
-          title="No saved addresses"
-          message="Add a delivery address so checkout is faster next time."
-          action={
-            <button
-              type="button"
-              onClick={() => setShowForm(true)}
-              className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Your First Address</span>
-            </button>
-          }
-        />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <EmptyState
+            icon={<MapPin className="w-6 h-6 stroke-[1.5]" />}
+            title="No saved addresses"
+            message="Add a delivery address so checkout is faster next time."
+            action={
+              <button
+                type="button"
+                onClick={() => setShowForm(true)}
+                className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Your First Address</span>
+              </button>
+            }
+          />
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {addresses.map((addr) => (

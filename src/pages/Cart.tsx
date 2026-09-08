@@ -26,23 +26,25 @@ export const Cart: React.FC<CartProps> = ({
 
   if (items.length === 0) {
     return (
-      <EmptyState
-        icon={<ShoppingBag className="w-7 h-7 stroke-[1.5]" />}
-        iconClassName="w-16 h-16"
-        title="Your Bag is Empty"
-        message="Explore our perfume collection and select your signature fragrance."
-        action={
-          <Button
-            type="button"
-            variant="primary"
-            size="lg"
-            onClick={onContinueShopping}
-            className="w-full font-bold"
-          >
-            Browse Perfumes
-          </Button>
-        }
-      />
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <EmptyState
+          icon={<ShoppingBag className="w-7 h-7 stroke-[1.5]" />}
+          iconClassName="w-16 h-16"
+          title="Your Bag is Empty"
+          message="Explore our perfume collection and select your signature fragrance."
+          action={
+            <Button
+              type="button"
+              variant="primary"
+              size="lg"
+              onClick={onContinueShopping}
+              className="w-full font-bold"
+            >
+              Browse Perfumes
+            </Button>
+          }
+        />
+      </div>
     );
   }
 

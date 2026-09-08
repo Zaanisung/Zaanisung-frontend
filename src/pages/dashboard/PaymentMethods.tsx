@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import type { PaymentMethod, PaymentMethodType } from "../../types/user";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { Loader } from "../../components/ui/Loader";
+import { PaymentMethodLogo } from "../../components/PaymentMethodLogo";
 import {
-  CreditCard,
   Plus,
   Trash2,
   Star,
   X,
-  Smartphone,
-  Building2,
-  Banknote,
+  CreditCard,
 } from "lucide-react";
 
 export interface PaymentMethodsProps {
@@ -27,13 +25,6 @@ const typeLabels: Record<PaymentMethodType, string> = {
   CARD: "Card",
   BANK: "Bank Transfer",
   CASH: "Cash on Delivery",
-};
-
-const typeIcons: Record<PaymentMethodType, React.ReactNode> = {
-  MOBILE_MONEY: <Smartphone className="w-4 h-4" />,
-  CARD: <CreditCard className="w-4 h-4" />,
-  BANK: <Building2 className="w-4 h-4" />,
-  CASH: <Banknote className="w-4 h-4" />,
 };
 
 export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
@@ -322,21 +313,23 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
       )}
 
       {paymentMethods.length === 0 && !showForm ? (
-        <EmptyState
-          icon={<CreditCard className="w-6 h-6 stroke-[1.5]" />}
-          title="No payment methods saved"
-          message="Add a payment method to speed up checkout."
-          action={
-            <button
-              type="button"
-              onClick={() => setShowForm(true)}
-              className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Payment Method</span>
-            </button>
-          }
-        />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <EmptyState
+            icon={<CreditCard className="w-6 h-6 stroke-[1.5]" />}
+            title="No payment methods saved"
+            message="Add a payment method to speed up checkout."
+            action={
+              <button
+                type="button"
+                onClick={() => setShowForm(true)}
+                className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Payment Method</span>
+              </button>
+            }
+          />
+        </div>
       ) : (
         <div className="space-y-3">
           {paymentMethods.map((pm) => (
@@ -349,9 +342,12 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
               }`}
             >
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 flex-shrink-0">
-                  {typeIcons[pm.type]}
-                </div>
+                <PaymentMethodLogo
+                  className="w-10 h-7 flex-shrink-0 overflow-hidden rounded"
+                  provider={pm.provider}
+                  type={pm.type}
+                  details={pm.details}
+                />
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold text-black dark:text-white">

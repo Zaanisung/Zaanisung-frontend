@@ -26,76 +26,87 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       id={`product-card-${product.id}`}
       onClick={() => onSelect(product)}
       className={cn(
-        "group relative flex flex-col h-full border transition-all duration-300 cursor-pointer overflow-hidden",
-        "surface-glass corner-frame hover:shadow-gold-glow hover:-translate-y-1",
-        isOutOfStock && "opacity-80"
+        "group relative flex flex-col h-full cursor-pointer overflow-hidden",
+        "surface-glass-strong rounded-2xl",
+        "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+        "hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]",
+        "hover:-translate-y-1 hover:scale-[1.01]",
+        isOutOfStock && "opacity-70"
       )}
     >
-      {/* Signature top hairline */}
+      {/* Soft gold hairline at top */}
       <div className="absolute top-0 left-0 right-0 hairline-gold z-20" aria-hidden="true" />
 
-      {/* Full-bleed perfume image — wider 4:3 framing */}
-      <div className="relative w-full aspect-[4/3] bg-white dark:bg-white/5 overflow-hidden">
+      {/* Product image */}
+      <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 overflow-hidden rounded-t-2xl">
         <img
           src={product.imageUrl}
           alt={product.name}
           loading="lazy"
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+          className={cn(
+            "w-full h-full object-cover object-center",
+            "transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+            "group-hover:scale-105"
+          )}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/10 pointer-events-none opacity-70 group-hover:opacity-50 transition-opacity duration-300" />
+        {/* Soft mist overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/5 pointer-events-none opacity-60 group-hover:opacity-40 transition-opacity duration-[400ms]" />
 
         {/* Stock status badge */}
         <div className="absolute top-3 right-3 z-10">
           {isOutOfStock ? (
-            <span className="inline-block bg-ink/90 text-cream text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold border border-white/20">
+            <span className="inline-block rounded-lg px-2.5 py-1 text-[9px] sm:text-[10px] uppercase tracking-widest font-bold bg-ink/90 dark:bg-ink/95 text-cream border border-white/20 backdrop-blur-md">
               Sold Out
             </span>
           ) : isLowStock ? (
-            <span className="inline-block bg-gold text-ink text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-widest font-bold shadow-gold-glow">
+            <span className="inline-block rounded-lg px-2.5 py-1 text-[9px] sm:text-[10px] uppercase tracking-widest font-bold bg-gold text-ink shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]">
               Only {product.stock} Left
             </span>
           ) : (
-            <span className="inline-block bg-ink/70 text-cream text-[9px] sm:text-[10px] px-2.5 py-1 uppercase tracking-wider font-medium border border-white/10 backdrop-blur-sm">
+            <span className="inline-block rounded-lg px-2.5 py-1 text-[9px] sm:text-[10px] uppercase tracking-wider font-medium bg-ink/70 text-cream border border-white/10 backdrop-blur-md">
               In Stock
             </span>
           )}
         </div>
 
-        {/* Quick view hint */}
-        <div className="hidden sm:flex absolute inset-0 items-center justify-center bg-ink/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <span className="px-3.5 py-1.5 bg-ink/85 text-cream text-[10px] uppercase tracking-widest font-bold border border-gold/40 flex items-center gap-1.5 backdrop-blur-sm shadow-lift">
+        {/* Quick view hint on hover */}
+        <div className="hidden sm:flex absolute inset-0 items-center justify-center bg-ink/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-[400ms] pointer-events-none">
+          <span className="rounded-xl px-4 py-2 bg-ink/90 text-cream text-[10px] uppercase tracking-widest font-bold border border-gold/40 flex items-center gap-2 backdrop-blur-md shadow-lift">
             <Eye className="w-3.5 h-3.5 text-gold" />
             <span>View Fragrance</span>
           </span>
         </div>
 
-        {/* Size chip + gold corner accent */}
+        {/* Size indicator */}
         <div className="absolute bottom-3 left-3 z-10">
-          <span className="inline-block px-2 py-1 bg-black/55 text-cream/90 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold border border-white/15 backdrop-blur-sm">
+          <span className="inline-block rounded-lg px-2 py-1 bg-black/60 text-cream/90 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold border border-white/15 backdrop-blur-md">
             100 ml
           </span>
         </div>
 
-        <div className="absolute bottom-0 right-0 w-9 h-9 overflow-hidden pointer-events-none">
-          <div className="w-14 h-14 bg-gold transform rotate-45 translate-x-7 translate-y-7 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Soft gold accent corner */}
+        <div className="absolute bottom-0 right-0 w-16 h-16 overflow-hidden pointer-events-none opacity-50 group-hover:opacity-70 transition-opacity duration-[400ms]">
+          <div className="w-24 h-24 bg-gradient-radial from-gold/30 to-transparent rounded-full transform translate-x-8 translate-y-8 blur-2xl"></div>
         </div>
       </div>
 
       {/* Product information */}
       <div
         className={cn(
-          "flex flex-col flex-1 gap-2.5",
-          compact ? "p-3.5" : "p-4 sm:p-5"
+          "flex flex-col flex-1 gap-3",
+          compact ? "p-4" : "p-5"
         )}
       >
-        <div className="flex flex-col gap-1.5 flex-1">
-          <span className="eyebrow text-gold text-opacity-90 block">
+        <div className="flex flex-col gap-2 flex-1">
+          <span className="eyebrow text-gold/90 block">
             Eau de Parfum
           </span>
           <h3
             className={cn(
-              "font-brand-serif font-medium text-ink dark:text-white leading-snug line-clamp-1 group-hover:text-gold transition-colors",
+              "font-brand-serif font-medium text-ink dark:text-white leading-snug line-clamp-1",
+              "transition-colors duration-[400ms]",
+              "group-hover:text-gold",
               compact ? "text-sm" : "text-base sm:text-lg"
             )}
             title={product.name}
@@ -104,26 +115,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </h3>
 
           {!compact && product.description && (
-            <p className="mt-0.5 text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+            <p className="text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
               {product.description}
             </p>
           )}
         </div>
 
-        <div className="hairline-black" aria-hidden="true" />
+        <div className="hairline-black my-1" aria-hidden="true" />
 
-        <div className="flex items-baseline justify-between mt-auto">
-          <span className={cn("font-bold font-mono text-gold", compact ? "text-sm" : "text-base sm:text-lg")}>
-            {product.price.toFixed(2)} GHS
+        <div className="flex items-baseline justify-between">
+          <span className={cn(
+            "font-bold font-mono text-gold",
+            compact ? "text-sm" : "text-base sm:text-lg"
+          )}>
+            ₵{product.price.toFixed(2)}
           </span>
           {!compact && (
             <span className="text-[10px] uppercase tracking-wider text-black/45 dark:text-white/55">
-              Extrait Oil
+              Premium Oil
             </span>
           )}
         </div>
 
-        {/* Action button */}
+        {/* Action button with mist-inspired styling */}
         <button
           type="button"
           disabled={isOutOfStock}
@@ -132,12 +146,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             if (!isOutOfStock) onAddToCart(product, e);
           }}
           className={cn(
-            "w-full min-h-[46px] py-2.5 px-3 text-[11px] sm:text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 border select-none active:scale-[0.98]",
+            "w-full min-h-[46px] py-3 px-4 rounded-xl",
+            "text-[11px] sm:text-xs uppercase tracking-widest font-bold",
+            "flex items-center justify-center gap-2",
+            "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+            "select-none active:scale-[0.98]",
             isOutOfStock
-              ? "border-black/10 dark:border-white/15 text-black/45 dark:text-white/45 bg-white/60 dark:bg-white/[0.08] cursor-not-allowed"
+              ? "surface-glass text-black/45 dark:text-white/45 cursor-not-allowed border border-black/10 dark:border-white/15"
               : isAdded
-                ? "bg-gold text-ink border-gold shadow-gold-glow"
-                : "border-ink/60 dark:border-white/25 text-ink dark:text-white hover:bg-gold hover:text-ink hover:border-gold dark:hover:bg-gold dark:hover:text-ink dark:hover:border-gold"
+                ? "gold-gradient-bg text-ink border border-gold-600/30 shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]"
+                : "surface-glass-strong text-ink dark:text-white border border-black/15 dark:border-white/20 hover:gold-gradient-bg hover:text-ink hover:border-gold-600/30 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:scale-[1.02]"
           )}
         >
           {isOutOfStock ? (
@@ -145,7 +163,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ) : isAdded ? (
             <>
               <Check className="w-4 h-4 stroke-[2.5]" />
-              <span>Added to Bag</span>
+              <span>Added to Cart</span>
             </>
           ) : (
             <>

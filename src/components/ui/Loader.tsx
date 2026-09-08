@@ -3,10 +3,10 @@ import { cn } from "../../utils/cn";
 
 /**
  * Minimal, text-free loaders. No words — pure motion.
- * Variants: dots, squares, circles.
+ * Variants: dots, squares, circles, ring.
  */
 
-type LoaderVariant = "dots" | "squares" | "circles";
+type LoaderVariant = "dots" | "squares" | "circles" | "ring";
 
 interface LoaderProps {
   variant?: LoaderVariant;
@@ -27,12 +27,35 @@ const gapMap: Record<NonNullable<LoaderProps["size"]>, string> = {
   lg: "gap-2.5",
 };
 
+const ringSizeMap: Record<NonNullable<LoaderProps["size"]>, string> = {
+  sm: "h-5 w-5",
+  md: "h-7 w-7",
+  lg: "h-10 w-10",
+};
+
 export const Loader: React.FC<LoaderProps> = ({
   variant = "dots",
   className,
   size = "md",
 }) => {
   const box = sizeMap[size];
+
+  if (variant === "ring") {
+    return (
+      <span
+        role="status"
+        aria-label="Loading"
+        className={cn("inline-flex items-center justify-center", className)}
+      >
+        <span
+          className={cn(
+            ringSizeMap[size],
+            "rounded-full border-2 border-gold/30 border-t-gold loader-ring"
+          )}
+        />
+      </span>
+    );
+  }
 
   if (variant === "squares") {
     return (
@@ -92,9 +115,9 @@ export const Loader: React.FC<LoaderProps> = ({
   );
 };
 
-/** Full-bleed centered loader for page-level async states. */
+/** Full-bleed centered circle page loader for page-level async states. */
 export const PageLoader: React.FC<{ variant?: LoaderVariant; className?: string }> = ({
-  variant,
+  variant = "ring",
   className,
 }) => (
   <div className="flex items-center justify-center py-16 sm:py-24" role="status">

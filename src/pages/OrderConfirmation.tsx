@@ -17,9 +17,9 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
 }) => {
   return (
     <div className="w-full max-w-lg mx-auto py-6 px-4">
-      <div className="relative overflow-hidden surface-glass-strong corner-frame-static corner-frame p-6 sm:p-10 shadow-lift text-center">
+      <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] text-center">
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
-        <div className="absolute -top-28 -left-24 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
+        <div className="absolute -top-28 -left-24 w-72 h-72 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
         <div className="absolute -bottom-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         {/* Geometric Check Icon Frame */}

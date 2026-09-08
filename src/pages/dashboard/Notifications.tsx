@@ -75,11 +75,13 @@ export const Notifications: React.FC<NotificationsProps> = ({
       </div>
 
       {notifications.length === 0 ? (
-        <EmptyState
-          icon={<Bell className="w-6 h-6 stroke-[1.5]" />}
-          title="No notifications"
-          message="You are all caught up. Updates from orders and promotions will appear here."
-        />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <EmptyState
+            icon={<Bell className="w-6 h-6 stroke-[1.5]" />}
+            title="No notifications"
+            message="You are all caught up. Updates from orders and promotions will appear here."
+          />
+        </div>
       ) : (
         <div className="space-y-2">
           {notifications.map((n) => {

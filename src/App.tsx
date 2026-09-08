@@ -16,6 +16,7 @@ import {
 import * as api from "./services";
 import { getErrorMessage } from "./services";
 import { AppRouter } from "./router";
+import { Loader } from "./components/ui/Loader";
 import type {
   PlaceOrderData,
   PhysicalSaleData,
@@ -73,6 +74,7 @@ export default function App() {
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   const [view, setView] = useState<AppView>({ type: "landing" });
+  const [isBootstrapping, setIsBootstrapping] = useState(true);
   const [customerTab, setCustomerTab] = useState<CustomerTab>("shop");
   const [adminTab, setAdminTab] = useState<AdminTab>("dashboard");
 
@@ -119,7 +121,8 @@ export default function App() {
         setCustomerUser(normalizeFullUser(user));
         if (user.role === "ADMIN") setIsAdminLoggedIn(true);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setIsBootstrapping(false));
   }, []);
 
   // Fetch notifications for the signed-in user
@@ -244,7 +247,11 @@ export default function App() {
       setView({ type: "admin", page: "dashboard" });
       setAdminTab("dashboard");
     } else {
-      handleStartShopping();
+      // Do not force the user away from the public page they were on.
+      // Only step forward from the dedicated login page to the store.
+      if (view.type === "customer" && view.page === "login") {
+        handleStartShopping();
+      }
     }
   };
 
@@ -606,6 +613,18 @@ export default function App() {
   const pendingOrdersCount = orders.filter(
     (o) => o.status === "PENDING"
   ).length;
+
+  if (isBootstrapping) {
+    return (
+      <div
+        className="min-h-screen flex items-center justify-center bg-cream dark:bg-black"
+        role="status"
+        aria-label="Loading"
+      >
+        <Loader variant="ring" size="lg" />
+      </div>
+    );
+  }
 
   return (
     <AppRouter

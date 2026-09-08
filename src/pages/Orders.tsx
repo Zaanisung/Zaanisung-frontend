@@ -22,22 +22,24 @@ export const Orders: React.FC<OrdersProps> = ({
 
   if (orders.length === 0) {
     return (
-      <EmptyState
-        icon={<ReceiptText className="w-6 h-6 stroke-[1.5]" />}
-        title="No orders yet"
-        message="When you purchase perfumes, your receipts and order updates will appear here."
-        action={
-          <Button
-            type="button"
-            variant="primary"
-            size="lg"
-            onClick={onContinueShopping}
-            className="w-full font-bold"
-          >
-            Browse Perfumes
-          </Button>
-        }
-      />
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <EmptyState
+          icon={<ReceiptText className="w-6 h-6 stroke-[1.5]" />}
+          title="No orders yet"
+          message="When you purchase perfumes, your receipts and order updates will appear here."
+          action={
+            <Button
+              type="button"
+              variant="primary"
+              size="lg"
+              onClick={onContinueShopping}
+              className="w-full font-bold"
+            >
+              Browse Perfumes
+            </Button>
+          }
+        />
+      </div>
     );
   }
 

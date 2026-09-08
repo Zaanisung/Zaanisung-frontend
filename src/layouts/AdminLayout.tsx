@@ -2,6 +2,7 @@ import React from "react";
 import { AdminTab } from "../types";
 import { Logo } from "../components/Logo";
 import { ThemeToggle } from "../components/ThemeToggle";
+import { ErrorBoundary } from "../components/ui/Fallback";
 import {
   LayoutDashboard,
   Boxes,
@@ -222,7 +223,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-24 md:pb-12">{children}</main>
+        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-24 md:pb-12">
+          <ErrorBoundary>{children}</ErrorBoundary>
+        </main>
       </div>
 
       {/* Mobile bottom nav */}

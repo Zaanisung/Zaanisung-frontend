@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertTriangle, RotateCw } from "lucide-react";
+import { AlertTriangle, RotateCw, ShieldAlert } from "lucide-react";
 import { cn } from "../../utils/cn";
 
 /**
@@ -25,6 +25,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
       "flex flex-col items-center justify-center py-12 px-6 text-center",
       className
     )}
+    role="alert"
   >
     <div className="h-12 w-12 flex items-center justify-center rounded-full bg-gold/10 border border-gold/30 mb-4">
       <AlertTriangle className="w-6 h-6 text-gold" aria-hidden="true" />
@@ -43,6 +44,73 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
     )}
   </div>
 );
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+/**
+ * A class-based React error boundary that catches any render error thrown
+ * by its children and displays a safe, generic fallback UI instead of
+ * leaking error messages/code to the frontend.
+ */
+export class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Never surface the raw error to the user; only log it for debugging.
+    console.error("Unhandled UI error:", error, errorInfo);
+    this.props.onError?.(error, errorInfo);
+  }
+
+  handleRetry = () => {
+    this.setState({ hasError: false });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) return this.props.fallback;
+      return (
+        <div className="w-full min-h-[50vh] flex items-center justify-center px-4">
+          <div className="relative overflow-hidden w-full max-w-md py-14 px-6 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+            <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+            <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
+            <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h2 className="relative text-xl font-light text-black dark:text-white mb-1 font-brand-serif">
+              Something went wrong
+            </h2>
+            <p className="relative text-xs text-black/50 dark:text-white/50 mb-6">
+              An unexpected error occurred. Please refresh the page or try again in a moment.
+            </p>
+            <button
+              type="button"
+              onClick={this.handleRetry}
+              className="relative min-h-[44px] px-6 text-xs uppercase tracking-widest font-bold text-ink bg-gold hover:bg-gold-600 transition-colors"
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 interface SkeletonProps {
   className?: string;

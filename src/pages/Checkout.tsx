@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { OrderItem } from "../types";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { PaymentMethodLogo } from "../components/PaymentMethodLogo";
 import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard } from "lucide-react";
 
 export interface CheckoutProps {
@@ -239,13 +240,19 @@ export const Checkout: React.FC<CheckoutProps> = ({
                       key={net}
                       type="button"
                       onClick={() => setMomoNetwork(net)}
-                      className={`min-h-[44px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border transition-all ${
+                      className={`min-h-[52px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border transition-all flex flex-col items-center justify-center gap-1.5 ${
                         momoNetwork === net
-                          ? "border-gold bg-gold text-black shadow-xs"
+                          ? "border-gold bg-gold/5 shadow-xs"
                           : "border-black/10 dark:border-white/15 bg-white dark:bg-white/5 text-black/70 dark:text-white/80"
                       }`}
                     >
-                      {net}
+                      <PaymentMethodLogo
+                        className="w-10 h-6 object-contain"
+                        provider={net}
+                      />
+                      <span className={momoNetwork === net ? "text-black dark:text-white" : ""}>
+                        {net}
+                      </span>
                     </button>
                   ))}
                 </div>

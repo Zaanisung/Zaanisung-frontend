@@ -4,6 +4,7 @@ import { BottomNav } from "../components/BottomNav";
 import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
 import { ThemeToggle } from "../components/ThemeToggle";
+import { ErrorBoundary } from "../components/ui/Fallback";
 import { ShoppingBag } from "lucide-react";
 import { cn } from "../utils/cn";
 
@@ -15,6 +16,8 @@ export interface CustomerLayoutProps {
   isDark: boolean;
   onToggleTheme: () => void;
   onNavigateHome?: () => void;
+  userName?: string;
+  onOpenDashboard?: () => void;
 }
 
 const TABS: { id: CustomerTab; label: string }[] = [
@@ -31,6 +34,8 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   isDark,
   onToggleTheme,
   onNavigateHome,
+  userName,
+  onOpenDashboard,
 }) => {
   return (
     <div className="min-h-screen flex flex-col bg-cream dark:bg-black text-ink dark:text-white transition-colors">
@@ -84,6 +89,17 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
           {/* Right actions */}
           <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+            {userName && onOpenDashboard && (
+              <button
+                type="button"
+                onClick={onOpenDashboard}
+                aria-label={`My Dashboard (${userName})`}
+                title="My Dashboard"
+                className="relative h-11 w-11 flex items-center justify-center rounded-full bg-ink dark:bg-gold text-cream dark:text-ink font-bold text-sm border-2 border-gold/70 dark:border-ink hover:border-gold transition-colors"
+              >
+                {userName.charAt(0).toUpperCase()}
+              </button>
+            )}
             <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             <button
               type="button"
@@ -104,7 +120,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
       {/* Main page area */}
       <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-24 md:pb-14">
-        {children}
+        <ErrorBoundary>{children}</ErrorBoundary>
       </main>
 
       <Footer

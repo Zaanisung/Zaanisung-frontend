@@ -48,9 +48,9 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
         Back to Fragrances
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong corner-frame-static corner-frame shadow-lift grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
+      <div className="relative overflow-hidden surface-glass-strong rounded-2xl shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
         {/* Large Prominent Perfume Image Frame */}
-        <div className="relative aspect-square bg-white dark:bg-white/5 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15">
+        <div className="relative aspect-square bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">
           <img
             src={product.imageUrl}
             alt={product.name}
@@ -60,23 +60,23 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
           {/* Stock Badge */}
           <div className="absolute top-4 right-4 z-10">
             {isOutOfStock ? (
-              <span className="bg-black/90 dark:bg-black text-white text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold backdrop-blur-xs border border-white/20">
+              <span className="rounded-lg bg-black/90 dark:bg-black text-white text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold backdrop-blur-md border border-white/20">
                 Sold Out
               </span>
             ) : isLowStock ? (
-              <span className="bg-gold text-black text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-md">
+              <span className="rounded-lg bg-gold text-ink text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]">
                 Only {product.stock} Left in Stock
               </span>
             ) : (
-              <span className="bg-black/85 dark:bg-black text-white text-[10px] px-3 py-1 uppercase tracking-widest font-medium backdrop-blur-xs border border-white/10">
+              <span className="rounded-lg bg-black/85 dark:bg-black text-white text-[10px] px-3 py-1 uppercase tracking-widest font-medium backdrop-blur-md border border-white/10">
                 In Stock ({product.stock} Available)
               </span>
             )}
           </div>
 
-          {/* Gold brand corner */}
-          <div className="absolute bottom-0 right-0 w-10 h-10 overflow-hidden pointer-events-none">
-            <div className="w-16 h-16 bg-gold transform rotate-45 translate-x-8 translate-y-8"></div>
+          {/* Soft gold accent corner */}
+          <div className="absolute bottom-0 right-0 w-16 h-16 overflow-hidden pointer-events-none opacity-50">
+            <div className="w-24 h-24 bg-gradient-radial from-gold/30 to-transparent rounded-full transform translate-x-8 translate-y-8 blur-2xl"></div>
           </div>
         </div>
 

@@ -249,7 +249,12 @@ export const AppRouter: React.FC<AppRouterProps> = ({
         {view.page === "edit-product" &&
           (() => {
             const prodToEdit = products.find((p) => p.id === view.productId);
-            if (!prodToEdit) return <div className="text-black/45 dark:text-white/45">Perfume not found.</div>;
+            if (!prodToEdit)
+              return (
+                <div className="flex items-center justify-center min-h-[50vh]">
+                  <div className="text-black/45 dark:text-white/45">Perfume not found.</div>
+                </div>
+              );
             return (
               <EditProduct
                 product={prodToEdit}
@@ -362,7 +367,11 @@ export const AppRouter: React.FC<AppRouterProps> = ({
           (() => {
             const product = products.find((p) => p.id === view.productId);
             if (!product)
-              return <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>;
+              return (
+                <div className="flex items-center justify-center min-h-[50vh]">
+                  <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>
+                </div>
+              );
             return (
               <ProductDetails
                 product={product}
@@ -401,7 +410,13 @@ export const AppRouter: React.FC<AppRouterProps> = ({
           (() => {
             const order = orders.find((o) => o.id === view.orderId) || lastConfirmedOrder;
             if (!order)
-              return <div className="py-12 text-center"><p className="text-black/50 dark:text-white/50">No order found.</p></div>;
+              return (
+                <div className="flex items-center justify-center min-h-[50vh]">
+                  <div className="py-12 text-center">
+                    <p className="text-black/50 dark:text-white/50">No order found.</p>
+                  </div>
+                </div>
+              );
             return (
               <OrderConfirmation
                 order={order}
@@ -473,6 +488,8 @@ export const AppRouter: React.FC<AppRouterProps> = ({
       isDark={isDark}
       onToggleTheme={onToggleTheme}
       onNavigateHome={() => onNavigate({ type: "landing" })}
+      userName={customerUser?.name || ""}
+      onOpenDashboard={onOpenDashboard}
     >
       {view.page === "login" && (
         <Login
@@ -504,7 +521,12 @@ export const AppRouter: React.FC<AppRouterProps> = ({
       {view.page === "product-details" &&
         (() => {
           const product = products.find((p) => p.id === view.productId);
-          if (!product) return <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>;
+          if (!product)
+            return (
+              <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="py-12 text-center text-black/50 dark:text-white/50">Fragrance not found.</div>
+              </div>
+            );
           return (
             <ProductDetails
               product={product}
@@ -542,7 +564,14 @@ export const AppRouter: React.FC<AppRouterProps> = ({
       {view.page === "order-confirmation" &&
         (() => {
           const order = orders.find((o) => o.id === view.orderId) || lastConfirmedOrder;
-          if (!order) return <div className="py-12 text-center"><p className="text-black/50 dark:text-white/50">No order found.</p></div>;
+          if (!order)
+            return (
+              <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="py-12 text-center">
+                  <p className="text-black/50 dark:text-white/50">No order found.</p>
+                </div>
+              </div>
+            );
           return (
             <OrderConfirmation
               order={order}
