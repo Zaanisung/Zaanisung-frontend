@@ -309,7 +309,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
             <button
               type="button"
               onClick={onOpenCart}
-              className="relative min-h-[44px] min-w-[44px] p-2 flex items-center justify-center text-ink/60 dark:text-white/60 bg-white/60 dark:bg-white/[0.06] border border-black/10 dark:border-white/15"
+              className="relative min-h-[44px] min-w-[44px] rounded-lg p-2 flex items-center justify-center text-ink/60 dark:text-white/60 bg-white/60 dark:bg-white/[0.06] border border-black/10 dark:border-white/15 hover:scale-[1.05] active:scale-[0.98] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
               aria-label="Open cart"
             >
               <ShoppingBag className="w-4 h-4 text-gold" />
