@@ -74,7 +74,7 @@ export const Overview: React.FC<OverviewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div
           onClick={() => onNavigate("orders")}
-          className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 transition-all group"
+          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -87,7 +87,7 @@ export const Overview: React.FC<OverviewProps> = ({
           </div>
         </div>
 
-        <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-4 sm:p-5 flex flex-col justify-between">
+        <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Active / Pending
@@ -99,7 +99,7 @@ export const Overview: React.FC<OverviewProps> = ({
           </div>
         </div>
 
-        <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-4 sm:p-5 flex flex-col justify-between">
+        <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Products Available
@@ -113,7 +113,7 @@ export const Overview: React.FC<OverviewProps> = ({
 
         <div
           onClick={() => onNavigate("addresses")}
-          className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 transition-all group"
+          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -130,7 +130,7 @@ export const Overview: React.FC<OverviewProps> = ({
         </div>
       </div>
 
-      <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6">
+      <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
             Recent Orders
@@ -139,7 +139,7 @@ export const Overview: React.FC<OverviewProps> = ({
             <button
               type="button"
               onClick={() => onNavigate("orders")}
-              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold min-h-[44px] flex items-center"
+              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold min-h-[44px] flex items-center transition-colors duration-[400ms]"
             >
               View all ({orders.length}) →
             </button>
@@ -189,7 +189,7 @@ export const Overview: React.FC<OverviewProps> = ({
               key={link.label}
               type="button"
               onClick={() => onNavigate(link.page)}
-              className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-4 min-h-[44px] flex items-center gap-3 hover:border-gold/60 hover:bg-gold/5 transition-all group text-left"
+              className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 min-h-[44px] flex items-center gap-3 hover:border-gold/60 hover:bg-gold/5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group text-left"
             >
               <span className="text-black/45 dark:text-white/45 group-hover:text-gold transition-colors">
                 {link.icon}
@@ -205,9 +205,9 @@ export const Overview: React.FC<OverviewProps> = ({
 
       <div
         onClick={() => onNavigate("shop")}
-        className="relative overflow-hidden border border-gold/40 bg-gold/8 p-6 sm:p-8 cursor-pointer hover:bg-gold/12 transition-colors group"
+        className="relative overflow-hidden rounded-xl border border-gold/40 surface-glass-tint p-6 sm:p-8 cursor-pointer hover:bg-gold/12 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
       >
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gold/10 blur-3xl pointer-events-none" />
+        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gold/10 blur-3xl pointer-events-none animate-mist-pulse" />
         <div className="relative flex items-center justify-between">
           <div>
             <h3 className="text-sm sm:text-base font-brand-serif text-black dark:text-white font-light">

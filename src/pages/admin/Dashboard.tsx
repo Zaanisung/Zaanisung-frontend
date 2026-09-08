@@ -51,7 +51,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-gold/15 hover:bg-gold/25 border border-gold/40 flex items-center space-x-1.5 transition-colors"
+            className="rounded-lg min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold surface-glass-tint hover:bg-gold/25 border border-gold/40 flex items-center space-x-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <TrendingUp className="w-4 h-4 text-gold" />
             <span>Record Sale</span>
@@ -60,7 +60,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("restock")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-gold/10 hover:bg-gold/10 border border-gold/40 flex items-center space-x-1.5 transition-colors"
+            className="rounded-lg min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold surface-glass-tint hover:bg-gold/20 border border-gold/40 flex items-center space-x-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <RefreshCw className="w-4 h-4 text-gold" />
             <span>Restock</span>
@@ -69,7 +69,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("add-product")}
-            className="min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-black dark:text-white bg-white dark:bg-white/5 hover:bg-cream dark:hover:bg-white/10 border border-black/10 dark:border-white/15 flex items-center space-x-1.5 transition-colors"
+            className="rounded-lg min-h-[44px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-black dark:text-white surface-glass hover:bg-cream dark:hover:bg-white/10 border border-black/10 dark:border-white/15 flex items-center space-x-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <PlusCircle className="w-4 h-4 text-gold" />
             <span>+ Add Perfume</span>
@@ -82,13 +82,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Total Products */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group"
+          className="rounded-xl surface-glass-strong hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
               Total Perfumes
             </span>
-            <Boxes className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
+            <Boxes className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors duration-[400ms]" />
           </div>
           <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
             {totalProducts}
@@ -101,7 +101,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Low Stock Count */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className={`relative overflow-hidden surface-glass-strong hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group ${
+          className={`rounded-xl relative overflow-hidden surface-glass-strong hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group ${
             lowStockProducts.length > 0
               ? "border-gold/50 bg-gold/8 hover:border-gold"
               : "hover:border-gold/60"
@@ -124,7 +124,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Out of Stock Count */}
         <div
           onClick={() => onNavigateTo("inventory")}
-          className={`relative overflow-hidden surface-glass-strong hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group ${
+          className={`rounded-xl relative overflow-hidden surface-glass-strong hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group ${
             outOfStockProducts.length > 0
               ? "border-red-900/50 bg-red-950/10 hover:border-red-600"
               : "hover:border-gold/60"
@@ -147,7 +147,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Today's Orders / Sales */}
         <div
           onClick={() => onNavigateTo("orders")}
-          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group"
+          className="rounded-xl surface-glass-strong hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -169,7 +169,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {/* Pending Orders */}
         <div
           onClick={() => onNavigateTo("orders")}
-          className="surface-glass-strong hover:border-gold/60 hover:shadow-lift hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all group col-span-2 sm:col-span-1"
+          className="rounded-xl surface-glass-strong hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group col-span-2 sm:col-span-1"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -188,7 +188,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
       {/* Critical Stock Alerts */}
       {(lowStockProducts.length > 0 || outOfStockProducts.length > 0) && (
-        <div className="relative overflow-hidden surface-glass-strong p-5 shadow-lift">
+        <div className="relative overflow-hidden rounded-xl surface-glass-strong p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
           <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
           <div className="relative flex items-center justify-between mb-4">
             <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-2">
@@ -198,7 +198,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <button
               type="button"
               onClick={() => onNavigateTo("restock")}
-              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold"
+              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold transition-colors duration-[400ms]"
             >
               Restock Now →
             </button>
@@ -208,13 +208,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {[...outOfStockProducts, ...lowStockProducts].slice(0, 6).map((item) => (
               <div
                 key={item.id}
-                className="p-3 surface-glass-tint flex items-center justify-between"
+                className="rounded-lg p-3 surface-glass-tint flex items-center justify-between"
               >
                 <div className="flex items-center space-x-3 min-w-0">
                   <img
                     src={item.imageUrl}
                     alt={item.name}
-                    className="w-10 h-10 object-cover border border-black/10 dark:border-white/15 flex-shrink-0"
+                    className="rounded-lg w-10 h-10 object-cover border border-black/10 dark:border-white/15 flex-shrink-0"
                   />
                   <div className="truncate">
                     <p className="text-xs font-semibold text-black dark:text-white truncate">
@@ -228,7 +228,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
                 <div className="text-right flex-shrink-0 ml-2">
                   <span
-                    className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                    className={`inline-block rounded-lg px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                       item.stock <= 0
                         ? "bg-red-950 text-red-300 border border-red-800"
                         : "bg-gold/10 text-gold border border-gold/40"
@@ -244,7 +244,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       )}
 
       {/* Recent Orders Overview */}
-      <div className="relative overflow-hidden surface-glass-strong p-5 shadow-lift">
+      <div className="relative overflow-hidden rounded-xl surface-glass-strong p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
         <div className="relative flex items-center justify-between mb-4">
           <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
@@ -253,7 +253,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("orders")}
-            className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold"
+            className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold transition-colors duration-[400ms]"
           >
             View All ({orders.length}) →
           </button>
@@ -269,7 +269,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <div className="flex items-center space-x-2">
                   <span className="font-mono font-bold text-black dark:text-white">{o.id}</span>
                   <span
-                    className={`text-[9px] uppercase tracking-wider px-1.5 py-0.2 font-bold ${
+                    className={`rounded-md text-[9px] uppercase tracking-wider px-1.5 py-0.2 font-bold ${
                       o.source === "ONLINE"
                         ? "bg-black dark:bg-white text-white dark:text-black border border-white/30 dark:border-black/30"
                         : "bg-gold text-black border border-gold/40"

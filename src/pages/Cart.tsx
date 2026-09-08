@@ -66,7 +66,7 @@ export const Cart: React.FC<CartProps> = ({
         </span>
       </div>
 
-      <div className="relative overflow-hidden surface-glass-strong p-4 sm:p-6 md:p-8 shadow-lift">
+      <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
         <div className="flex flex-col divide-y divide-black/10 dark:divide-white/10">
           {items.map((item) => {
