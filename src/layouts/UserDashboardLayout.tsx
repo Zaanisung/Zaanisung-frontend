@@ -194,18 +194,18 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
                         title={collapsed ? item.label : undefined}
                         aria-label={collapsed ? item.label : undefined}
                         className={cn(
-                          "relative min-h-[46px] text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-3",
+                          "rounded-lg relative min-h-[46px] text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-3",
                           collapsed
                             ? "justify-center px-0"
                             : "px-3.5 py-2.5",
                           active
-                            ? "bg-gold text-ink font-bold"
+                            ? "bg-gold text-ink font-bold shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_4px_16px_-4px_rgba(212,175,55,0.3)]"
                             : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
                         )}
                       >
                         {active && (
                           <span
-                            className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30"
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full"
                             aria-hidden="true"
                           />
                         )}
@@ -238,7 +238,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
                 title="Browse Fragrances"
                 aria-label="Browse Fragrances"
                 className={cn(
-                  "min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-colors",
+                  "rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                   collapsed ? "justify-center px-0" : "px-3.5 py-2.5"
                 )}
               >
@@ -252,7 +252,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
                 title="Public Store"
                 aria-label="Public Store"
                 className={cn(
-                  "min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-colors",
+                  "rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                   collapsed ? "justify-center px-0" : "px-3.5 py-2.5"
                 )}
               >
@@ -266,7 +266,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
               onClick={toggleCollapsed}
               title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-              className="min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-colors mt-1"
+              className="rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] mt-1"
             >
               {collapsed ? (
                 <PanelLeftOpen className="w-4 h-4 flex-shrink-0" />

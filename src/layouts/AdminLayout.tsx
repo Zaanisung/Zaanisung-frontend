@@ -91,14 +91,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     type="button"
                     onClick={() => onChangeTab(item.id)}
                     className={cn(
-                      "relative min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-between",
+                      "rounded-lg relative min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center justify-between",
                       isActive
-                        ? "bg-gold text-ink font-bold"
+                        ? "bg-gold text-ink font-bold shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_4px_16px_-4px_rgba(212,175,55,0.3)]"
                         : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
                     )}
                   >
                     {isActive && (
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30" aria-hidden="true" />
+                      <span className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full" aria-hidden="true" />
                     )}
                     <div className="flex items-center gap-3">
                       <Icon className={cn("w-4 h-4", isActive && "stroke-[2.2]")} />
@@ -107,7 +107,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     {typeof item.badge === "number" && item.badge > 0 && (
                       <span
                         className={cn(
-                          "min-w-[20px] h-[20px] px-1.5 text-[10px] font-bold inline-flex items-center justify-center",
+                          "rounded-full min-w-[20px] h-[20px] px-1.5 text-[10px] font-bold inline-flex items-center justify-center",
                           isActive ? "bg-ink text-gold" : "bg-gold text-ink"
                         )}
                       >
@@ -126,7 +126,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateTo("record-sale")}
-                  className="min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-colors"
+                  className="rounded-lg min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
                 >
                   <TrendingUp className="w-4 h-4 text-gold" />
                   <span>Record Sale</span>
@@ -135,7 +135,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateTo("restock")}
-                  className="min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-colors"
+                  className="rounded-lg min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
                 >
                   <RefreshCw className="w-4 h-4 text-gold" />
                   <span>Restock</span>
@@ -144,7 +144,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateTo("add-product")}
-                  className="min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-cream/70 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 flex items-center gap-2.5 transition-colors"
+                  className="rounded-lg min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-cream/70 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
                 >
                   <PlusCircle className="w-4 h-4 text-gold" />
                   <span>+ Add Perfume</span>
@@ -158,7 +158,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <button
               type="button"
               onClick={onReturnToStorefront}
-              className="w-full min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-colors"
+              className="rounded-lg w-full min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <Store className="w-4 h-4 text-gold" />
               <span>Storefront</span>
@@ -176,7 +176,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <h2 className="font-brand-serif text-base tracking-[0.14em] font-light italic text-ink dark:text-white hidden min-[420px]:inline">
               ZAANISUNG
             </h2>
-            <span className="text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
+            <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
               ADMIN
             </span>
           </div>
@@ -186,7 +186,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <button
               type="button"
               onClick={onReturnToStorefront}
-              className="min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 bg-white/60 dark:bg-white/[0.06] border border-black/10 dark:border-white/15 flex items-center gap-1.5"
+              className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <Store className="w-3.5 h-3.5 text-gold" />
               <span>Store</span>
@@ -199,7 +199,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
-            className="min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap"
+            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <TrendingUp className="w-3.5 h-3.5 text-gold" />
             <span>Record Sale</span>
@@ -207,7 +207,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("restock")}
-            className="min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap"
+            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <RefreshCw className="w-3.5 h-3.5 text-gold" />
             <span>Restock</span>
@@ -215,7 +215,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("add-product")}
-            className="min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 bg-white/70 dark:bg-white/[0.06] border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap"
+            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <PlusCircle className="w-3.5 h-3.5 text-gold" />
             <span>+ Add</span>
@@ -251,7 +251,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 <div className="relative">
                   <Icon className={cn("w-5 h-5", isActive ? "stroke-[2.2]" : "stroke-[1.6]")} />
                   {typeof item.badge === "number" && item.badge > 0 && (
-                    <span className="absolute -top-1.5 -right-2.5 min-w-[17px] h-[17px] px-1 bg-gold text-ink text-[9px] font-bold rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1.5 -right-2.5 min-w-[17px] h-[17px] px-1 bg-gold text-ink text-[9px] font-bold rounded-full flex items-center justify-center shadow-[0_0_0_2px_rgba(0,0,0,0.1)]">
                       {item.badge}
                     </span>
                   )}
@@ -264,7 +264,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 >
                   {item.label}
                 </span>
-                {isActive && <span className="absolute top-0 w-8 h-[2px] bg-gold" />}
+                {isActive && <span className="absolute top-0 w-8 h-[2px] bg-gold rounded-full" />}
               </button>
             );
           })}
