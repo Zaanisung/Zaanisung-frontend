@@ -63,7 +63,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="w-10 h-10 flex items-center justify-center border border-white/15 text-cream/70 hover:text-ink hover:border-gold hover:bg-gold transition-all"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/15 text-cream/70 hover:text-ink hover:border-gold hover:bg-gold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.1] active:scale-[0.95]"
                 >
                   <s.icon className="w-4 h-4" />
                 </a>
@@ -123,16 +123,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="text-sm text-cream/60 mb-4">
               Be first to know about new drops and exclusive offers.
             </p>
-            <form className="flex" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="you@email.com"
                 aria-label="Email address"
-                className="flex-1 min-w-0 px-3.5 py-2.5 text-sm bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold transition-colors"
+                className="flex-1 min-w-0 px-3.5 py-2.5 text-sm rounded-lg bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
               />
               <button
                 type="submit"
-                className="min-h-[44px] px-5 bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-colors"
+                className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]"
               >
                 Join
               </button>
