@@ -38,13 +38,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       <div className="absolute top-0 left-0 right-0 hairline-gold z-20" aria-hidden="true" />
 
       {/* Product image */}
-      <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 overflow-hidden rounded-t-2xl">
+      <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 overflow-hidden rounded-t-2xl flex-shrink-0">
         <img
           src={product.imageUrl}
           alt={product.name}
           loading="lazy"
           className={cn(
-            "w-full h-full object-cover object-center",
+            "absolute inset-0 w-full h-full object-cover object-center",
             "transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
             "group-hover:scale-105"
           )}
