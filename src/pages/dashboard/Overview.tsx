@@ -2,7 +2,7 @@ import React from "react";
 import type { FullUser } from "../../types/user";
 import type { Order } from "../../types/order";
 import type { Product } from "../../types/product";
-import type { DashboardPage } from "../../types/nav";
+import type { DashboardNavPage } from "../../types/nav";
 import {
   MapPin,
   CreditCard,
@@ -19,7 +19,7 @@ export interface OverviewProps {
   user: FullUser | null;
   orders: Order[];
   products: Product[];
-  onNavigate: (page: DashboardPage) => void;
+  onNavigate: (page: DashboardNavPage) => void;
 }
 
 export const Overview: React.FC<OverviewProps> = ({
@@ -38,22 +38,22 @@ export const Overview: React.FC<OverviewProps> = ({
     {
       label: "Addresses",
       icon: <MapPin className="w-5 h-5" />,
-      page: "addresses" as DashboardPage,
+      page: "addresses" as DashboardNavPage,
     },
     {
       label: "Payment Methods",
       icon: <CreditCard className="w-5 h-5" />,
-      page: "payment-methods" as DashboardPage,
+      page: "payment-methods" as DashboardNavPage,
     },
     {
       label: "Settings",
       icon: <Settings className="w-5 h-5" />,
-      page: "settings" as DashboardPage,
+      page: "settings" as DashboardNavPage,
     },
     {
       label: "Notifications",
       icon: <Bell className="w-5 h-5" />,
-      page: "notifications" as DashboardPage,
+      page: "notifications" as DashboardNavPage,
     },
   ];
 

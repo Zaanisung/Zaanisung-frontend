@@ -3,6 +3,7 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Logo } from "../components/Logo";
 import { CustomerUser } from "../types";
+import { VALIDATION, PASSWORD_REGEX } from "../constants";
 import * as api from "../services";
 import { getErrorMessage } from "../services";
 
@@ -32,8 +33,16 @@ export const Register: React.FC<RegisterProps> = ({
       setError("Please enter your phone number.");
       return;
     }
-    if (!password.trim() || password.length < 6) {
-      setError("Please enter a secure password (at least 6 characters).");
+    if (!password.trim() || password.length < VALIDATION.PASSWORD_MIN_LENGTH) {
+      setError(
+        `Please enter a secure password (at least ${VALIDATION.PASSWORD_MIN_LENGTH} characters).`
+      );
+      return;
+    }
+    if (!PASSWORD_REGEX.test(password)) {
+      setError(
+        "Password must include an uppercase letter, a lowercase letter, a number and a special character."
+      );
       return;
     }
 
@@ -188,7 +197,7 @@ export const Register: React.FC<RegisterProps> = ({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                helperText="Minimum 6 characters"
+                helperText={`Minimum ${VALIDATION.PASSWORD_MIN_LENGTH} characters with uppercase, lowercase, number & special character`}
                 required
               />
 

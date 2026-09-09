@@ -3,6 +3,7 @@ import { OrderItem } from "../types";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { PaymentMethodLogo } from "../components/PaymentMethodLogo";
+import { GHANA_PHONE_REGEX } from "../constants";
 import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard } from "lucide-react";
 
 export interface CheckoutProps {
@@ -18,7 +19,7 @@ export interface CheckoutProps {
     deliveryAddress: string;
     digitalAddress?: string;
     paymentMethod: string;
-  }) => void;
+  }) => Promise<void>;
 }
 
 export const Checkout: React.FC<CheckoutProps> = ({
@@ -40,7 +41,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
       setError("Please provide your delivery recipient name.");
@@ -48,6 +49,10 @@ export const Checkout: React.FC<CheckoutProps> = ({
     }
     if (!phone.trim()) {
       setError("Please provide a contact phone number for delivery.");
+      return;
+    }
+    if (!GHANA_PHONE_REGEX.test(phone.trim().replace(/[\s-]/g, ""))) {
+      setError("Please enter a valid Ghanaian phone number, e.g. +233 24 551 2890.");
       return;
     }
     if (!address.trim()) {
@@ -58,13 +63,16 @@ export const Checkout: React.FC<CheckoutProps> = ({
       setError("Please enter a valid Ghana digital address, e.g. NT-0000-0000.");
       return;
     }
+    if (paymentMethod === "Mobile Money" && !momoNumber.trim()) {
+      setError(`Please provide your ${momoNetwork} account number.`);
+      return;
+    }
 
     setIsSubmitting(true);
     setError(null);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      onPlaceOrder({
+    try {
+      await onPlaceOrder({
         items,
         total,
         customerName: name.trim(),
@@ -73,7 +81,11 @@ export const Checkout: React.FC<CheckoutProps> = ({
         digitalAddress: digitalAddress.trim() ? digitalAddress.trim().toUpperCase() : undefined,
         paymentMethod: paymentMethod === "Mobile Money" ? `${paymentMethod} (${momoNetwork})` : paymentMethod,
       });
-    }, 600);
+    } catch {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

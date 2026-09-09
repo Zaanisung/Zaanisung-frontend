@@ -16,6 +16,16 @@ export type DashboardPage =
   | "profile"
   | "security";
 
+/**
+ * Dashboard pages that are reachable directly from navigation links.
+ * `product-details` and `order-confirmation` require route params and are
+ * therefore navigated to with an explicit visitor/order id instead.
+ */
+export type DashboardNavPage = Exclude<
+  DashboardPage,
+  "product-details" | "order-confirmation"
+>;
+
 export type AppView =
   | { type: "landing" }
   | { type: "customer"; page: "login" }

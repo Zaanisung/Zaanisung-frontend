@@ -46,7 +46,7 @@ export type MoMoNetwork = (typeof MOMO_NETWORKS)[number];
 export const PAYMENT_METHOD_TYPES = [
   "MOBILE_MONEY",
   "CARD",
-  "BANK_TRANSFER",
+  "BANK",
   "CASH",
 ] as const;
 export type PaymentMethodType = (typeof PAYMENT_METHOD_TYPES)[number];
@@ -54,7 +54,7 @@ export type PaymentMethodType = (typeof PAYMENT_METHOD_TYPES)[number];
 export const PAYMENT_METHOD_LABELS: Record<PaymentMethodType, string> = {
   MOBILE_MONEY: "Mobile Money",
   CARD: "Debit/Credit Card",
-  BANK_TRANSFER: "Bank Transfer",
+  BANK: "Bank Transfer",
   CASH: "Cash on Delivery",
 };
 
