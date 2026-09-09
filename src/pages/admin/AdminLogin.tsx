@@ -87,7 +87,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
           <form onSubmit={handleSubmit} className="relative space-y-4">
             {error && (
-              <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium">
+              <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium rounded-xl">
                 {error}
               </div>
             )}

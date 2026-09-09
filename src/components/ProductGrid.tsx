@@ -88,7 +88,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               type="button"
               onClick={() => setActiveFilter(opt.id)}
               className={cn(
-                "min-h-[40px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border",
+                "min-h-[40px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border rounded-full",
                 activeFilter === opt.id
                   ? "bg-ink text-cream border-ink dark:bg-gold dark:text-ink dark:border-gold"
                   : "bg-white/60 dark:bg-white/[0.05] text-black/60 dark:text-white/65 border-black/15 dark:border-white/15 hover:border-gold hover:text-ink dark:hover:text-white"
@@ -100,12 +100,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
 
         {/* Mobile layout toggle */}
-        <div className="flex items-center gap-1 bg-white/60 dark:bg-white/[0.08] p-1 border border-black/15 dark:border-white/15 sm:hidden flex-shrink-0">
+        <div className="flex items-center gap-1 bg-white/60 dark:bg-white/[0.08] p-1 border border-black/15 dark:border-white/15 sm:hidden flex-shrink-0 rounded-full">
           <button
             type="button"
             onClick={() => setMobileLayout("grid")}
             className={cn(
-              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors",
+              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors rounded-full",
               mobileLayout === "grid" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
             )}
             title="Compact Grid"
@@ -117,7 +117,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
             type="button"
             onClick={() => setMobileLayout("showcase")}
             className={cn(
-              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors",
+              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors rounded-full",
               mobileLayout === "showcase" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
             )}
             title="Large Cards"
@@ -154,13 +154,13 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           <Loader variant="circles" size="lg" />
         </div>
       ) : error ? (
-        <div className="p-8 bg-white dark:bg-white/5 border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8">
+        <div className="p-8 bg-white dark:bg-white/5 border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8 rounded-2xl">
           <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-3" />
           <p className="text-sm text-red-700 dark:text-red-400 font-medium mb-4">{error}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="min-h-[44px] px-6 py-2 text-[11px] uppercase tracking-widest font-bold bg-ink dark:bg-white text-white dark:text-ink hover:bg-gold hover:text-ink transition-colors"
+              className="min-h-[44px] px-6 py-2 text-[11px] uppercase tracking-widest font-bold bg-ink dark:bg-white text-white dark:text-ink hover:bg-gold hover:text-ink transition-colors rounded-lg"
             >
               Try again
             </button>
@@ -168,7 +168,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="py-16 px-6 surface-glass text-center flex flex-col items-center max-w-md mx-auto">
-          <div className="w-12 h-12 border border-gold flex items-center justify-center text-gold mb-4">
+          <div className="w-12 h-12 border border-gold flex items-center justify-center text-gold mb-4 rounded-xl">
             <span className="font-brand-serif text-xl font-light">Z</span>
           </div>
           <h3 className="font-brand-serif text-lg font-normal text-ink dark:text-white mb-1">
@@ -188,7 +188,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                 setSearchQuery("");
                 setActiveFilter("ALL");
               }}
-              className="min-h-[44px] px-6 py-2.5 text-[11px] uppercase tracking-widest font-bold border border-ink dark:border-white text-ink dark:text-white hover:bg-ink hover:text-cream dark:hover:bg-white dark:hover:text-ink transition-colors"
+              className="min-h-[44px] px-6 py-2.5 text-[11px] uppercase tracking-widest font-bold border border-ink dark:border-white text-ink dark:text-white hover:bg-ink hover:text-cream dark:hover:bg-white dark:hover:text-ink transition-colors rounded-lg"
             >
               Clear All Filters
             </button>

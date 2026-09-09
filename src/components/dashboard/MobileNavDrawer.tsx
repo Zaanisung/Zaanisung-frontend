@@ -85,7 +85,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
                       type="button"
                       onClick={() => onNavigate(item.id)}
                       className={cn(
-                        "relative min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-3",
+                        "relative min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-3 rounded-lg",
                         active
                           ? "bg-gold text-ink font-bold"
                           : "text-black/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/[0.06]"
@@ -116,7 +116,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
           <button
             type="button"
             onClick={() => onNavigate("shop")}
-            className="min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-black/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/[0.06] flex items-center gap-3 transition-colors"
+            className="min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-black/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/[0.06] flex items-center gap-3 transition-colors rounded-lg"
           >
             <Store className="w-4 h-4 text-gold flex-shrink-0" />
             <span>Browse Fragrances</span>
@@ -125,7 +125,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
           <button
             type="button"
             onClick={onReturnToStorefront}
-            className="min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-black/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/[0.06] flex items-center gap-3 transition-colors"
+            className="min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-black/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/[0.06] flex items-center gap-3 transition-colors rounded-lg"
           >
             <Store className="w-4 h-4 text-gold flex-shrink-0" />
             <span>Public Store</span>
@@ -140,7 +140,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
               onClose();
               if (onLogout) onLogout();
             }}
-            className="w-full min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 flex items-center justify-center gap-2 transition-colors"
+            className="w-full min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 flex items-center justify-center gap-2 transition-colors rounded-lg"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>

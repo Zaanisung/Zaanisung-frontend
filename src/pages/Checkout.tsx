@@ -99,7 +99,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
         Back to Bag
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong p-5 sm:p-8 shadow-lift">
+      <div className="relative overflow-hidden surface-glass-strong p-5 sm:p-8 shadow-lift rounded-2xl">
         <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
         <div className="absolute -top-28 -right-28 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
 
@@ -115,7 +115,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
+          <div className="mb-6 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
             {error}
           </div>
         )}
@@ -179,7 +179,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 onChange={(e) => setAddress(e.target.value)}
                 rows={2}
                 placeholder="House Number, Street Name, Landmark, Area (e.g. Ring Road Central, Accra)"
-                className="w-full p-3 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 border border-black/10 dark:border-white/15 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+                className="w-full p-3 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 border border-black/10 dark:border-white/15 rounded-xl focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
                 required
               />
             </div>
@@ -216,7 +216,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                     key={pm.id}
                     type="button"
                     onClick={() => setPaymentMethod(pm.id)}
-                    className={`p-3.5 text-left border min-h-[48px] transition-all ${
+                    className={`p-3.5 text-left border min-h-[48px] rounded-xl transition-all ${
                       isSelected
                         ? "border-gold bg-gold/10 text-black font-semibold"
                         : "border-black/10 dark:border-white/15 text-black/70 bg-white dark:bg-white/5 hover:border-black/30"
@@ -252,7 +252,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
                       key={net}
                       type="button"
                       onClick={() => setMomoNetwork(net)}
-                      className={`min-h-[52px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border transition-all flex flex-col items-center justify-center gap-1.5 ${
+                      className={`min-h-[52px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border rounded-xl transition-all flex flex-col items-center justify-center gap-1.5 ${
                         momoNetwork === net
                           ? "border-gold bg-gold/5 shadow-xs"
                           : "border-black/10 dark:border-white/15 bg-white dark:bg-white/5 text-black/70 dark:text-white/80"

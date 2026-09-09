@@ -80,7 +80,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
         Back to Inventory
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl">
         <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
         <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
@@ -96,7 +96,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
         </div>
 
         {error && (
-          <div className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-300 font-medium mb-6">
+          <div className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-300 font-medium mb-6 rounded-xl">
             {error}
           </div>
         )}
@@ -131,7 +131,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold text-gold bg-gold/10 hover:bg-gold/20 border border-gold/40 flex items-center space-x-2 transition-colors"
+                  className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-semibold text-gold bg-gold/10 hover:bg-gold/20 border border-gold/40 flex items-center space-x-2 transition-colors rounded-lg"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>Replace Image</span>
@@ -169,7 +169,7 @@ export const EditProduct: React.FC<EditProductProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value.slice(0, 160))}
               placeholder="e.g. A bold amber-oud blend with a warm, smoky dry-down."
-              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-none border border-black/10 dark:border-white/15 transition-colors focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+              className="w-full min-h-[44px] px-3.5 py-2.5 text-sm bg-white dark:bg-white/5 text-black dark:text-white placeholder-black/40 rounded-xl border border-black/10 dark:border-white/15 transition-colors focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold"
             />
           </div>
 

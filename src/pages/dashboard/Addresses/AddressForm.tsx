@@ -4,7 +4,7 @@ import { GHANA_PHONE_REGEX } from "../../../constants";
 import { X } from "lucide-react";
 
 const inputClass =
-  "w-full min-h-[44px] px-3 py-2 text-sm bg-white dark:bg-white/5 border border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:border-gold transition-colors";
+  "w-full min-h-[44px] px-3 py-2 text-sm bg-white dark:bg-white/5 border border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:border-gold transition-colors rounded-xl";
 
 interface AddressFormProps {
   /** When present, the form pre-fills and submits an update instead of a create. */
@@ -46,7 +46,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   };
 
   return (
-    <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6">
+    <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6 rounded-2xl">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
           {editing ? "Edit Address" : "New Address"}
@@ -157,14 +157,14 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <div className="flex items-center gap-3 pt-2">
           <button
             type="submit"
-            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center gap-2"
+            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center gap-2 rounded-lg"
           >
             <span>{editing ? "Save Changes" : "Add Address"}</span>
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors rounded-lg"
           >
             Cancel
           </button>

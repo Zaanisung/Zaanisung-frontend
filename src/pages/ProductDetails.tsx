@@ -126,7 +126,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                   (accord) => (
                     <span
                       key={accord}
-                      className="px-2.5 py-1 bg-gold/8 dark:bg-gold/10 text-black/70 dark:text-gold-100 text-[11px] border border-gold/30"
+                      className="px-2.5 py-1 rounded-full bg-gold/8 dark:bg-gold/10 text-black/70 dark:text-gold-100 text-[11px] border border-gold/30"
                     >
                       {accord}
                     </span>

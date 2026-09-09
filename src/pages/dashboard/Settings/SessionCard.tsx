@@ -8,7 +8,7 @@ interface SessionCardProps {
 
 export const SessionCard: React.FC<SessionCardProps> = ({ onLogout }) => {
   return (
-    <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6">
+    <div className="border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 sm:p-6 rounded-2xl">
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-black dark:text-white">

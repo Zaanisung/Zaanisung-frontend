@@ -57,7 +57,7 @@ export const Restock: React.FC<RestockProps> = ({
         Back
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl">
         <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
         <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
@@ -79,14 +79,14 @@ export const Restock: React.FC<RestockProps> = ({
         </div>
 
         {error && (
-          <div className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-300 font-medium mb-6">
+          <div className="p-3 bg-red-950/50 border border-red-800 text-xs text-red-300 font-medium mb-6 rounded-xl">
             {error}
           </div>
         )}
 
         {isSuccess ? (
           <div className="py-8 text-center space-y-3">
-            <div className="w-12 h-12 bg-gold/10 border border-gold text-gold flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 bg-gold/10 border border-gold text-gold flex items-center justify-center mx-auto rounded-xl">
               <Check className="w-6 h-6 stroke-[3]" />
             </div>
             <h3 className="text-base font-semibold text-black dark:text-white">
@@ -109,7 +109,7 @@ export const Restock: React.FC<RestockProps> = ({
                   setSelectedProductId(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-xs sm:text-sm bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold rounded-xl"
               >
                 {products.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -154,7 +154,7 @@ export const Restock: React.FC<RestockProps> = ({
                   setQuantityAdded(e.target.value);
                   setError(null);
                 }}
-                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold"
+                className="w-full min-h-[44px] px-3.5 py-2.5 text-base font-mono font-bold bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-black dark:text-white focus:outline-none focus:border-gold rounded-xl"
                 placeholder="10"
                 required
               />
@@ -170,7 +170,7 @@ export const Restock: React.FC<RestockProps> = ({
                   key={count}
                   type="button"
                   onClick={() => setQuantityAdded(count.toString())}
-                  className="px-2.5 py-1 text-[11px] font-mono text-gold bg-gold/10 hover:bg-gold/20 border border-gold/30"
+                  className="px-2.5 py-1 text-[11px] font-mono text-gold bg-gold/10 hover:bg-gold/20 border border-gold/30 rounded-lg"
                 >
                   +{count}
                 </button>

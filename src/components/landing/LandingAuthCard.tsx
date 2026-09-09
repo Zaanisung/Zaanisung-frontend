@@ -76,14 +76,14 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
             </div>
 
             {/* Mode toggle */}
-            <div className="inline-flex self-start p-1 border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.06] mb-6">
+            <div className="inline-flex self-start p-1 border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.06] mb-6 rounded-full">
               {(["signup", "login"] as const).map((m) => (
                 <button
                   key={m}
                   type="button"
                   onClick={() => onModeChange(m)}
                   className={cn(
-                    "min-h-[38px] px-4 text-[10px] uppercase tracking-wider font-bold transition-colors",
+                    "min-h-[38px] px-4 text-[10px] uppercase tracking-wider font-bold transition-colors rounded-full",
                     mode === m
                       ? "bg-ink text-cream dark:bg-gold dark:text-ink"
                       : "text-black/50 dark:text-white/50 hover:text-ink dark:hover:text-white"
@@ -96,7 +96,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
 
             <form onSubmit={onSubmit} className="space-y-4">
               {error && (
-                <div className="p-3 bg-red-950/40 border border-red-800 text-xs text-red-300 font-medium">
+                <div className="p-3 bg-red-950/40 border border-red-800 text-xs text-red-300 font-medium rounded-xl">
                   {error}
                 </div>
               )}
@@ -151,7 +151,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
           </>
         ) : (
           <div className="text-center py-2">
-            <div className="w-16 h-16 bg-gold/15 border border-gold/50 flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-gold/15 border border-gold/50 flex items-center justify-center mx-auto mb-6 rounded-xl">
               <CheckCircle2 className="w-8 h-8 text-gold" />
             </div>
             <h2 className="font-brand-serif text-2xl sm:text-3xl font-light text-ink dark:text-white">

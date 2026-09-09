@@ -23,7 +23,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
         <div className="absolute -bottom-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         {/* Geometric Check Icon Frame */}
-        <div className="relative w-16 h-16 bg-gold/15 border border-gold/40 flex items-center justify-center mx-auto mb-6">
+        <div className="relative w-16 h-16 bg-gold/15 border border-gold/40 flex items-center justify-center mx-auto mb-6 rounded-xl">
           <Check className="w-8 h-8 text-gold stroke-[2.5]" />
         </div>
 

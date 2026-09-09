@@ -59,7 +59,7 @@ export const Addresses: React.FC<AddressesProps> = ({
           <button
             type="button"
             onClick={() => setShowForm(true)}
-            className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center gap-2"
+            className="min-h-[44px] px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center gap-2 rounded-lg"
           >
             <Plus className="w-4 h-4" />
             <span>Add Address</span>
@@ -86,7 +86,7 @@ export const Addresses: React.FC<AddressesProps> = ({
               <button
                 type="button"
                 onClick={() => setShowForm(true)}
-                className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2"
+                className="w-full min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 rounded-lg"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Your First Address</span>

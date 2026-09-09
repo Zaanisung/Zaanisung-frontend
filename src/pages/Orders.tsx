@@ -56,7 +56,7 @@ export const Orders: React.FC<OrdersProps> = ({
           Back to all orders
         </button>
 
-        <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift">
+        <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl">
           <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
           <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
@@ -178,7 +178,7 @@ export const Orders: React.FC<OrdersProps> = ({
                 </span>
                 {order.source && (
                   <span
-                    className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold ${
+                    className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold rounded-full ${
                       order.source === "ONLINE"
                         ? "bg-white dark:bg-black text-black dark:text-white border border-black/10 dark:border-white/30"
                         : "bg-gold/15 dark:bg-gold text-gold dark:text-black border border-gold/40 dark:border-gold/40"

@@ -39,7 +39,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex flex-col justify-center"
         >
-          <span className="inline-flex items-center gap-2 border border-gold/40 bg-gold/10 text-gold px-3 py-1.5 w-fit">
+          <span className="inline-flex items-center gap-2 border border-gold/40 bg-gold/10 text-gold px-3 py-1.5 w-fit rounded-full">
             <Sparkles className="w-3.5 h-3.5" />
             <span className="eyebrow">Maison de Parfum · Tamale</span>
           </span>
@@ -75,7 +75,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               const Icon = badge.icon;
               return (
                 <div key={badge.label} className="flex flex-col items-center sm:items-start px-2 first:pl-0 sm:px-4 sm:first:pl-0">
-                  <div className="w-9 h-9 border border-gold/40 bg-gold/10 flex items-center justify-center mb-2.5">
+                  <div className="w-9 h-9 border border-gold/40 bg-gold/10 flex items-center justify-center mb-2.5 rounded-lg">
                     <Icon className="w-4 h-4 text-gold" />
                   </div>
                   <p className="text-xs font-bold uppercase tracking-wider text-ink dark:text-white">

@@ -79,7 +79,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           <button
             type="submit"
             disabled={updatingProfile}
-            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 disabled:opacity-50 transition-colors flex items-center gap-2 rounded-lg"
           >
             {updatingProfile ? <Loader variant="dots" size="sm" /> : <Save className="w-4 h-4" />}
             <span>Save Profile</span>

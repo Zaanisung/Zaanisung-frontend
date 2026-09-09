@@ -54,12 +54,12 @@ export const NotificationPrefsCard: React.FC<NotificationPrefsCardProps> = ({
               role="switch"
               aria-checked={prefs[pref.key]}
               onClick={() => toggle(pref.key)}
-              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer transition-colors ${
+              className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer transition-colors rounded-full ${
                 prefs[pref.key] ? "bg-gold" : "bg-black/20 dark:bg-white/20"
               }`}
             >
               <span
-                className={`pointer-events-none inline-block h-5 w-5 bg-white shadow-sm transition-transform ${
+                className={`pointer-events-none inline-block h-5 w-5 bg-white shadow-sm transition-transform rounded-full ${
                   prefs[pref.key] ? "translate-x-5" : "translate-x-0.5"
                 }`}
               />

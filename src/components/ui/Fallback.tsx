@@ -36,7 +36,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
       <button
         type="button"
         onClick={onRetry}
-        className="mt-5 min-h-[44px] px-5 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-ink bg-gold hover:bg-gold-600 transition-colors"
+        className="mt-5 min-h-[44px] px-5 rounded-lg inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-ink bg-gold hover:bg-gold-600 transition-colors"
       >
         <RotateCw className="w-4 h-4" />
         <span>Try again</span>
@@ -88,7 +88,7 @@ export class ErrorBoundary extends React.Component<
           <div className="relative overflow-hidden w-full max-w-md py-14 px-6 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
             <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
             <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
-            <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40">
+            <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40 rounded-xl">
               <ShieldAlert className="w-6 h-6" />
             </div>
             <h2 className="relative text-xl font-light text-black dark:text-white mb-1 font-brand-serif">
@@ -100,7 +100,7 @@ export class ErrorBoundary extends React.Component<
             <button
               type="button"
               onClick={this.handleRetry}
-              className="relative min-h-[44px] px-6 text-xs uppercase tracking-widest font-bold text-ink bg-gold hover:bg-gold-600 transition-colors"
+              className="relative min-h-[44px] px-6 rounded-lg text-xs uppercase tracking-widest font-bold text-ink bg-gold hover:bg-gold-600 transition-colors"
             >
               Try again
             </button>
@@ -138,7 +138,7 @@ export const SkeletonText: React.FC<{ lines?: number; className?: string }> = ({
 export const SkeletonCard: React.FC<{ className?: string }> = ({ className }) => (
   <div
     className={cn(
-      "border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 space-y-3",
+      "border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] p-5 space-y-3 rounded-xl",
       className
     )}
   >

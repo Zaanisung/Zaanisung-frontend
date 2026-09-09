@@ -85,7 +85,7 @@ export const SecurityCard: React.FC<SecurityCardProps> = ({
           <button
             type="submit"
             disabled={changingPassword}
-            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="min-h-[44px] px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 disabled:opacity-50 transition-colors flex items-center gap-2 rounded-lg"
           >
             {changingPassword ? <Loader variant="dots" size="sm" /> : <Lock className="w-4 h-4" />}
             <span>Update Password</span>

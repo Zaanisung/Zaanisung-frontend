@@ -23,7 +23,7 @@ export const Account: React.FC<AccountProps> = ({
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
         <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
 
-        <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40">
+        <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40 rounded-xl">
           <User className="w-6 h-6 stroke-[1.5]" />
         </div>
         <h2
@@ -61,18 +61,18 @@ export const Account: React.FC<AccountProps> = ({
         </p>
       </div>
 
-      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift space-y-6">
+      <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl space-y-6">
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
         <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         {/* Customer Avatar & Name */}
         <div className="relative flex items-center space-x-4 pb-6">
-          <div className="w-14 h-14 bg-black dark:bg-white/5 text-gold border border-gold/50 flex items-center justify-center text-lg font-bold">
+          <div className="w-14 h-14 bg-black dark:bg-white/5 text-gold border border-gold/50 flex items-center justify-center text-lg font-bold rounded-xl">
             {user.name.charAt(0).toUpperCase()}
           </div>
           <div>
             <h3 className="font-semibold text-base text-black dark:text-white">{user.name}</h3>
-            <span className="text-[11px] uppercase tracking-wider text-gold dark:text-gold font-bold bg-gold/10 dark:bg-gold/10 px-2 py-0.5 border border-gold/40 dark:border-gold/40 inline-block mt-0.5">
+            <span className="text-[11px] uppercase tracking-wider text-gold dark:text-gold font-bold bg-gold/10 dark:bg-gold/10 px-2 py-0.5 border border-gold/40 dark:border-gold/40 inline-block mt-0.5 rounded-full">
               Verified Customer
             </span>
           </div>

@@ -63,7 +63,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
           <button
             type="button"
             onClick={onMarkAllRead}
-            className="min-h-[44px] px-4 text-xs uppercase tracking-wider font-bold text-gold border border-gold/40 hover:bg-gold/10 transition-colors flex items-center gap-2"
+            className="min-h-[44px] px-4 text-xs uppercase tracking-wider font-bold text-gold border border-gold/40 hover:bg-gold/10 transition-colors flex items-center gap-2 rounded-lg"
           >
             <CheckCheck className="w-4 h-4" />
             <span>
@@ -94,7 +94,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                 onClick={() => {
                   if (isUnread) onMarkRead(n._id);
                 }}
-                className={`w-full text-left border p-4 sm:p-5 flex gap-4 transition-all hover:-translate-y-0.5 ${
+                className={`w-full text-left border p-4 sm:p-5 flex gap-4 transition-all hover:-translate-y-0.5 rounded-xl ${
                   isUnread
                     ? "border-gold/40 bg-gold/5 hover:border-gold/60"
                     : "border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] hover:border-black/20 dark:hover:border-white/25"
@@ -120,7 +120,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
                       {n.title}
                     </h4>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 border border-black/10 dark:border-white/15 flex items-center gap-1">
+                      <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 border border-black/10 dark:border-white/15 flex items-center gap-1 rounded-full">
                         {ch.icon}
                         <span className="hidden sm:inline">{ch.label}</span>
                       </span>
