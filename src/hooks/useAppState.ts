@@ -78,6 +78,7 @@ export function useAppState() {
   const [customerTab, setCustomerTab] = useState<CustomerTab>("shop");
   const [adminTab, setAdminTab] = useState<AdminTab>("dashboard");
   const [recentlyAddedId, setRecentlyAddedId] = useState<string | null>(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [lastConfirmedOrder, setLastConfirmedOrder] = useState<Order | null>(null);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState<string | null>(null);
@@ -446,6 +447,7 @@ export function useAppState() {
     });
     setRecentlyAddedId(product.id);
     setTimeout(() => setRecentlyAddedId(null), 1500);
+    setIsCartOpen(true);
   };
 
   const handleUpdateCartQuantity = (productId: string, quantity: number) => {
@@ -467,6 +469,10 @@ export function useAppState() {
   const handleRemoveCartItem = (productId: string) => {
     setCart((prev) => prev.filter((item) => item.productId !== productId));
   };
+
+  const handleCartOpen = useCallback(() => setIsCartOpen(true), []);
+
+  const handleCartClose = useCallback(() => setIsCartOpen(false), []);
 
   // ─── Order placement ────────────────────────────────────────────────
   const handlePlaceOrder = async (orderData: PlaceOrderData) => {
@@ -606,6 +612,7 @@ export function useAppState() {
     productsError,
     recentlyAddedId,
     lastConfirmedOrder,
+    isCartOpen,
     pendingOrdersCount,
     totalCartCount,
     notifications,
@@ -640,6 +647,8 @@ export function useAppState() {
     onAddToCart: handleAddToCart,
     onUpdateCartQuantity: handleUpdateCartQuantity,
     onRemoveCartItem: handleRemoveCartItem,
+    onCartOpen: handleCartOpen,
+    onCartClose: handleCartClose,
     onPlaceOrder: handlePlaceOrder,
     // admin
     onConfirmPhysicalSale: handleConfirmPhysicalSale,

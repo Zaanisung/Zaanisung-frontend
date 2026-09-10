@@ -40,6 +40,7 @@ type Props = Pick<
   | "onAddToCart"
   | "onUpdateCartQuantity"
   | "onRemoveCartItem"
+  | "onCartOpen"
   | "onPlaceOrder"
   | "onRetryProducts"
   | "onCustomerLogout"
@@ -83,6 +84,7 @@ export const DashboardRouter: React.FC<Props> = ({
   onAddToCart,
   onUpdateCartQuantity,
   onRemoveCartItem,
+  onCartOpen,
   onPlaceOrder,
   onRetryProducts,
   onCustomerLogout,
@@ -110,7 +112,7 @@ export const DashboardRouter: React.FC<Props> = ({
     <UserDashboardLayout
       activePage={view.page}
       onNavigate={navigate}
-      onOpenCart={() => onNavigate({ type: "dashboard", page: "cart" })}
+      onOpenCart={onCartOpen}
       cartCount={totalCartCount}
       userName={customerUser?.name || ""}
       isDark={isDark}

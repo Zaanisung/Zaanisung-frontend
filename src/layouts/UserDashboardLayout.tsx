@@ -3,10 +3,11 @@ import type { DashboardNavPage, DashboardPage } from "../types";
 import { Loader } from "../components/ui/Loader";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import { Sidebar } from "../components/dashboard/Sidebar";
-import { MobileHeader } from "../components/dashboard/MobileHeader";
+import { DashboardHeader } from "../components/dashboard/DashboardHeader";
 import { MobilePageTitle } from "../components/dashboard/MobilePageTitle";
 import { MobileNavDrawer } from "../components/dashboard/MobileNavDrawer";
 import { MobileBottomNav } from "../components/dashboard/MobileBottomNav";
+import { currentPageLabel } from "../components/dashboard/navigation";
 import { STORAGE_KEYS } from "../constants";
 
 export interface UserDashboardLayoutProps {
@@ -59,7 +60,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
+    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black weave-bg">
       <Sidebar
         activePage={activePage}
         userName={userName}
@@ -73,9 +74,10 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
 
       {/* Main column */}
       <div className="flex-1 flex flex-col min-w-0">
-        <MobileHeader
+        <DashboardHeader
           cartCount={cartCount}
           isDark={isDark}
+          pageLabel={currentPageLabel(activePage)}
           onOpenMenu={() => setMenuOpen(true)}
           onOpenCart={onOpenCart}
           onToggleTheme={onToggleTheme}

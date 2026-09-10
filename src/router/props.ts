@@ -35,6 +35,7 @@ export interface AppRouterProps {
   productsError: string | null;
   recentlyAddedId: string | null;
   lastConfirmedOrder: Order | null;
+  isCartOpen: boolean;
   pendingOrdersCount: number;
   totalCartCount: number;
   notifications: AppNotification[];
@@ -52,6 +53,8 @@ export interface AppRouterProps {
   onAddToCart: (product: Product, quantity?: number) => void;
   onUpdateCartQuantity: (productId: string, quantity: number) => void;
   onRemoveCartItem: (productId: string) => void;
+  onCartOpen: () => void;
+  onCartClose: () => void;
   onPlaceOrder: (data: PlaceOrderData) => Promise<void>;
   onConfirmPhysicalSale: (data: PhysicalSaleData) => void;
   onConfirmRestock: (productId: string, quantityAdded: number) => void;
