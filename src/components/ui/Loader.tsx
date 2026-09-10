@@ -3,10 +3,10 @@ import { cn } from "../../utils/cn";
 
 /**
  * Minimal, text-free loaders. No words — pure motion.
- * Variants: dots, squares, circles, ring.
+ * Variants: dots, squares, circles, ring, circle (concentric page spinner).
  */
 
-type LoaderVariant = "dots" | "squares" | "circles" | "ring";
+type LoaderVariant = "dots" | "squares" | "circles" | "ring" | "circle";
 
 interface LoaderProps {
   variant?: LoaderVariant;
@@ -33,12 +33,45 @@ const ringSizeMap: Record<NonNullable<LoaderProps["size"]>, string> = {
   lg: "h-10 w-10",
 };
 
+const ringInnerSizeMap: Record<NonNullable<LoaderProps["size"]>, string> = {
+  sm: "h-3 w-3",
+  md: "h-4 w-4",
+  lg: "h-6 w-6",
+};
+
 export const Loader: React.FC<LoaderProps> = ({
   variant = "dots",
   className,
   size = "md",
 }) => {
   const box = sizeMap[size];
+
+  if (variant === "circle") {
+    return (
+      <span
+        role="status"
+        aria-label="Loading"
+        className={cn(
+          "relative inline-flex items-center justify-center",
+          className
+        )}
+      >
+        <span
+          className={cn(
+            ringSizeMap[size],
+            "rounded-full border-2 border-gold/25 border-t-gold loader-ring"
+          )}
+        />
+        <span
+          className={cn(
+            ringInnerSizeMap[size],
+            "absolute rounded-full border border-gold/40 border-t-transparent loader-ring"
+          )}
+          style={{ animationDirection: "reverse", animationDuration: "0.9s" }}
+        />
+      </span>
+    );
+  }
 
   if (variant === "ring") {
     return (
@@ -116,11 +149,24 @@ export const Loader: React.FC<LoaderProps> = ({
 };
 
 /** Full-bleed centered circle page loader for page-level async states. */
-export const PageLoader: React.FC<{ variant?: LoaderVariant; className?: string }> = ({
-  variant = "ring",
-  className,
-}) => (
+export const PageLoader: React.FC<{
+  variant?: LoaderVariant;
+  className?: string;
+}> = ({ variant = "circle", className }) => (
   <div className="flex items-center justify-center py-16 sm:py-24" role="status">
     <Loader variant={variant} size="lg" className={className} />
+  </div>
+);
+
+/** Full-viewport centered circle loader shown while the whole app boots. */
+export const FullPageLoader: React.FC<{ className?: string }> = ({
+  className,
+}) => (
+  <div
+    className="min-h-screen w-full flex items-center justify-center bg-cream dark:bg-black"
+    role="status"
+    aria-label="Loading"
+  >
+    <Loader variant="circle" size="lg" className={className} />
   </div>
 );
