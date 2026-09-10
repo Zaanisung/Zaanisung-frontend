@@ -53,9 +53,12 @@ export const Login: React.FC<LoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row lg:gap-10 xl:gap-14">
       {/* Left Side - Branding & Imagery (Desktop Only) */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800 weave-bg">
+        {/* Kente trim along the inner edge */}
+        <div className="absolute inset-y-0 right-0 w-2 kente-band kente-band-vertical" aria-hidden="true"></div>
+        <div className="absolute bottom-0 inset-x-0 kente-band h-1.5" aria-hidden="true"></div>
         {/* Atmospheric mist effects */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-20 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>
@@ -64,10 +67,10 @@ export const Login: React.FC<LoginProps> = ({
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col justify-between p-12 xl:p-16 text-cream w-full">
+        <div className="relative z-10 flex flex-col justify-between py-12 xl:py-16 text-cream w-full">
           <div>
             <Logo className="h-16 w-16 mb-6" />
-            <h1 className="text-5xl xl:text-6xl font-light italic tracking-widest font-brand-serif mb-3">
+            <h1 className="text-5xl xl:text-6xl font-light tracking-widest font-brand-serif mb-3">
               ZAANISUNG
             </h1>
             <p className="text-sm uppercase tracking-[0.25em] text-gold-300 font-semibold">
@@ -119,7 +122,7 @@ export const Login: React.FC<LoginProps> = ({
           {/* Mobile branding */}
           <div className="lg:hidden text-center mb-8 flex flex-col items-center">
             <Logo className="h-14 w-14 mb-3" />
-            <h2 className="text-2xl font-light italic tracking-widest text-ink dark:text-cream font-brand-serif">
+            <h2 className="text-2xl font-light tracking-widest text-ink dark:text-cream font-brand-serif">
               ZAANISUNG
             </h2>
             <p className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mt-1">
