@@ -81,11 +81,9 @@ export const Popover: React.FC<PopoverProps> = ({
             alignClasses[align],
             "surface-glass-strong rounded-xl border border-black/15 dark:border-white/20",
             "shadow-lift overflow-hidden",
-            "animate-in fade-in zoom-in-95 duration-200",
-            position === "top" && "slide-in-from-bottom-2",
-            position === "bottom" && "slide-in-from-top-2",
-            position === "left" && "slide-in-from-right-2",
-            position === "right" && "slide-in-from-left-2"
+            position === "top" && "animate-slide-up",
+            position === "bottom" && "animate-slide-down",
+            (position === "left" || position === "right") && "animate-fade-in"
           )}
         >
           {content}

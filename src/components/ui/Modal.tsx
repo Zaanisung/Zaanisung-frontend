@@ -59,7 +59,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-fade-in"
       onClick={closeOnOverlayClick ? onClose : undefined}
     >
       {/* Backdrop - glassmorphic mist overlay */}
@@ -70,14 +70,14 @@ export const Modal: React.FC<ModalProps> = ({
 
       {/* Floating mist orbs in background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="orb orb-gold-faint mist-float absolute top-1/4 left-1/4 w-64 h-64 opacity-30" />
-        <div className="orb orb-gold-faint mist-drift absolute bottom-1/3 right-1/4 w-48 h-48 opacity-20" />
+        <div className="orb orb-gold-faint animate-mist-float absolute top-1/4 left-1/4 w-64 h-64 opacity-30" />
+        <div className="orb orb-gold-faint animate-mist-drift absolute bottom-1/3 right-1/4 w-48 h-48 opacity-20" />
       </div>
 
       {/* Modal content */}
       <div
         className={cn(
-          "relative w-full animate-in zoom-in-95 slide-in-from-bottom-4 duration-300",
+          "relative w-full animate-zoom-in",
           sizeClasses[size]
         )}
         onClick={(e) => e.stopPropagation()}
