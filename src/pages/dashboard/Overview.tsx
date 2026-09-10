@@ -3,6 +3,7 @@ import type { FullUser } from "../../types/user";
 import type { Order } from "../../types/order";
 import type { Product } from "../../types/product";
 import type { DashboardNavPage } from "../../types/nav";
+import { ProductCard } from "../../components/ProductCard";
 import {
   MapPin,
   CreditCard,
@@ -20,6 +21,9 @@ export interface OverviewProps {
   orders: Order[];
   products: Product[];
   onNavigate: (page: DashboardNavPage) => void;
+  onSelectProduct?: (product: Product) => void;
+  onAddToCart?: (product: Product, e: React.MouseEvent) => void;
+  recentlyAddedId?: string | null;
 }
 
 export const Overview: React.FC<OverviewProps> = ({
@@ -27,7 +31,11 @@ export const Overview: React.FC<OverviewProps> = ({
   orders,
   products,
   onNavigate,
+  onSelectProduct,
+  onAddToCart = () => {},
+  recentlyAddedId,
 }) => {
+  const featuredProducts = products.slice(0, 4);
   const pendingOrders = orders.filter((o) => o.status === "PENDING");
   const activeOrders = orders.filter(
     (o) => o.status === "CONFIRMED" || o.status === "SHIPPED"
@@ -202,6 +210,35 @@ export const Overview: React.FC<OverviewProps> = ({
           ))}
         </div>
       </div>
+
+      {featuredProducts.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 font-bold">
+              Featured Fragrances
+            </h3>
+            <button
+              type="button"
+              onClick={() => onNavigate("shop")}
+              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold min-h-[44px] flex items-center transition-colors duration-[400ms]"
+            >
+              View all ({products.length}) →
+            </button>
+          </div>
+          <div className="grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {featuredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onSelect={onSelectProduct || (() => {})}
+                onAddToCart={onAddToCart}
+                isAdded={recentlyAddedId === product.id}
+                compact
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div
         onClick={() => onNavigate("shop")}

@@ -124,6 +124,11 @@ export const DashboardRouter: React.FC<Props> = ({
           orders={orders}
           products={products}
           onNavigate={(page) => onNavigate(dashboardNavView(page))}
+          onSelectProduct={(p) =>
+            onNavigate({ type: "dashboard", page: "product-details", productId: p.id })
+          }
+          onAddToCart={(p) => onAddToCart(p, 1)}
+          recentlyAddedId={recentlyAddedId}
         />
       )}
 

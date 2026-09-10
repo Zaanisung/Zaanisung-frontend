@@ -22,7 +22,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
 }) => (
   <div
     className={cn(
-      "flex flex-col items-center justify-center py-12 px-6 text-center",
+      "flex flex-col items-center justify-center w-full py-12 px-6 text-center",
       className
     )}
     role="alert"

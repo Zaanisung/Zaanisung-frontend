@@ -154,45 +154,54 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           <Loader variant="circles" size="lg" />
         </div>
       ) : error ? (
-        <div className="p-8 bg-white dark:bg-white/5 border border-red-200 dark:border-red-900/50 text-center max-w-md mx-auto my-8 rounded-2xl">
-          <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-3" />
-          <p className="text-sm text-red-700 dark:text-red-400 font-medium mb-4">{error}</p>
-          {onRetry && (
-            <button
-              onClick={onRetry}
-              className="min-h-[44px] px-6 py-2 text-[11px] uppercase tracking-widest font-bold bg-ink dark:bg-white text-white dark:text-ink hover:bg-gold hover:text-ink transition-colors rounded-lg"
-            >
-              Try again
-            </button>
-          )}
+        <div className="py-16 flex items-center justify-center">
+          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-12 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+            <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+            <div className="w-12 h-12 rounded-xl surface-glass-tint flex items-center justify-center text-gold mb-4 border border-gold/40">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <p className="text-sm text-black/70 dark:text-white/70 font-medium mb-5">{error}</p>
+            {onRetry && (
+              <button
+                onClick={onRetry}
+                className="min-h-[44px] px-6 py-2.5 text-[11px] uppercase tracking-widest font-bold bg-ink dark:bg-white text-white dark:text-ink hover:bg-gold hover:text-ink transition-colors rounded-lg"
+              >
+                Try again
+              </button>
+            )}
+          </div>
         </div>
       ) : filteredProducts.length === 0 ? (
-        <div className="py-16 px-6 surface-glass text-center flex flex-col items-center max-w-md mx-auto">
-          <div className="w-12 h-12 border border-gold flex items-center justify-center text-gold mb-4 rounded-xl">
-            <span className="font-brand-serif text-xl font-light">Z</span>
+        <div className="py-16 flex items-center justify-center">
+          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-14 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+            <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+            <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
+            <div className="relative w-12 h-12 rounded-xl border border-gold/40 surface-glass-tint flex items-center justify-center text-gold mb-4">
+              <span className="font-brand-serif text-xl font-light">Z</span>
+            </div>
+            <h3 className="relative font-brand-serif text-lg font-normal text-ink dark:text-white mb-1">
+              {searchQuery || activeFilter !== "ALL"
+                ? "No matching fragrances found"
+                : "No perfumes available yet."}
+            </h3>
+            <p className="relative text-xs text-black/50 dark:text-white/50 mb-6">
+              {searchQuery || activeFilter !== "ALL"
+                ? "Try adjusting your search terms or filter selection."
+                : "New handcrafted batches are being prepared in our workshop."}
+            </p>
+            {(searchQuery || activeFilter !== "ALL") && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveFilter("ALL");
+                }}
+                className="relative min-h-[44px] px-6 py-2.5 text-[11px] uppercase tracking-widest font-bold border border-ink dark:border-white text-ink dark:text-white hover:bg-ink hover:text-cream dark:hover:bg-white dark:hover:text-ink transition-colors rounded-lg"
+              >
+                Clear All Filters
+              </button>
+            )}
           </div>
-          <h3 className="font-brand-serif text-lg font-normal text-ink dark:text-white mb-1">
-            {searchQuery || activeFilter !== "ALL"
-              ? "No matching fragrances found"
-              : "No perfumes available yet."}
-          </h3>
-          <p className="text-xs text-black/50 dark:text-white/50 mb-6">
-            {searchQuery || activeFilter !== "ALL"
-              ? "Try adjusting your search terms or filter selection."
-              : "New handcrafted batches are being prepared in our workshop."}
-          </p>
-          {(searchQuery || activeFilter !== "ALL") && (
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery("");
-                setActiveFilter("ALL");
-              }}
-              className="min-h-[44px] px-6 py-2.5 text-[11px] uppercase tracking-widest font-bold border border-ink dark:border-white text-ink dark:text-white hover:bg-ink hover:text-cream dark:hover:bg-white dark:hover:text-ink transition-colors rounded-lg"
-            >
-              Clear All Filters
-            </button>
-          )}
         </div>
       ) : (
         <div
