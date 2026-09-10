@@ -38,7 +38,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   onOpenDashboard,
 }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-cream dark:bg-black text-ink dark:text-white transition-colors">
+    <div className="min-h-screen flex flex-col bg-cream dark:bg-black text-ink dark:text-white transition-colors weave-bg">
       {/* Glass header */}
       <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl shadow-hairline-inset">
         <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
@@ -52,7 +52,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
             >
               <Logo className="h-10 w-10 sm:h-11 sm:w-11" />
               <span className="hidden sm:block">
-                <span className="font-brand-serif text-xl sm:text-2xl tracking-[0.16em] font-light italic text-ink dark:text-white hover:text-gold transition-colors block leading-none">
+                <span className="font-brand-serif text-xl sm:text-2xl tracking-[0.16em] font-light text-ink dark:text-white hover:text-gold transition-colors block leading-none">
                   ZAANISUNG
                 </span>
                 <span className="eyebrow text-gold block mt-1.5">

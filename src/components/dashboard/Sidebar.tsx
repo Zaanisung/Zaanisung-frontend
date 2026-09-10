@@ -31,11 +31,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        "hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out",
+        "hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out weave-bg",
         collapsed ? "w-[76px]" : "w-[260px] lg:w-[280px]"
       )}
       aria-label="Dashboard sidebar"
     >
+      {/* Kente crown — woven Ghanaian trim along the top edge */}
+      <div className="absolute top-0 inset-x-0 h-[6px] kente-band z-20" aria-hidden="true" />
       <div
         className={cn(
           "relative flex flex-col min-h-full p-6",
@@ -71,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             >
               <Logo className="h-8 w-8 flex-shrink-0" />
               <div className={cn(collapsed && "hidden")}>
-                <h2 className="font-brand-serif text-lg tracking-[0.14em] font-light italic text-cream leading-none">
+                <h2 className="font-brand-serif text-lg tracking-[0.14em] font-light text-cream leading-none">
                   ZAANISUNG
                 </h2>
                 <span className="text-[9px] uppercase tracking-widest text-gold mt-1 block font-semibold">
@@ -109,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       title={collapsed ? item.label : undefined}
                       aria-label={collapsed ? item.label : undefined}
                       className={cn(
-                        "rounded-lg relative min-h-[46px] text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-3",
+                        "rounded-lg relative w-full min-w-0 min-h-[46px] text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-3",
                         collapsed
                           ? "justify-center px-0"
                           : "px-3.5 py-2.5",
@@ -120,7 +122,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     >
                       {active && (
                         <span
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full"
+                          className={cn(
+                            "absolute top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full",
+                            collapsed ? "left-1" : "left-2"
+                          )}
                           aria-hidden="true"
                         />
                       )}
@@ -130,7 +135,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           active && "stroke-[2.2]"
                         )}
                       />
-                      {!collapsed && <span>{item.label}</span>}
+                      {!collapsed && (
+                        <span className="truncate min-w-0">{item.label}</span>
+                      )}
                     </button>
                   );
                 })}
@@ -153,12 +160,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               title="Browse Fragrances"
               aria-label="Browse Fragrances"
               className={cn(
-                "rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                "rounded-lg w-full min-w-0 min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                 collapsed ? "justify-center px-0" : "px-3.5 py-2.5"
               )}
             >
               <Store className="w-4 h-4 text-gold flex-shrink-0" />
-              {!collapsed && <span>Browse Fragrances</span>}
+              {!collapsed && <span className="truncate min-w-0">Browse Fragrances</span>}
             </button>
 
             <button
@@ -167,12 +174,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               title="Public Store"
               aria-label="Public Store"
               className={cn(
-                "rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                "rounded-lg w-full min-w-0 min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                 collapsed ? "justify-center px-0" : "px-3.5 py-2.5"
               )}
             >
               <Store className="w-4 h-4 text-gold flex-shrink-0" />
-              {!collapsed && <span>Public Store</span>}
+              {!collapsed && <span className="truncate min-w-0">Public Store</span>}
             </button>
           </div>
 
@@ -181,14 +188,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             onClick={onToggleCollapsed}
             title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className="rounded-lg min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] mt-1"
+            className={cn(
+              "rounded-lg w-full min-w-0 min-h-[46px] text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] mt-1",
+              collapsed ? "justify-center px-0" : "px-3.5 py-2.5"
+            )}
           >
             {collapsed ? (
               <PanelLeftOpen className="w-4 h-4 flex-shrink-0" />
             ) : (
               <>
                 <PanelLeftClose className="w-4 h-4 text-gold flex-shrink-0" />
-                <span>Collapse</span>
+                <span className="truncate min-w-0">Collapse</span>
               </>
             )}
           </button>
