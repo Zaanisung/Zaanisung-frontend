@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="flex items-center gap-3">
               <Logo className="h-10 w-10" />
               <div>
-                <span className="font-brand-serif text-cream text-xl tracking-[0.16em] font-light italic block leading-none">
+                <span className="font-brand-serif text-cream text-xl tracking-[0.16em] font-light block leading-none">
                   ZAANISUNG
                 </span>
                 <span className="eyebrow text-gold mt-1.5 block">

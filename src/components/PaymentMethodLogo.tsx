@@ -95,7 +95,7 @@ const VisaLogo: React.FC<LogoProps> = ({ className }) => (
         <stop offset="100%" style={{ stopColor: "#14185A", stopOpacity: 1 }} />
       </linearGradient>
     </defs>
-    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontStyle="italic" fontSize="16" fill="#fff" letterSpacing="1">
+    <text x="24" y="19" textAnchor="middle" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fontSize="16" fill="#fff" letterSpacing="1">
       VISA
     </text>
   </svg>

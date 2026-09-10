@@ -71,7 +71,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <div className="text-center mb-8 flex flex-col items-center">
           <Logo className="h-14 w-14 mb-3" />
           <h1
-            className="text-2xl font-light italic tracking-[0.2em] text-black dark:text-white font-brand-serif"
+            className="text-2xl font-light tracking-[0.2em] text-black dark:text-white font-brand-serif"
           >
             ZAANISUNG
           </h1>

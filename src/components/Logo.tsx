@@ -23,7 +23,7 @@ export const Logo: React.FC<LogoProps> = ({
       {showWordmark && (
         <span
           className={cn(
-            "text-lg tracking-[0.16em] font-light italic text-black dark:text-white font-brand-serif",
+            "text-lg tracking-[0.16em] font-light text-black dark:text-white font-brand-serif",
             wordmarkClassName
           )}
         >

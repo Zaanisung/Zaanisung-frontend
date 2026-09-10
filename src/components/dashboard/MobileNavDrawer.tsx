@@ -43,7 +43,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
           <div className="flex items-center gap-2.5">
             <Logo className="h-8 w-8" />
             <div>
-              <p className="font-brand-serif text-base tracking-[0.14em] font-light italic leading-none">
+              <p className="font-brand-serif text-base tracking-[0.14em] font-light leading-none">
                 ZAANISUNG
               </p>
               <span className="text-[9px] uppercase tracking-widest text-gold mt-1 block font-semibold">

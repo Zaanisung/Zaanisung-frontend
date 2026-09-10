@@ -24,7 +24,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
           <span className="eyebrow text-gold">Our Story</span>
           <h2 className="font-brand-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-light mt-3 leading-snug text-balance">
             Born in the North.
-            <span className="gold-gradient-text italic block mt-1 pb-1">Worn everywhere.</span>
+            <span className="gold-gradient-text block mt-1 pb-1">Worn everywhere.</span>
           </h2>
           <p className="mt-6 text-black/60 dark:text-white/60 leading-relaxed max-w-lg">
             Zaanisung is an artisanal fragrance house rooted in Tamale, Ghana.
