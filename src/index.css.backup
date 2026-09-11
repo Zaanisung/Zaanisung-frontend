@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-@import "./kente-system.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -144,31 +143,21 @@
     margin: 0;
     padding: 0;
     background-color: #f6f3ec;
-    text-rendering: optimizeLegibility;
-  }
-
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('/dagomba-smock-light.webp');
+    background-image: url('/dagomba-smock-pattern.svg');
     background-size: 960px auto;
     background-repeat: repeat;
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: -1;
+    background-attachment: fixed;
+    text-rendering: optimizeLegibility;
   }
 
   .dark body {
     background-color: #070707;
-  }
-
-  .dark body::before {
-    background-image: url('/dagomba-smock-pattern.webp');
-    opacity: 0.08;
+    background-image: url('/dagomba-smock-pattern.svg');
+    background-size: 960px auto;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    /* Apply dark mode filter */
+    /* Removed filter, using dark SVG instead */
   }
 
   :where(section[id]) {
@@ -471,10 +460,155 @@
   }
 
   /* ═══ GHANAIAN TEXTILE PATTERNS ══════════════════════════════════════ */
+  /* Kente-inspired woven cloth: fine interlocking threads of gold, ink,
+     flag red and flag green. Used sparingly as bands & accents. */
+  .kente-band {
+    position: relative;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.9) 0px,
+      rgba(212, 175, 55, 0.9) 8px,
+      rgba(10, 10, 10, 0.82) 8px,
+      rgba(10, 10, 10, 0.82) 11px,
+      rgba(206, 17, 38, 0.78) 11px,
+      rgba(206, 17, 38, 0.78) 16px,
+      rgba(252, 209, 22, 0.9) 16px,
+      rgba(252, 209, 22, 0.9) 23px,
+      rgba(0, 107, 63, 0.72) 23px,
+      rgba(0, 107, 63, 0.72) 27px,
+      rgba(212, 175, 55, 0.9) 27px,
+      rgba(212, 175, 55, 0.9) 35px
+    );
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.08);
+  }
+
+  .kente-band-thin {
+    height: 4px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.85) 0px,
+      rgba(212, 175, 55, 0.85) 6px,
+      rgba(10, 10, 10, 0.7) 6px,
+      rgba(10, 10, 10, 0.7) 9px,
+      rgba(206, 17, 38, 0.6) 9px,
+      rgba(206, 17, 38, 0.6) 13px,
+      rgba(0, 107, 63, 0.55) 13px,
+      rgba(0, 107, 63, 0.55) 17px
+    );
+  }
+
+  /* Vertical kente strip for panel edges */
+  .kente-band-vertical {
+    height: auto;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(212, 175, 55, 0.9) 0px,
+      rgba(212, 175, 55, 0.9) 10px,
+      rgba(10, 10, 10, 0.82) 10px,
+      rgba(10, 10, 10, 0.82) 13px,
+      rgba(206, 17, 38, 0.78) 13px,
+      rgba(206, 17, 38, 0.78) 19px,
+      rgba(252, 209, 22, 0.9) 19px,
+      rgba(252, 209, 22, 0.9) 27px,
+      rgba(0, 107, 63, 0.72) 27px,
+      rgba(0, 107, 63, 0.72) 31px
+    );
+    border-radius: var(--radius-full);
+  }
+
+  /* Dagomba smock weave pattern for large surfaces (heroes, sidebars, panels).
+     Authentic hand-woven cloth with narrow vertical strips. */
+  .weave-bg {
+    position: relative;
+    background-color: rgba(27, 42, 107, 0.95);
+    background-image: url('/dagomba-smock-pattern.svg');
+    background-size: 960px auto;
+    background-repeat: repeat;
+    background-position: center;
+  }
+
+  .dark .weave-bg {
+    background-color: rgba(27, 42, 107, 0.85);
+    filter: brightness(0.75) contrast(1.15);
+  }
+
+  /* Adinkra-influenced diamond motif — a sparse, understated grid of dots
+     arranged in the classic Sankofa geometry. */
+  .adinkra-motif {
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.16) 1.5px, transparent 2.25px),
+      radial-gradient(circle at 100% 0%, rgba(10, 10, 10, 0.06) 1.5px, transparent 2.25px),
+      radial-gradient(circle at 0% 100%, rgba(10, 10, 10, 0.06) 1.5px, transparent 2.25px);
+    background-size: 28px 28px, 28px 28px, 28px 28px;
+  }
+
+  .dark .adinkra-motif {
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.17) 1.5px, transparent 2.25px),
+      radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.05) 1.5px, transparent 2.25px),
+      radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.05) 1.5px, transparent 2.25px);
+  }
+
+  /* Simplified glyph chip — a small diamond-in-square mark, echoes Adinkra
+     seal work for icons and header accents. */
+  .adinkra-seal {
+    position: relative;
+  }
+
+  .adinkra-seal::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    transform: rotate(45deg);
+    background: currentColor;
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  .adinkra-seal::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border: 1px solid currentColor;
+    transform: rotate(45deg);
+    border-radius: 4px;
+    opacity: 0.9;
+  }
+
+  /* Woven gold frame — subtle cloth border that hugs card radius via mask. */
+  .kente-frame {
+    position: relative;
+  }
+
+  .kente-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 3px;
+    background: repeating-linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.85) 0px,
+      rgba(212, 175, 55, 0.85) 5px,
+      rgba(10, 10, 10, 0.55) 5px,
+      rgba(10, 10, 10, 0.55) 9px,
+      rgba(206, 17, 38, 0.5) 9px,
+      rgba(206, 17, 38, 0.5) 13px,
+      rgba(0, 107, 63, 0.45) 13px,
+      rgba(0, 107, 63, 0.45) 17px
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
 
   /* Dagomba smock pattern as a subtle product card background */
   .smock-bg {
-    background-image: url('/dagomba-smock-pattern.webp');
+    background-image: url('/dagomba-smock-pattern.svg');
     background-size: 480px auto;
     background-repeat: repeat;
     background-position: center;
@@ -482,17 +616,16 @@
 
   .smock-bg-light {
     background-color: #f6f3ec;
-    background-image: url('/dagomba-smock-light.webp');
+    background-image: url('/dagomba-smock-pattern.svg');
     background-size: 480px auto;
     background-repeat: repeat;
     background-position: center;
-    opacity: 0.08;
+    opacity: 0.15;
   }
 
   .dark .smock-bg-light {
     background-color: #0a0a0a;
-    background-image: url('/dagomba-smock-pattern.webp');
-    opacity: 0.05;
+    opacity: 0.08;
   }
 
   /* ═══ UPPERCASE LABELS ═════════════════════════════════════════════════ */

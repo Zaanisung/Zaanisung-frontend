@@ -117,6 +117,8 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
           </div>
         </div>
       </header>
+      {/* Kente bottom border */}
+      <div className="kente-navbar-border" aria-hidden="true" />
 
       {/* Main page area */}
       <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-24 md:pb-14">

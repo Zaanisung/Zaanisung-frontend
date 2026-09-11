@@ -75,8 +75,8 @@ export const Register: React.FC<RegisterProps> = ({
       {/* Left Side - Branding & Imagery (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800 weave-bg">
         {/* Kente trim along the inner edge */}
-        <div className="absolute inset-y-0 right-0 w-2 kente-band kente-band-vertical" aria-hidden="true"></div>
-        <div className="absolute bottom-0 inset-x-0 kente-band h-1.5" aria-hidden="true"></div>
+        <div className="absolute inset-y-0 right-0 kente-divider-auth" aria-hidden="true"></div>
+        <div className="absolute bottom-0 inset-x-0 kente-navbar-border" aria-hidden="true"></div>
         {/* Atmospheric mist effects */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-20 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>

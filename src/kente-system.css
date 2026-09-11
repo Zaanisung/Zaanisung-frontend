@@ -1,0 +1,361 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   KENTE ACCENT SYSTEM — Ghanaian Textile-Inspired Borders & Dividers
+   ═══════════════════════════════════════════════════════════════════════
+   
+   Based on traditional Kente cloth patterns from Ghana.
+   Colors: Gold, Black, Red (Ghana flag), Yellow, Green (Ghana flag)
+   
+   Usage across the entire site as the primary accent system.
+════════════════════════════════════════════════════════════════════════ */
+
+/* ─── BASE KENTE BANDS ─────────────────────────────────────────────── */
+
+/* Standard horizontal band (8px height) */
+.kente-band {
+  position: relative;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 8px,
+    rgba(10, 10, 10, 0.95) 8px,
+    rgba(10, 10, 10, 0.95) 11px,
+    rgba(206, 17, 38, 0.9) 11px,
+    rgba(206, 17, 38, 0.9) 16px,
+    rgba(252, 209, 22, 0.98) 16px,
+    rgba(252, 209, 22, 0.98) 23px,
+    rgba(0, 107, 63, 0.85) 23px,
+    rgba(0, 107, 63, 0.85) 27px,
+    rgba(212, 175, 55, 0.98) 27px,
+    rgba(212, 175, 55, 0.98) 35px
+  );
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.08);
+}
+
+/* Thin horizontal band (4px height) */
+.kente-band-thin {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.95) 0px,
+    rgba(212, 175, 55, 0.95) 6px,
+    rgba(10, 10, 10, 0.9) 6px,
+    rgba(10, 10, 10, 0.9) 9px,
+    rgba(206, 17, 38, 0.85) 9px,
+    rgba(206, 17, 38, 0.85) 13px,
+    rgba(0, 107, 63, 0.8) 13px,
+    rgba(0, 107, 63, 0.8) 17px
+  );
+}
+
+/* Extra thin (2px height) for subtle accents */
+.kente-band-hairline {
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.8) 0px,
+    rgba(212, 175, 55, 0.8) 4px,
+    rgba(206, 17, 38, 0.5) 4px,
+    rgba(206, 17, 38, 0.5) 7px,
+    rgba(0, 107, 63, 0.5) 7px,
+    rgba(0, 107, 63, 0.5) 10px
+  );
+}
+
+/* Vertical band */
+.kente-band-vertical {
+  width: 8px;
+  height: auto;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.9) 0px,
+    rgba(212, 175, 55, 0.9) 10px,
+    rgba(10, 10, 10, 0.82) 10px,
+    rgba(10, 10, 10, 0.82) 13px,
+    rgba(206, 17, 38, 0.78) 13px,
+    rgba(206, 17, 38, 0.78) 19px,
+    rgba(252, 209, 22, 0.9) 19px,
+    rgba(252, 209, 22, 0.9) 27px,
+    rgba(0, 107, 63, 0.72) 27px,
+    rgba(0, 107, 63, 0.72) 31px
+  );
+  border-radius: var(--radius-full);
+}
+
+/* Thin vertical band (4px width) */
+.kente-band-vertical-thin {
+  width: 4px;
+  height: auto;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 8px,
+    rgba(10, 10, 10, 0.7) 8px,
+    rgba(10, 10, 10, 0.7) 11px,
+    rgba(206, 17, 38, 0.6) 11px,
+    rgba(206, 17, 38, 0.6) 16px,
+    rgba(0, 107, 63, 0.55) 16px,
+    rgba(0, 107, 63, 0.55) 20px
+  );
+}
+
+/* Hairline vertical (2px width) */
+.kente-band-vertical-hairline {
+  width: 2px;
+  height: auto;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.8) 0px,
+    rgba(212, 175, 55, 0.8) 6px,
+    rgba(206, 17, 38, 0.5) 6px,
+    rgba(206, 17, 38, 0.5) 10px,
+    rgba(0, 107, 63, 0.5) 10px,
+    rgba(0, 107, 63, 0.5) 14px
+  );
+}
+
+/* ─── KENTE BORDERS (Apply to containers) ─────────────────────────── */
+
+/* Top border */
+.kente-border-t {
+  position: relative;
+}
+
+.kente-border-t::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 6px,
+    rgba(10, 10, 10, 0.7) 6px,
+    rgba(10, 10, 10, 0.7) 9px,
+    rgba(206, 17, 38, 0.6) 9px,
+    rgba(206, 17, 38, 0.6) 13px,
+    rgba(0, 107, 63, 0.55) 13px,
+    rgba(0, 107, 63, 0.55) 17px
+  );
+  border-radius: inherit;
+}
+
+/* Bottom border */
+.kente-border-b {
+  position: relative;
+}
+
+.kente-border-b::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 6px,
+    rgba(10, 10, 10, 0.7) 6px,
+    rgba(10, 10, 10, 0.7) 9px,
+    rgba(206, 17, 38, 0.6) 9px,
+    rgba(206, 17, 38, 0.6) 13px,
+    rgba(0, 107, 63, 0.55) 13px,
+    rgba(0, 107, 63, 0.55) 17px
+  );
+  border-radius: inherit;
+}
+
+/* Left border */
+.kente-border-l {
+  position: relative;
+}
+
+.kente-border-l::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 8px,
+    rgba(10, 10, 10, 0.7) 8px,
+    rgba(10, 10, 10, 0.7) 11px,
+    rgba(206, 17, 38, 0.6) 11px,
+    rgba(206, 17, 38, 0.6) 16px,
+    rgba(0, 107, 63, 0.55) 16px,
+    rgba(0, 107, 63, 0.55) 20px
+  );
+  border-radius: inherit;
+}
+
+/* Right border */
+.kente-border-r {
+  position: relative;
+}
+
+.kente-border-r::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 8px,
+    rgba(10, 10, 10, 0.7) 8px,
+    rgba(10, 10, 10, 0.7) 11px,
+    rgba(206, 17, 38, 0.6) 11px,
+    rgba(206, 17, 38, 0.6) 16px,
+    rgba(0, 107, 63, 0.55) 16px,
+    rgba(0, 107, 63, 0.55) 20px
+  );
+  border-radius: inherit;
+}
+
+/* Full frame (all sides) */
+.kente-frame {
+  position: relative;
+}
+
+.kente-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.85) 0px,
+    rgba(212, 175, 55, 0.85) 5px,
+    rgba(10, 10, 10, 0.55) 5px,
+    rgba(10, 10, 10, 0.55) 9px,
+    rgba(206, 17, 38, 0.5) 9px,
+    rgba(206, 17, 38, 0.5) 13px,
+    rgba(0, 107, 63, 0.45) 13px,
+    rgba(0, 107, 63, 0.45) 17px
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+
+/* ─── BUTTON ACCENTS (THICK - 8px) ──────────────────────────────── */
+
+.btn-kente {
+  position: relative;
+  overflow: visible;
+}
+
+.btn-kente::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.95) 0px,
+    rgba(212, 175, 55, 0.95) 12px,
+    rgba(10, 10, 10, 0.9) 12px,
+    rgba(10, 10, 10, 0.9) 16px,
+    rgba(206, 17, 38, 0.9) 16px,
+    rgba(206, 17, 38, 0.9) 24px,
+    rgba(252, 209, 22, 0.95) 24px,
+    rgba(252, 209, 22, 0.95) 34px,
+    rgba(0, 107, 63, 0.85) 34px,
+    rgba(0, 107, 63, 0.85) 40px,
+    rgba(212, 175, 55, 0.95) 40px,
+    rgba(212, 175, 55, 0.95) 52px
+  );
+  box-shadow: 0 3px 8px -1px rgba(212, 175, 55, 0.4);
+  transition: height 0.3s ease, bottom 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0 0 12px 12px;
+  z-index: -1;
+}
+
+.btn-kente:hover::before {
+  height: 10px;
+  bottom: -3px;
+  box-shadow: 0 4px 12px -1px rgba(212, 175, 55, 0.5);
+}
+
+/* ─── CARD ACCENTS (THICK - 8px) ────────────────────────────────── */
+
+.card-kente-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-kente-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 12px,
+    rgba(10, 10, 10, 0.95) 12px,
+    rgba(10, 10, 10, 0.95) 16px,
+    rgba(206, 17, 38, 0.9) 16px,
+    rgba(206, 17, 38, 0.9) 24px,
+    rgba(252, 209, 22, 0.98) 24px,
+    rgba(252, 209, 22, 0.98) 34px,
+    rgba(0, 107, 63, 0.9) 34px,
+    rgba(0, 107, 63, 0.9) 40px,
+    rgba(212, 175, 55, 0.98) 40px,
+    rgba(212, 175, 55, 0.98) 52px
+  );
+  border-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 3px 8px -1px rgba(212, 175, 55, 0.3);
+  z-index: 10;
+}
+
+.card-kente-side {
+  position: relative;
+}
+
+.card-kente-side::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 14px,
+    rgba(10, 10, 10, 0.95) 14px,
+    rgba(10, 10, 10, 0.95) 18px,
+    rgba(206, 17, 38, 0.9) 18px,
+    rgba(206, 17, 38, 0.9) 26px,
+    rgba(252, 209, 22, 0.98) 26px,
+    rgba(252, 209, 22, 0.98) 38px,
+    rgba(0, 107, 63, 0.9) 38px,
+    rgba(0, 107, 63, 0.9) 44px
+  );
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 3px 0 8px -1px rgba(212, 175, 55, 0.3);
+  z-index: 10;
+}
+

@@ -50,7 +50,10 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 
       <div className="relative overflow-hidden surface-glass-strong rounded-2xl shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch w-full min-w-0">
         {/* Large Prominent Perfume Image Frame */}
-        <div className="relative aspect-[4/3] md:aspect-square bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none min-w-0">
+        <div className="relative aspect-[4/3] md:aspect-square flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none min-w-0">
+          {/* Dagomba smock pattern background */}
+          <div className="absolute inset-0 smock-bg-light" />
+          
           <img
             src={product.imageUrl}
             alt={product.name}

@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="relative bg-ink text-cream/70 mt-auto">
       {/* Gold hairline crown */}
-      <div className="absolute top-0 inset-x-0 hairline-gold" />
+      <div className="absolute top-0 inset-x-0 kente-navbar-border" aria-hidden="true" />
 
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-14 sm:pt-18 pb-10">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">

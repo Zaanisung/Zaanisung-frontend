@@ -35,10 +35,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       )}
     >
       {/* Soft gold hairline at top */}
-      <div className="absolute top-0 left-0 right-0 hairline-gold z-20" aria-hidden="true" />
+      <div className="kente-band-thin absolute top-0 left-0 right-0 z-20" aria-hidden="true" />
 
       {/* Product image */}
-      <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-cream-100 to-cream-200 dark:from-white/5 dark:to-white/10 overflow-hidden rounded-t-2xl flex-shrink-0">
+      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl flex-shrink-0">
+        {/* Dagomba smock pattern background */}
+        <div className="absolute inset-0 smock-bg-light" />
+        
         <img
           src={product.imageUrl}
           alt={product.name}

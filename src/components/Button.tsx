@@ -28,6 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
   const variantStyles = {
     // Luxury gold CTA — soft gradient with diffused glow
     primary: cn(
+      "btn-kente",
       "gold-gradient-bg text-ink font-bold border border-gold-600/30",
       "shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25),0_4px_16px_-4px_rgba(212,175,55,0.2)]",
       "hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]",
