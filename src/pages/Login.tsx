@@ -53,7 +53,7 @@ export const Login: React.FC<LoginProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row lg:gap-10 xl:gap-14">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row">
       {/* Left Side - Branding & Imagery (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800 weave-bg">
         {/* Kente trim along the inner edge */}
@@ -67,7 +67,7 @@ export const Login: React.FC<LoginProps> = ({
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col justify-between py-12 xl:py-16 text-cream w-full">
+        <div className="relative z-10 flex flex-col justify-between p-10 xl:p-16 text-cream w-full items-start text-left">
           <div>
             <Logo className="h-16 w-16 mb-6" />
             <h1 className="text-5xl xl:text-6xl font-light tracking-widest font-brand-serif mb-3">
@@ -130,8 +130,8 @@ export const Login: React.FC<LoginProps> = ({
             </p>
           </div>
 
-          {/* Form card */}
-          <div className="surface-glass-strong rounded-2xl p-8 sm:p-10 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+          {/* Form — no card background */}
+          <div className="w-full">
             <div className="mb-8">
               <h3 className="text-2xl sm:text-3xl font-brand-serif font-light text-ink dark:text-cream mb-2">
                 Welcome Back

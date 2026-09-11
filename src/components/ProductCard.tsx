@@ -70,8 +70,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
 
-        {/* Quick view hint on hover */}
-        <div className="hidden sm:flex absolute inset-0 items-center justify-center bg-ink/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-[400ms] pointer-events-none">
+        {/* Quick view hint on hover (keeps the product image fully visible) */}
+        <div className="hidden sm:flex absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-[400ms] pointer-events-none">
           <span className="rounded-xl px-4 py-2 bg-ink/90 text-cream text-[10px] uppercase tracking-widest font-bold border border-gold/40 flex items-center gap-2 backdrop-blur-md shadow-lift">
             <Eye className="w-3.5 h-3.5 text-gold" />
             <span>View Fragrance</span>
