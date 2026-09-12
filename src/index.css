@@ -439,6 +439,7 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    filter: none;
     background-image:
       linear-gradient(180deg, rgba(246, 243, 236, 0.9) 0%, rgba(246, 243, 236, 0.52) 45%, rgba(246, 243, 236, 0.74) 100%),
       radial-gradient(70% 60% at 88% 18%, rgba(212, 175, 55, 0.14) 0%, rgba(212, 175, 55, 0) 62%),
@@ -450,16 +451,12 @@
 
   .dark .scene-bg {
     background-image:
-      linear-gradient(180deg, rgba(7, 7, 7, 0.74) 0%, rgba(7, 7, 7, 0.44) 45%, rgba(7, 7, 7, 0.68) 100%),
+      linear-gradient(180deg, rgba(7, 7, 7, 0.78) 0%, rgba(7, 7, 7, 0.5) 45%, rgba(7, 7, 7, 0.72) 100%),
       radial-gradient(70% 60% at 88% 18%, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 62%),
       var(--scene-image, linear-gradient(125deg, #0a0a0a 0%, #161616 55%, #111111 100%));
     background-size: cover, cover, cover;
     background-position: center;
     background-repeat: no-repeat;
-  }
-
-  .dark .scene-bg {
-    filter: brightness(0.55) saturate(0.9);
   }
 
   .scene-hero {
@@ -566,6 +563,14 @@
   background: rgba(212, 175, 55, 0.65);
   border: 2px solid transparent;
   background-clip: padding-box;
+}
+
+/* Button text safeguards — label text must never push outside or spill past
+   its button box. Buttons cap at their container width; long labels wrap. */
+button,
+button:where(a) {
+  min-width: 0;
+  max-width: 100%;
 }
 /* ── Loaders (text-free, mist-inspired) ──────────────────────── */
 @keyframes mist-drift {
