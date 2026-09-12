@@ -4,7 +4,6 @@ import { Loader } from "../components/ui/Loader";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import { Sidebar } from "../components/dashboard/Sidebar";
 import { DashboardHeader } from "../components/dashboard/DashboardHeader";
-import { MobilePageTitle } from "../components/dashboard/MobilePageTitle";
 import { MobileNavDrawer } from "../components/dashboard/MobileNavDrawer";
 import { MobileBottomNav } from "../components/dashboard/MobileBottomNav";
 import { currentPageLabel } from "../components/dashboard/navigation";
@@ -82,8 +81,6 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
           onOpenCart={onOpenCart}
           onToggleTheme={onToggleTheme}
         />
-
-        <MobilePageTitle activePage={activePage} />
 
         {/* Page content */}
         <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-24 md:pb-12">

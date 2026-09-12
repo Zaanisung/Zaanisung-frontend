@@ -225,7 +225,7 @@ export const Overview: React.FC<OverviewProps> = ({
               View all ({products.length}) →
             </button>
           </div>
-          <div className="grid grid-cols-1 min-[520px]:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 xl:gap-5">
             {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
