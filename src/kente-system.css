@@ -63,6 +63,57 @@
   );
 }
 
+/* Navbar & footer border band (6px height) — runs the full width along the
+   bottom of the site header and the top of the footer. */
+.kente-navbar-border {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 8px,
+    rgba(10, 10, 10, 0.92) 8px,
+    rgba(10, 10, 10, 0.92) 12px,
+    rgba(206, 17, 38, 0.9) 12px,
+    rgba(206, 17, 38, 0.9) 18px,
+    rgba(0, 107, 63, 0.85) 18px,
+    rgba(0, 107, 63, 0.85) 23px
+  );
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12);
+}
+
+/* Vertical divider band (6px width) for auth / split panels */
+.kente-divider-auth {
+  width: 6px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(212, 175, 55, 0.95) 0px,
+    rgba(212, 175, 55, 0.95) 10px,
+    rgba(10, 10, 10, 0.85) 10px,
+    rgba(10, 10, 10, 0.85) 14px,
+    rgba(206, 17, 38, 0.8) 14px,
+    rgba(206, 17, 38, 0.8) 21px,
+    rgba(0, 107, 63, 0.75) 21px,
+    rgba(0, 107, 63, 0.75) 26px
+  );
+}
+
+/* Subtle woven-texture backdrop that layers over any page/panel background
+   (background-color utilities keep working — this only paints an image). */
+.weave-bg {
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.12) 1.5px, transparent 2.25px),
+    radial-gradient(circle at 100% 0%, rgba(10, 10, 10, 0.05) 1.5px, transparent 2.25px),
+    radial-gradient(circle at 0% 100%, rgba(10, 10, 10, 0.05) 1.5px, transparent 2.25px);
+  background-size: 34px 34px, 34px 34px, 34px 34px;
+}
+
+.dark .weave-bg {
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 1.5px, transparent 2.25px),
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.04) 1.5px, transparent 2.25px),
+    radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.04) 1.5px, transparent 2.25px);
+}
+
 /* Vertical band */
 .kente-band-vertical {
   width: 8px;
@@ -221,7 +272,9 @@
   border-radius: inherit;
 }
 
-/* Full frame (all sides) */
+/* Full frame (all sides) — the primary kente border treatment.
+   Works with rounded corners via border-radius: inherit and paints above the
+   card's own content edge so it reads as a complete, unclipped border. */
 .kente-frame {
   position: relative;
 }
@@ -231,23 +284,24 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 3px;
+  padding: 4px;
   background: repeating-linear-gradient(
     135deg,
-    rgba(212, 175, 55, 0.85) 0px,
-    rgba(212, 175, 55, 0.85) 5px,
-    rgba(10, 10, 10, 0.55) 5px,
-    rgba(10, 10, 10, 0.55) 9px,
-    rgba(206, 17, 38, 0.5) 9px,
-    rgba(206, 17, 38, 0.5) 13px,
-    rgba(0, 107, 63, 0.45) 13px,
-    rgba(0, 107, 63, 0.45) 17px
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 6px,
+    rgba(10, 10, 10, 0.75) 6px,
+    rgba(10, 10, 10, 0.75) 11px,
+    rgba(206, 17, 38, 0.7) 11px,
+    rgba(206, 17, 38, 0.7) 16px,
+    rgba(0, 107, 63, 0.6) 16px,
+    rgba(0, 107, 63, 0.6) 21px
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
+  z-index: 10;
 }
 
 
@@ -256,40 +310,35 @@
 .btn-kente {
   position: relative;
   overflow: visible;
+  isolation: isolate;
 }
 
+/* Full kente ring hugging the button outline (all four sides, unclipped).
+   Drawn above the button's own background so the pattern is fully visible. */
 .btn-kente::before {
   content: "";
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 8px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(212, 175, 55, 0.95) 0px,
-    rgba(212, 175, 55, 0.95) 12px,
+  inset: 0;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.98) 0px,
+    rgba(212, 175, 55, 0.98) 8px,
+    rgba(10, 10, 10, 0.9) 8px,
     rgba(10, 10, 10, 0.9) 12px,
-    rgba(10, 10, 10, 0.9) 16px,
-    rgba(206, 17, 38, 0.9) 16px,
-    rgba(206, 17, 38, 0.9) 24px,
-    rgba(252, 209, 22, 0.95) 24px,
-    rgba(252, 209, 22, 0.95) 34px,
-    rgba(0, 107, 63, 0.85) 34px,
-    rgba(0, 107, 63, 0.85) 40px,
-    rgba(212, 175, 55, 0.95) 40px,
-    rgba(212, 175, 55, 0.95) 52px
+    rgba(206, 17, 38, 0.85) 12px,
+    rgba(206, 17, 38, 0.85) 20px,
+    rgba(252, 209, 22, 0.95) 20px,
+    rgba(252, 209, 22, 0.95) 30px,
+    rgba(0, 107, 63, 0.8) 30px,
+    rgba(0, 107, 63, 0.8) 37px
   );
-  box-shadow: 0 3px 8px -1px rgba(212, 175, 55, 0.4);
-  transition: height 0.3s ease, bottom 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 0 0 12px 12px;
-  z-index: -1;
-}
-
-.btn-kente:hover::before {
-  height: 10px;
-  bottom: -3px;
-  box-shadow: 0 4px 12px -1px rgba(212, 175, 55, 0.5);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* ─── CARD ACCENTS (THICK - 8px) ────────────────────────────────── */

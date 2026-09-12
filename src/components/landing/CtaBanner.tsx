@@ -31,7 +31,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="surface-glass-strong rounded-2xl max-w-4xl mx-auto px-6 sm:px-14 py-14 sm:py-16 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]"
+          className="surface-glass-strong rounded-2xl kente-frame max-w-4xl mx-auto px-6 sm:px-14 py-14 sm:py-16 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]"
         >
           <span className="eyebrow text-gold">Begin your ritual</span>
           <h2 className="font-brand-serif text-3xl sm:text-5xl font-light leading-tight mt-4 text-balance">

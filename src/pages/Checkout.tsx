@@ -99,8 +99,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
         Back to Bag
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong p-5 sm:p-8 shadow-lift rounded-2xl">
-        <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
+      <div className="relative overflow-hidden surface-glass-strong rounded-2xl kente-frame p-5 sm:p-8 shadow-lift">
         <div className="absolute -top-28 -right-28 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
 
         <div className="relative pb-2 mb-6">

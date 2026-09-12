@@ -27,16 +27,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       onClick={() => onSelect(product)}
       className={cn(
         "group relative flex flex-col h-full cursor-pointer overflow-hidden",
-        "surface-glass-strong rounded-2xl",
+        "surface-glass-strong rounded-2xl kente-frame",
         "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
         "hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]",
         "hover:-translate-y-1 hover:scale-[1.01]",
         isOutOfStock && "opacity-70"
       )}
     >
-      {/* Soft gold hairline at top */}
-      <div className="kente-band-thin absolute top-0 left-0 right-0 z-20" aria-hidden="true" />
-
       {/* Product image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl flex-shrink-0">
         {/* Dagomba smock pattern background */}

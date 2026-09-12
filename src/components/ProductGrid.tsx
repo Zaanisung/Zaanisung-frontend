@@ -155,8 +155,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : error ? (
         <div className="py-16 flex items-center justify-center">
-          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-12 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-            <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-12 surface-glass-strong rounded-2xl kente-frame text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
             <div className="w-12 h-12 rounded-xl surface-glass-tint flex items-center justify-center text-gold mb-4 border border-gold/40">
               <AlertCircle className="w-6 h-6" />
             </div>
@@ -173,8 +172,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="py-16 flex items-center justify-center">
-          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-14 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-            <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
+          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-14 surface-glass-strong rounded-2xl kente-frame text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
             <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
             <div className="relative w-12 h-12 rounded-xl border border-gold/40 surface-glass-tint flex items-center justify-center text-gold mb-4">
               <span className="font-brand-serif text-xl font-light">Z</span>
