@@ -55,10 +55,21 @@ export const Login: React.FC<LoginProps> = ({
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row">
       {/* Left Side - Branding & Imagery (Desktop Only) */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800 weave-bg">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800">
         {/* Kente trim along the inner edge */}
         <div className="absolute inset-y-0 right-0 kente-divider-auth" aria-hidden="true"></div>
         <div className="absolute bottom-0 inset-x-0 kente-navbar-border" aria-hidden="true"></div>
+        {/* Perfume still-life backdrop */}
+        <img
+          src="/assets/backgrounds/auth-panel.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/55 to-ink/80"
+          aria-hidden="true"
+        ></div>
         {/* Atmospheric mist effects */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-20 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>
@@ -74,7 +85,7 @@ export const Login: React.FC<LoginProps> = ({
               ZAANISUNG
             </h1>
             <p className="text-sm uppercase tracking-[0.25em] text-gold-300 font-semibold">
-              Exclusive Fragrances • Ent. GH
+              Zaanisung Exclusive <span className="text-cream">Fragrances</span>
             </p>
           </div>
 

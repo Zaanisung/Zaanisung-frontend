@@ -32,7 +32,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
           Order Confirmed
         </h2>
         <p className="relative text-xs uppercase tracking-widest text-black/50 dark:text-white/50 mb-8">
-          Thank you for choosing Zaanisung Ent. GH
+          Thank you for choosing Zaanisung
         </p>
 
         {/* Order Reference Card */}

@@ -51,7 +51,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
-    <div className="absolute inset-0 lux-grid lux-grid-fade opacity-60" aria-hidden="true"></div>
     <div className="absolute top-20 right-24 w-72 h-72 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
     <div className="absolute -bottom-24 left-1/4 w-80 h-80 orb orb-gold-faint animate-mist-float" aria-hidden="true"></div>
 

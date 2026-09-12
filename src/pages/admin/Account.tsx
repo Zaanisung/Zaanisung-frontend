@@ -20,7 +20,7 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
           Admin Portal Settings
         </h2>
         <p className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 mt-1">
-          Zaanisung Ent. GH Management
+          Zaanisung Management
         </p>
       </div>
 

@@ -26,13 +26,16 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
     <section className="relative overflow-hidden">
       {/* Ambient backdrop */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 lux-grid lux-grid-fade" />
-        <div className="orb orb-gold-strong w-[520px] h-[520px] -top-40 -right-32" />
-        <div className="orb orb-gold w-[460px] h-[460px] -bottom-48 -left-40" />
-        <div className="orb orb-ink w-[380px] h-[380px] top-1/3 left-1/2 -translate-x-1/2" />
+        <div className="scene-bg scene-hero" />
+        <div className="orb orb-gold-strong w-[560px] h-[560px] -top-44 -right-36 animate-mist-float" />
+        <div className="orb orb-gold w-[460px] h-[460px] -bottom-52 -left-40 animate-mist-drift" />
+        <div className="orb orb-ink w-[380px] h-[380px] top-1/3 left-1/2 -translate-x-1/2 opacity-70" />
       </div>
 
-      <div className="relative w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-96px)] px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-12 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
+      {/* Soft blend into the next section */}
+      <div className="absolute inset-x-0 bottom-0 h-28 sm:h-36 bg-gradient-to-t from-white/70 sm:from-white/80 to-transparent dark:from-black/60 dark:sm:from-black/70 pointer-events-none" aria-hidden="true" />
+
+      <div className="relative z-10 w-full min-h-[calc(100vh-64px)] sm:min-h-[calc(100vh-96px)] px-4 sm:px-8 lg:px-12 py-14 sm:py-20 lg:py-12 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,7 +52,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <span className="gold-gradient-text block mt-1 pb-1">endures.</span>
           </h1>
 
-          <p className="mt-6 text-base sm:text-lg text-black/60 dark:text-white/60 leading-relaxed max-w-xl">
+          <p className="mt-6 text-base sm:text-lg text-black/75 dark:text-white/80 leading-relaxed max-w-xl">
             Hand-crafted in Tamale, Ghana. Zaanisung bottles bold, long-lasting
             scent that moves with you — from the market to the metropolis.
           </p>
@@ -81,7 +84,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   <p className="text-xs font-bold uppercase tracking-wider text-ink dark:text-white">
                     {badge.label}
                   </p>
-                  <p className="text-[10px] text-black/50 dark:text-white/55 mt-0.5">
+                  <p className="text-[10px] text-black/65 dark:text-white/70 mt-0.5">
                     {badge.sub}
                   </p>
                 </div>

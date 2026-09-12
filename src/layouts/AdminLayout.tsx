@@ -49,7 +49,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   ];
 
   return (
-    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black weave-bg">
+    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
       {/* Desktop sidebar — deep ink console surface */}
       <aside className="relative hidden md:flex flex-col w-[260px] lg:w-[280px] bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 min-h-screen sticky top-0 h-screen p-6 overflow-y-auto scrollbar-none">
         {/* Kente crown — woven Ghanaian trim along the top edge */}
@@ -71,7 +71,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     ZAANISUNG
                   </h2>
                   <span className="text-[9px] uppercase tracking-widest text-gold mt-1 block font-semibold">
-                    Admin · Ent. GH
+                    Admin Panel
                   </span>
                 </div>
               </div>

@@ -97,23 +97,6 @@
   );
 }
 
-/* Subtle woven-texture backdrop that layers over any page/panel background
-   (background-color utilities keep working — this only paints an image). */
-.weave-bg {
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.12) 1.5px, transparent 2.25px),
-    radial-gradient(circle at 100% 0%, rgba(10, 10, 10, 0.05) 1.5px, transparent 2.25px),
-    radial-gradient(circle at 0% 100%, rgba(10, 10, 10, 0.05) 1.5px, transparent 2.25px);
-  background-size: 34px 34px, 34px 34px, 34px 34px;
-}
-
-.dark .weave-bg {
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 1.5px, transparent 2.25px),
-    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.04) 1.5px, transparent 2.25px),
-    radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.04) 1.5px, transparent 2.25px);
-}
-
 /* Vertical band */
 .kente-band-vertical {
   width: 8px;

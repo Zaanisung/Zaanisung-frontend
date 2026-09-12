@@ -165,14 +165,6 @@ export const FullPageLoader: React.FC = () => (
     role="status"
     aria-label="Loading"
   >
-    <div 
-      className="absolute inset-0 opacity-5 dark:opacity-3"
-      style={{
-        backgroundImage: "url('/dagomba-smock-light.webp')",
-        backgroundSize: '480px auto',
-        backgroundRepeat: 'repeat'
-      }}
-    />
     <div className="relative z-10">
       <div 
         className="w-24 h-24 rounded-full border-[8px] border-transparent animate-spin"

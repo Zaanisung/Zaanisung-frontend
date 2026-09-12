@@ -60,7 +60,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black weave-bg">
+    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
       <Sidebar
         activePage={activePage}
         userName={userName}

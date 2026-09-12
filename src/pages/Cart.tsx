@@ -58,7 +58,7 @@ export const Cart: React.FC<CartProps> = ({
             Shopping Bag
           </h2>
           <p className="text-[11px] uppercase tracking-widest text-gold font-semibold mt-0.5">
-            Zaanisung Ent. GH Order
+            Zaanisung Order
           </p>
         </div>
         <span className="text-xs uppercase tracking-widest text-black/45 dark:text-white/50">

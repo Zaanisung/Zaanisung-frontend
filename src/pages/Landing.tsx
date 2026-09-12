@@ -117,7 +117,7 @@ export const Landing: React.FC<LandingProps> = ({
     document.getElementById("auth-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
 
   return (
-    <div className="min-h-screen bg-cream dark:bg-black text-ink dark:text-white weave-bg">
+    <div className="min-h-screen bg-cream dark:bg-black text-ink dark:text-white">
       <LandingHeader
         isDark={isDark}
         isLoggedIn={isLoggedIn}

@@ -27,7 +27,8 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
   return (
     <section id="collections" className="relative bg-white dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
-      <div className="w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
+      <div className="scene-bg scene-collections" aria-hidden="true" />
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,14 +41,14 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
             <h2 className="font-brand-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-light mt-3 text-balance">
               Signature Collection
             </h2>
-            <p className="text-sm text-black/55 dark:text-white/55 mt-2 max-w-md">
+            <p className="text-sm text-black/70 dark:text-white/75 mt-2 max-w-md">
               Our most requested extraits — each bottle numbered, each batch finished by hand.
             </p>
           </div>
           <button
             type="button"
             onClick={onBrowseShop}
-            className="group text-xs uppercase tracking-widest font-semibold text-black/60 dark:text-white/60 hover:text-gold transition-colors min-h-[44px] inline-flex items-center gap-2 w-fit"
+            className="group text-xs uppercase tracking-widest font-semibold text-black/75 dark:text-white/75 hover:text-gold transition-colors min-h-[44px] inline-flex items-center gap-2 w-fit"
           >
             View All
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -70,8 +71,8 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
             keyExtractor={(p) => p.id}
             renderItem={(product, index) => (
               <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: Math.min(index, 3) * 0.06 }}
                 className="h-full"

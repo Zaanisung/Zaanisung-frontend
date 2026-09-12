@@ -31,7 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        "hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out weave-bg",
+        "hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen overflow-y-auto scrollbar-none transition-[width] duration-300 ease-in-out",
         collapsed ? "w-[76px]" : "w-[260px] lg:w-[280px]"
       )}
       aria-label="Dashboard sidebar"

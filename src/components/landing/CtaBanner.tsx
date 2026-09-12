@@ -22,10 +22,11 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({
     <section className="relative overflow-hidden bg-cream dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="orb orb-gold w-[560px] h-[560px] -top-48 left-1/2 -translate-x-1/2" />
+        <div className="scene-bg scene-cta" />
+        <div className="orb orb-gold w-[560px] h-[560px] -top-48 left-1/2 -translate-x-1/2 opacity-70" />
       </div>
 
-      <div className="relative w-full px-4 sm:px-8 lg:px-12 py-20 sm:py-28 text-center">
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-20 sm:py-28 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

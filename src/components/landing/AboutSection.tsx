@@ -13,7 +13,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
   return (
     <section id="about" className="relative bg-cream dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
-      <div className="w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="scene-bg scene-about" aria-hidden="true" />
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -26,12 +27,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
             Born in the North.
             <span className="gold-gradient-text block mt-1 pb-1">Worn everywhere.</span>
           </h2>
-          <p className="mt-6 text-black/60 dark:text-white/60 leading-relaxed max-w-lg">
+          <p className="mt-6 text-black/70 dark:text-white/75 leading-relaxed max-w-lg">
             Zaanisung is an artisanal fragrance house rooted in Tamale, Ghana.
             We blend rare oils and extracts into bold, long-lasting compositions
             inspired by the warmth of the savanna and the energy of Ghanaian life.
           </p>
-          <p className="mt-4 text-black/60 dark:text-white/60 leading-relaxed max-w-lg">
+          <p className="mt-4 text-black/70 dark:text-white/75 leading-relaxed max-w-lg">
             Every bottle is curated, numbered and finished by hand — a piece of
             Ghana you can wear, to keep and to gift.
           </p>
@@ -42,7 +43,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
                 <p className="font-brand-serif text-2xl sm:text-3xl font-light text-ink dark:text-white">
                   {stat.value}
                 </p>
-                <p className="eyebrow text-black/45 dark:text-white/45 mt-1.5">
+                <p className="eyebrow text-black/60 dark:text-white/60 mt-1.5">
                   {stat.label}
                 </p>
               </div>

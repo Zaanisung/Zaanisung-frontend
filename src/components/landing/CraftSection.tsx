@@ -6,7 +6,8 @@ export const CraftSection: React.FC = () => {
   return (
     <section id="craft" className="relative bg-white dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
-      <div className="w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
+      <div className="scene-bg scene-craft" aria-hidden="true" />
+      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -18,7 +19,7 @@ export const CraftSection: React.FC = () => {
           <h2 className="font-brand-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-light mt-3">
             Why Zaanisung
           </h2>
-          <p className="mt-4 text-black/60 dark:text-white/60 max-w-xl mx-auto">
+          <p className="mt-4 text-black/70 dark:text-white/75 max-w-xl mx-auto">
             Everything we do is designed around a single promise — scent that
             lasts as long as the memory you make with it.
           </p>

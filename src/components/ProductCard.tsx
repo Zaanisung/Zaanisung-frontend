@@ -36,9 +36,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Product image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl flex-shrink-0">
-        {/* Dagomba smock pattern background */}
-        <div className="absolute inset-0 smock-bg-light" />
-        
         <img
           src={product.imageUrl}
           alt={product.name}

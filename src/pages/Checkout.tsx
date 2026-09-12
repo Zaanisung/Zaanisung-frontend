@@ -109,7 +109,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
             Express Checkout
           </h2>
           <p className="text-[11px] uppercase tracking-widest text-gold font-semibold mt-1">
-            Zaanisung Ent. GH Fast Direct Order
+            Zaanisung Fast Direct Order
           </p>
         </div>
 

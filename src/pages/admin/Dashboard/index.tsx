@@ -41,7 +41,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             Inventory Overview
           </h2>
           <p className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 mt-1">
-            Zaanisung Ent. GH Live At-A-Glance
+            Zaanisung Live At-A-Glance
           </p>
         </div>
 

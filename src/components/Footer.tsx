@@ -45,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   ZAANISUNG
                 </span>
                 <span className="eyebrow text-gold mt-1.5 block">
-                  Ent. GH Fragrances
+                  Fragrance House · Tamale, Ghana
                 </span>
               </div>
             </div>
@@ -144,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="w-full px-4 sm:px-8 lg:px-12 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] uppercase tracking-[0.2em] text-cream/40">
-          <span>&copy; {new Date().getFullYear()} Zaanisung Ent. GH. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} Zaanisung Fragrance House. All rights reserved.</span>
           <div className="flex items-center gap-6">
             <span>Tamale, Ghana</span>
             <div className="flex items-center gap-2 text-gold">

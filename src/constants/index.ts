@@ -269,7 +269,7 @@ export const STORAGE_KEYS = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const SEO_DEFAULTS = {
-  SITE_NAME: "Zaanisung Ent. GH",
+  SITE_NAME: "Zaanisung",
   SITE_TAGLINE: "Premium Fragrances from Ghana",
   SITE_DESCRIPTION: "Discover luxury perfumes and authentic fragrances at Zaanisung Enterprise GH. Premium eau de parfum, colognes, and fragrance collections delivered from Tamale across Ghana.",
   OG_IMAGE: "/og-image.jpg",
