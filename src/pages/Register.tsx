@@ -71,29 +71,30 @@ export const Register: React.FC<RegisterProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row">
+    <div className="dark relative min-h-screen w-full overflow-hidden flex flex-col lg:flex-row bg-ink text-cream">
+      {/* Full-bleed auth background — main background of the auth container on every screen */}
+      <img
+        src="/assets/backgrounds/auth-panel.webp"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-center"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/55 to-ink/85"
+        aria-hidden="true"
+      ></div>
+      {/* Atmospheric mist */}
+      <div className="absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-24 left-16 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>
+        <div className="absolute bottom-24 right-24 w-80 h-80 orb orb-cream animate-mist-float [animation-delay:2s]"></div>
+        <div className="absolute top-1/2 left-1/3 w-72 h-72 orb orb-gold-faint animate-mist-drift"></div>
+      </div>
+
       {/* Left Side - Branding & Imagery (Desktop Only) */}
-      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative overflow-hidden bg-gradient-to-br from-ink via-ink-900 to-ink-800">
+      <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative z-10">
         {/* Kente trim along the inner edge */}
         <div className="absolute inset-y-0 right-0 kente-divider-auth" aria-hidden="true"></div>
         <div className="absolute bottom-0 inset-x-0 kente-navbar-border" aria-hidden="true"></div>
-        {/* Perfume still-life backdrop */}
-        <img
-          src="/assets/backgrounds/auth-panel.webp"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/55 to-ink/80"
-          aria-hidden="true"
-        ></div>
-        {/* Atmospheric mist effects */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-20 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>
-          <div className="absolute bottom-32 right-32 w-80 h-80 orb orb-cream animate-mist-float [animation-delay:2s]"></div>
-          <div className="absolute top-1/2 left-1/3 w-64 h-64 orb orb-gold-faint animate-mist-drift"></div>
-        </div>
 
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-10 xl:p-16 text-cream w-full items-start text-left">
@@ -140,12 +141,7 @@ export const Register: React.FC<RegisterProps> = ({
       </div>
 
       {/* Right Side - Form */}
-      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-cream-50 dark:bg-ink-950 relative overflow-hidden">
-        {/* Subtle background orbs for mobile/form side */}
-        <div className="absolute inset-0 opacity-20 lg:opacity-10">
-          <div className="absolute top-20 right-20 w-64 h-64 orb orb-gold-faint animate-mist-pulse"></div>
-          <div className="absolute bottom-40 left-20 w-48 h-48 orb orb-cream animate-mist-pulse [animation-delay:1.5s]"></div>
-        </div>
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 relative z-10">
 
         <div className="w-full max-w-md relative z-10">
           {/* Mobile branding */}
@@ -238,6 +234,8 @@ export const Register: React.FC<RegisterProps> = ({
           </div>
         </div>
       </div>
+      {/* Bottom kente band */}
+      <div className="absolute bottom-0 inset-x-0 kente-navbar-border pointer-events-none" aria-hidden="true"></div>
     </div>
   );
 };
