@@ -19,6 +19,19 @@ export interface DashboardProps {
   onNavigateTo: (page: "inventory" | "orders" | "add-product" | "record-sale" | "restock") => void;
 }
 
+/** True when the given timestamp falls on the current calendar day (local time). */
+const isToday = (value?: string | Date | null): boolean => {
+  if (!value) return false;
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return false;
+  const now = new Date();
+  return (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate()
+  );
+};
+
 export const Dashboard: React.FC<DashboardProps> = ({
   products,
   orders,
@@ -28,7 +41,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const lowStockProducts = products.filter((p) => p.stock > 0 && p.stock <= 3);
   const outOfStockProducts = products.filter((p) => p.stock <= 0);
 
-  const todayOrders = orders.filter((o) => o.createdAt?.toLowerCase().includes("today"));
+  const todayOrders = orders.filter((o) => isToday(o.createdAt));
   const todaySalesTotal = todayOrders.reduce((sum, o) => sum + o.total, 0);
 
   const pendingOrders = orders.filter((o) => o.status === "PENDING");
