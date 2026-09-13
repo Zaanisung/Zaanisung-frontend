@@ -6,3 +6,4 @@ export * from "./inventory.service";
 export * from "./admin.service";
 export * from "./profile.service";
 export * from "./notification.service";
+export * from "./payment.service";

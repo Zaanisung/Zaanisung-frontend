@@ -4,7 +4,9 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { PaymentMethodLogo } from "../components/PaymentMethodLogo";
 import { GHANA_PHONE_REGEX } from "../constants";
-import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard } from "lucide-react";
+import * as api from "../services";
+import { getErrorMessage } from "../services";
+import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard, Landmark, ExternalLink, RotateCw } from "lucide-react";
 
 export interface CheckoutProps {
   items: OrderItem[];
@@ -19,6 +21,7 @@ export interface CheckoutProps {
     deliveryAddress: string;
     digitalAddress?: string;
     paymentMethod: string;
+    paymentReference?: string;
   }) => Promise<void>;
 }
 
@@ -33,13 +36,31 @@ export const Checkout: React.FC<CheckoutProps> = ({
   const [phone, setPhone] = useState(defaultPhone);
   const [address, setAddress] = useState("");
   const [digitalAddress, setDigitalAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"Mobile Money" | "Cash on Delivery" | "Other">("Mobile Money");
+  const [paymentMethod, setPaymentMethod] = useState<"Mobile Money" | "Cash on Delivery" | "Bank / Transfer" | "Paystack (Card)">("Mobile Money");
   const [momoNumber, setMomoNumber] = useState(defaultPhone);
   const [momoNetwork, setMomoNetwork] = useState("MTN MoMo");
+  const [paystackEmail, setPaystackEmail] = useState("");
+  const [pendingPayment, setPendingPayment] = useState<{
+    reference: string;
+    authorizationUrl: string;
+    dummy: boolean;
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const buildOrderData = (paymentReference?: string) => ({
+    items,
+    total,
+    customerName: name.trim(),
+    customerPhone: phone.trim(),
+    deliveryAddress: address.trim(),
+    digitalAddress: digitalAddress.trim() ? digitalAddress.trim().toUpperCase() : undefined,
+    paymentMethod:
+      paymentMethod === "Mobile Money" ? `${paymentMethod} (${momoNetwork})` : paymentMethod,
+    paymentReference,
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,25 +88,71 @@ export const Checkout: React.FC<CheckoutProps> = ({
       setError(`Please provide your ${momoNetwork} account number.`);
       return;
     }
+    if (paymentMethod === "Paystack (Card)" && !paystackEmail.trim()) {
+      setError("Please provide your card billing email address.");
+      return;
+    }
 
     setIsSubmitting(true);
     setError(null);
 
     try {
-      await onPlaceOrder({
-        items,
-        total,
-        customerName: name.trim(),
-        customerPhone: phone.trim(),
-        deliveryAddress: address.trim(),
-        digitalAddress: digitalAddress.trim() ? digitalAddress.trim().toUpperCase() : undefined,
-        paymentMethod: paymentMethod === "Mobile Money" ? `${paymentMethod} (${momoNetwork})` : paymentMethod,
-      });
-    } catch {
-      setError("An unexpected error occurred. Please try again.");
+      // Paystack requires two steps: initialize → pay → verify → place order.
+      if (paymentMethod === "Paystack (Card)") {
+        const init = await api.initializePayment({
+          amount: total,
+          currency: "GHS",
+          meta: { customerPhone: phone.trim(), customerName: name.trim() },
+        });
+        const payment = {
+          reference: init.reference,
+          authorizationUrl: init.authorization_url,
+          dummy: !!init.dummy,
+        };
+        setPendingPayment(payment);
+
+        if (payment.dummy) {
+          // Demo mode simulates the whole flow: "payment" succeeds instantly.
+          await api.verifyPayment(payment.reference);
+          await onPlaceOrder(buildOrderData(payment.reference));
+          return;
+        }
+
+        // Live mode: open the hosted Paystack checkout, then the customer
+        // clicks "I've paid — verify" to confirm before the order is placed.
+        window.open(payment.authorizationUrl, "_blank", "noopener,noreferrer");
+        return;
+      }
+
+      await onPlaceOrder(buildOrderData());
+    } catch (err) {
+      setError(getErrorMessage(err, "An unexpected error occurred. Please try again."));
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleVerifyPaystack = async () => {
+    if (!pendingPayment) return;
+    setIsSubmitting(true);
+    setError(null);
+    try {
+      const result = await api.verifyPayment(pendingPayment.reference);
+      if (result.status !== "SUCCESS") {
+        setError("Your payment has not been confirmed yet. Please try again shortly.");
+        return;
+      }
+      await onPlaceOrder(buildOrderData(pendingPayment.reference));
+    } catch (err) {
+      setError(getErrorMessage(err, "Could not verify your payment. Please try again."));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetPaystack = () => {
+    setPendingPayment(null);
+    setError(null);
   };
 
   return (
@@ -200,12 +267,33 @@ export const Checkout: React.FC<CheckoutProps> = ({
               Payment Method
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {(
                 [
-                  { id: "Mobile Money", label: "Mobile Money", desc: "MTN MoMo, Telecel, AT", icon: Smartphone },
-                  { id: "Cash on Delivery", label: "Cash on Delivery", desc: "Pay on receipt", icon: Banknote },
-                  { id: "Other", label: "Bank / Transfer", desc: "Counter or online transfer", icon: CreditCard },
+                  {
+                    id: "Mobile Money",
+                    label: "Mobile Money",
+                    desc: "MTN MoMo, Telecel, AT",
+                    icon: Smartphone,
+                  },
+                  {
+                    id: "Cash on Delivery",
+                    label: "Cash on Delivery",
+                    desc: "Pay on receipt",
+                    icon: Banknote,
+                  },
+                  {
+                    id: "Paystack (Card)",
+                    label: "Paystack (Card)",
+                    desc: "Visa, Mastercard, Verve",
+                    icon: CreditCard,
+                  },
+                  {
+                    id: "Bank / Transfer",
+                    label: "Bank / Transfer",
+                    desc: "Counter or online transfer",
+                    icon: Landmark,
+                  },
                 ] as const
               ).map((pm) => {
                 const isSelected = paymentMethod === pm.id;
@@ -276,19 +364,84 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 />
               </div>
             )}
+
+            {paymentMethod === "Paystack (Card)" && (
+              <div className="p-4 surface-glass-tint mt-3 space-y-3">
+                <label className="text-[11px] uppercase tracking-widest text-gold font-bold block">
+                  Pay with Debit / Credit Card
+                </label>
+                <Input
+                  label="Billing Email"
+                  type="email"
+                  value={paystackEmail}
+                  onChange={(e) => setPaystackEmail(e.target.value)}
+                  placeholder="you@mail.com"
+                  helperText="Receipts and payment confirmation go to this address"
+                  autoComplete="email"
+                />
+
+                {pendingPayment?.dummy ? (
+                  <div className="rounded-xl p-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-700 dark:text-emerald-300">
+                    Demo mode: your test payment succeeded. Placing your order…
+                  </div>
+                ) : pendingPayment ? (
+                  <div className="space-y-3">
+                    <div className="rounded-xl p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs text-amber-700 dark:text-amber-300">
+                      A secure Paystack checkout opened in a new tab. Complete the
+                      payment there, then confirm here.
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="md"
+                        isLoading={isSubmitting}
+                        onClick={handleVerifyPaystack}
+                        className="flex-1"
+                      >
+                        <CheckCircle2 className="w-4 h-4 mr-1.5" /> I've Paid — Verify
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="md"
+                        onClick={() => window.open(pendingPayment.authorizationUrl, "_blank", "noopener,noreferrer")}
+                        className="flex-1"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-1.5" /> Re-Open Pay
+                      </Button>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={resetPaystack}
+                      className="text-[11px] uppercase tracking-widest text-black/45 dark:text-white/45 hover:text-ink dark:hover:text-white font-semibold inline-flex items-center gap-1 min-h-[44px] transition-colors"
+                    >
+                      <RotateCw className="w-3 h-3" /> Start Over
+                    </button>
+                  </div>
+                ) : (
+                  <p className="text-[11px] text-black/50 dark:text-white/50">
+                    You'll be redirected to Paystack's secure hosted checkout after
+                    pressing Confirm & Place Order.
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Place Order Primary Action */}
           <div className="pt-5">
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              isLoading={isSubmitting}
-              className="w-full font-bold shadow-xs"
-            >
-              Confirm & Place Order — {total.toFixed(2)} GHS
-            </Button>
+            {pendingPayment && !pendingPayment.dummy ? null : (
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                isLoading={isSubmitting}
+                className="w-full font-bold shadow-xs"
+              >
+                Confirm & Place Order — {total.toFixed(2)} GHS
+              </Button>
+            )}
             <div className="flex items-center justify-center space-x-1.5 text-black/45 dark:text-white/45 text-[11px] mt-3 uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5 text-gold" />
               <span>Safe & Secure Ghanaian Checkout</span>

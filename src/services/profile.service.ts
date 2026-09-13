@@ -95,29 +95,3 @@ export async function changePassword(data: {
     body: JSON.stringify(data),
   });
 }
-
-export interface PaymentInitResult {
-  reference: string;
-  authorization_url: string;
-  dummy?: boolean;
-  payment?: string;
-}
-
-export async function initializePayment(data: {
-  amount: number;
-  currency?: string;
-  orderId?: string;
-  meta?: Record<string, unknown>;
-}): Promise<PaymentInitResult> {
-  return request("/payments/initialize", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-}
-
-export async function verifyPayment(reference: string): Promise<{ status: string }> {
-  return request("/payments/verify", {
-    method: "POST",
-    body: JSON.stringify({ reference }),
-  });
-}
