@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
-import { ThemeToggle } from "../../components/ThemeToggle";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../services";
 import { getErrorMessage } from "../../services";
@@ -10,15 +9,11 @@ import { getErrorMessage } from "../../services";
 export interface AdminLoginProps {
   onLoginSuccess: () => void;
   onReturnToStorefront: () => void;
-  isDark: boolean;
-  onToggleTheme: () => void;
 }
 
 export const AdminLogin: React.FC<AdminLoginProps> = ({
   onLoginSuccess,
   onReturnToStorefront,
-  isDark,
-  onToggleTheme,
 }) => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -54,9 +49,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
     <div className="absolute top-20 right-24 w-72 h-72 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
     <div className="absolute -bottom-24 left-1/4 w-80 h-80 orb orb-gold-faint animate-mist-float" aria-hidden="true"></div>
 
-    <div className="fixed top-4 right-4 z-20">
-      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-    </div>
     <div className="relative w-full max-w-sm z-10">
         <button
           type="button"

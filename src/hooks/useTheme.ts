@@ -1,47 +1,71 @@
 import { useEffect, useState } from "react";
-import { STORAGE_KEYS } from "../constants";
 
-const THEME_KEY = STORAGE_KEYS.THEME;
+export type ThemePreference = "light" | "dark" | "system";
 
-function getInitialDark(): boolean {
-  if (typeof window === "undefined") return false;
-  const stored = window.localStorage.getItem(THEME_KEY);
-  if (stored === "light" || stored === "dark") return stored === "dark";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+const SYSTEM_DARK_QUERY = "(prefers-color-scheme: dark)";
+
+/** CSS variable that carries the brand accent color (see index.css `@theme`). */
+export const ACCENT_COLOR_VAR = "--color-gold";
+
+export const DEFAULT_ACCENT_COLOR = "#d4af37";
+
+const isSystemDark = (): boolean =>
+  typeof window !== "undefined" && !!window.matchMedia(SYSTEM_DARK_QUERY).matches;
+
+function resolveIsDark(preference: ThemePreference | undefined): boolean {
+  if (preference === "light") return false;
+  if (preference === "dark") return true;
+  // "system" (or unset) → follow the operating system / browser preference.
+  return isSystemDark();
 }
 
 /**
- * Dark-mode hook.
+ * Theme hook.
  *
- * - Manual toggle is persisted to localStorage.
- * - Without a stored preference the app follows the OS/browser preference.
- * - Toggling reflects immediately on the document element (for Tailwind dark:).
+ * The THEME TOGGLE BUTTON IS GONE: there is no manual on-page switch anymore.
+ * The active theme is driven entirely by:
+ *   1. the user's saved appearance preference (Settings → Appearance), and
+ *   2. the OS/browser "dark mode" preference when set to "system".
+ * An accent color chosen in Settings is applied as a runtime CSS variable so
+ * every `text-gold` / `bg-gold` element updates instantly.
  */
-export function useTheme() {
-  const [isDark, setIsDark] = useState<boolean>(getInitialDark);
+export function useTheme(appearance?: {
+  theme?: ThemePreference;
+  accentColor?: string;
+}) {
+  const preference = appearance?.theme ?? "system";
+  const accentColor =
+    appearance?.accentColor || DEFAULT_ACCENT_COLOR;
 
+  const [isDark, setIsDark] = useState<boolean>(() =>
+    resolveIsDark(preference)
+  );
+
+  // When the explicit theme (light/dark/system) changes, recompute darkness and
+  // follow the system in real time whenever the preference is "system".
+  useEffect(() => {
+    const apply = () => setIsDark(resolveIsDark(preference));
+
+    apply();
+    if (preference !== "system") return;
+
+    const mediaQuery = window.matchMedia(SYSTEM_DARK_QUERY);
+    mediaQuery.addEventListener("change", apply);
+    return () => mediaQuery.removeEventListener("change", apply);
+  }, [preference]);
+
+  // Reflect the resolved theme on <html> for Tailwind's `dark:` variant.
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
+  // Apply the chosen accent color as a global CSS variable (brand gold accent).
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const applySystemTheme = (e: MediaQueryList | MediaQueryListEvent) => {
-      if (!window.localStorage.getItem(THEME_KEY)) setIsDark(e.matches);
-    };
-    applySystemTheme(mediaQuery);
-    mediaQuery.addEventListener("change", applySystemTheme);
-    return () => mediaQuery.removeEventListener("change", applySystemTheme);
-  }, []);
+    document.documentElement.style.setProperty(
+      ACCENT_COLOR_VAR,
+      accentColor
+    );
+  }, [accentColor]);
 
-  const toggleTheme = () => {
-    setIsDark((prev) => {
-      const next = !prev;
-      window.localStorage.setItem(THEME_KEY, next ? "dark" : "light");
-      return next;
-    });
-  };
-
-  return { isDark, toggleTheme };
+  return { isDark };
 }
