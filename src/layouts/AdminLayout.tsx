@@ -1,7 +1,7 @@
 import React from "react";
 import { AdminTab } from "../types";
 import { Logo } from "../components/Logo";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { NavbarKenteBorder } from "../components/ui/NavbarKenteBorder";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import {
   LayoutDashboard,
@@ -21,8 +21,6 @@ export interface AdminLayoutProps {
   onChangeTab: (tab: AdminTab) => void;
   onNavigateTo: (page: "add-product" | "record-sale" | "restock") => void;
   onReturnToStorefront: () => void;
-  isDark: boolean;
-  onToggleTheme: () => void;
   pendingOrdersCount?: number;
 }
 
@@ -32,8 +30,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   onChangeTab,
   onNavigateTo,
   onReturnToStorefront,
-  isDark,
-  onToggleTheme,
   pendingOrdersCount = 0,
 }) => {
   const navItems = [
@@ -75,7 +71,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                   </span>
                 </div>
               </div>
-              <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             </div>
             <p className="eyebrow text-cream/40 mt-4">Inventory & Sales Portal</p>
           </div>
@@ -172,28 +167,30 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       {/* Main admin column */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
-        <header className="md:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex items-center justify-between gap-2 flex-nowrap">
-          <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
-            <Logo className="h-8 w-8 shrink-0" />
-            <h2 className="font-brand-serif text-base tracking-[0.14em] font-light text-ink dark:text-white hidden min-[420px]:inline">
-              ZAANISUNG
-            </h2>
-            <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
-              ADMIN
-            </span>
-          </div>
+        <header className="md:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex flex-col flex-nowrap">
+          <div className="flex items-center justify-between gap-2 flex-nowrap">
+            <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+              <Logo className="h-8 w-8 shrink-0" />
+              <h2 className="font-brand-serif text-base tracking-[0.14em] font-light text-ink dark:text-white hidden min-[420px]:inline">
+                ZAANISUNG
+              </h2>
+              <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
+                ADMIN
+              </span>
+            </div>
 
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
-            <button
-              type="button"
-              onClick={onReturnToStorefront}
-              className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-            >
-              <Store className="w-3.5 h-3.5 text-gold" />
-              <span>Store</span>
-            </button>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button
+                type="button"
+                onClick={onReturnToStorefront}
+                className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              >
+                <Store className="w-3.5 h-3.5 text-gold" />
+                <span>Store</span>
+              </button>
+            </div>
           </div>
+          <NavbarKenteBorder className="mt-2" />
         </header>
 
         {/* Mobile fast-action pills */}
@@ -225,7 +222,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-24 md:pb-12">
+        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-32 md:pb-12">
           <ErrorBoundary>{children}</ErrorBoundary>
         </main>
       </div>

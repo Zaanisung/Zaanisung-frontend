@@ -3,7 +3,7 @@ import { CustomerTab } from "../types";
 import { BottomNav } from "../components/BottomNav";
 import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { NavbarKenteBorder } from "../components/ui/NavbarKenteBorder";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import { ShoppingBag } from "lucide-react";
 import { cn } from "../utils/cn";
@@ -13,9 +13,8 @@ export interface CustomerLayoutProps {
   activeTab: CustomerTab;
   onChangeTab: (tab: CustomerTab) => void;
   cartCount: number;
-  isDark: boolean;
-  onToggleTheme: () => void;
   onNavigateHome?: () => void;
+  onNavigateSection?: (section: "collections" | "about" | "craft") => void;
   userName?: string;
   onOpenDashboard?: () => void;
 }
@@ -31,9 +30,8 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
   activeTab,
   onChangeTab,
   cartCount,
-  isDark,
-  onToggleTheme,
   onNavigateHome,
+  onNavigateSection,
   userName,
   onOpenDashboard,
 }) => {
@@ -54,9 +52,6 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
               <span className="hidden sm:block">
                 <span className="font-brand-serif text-xl sm:text-2xl tracking-[0.16em] font-light text-ink dark:text-white hover:text-gold transition-colors block leading-none">
                   ZAANISUNG
-                </span>
-                <span className="eyebrow text-gold block mt-1.5">
-                  Fragrance House
                 </span>
               </span>
             </button>
@@ -100,7 +95,6 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
                 {userName.charAt(0).toUpperCase()}
               </button>
             )}
-            <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
             <button
               type="button"
               onClick={() => onChangeTab("cart")}
@@ -116,18 +110,19 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
             </button>
           </div>
         </div>
+        <NavbarKenteBorder />
       </header>
-      {/* Kente bottom border */}
-      <div className="kente-navbar-border" aria-hidden="true" />
 
       {/* Main page area */}
-      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-24 md:pb-14">
+      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-32 md:pb-14">
         <ErrorBoundary>{children}</ErrorBoundary>
       </main>
 
       <Footer
         onNavigate={(target) => {
-          if (target === "about" || target === "home") {
+          if (target === "about") {
+            onNavigateSection?.("about");
+          } else if (target === "home") {
             onNavigateHome?.();
           } else if (target === "shop") {
             onChangeTab("shop");

@@ -3,14 +3,12 @@ import { ArrowRight } from "lucide-react";
 import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
-import { ThemeToggle } from "../ThemeToggle";
+import { NavbarKenteBorder } from "../ui/NavbarKenteBorder";
 import { navLinks } from "./constants";
 
 interface LandingHeaderProps {
-  isDark: boolean;
   isLoggedIn: boolean;
   currentUser: CustomerUser | null;
-  onToggleTheme: () => void;
   onBrowseShop: () => void;
   onGoToLogin: () => void;
   onStartShopping: () => void;
@@ -18,10 +16,8 @@ interface LandingHeaderProps {
 }
 
 export const LandingHeader: React.FC<LandingHeaderProps> = ({
-  isDark,
   isLoggedIn,
   currentUser,
-  onToggleTheme,
   onBrowseShop,
   onGoToLogin,
   onStartShopping,
@@ -59,7 +55,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
           {isLoggedIn ? (
             <>
               {onOpenDashboard && (
@@ -84,6 +79,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
           )}
         </div>
       </div>
+      <NavbarKenteBorder />
     </header>
   );
 };

@@ -1,19 +1,13 @@
 import React from "react";
 import type { DashboardPage, DashboardNavPage } from "../../types";
 import { Logo } from "../Logo";
-import { ThemeToggle } from "../ThemeToggle";
 import { cn } from "../../utils/cn";
 import { ACCOUNT_NAV, isNavActive } from "./navigation";
 import { Store, Globe } from "lucide-react";
 
 interface SidebarProps {
   activePage: DashboardPage;
-  userName: string;
-  isDark: boolean;
-  collapsed: boolean;
-  onToggleTheme: () => void;
   onNavigate: (page: DashboardNavPage) => void;
-  onToggleCollapsed: () => void;
   onReturnToStorefront: () => void;
 }
 
@@ -24,12 +18,7 @@ interface SidebarProps {
  */
 export const Sidebar: React.FC<SidebarProps> = ({
   activePage,
-  userName: _userName,
-  isDark,
-  collapsed: _collapsed,
-  onToggleTheme,
   onNavigate,
-  onToggleCollapsed: _onToggleCollapsed,
   onReturnToStorefront,
 }) => {
   return (
@@ -48,7 +37,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Header */}
         <div className="relative pb-4 border-b border-white/10 flex flex-col items-center gap-3">
           <Logo className="h-8 w-8 flex-shrink-0" />
-          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
         </div>
 
         {/* Nav */}
