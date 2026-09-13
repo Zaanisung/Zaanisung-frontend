@@ -3,7 +3,7 @@ import { Product } from "../types";
 import { ProductCard } from "./ProductCard";
 import { SearchInput } from "./ui/SearchInput";
 import { Loader } from "./ui/Loader";
-import { AlertCircle, LayoutGrid, Square } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { cn } from "../utils/cn";
 
 export interface ProductGridProps {
@@ -29,7 +29,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<PriceFilter>("ALL");
-  const [mobileLayout, setMobileLayout] = useState<"grid" | "showcase">("showcase");
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -97,34 +96,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               {opt.label}
             </button>
           ))}
-        </div>
-
-        {/* Mobile layout toggle */}
-        <div className="flex items-center gap-1 bg-white/60 dark:bg-white/[0.08] p-1 border border-black/15 dark:border-white/15 sm:hidden flex-shrink-0 rounded-full">
-          <button
-            type="button"
-            onClick={() => setMobileLayout("grid")}
-            className={cn(
-              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors rounded-full",
-              mobileLayout === "grid" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
-            )}
-            title="Compact Grid"
-            aria-label="Compact grid view"
-          >
-            <LayoutGrid className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setMobileLayout("showcase")}
-            className={cn(
-              "p-2 min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors rounded-full",
-              mobileLayout === "showcase" ? "bg-ink text-cream dark:bg-white dark:text-ink" : "text-black/45 dark:text-white/45"
-            )}
-            title="Large Cards"
-            aria-label="Large cards view"
-          >
-            <Square className="w-4 h-4" />
-          </button>
         </div>
       </div>
 
@@ -202,14 +173,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           </div>
         </div>
       ) : (
-        <div
-          className={cn(
-            "grid gap-4 sm:gap-6",
-            mobileLayout === "showcase"
-              ? "grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
-              : "grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
-          )}
-        >
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 min-[520px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
@@ -217,7 +181,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               onSelect={onSelectProduct}
               onAddToCart={onAddToCart}
               isAdded={recentlyAddedId === product.id}
-              compact={mobileLayout === "grid"}
             />
           ))}
         </div>

@@ -13,7 +13,6 @@ import {
   Package,
   Clock,
   Store,
-  ChevronRight,
 } from "lucide-react";
 
 export interface OverviewProps {
@@ -197,15 +196,14 @@ export const Overview: React.FC<OverviewProps> = ({
               key={link.label}
               type="button"
               onClick={() => onNavigate(link.page)}
-              className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 min-h-[44px] flex items-center gap-3 hover:border-gold/60 hover:bg-gold/5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group text-left"
+              className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 min-w-0 min-h-[44px] flex items-center gap-2.5 hover:border-gold/60 hover:bg-gold/5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group text-left"
             >
-              <span className="text-black/45 dark:text-white/45 group-hover:text-gold transition-colors">
+              <span className="text-black/45 dark:text-white/45 group-hover:text-gold transition-colors flex-shrink-0">
                 {link.icon}
               </span>
-              <span className="text-xs uppercase tracking-wider font-semibold text-black dark:text-white">
+              <span className="text-xs uppercase tracking-wider font-semibold text-black dark:text-white min-w-0 leading-tight truncate">
                 {link.label}
               </span>
-              <ChevronRight className="w-3 h-3 text-black/30 dark:text-white/30 ml-auto" />
             </button>
           ))}
         </div>
@@ -233,7 +231,6 @@ export const Overview: React.FC<OverviewProps> = ({
                 onSelect={onSelectProduct || (() => {})}
                 onAddToCart={onAddToCart}
                 isAdded={recentlyAddedId === product.id}
-                compact
               />
             ))}
           </div>
