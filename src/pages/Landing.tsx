@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Product, CustomerUser } from "../types";
 import * as api from "../services";
 import { getErrorMessage } from "../services";
@@ -17,8 +17,7 @@ export interface LandingProps {
   products: Product[];
   currentUser: CustomerUser | null;
   isLoadingProducts: boolean;
-  isDark: boolean;
-  onToggleTheme: () => void;
+  initialSection?: "collections" | "about" | "craft";
   onCreateAccount: (user: CustomerUser) => void;
   onLogin: (user: CustomerUser) => void;
   onStartShopping: () => void;
@@ -34,8 +33,7 @@ export const Landing: React.FC<LandingProps> = ({
   products,
   currentUser,
   isLoadingProducts,
-  isDark,
-  onToggleTheme,
+  initialSection,
   onCreateAccount,
   onLogin,
   onStartShopping,
@@ -51,6 +49,17 @@ export const Landing: React.FC<LandingProps> = ({
       ? "login"
       : "signup"
   );
+
+  // Deep-link to a landing section (e.g. "About Us" in the storefront footer).
+  useEffect(() => {
+    if (!initialSection) return;
+    const element = document.getElementById(initialSection);
+    if (!element) return;
+    const timer = setTimeout(() => {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+    return () => clearTimeout(timer);
+  }, [initialSection]);
 
   const [name, setName] = useState("");
   const [identifier, setIdentifier] = useState("");
@@ -119,10 +128,8 @@ export const Landing: React.FC<LandingProps> = ({
   return (
     <div className="min-h-screen bg-cream dark:bg-black text-ink dark:text-white">
       <LandingHeader
-        isDark={isDark}
         isLoggedIn={isLoggedIn}
         currentUser={currentUser}
-        onToggleTheme={onToggleTheme}
         onBrowseShop={onBrowseShop}
         onGoToLogin={onGoToLogin}
         onStartShopping={onStartShopping}
@@ -194,8 +201,10 @@ export const Landing: React.FC<LandingProps> = ({
 
       <Footer
         onNavigate={(target) => {
-          if (target === "about" || target === "home") {
+          if (target === "about") {
             document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+          } else if (target === "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
           } else if (target === "shop") {
             onBrowseShop();
           } else if (target === "orders" || target === "account") {

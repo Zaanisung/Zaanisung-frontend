@@ -61,9 +61,6 @@ function toFullUser(u: CustomerUser): FullUser {
  * it unit-testable and gives future developers a single place to add state.
  */
 export function useAppState() {
-  // ─── Theme ──────────────────────────────────────────────────────────
-  const { isDark, toggleTheme } = useTheme();
-
   // ─── Core data ──────────────────────────────────────────────────────
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -71,6 +68,11 @@ export function useAppState() {
   const [customerUser, setCustomerUser] = useState<FullUser | null>(null);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+  // ─── Theme ──────────────────────────────────────────────────────────
+  // Appearance (light/dark/system + accent color) comes from the signed-in
+  // user's saved Settings. Guests fall back to the "system" scheme.
+  useTheme(customerUser?.appearance);
 
   // ─── UI / navigation state ──────────────────────────────────────────
   const [view, setView] = useState<AppView>({ type: "landing" });
@@ -83,6 +85,14 @@ export function useAppState() {
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState<string | null>(null);
 
+  // ─── Guest checkout gate ────────────────────────────────────────────
+  // Checkout requires a signed-in account (the backend refuses unauthenticated
+  // orders). Guests are blocked from the checkout views and shown an auth
+  // modal instead; after a successful sign-in the saved target view is then
+  // visited so the bag / checkout intent is never lost.
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [checkoutTarget, setCheckoutTarget] = useState<AppView | null>(null);
+
   // ─── Profile mutation feedback ──────────────────────────────────────
   const [updatingProfile, setUpdatingProfile] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
@@ -92,9 +102,58 @@ export function useAppState() {
   const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
 
   // ─── Navigation ─────────────────────────────────────────────────────
-  const handleNavigate = useCallback((nextView: AppView) => {
-    setView(nextView);
+  const isCheckoutView = (v: AppView): boolean =>
+    (v.type === "customer" && v.page === "checkout") ||
+    (v.type === "dashboard" && v.page === "checkout");
+
+  const handleNavigate = useCallback(
+    (nextView: AppView) => {
+      // Guests must sign in before reaching checkout.
+      if (isCheckoutView(nextView) && !customerUser) {
+        setCheckoutTarget(nextView);
+        setIsAuthModalOpen(true);
+        return;
+      }
+      setView(nextView);
+    },
+    [customerUser]
+  );
+
+  // Opens the auth modal from the checkout page when the backend rejects the
+  // order request (e.g. an expired session), keeping the bag intact.
+  const handleRequireSignIn = useCallback(() => {
+    setCheckoutTarget(null);
+    setIsAuthModalOpen(true);
   }, []);
+
+  const handleCloseAuthModal = useCallback(() => {
+    setIsAuthModalOpen(false);
+    setCheckoutTarget(null);
+  }, []);
+
+  // Completion handler for the auth modal (login OR registration). Routes the
+  // user to their intended checkout destination, or to the shop by default.
+  const handleAuthModalSuccess = useCallback(
+    (user: CustomerUser) => {
+      setCustomerUser(toFullUser(user));
+      setIsAuthModalOpen(false);
+      const target = checkoutTarget;
+      setCheckoutTarget(null);
+
+      if (user.role === "ADMIN") {
+        setIsAdminLoggedIn(true);
+        setAdminTab("dashboard");
+        setView({ type: "admin", page: "dashboard" });
+        return;
+      }
+      if (target) {
+        setView(target);
+        return;
+      }
+      setView({ type: "customer", page: "shop" });
+    },
+    [checkoutTarget]
+  );
 
   // ─── Auth bootstrap ─────────────────────────────────────────────────
   useEffect(() => {
@@ -475,24 +534,33 @@ export function useAppState() {
   const handleCartClose = useCallback(() => setIsCartOpen(false), []);
 
   // ─── Order placement ────────────────────────────────────────────────
+  const statusCodeOf = (err: unknown): number | undefined =>
+    typeof err === "object" && err !== null && "statusCode" in err
+      ? (err as { statusCode?: unknown }).statusCode as number
+      : undefined;
+
   const handlePlaceOrder = async (orderData: PlaceOrderData) => {
     const productsPayload = orderData.items.map((item) => ({
       productId: item.productId || "",
       quantity: item.quantity,
     }));
 
-    const { order } = await api.placeOrder({
-        products: productsPayload,
-        delivery: {
-          address: orderData.deliveryAddress,
-          city: "Tamale",
-          phone: orderData.customerPhone,
-          ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
-        },
-        payment: {
-          method: orderData.paymentMethod,
-        },
-      });
+try {
+      const { order } = await api.placeOrder({
+          products: productsPayload,
+          delivery: {
+            address: orderData.deliveryAddress,
+            city: "Tamale",
+            phone: orderData.customerPhone,
+            ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
+          },
+          payment: {
+            method: orderData.paymentMethod,
+            ...(orderData.paymentReference
+              ? { reference: orderData.paymentReference }
+              : {}),
+          },
+        });
 
       const newOrder: Order = {
         _id: order._id,
@@ -516,6 +584,15 @@ export function useAppState() {
 
       // Refresh products to update stock
       fetchProducts();
+    } catch (err) {
+      // Session expired mid-checkout → reopen the sign-in modal without
+      // losing the bag, and surface a friendlier message.
+      if (statusCodeOf(err) === 401) {
+        handleRequireSignIn();
+        throw new Error("Please sign in to complete your order.", { cause: err });
+      }
+      throw err;
+    }
   };
 
   // ─── Admin: Record Physical Sale ────────────────────────────────────
@@ -622,10 +699,13 @@ export function useAppState() {
     profileMessage,
     passwordError,
     passwordMessage,
-    isDark,
     isBootstrapping,
+    // guest checkout auth gate
+    isAuthModalOpen,
+    onRequireSignIn: handleRequireSignIn,
+    onCloseAuthModal: handleCloseAuthModal,
+    onAuthModalSuccess: handleAuthModalSuccess,
     // navigation
-    onToggleTheme: toggleTheme,
     onNavigate: handleNavigate,
     onCustomerTabChange: handleCustomerTabChange,
     onAdminTabChange: handleAdminTabChange,

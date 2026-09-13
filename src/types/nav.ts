@@ -26,8 +26,10 @@ export type DashboardNavPage = Exclude<
   "product-details" | "order-confirmation"
 >;
 
+export type LandingSection = "collections" | "about" | "craft";
+
 export type AppView =
-  | { type: "landing" }
+  | { type: "landing"; section?: LandingSection }
   | { type: "customer"; page: "login" }
   | { type: "customer"; page: "register" }
   | { type: "customer"; page: "shop" }

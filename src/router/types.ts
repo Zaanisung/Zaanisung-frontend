@@ -8,6 +8,8 @@ export interface PlaceOrderData {
   deliveryAddress: string;
   digitalAddress?: string;
   paymentMethod: string;
+  /** Reference returned by initializePayment when checkout used Paystack. */
+  paymentReference?: string;
 }
 
 export interface PhysicalSaleData {
