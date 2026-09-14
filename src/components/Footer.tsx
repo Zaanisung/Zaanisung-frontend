@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="relative bg-ink text-cream/70 mt-auto">
       {/* Gold hairline crown */}
-      <div className="absolute top-0 inset-x-0 kente-navbar-border" aria-hidden="true" />
+      <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
 
       <div className="w-full px-4 sm:px-8 lg:px-12 pt-14 sm:pt-18 pb-10">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
@@ -132,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               />
               <button
                 type="submit"
-                className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]"
+                className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 Join
               </button>

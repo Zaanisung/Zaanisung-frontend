@@ -3,7 +3,6 @@ import { CustomerTab } from "../types";
 import { BottomNav } from "../components/BottomNav";
 import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
-import { NavbarKenteBorder } from "../components/ui/NavbarKenteBorder";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import { ShoppingBag } from "lucide-react";
 import { cn } from "../utils/cn";
@@ -110,11 +109,10 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
             </button>
           </div>
         </div>
-        <NavbarKenteBorder />
       </header>
 
       {/* Main page area */}
-      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 py-6 sm:py-10 pb-32 md:pb-14">
+      <main className="flex-1 w-full px-4 sm:px-8 xl:px-12 py-6 sm:py-10 pb-28 lg:pb-14">
         <ErrorBoundary>{children}</ErrorBoundary>
       </main>
 

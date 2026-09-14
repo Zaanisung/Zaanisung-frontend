@@ -35,7 +35,7 @@ export const CraftSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="surface-glass rounded-xl group p-7 sm:p-8 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] lg:min-h-[300px] flex flex-col justify-center hover:-translate-y-1.5 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]"
+                className="surface-glass rounded-xl group p-7 sm:p-8 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] lg:min-h-[300px] flex flex-col justify-center hover:-translate-y-1.5"
               >
                 <div className="w-12 h-12 flex items-center justify-center border border-gold/40 bg-gold/10 mb-6 group-hover:bg-gold/15 transition-colors rounded-xl">
                   <Icon className="w-5 h-5 text-gold" />

@@ -237,6 +237,7 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
         onLogin={props.onLogin}
         onNavigateToRegister={() => props.onNavigate({ type: "customer", page: "register" })}
         onContinueAsGuest={props.onContinueAsGuest}
+        onReturnToLanding={() => props.onNavigate({ type: "landing" })}
       />
     );
   }
@@ -245,6 +246,7 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
       <Register
         onRegister={props.onRegister}
         onNavigateToLogin={() => props.onNavigate({ type: "customer", page: "login" })}
+        onReturnToLanding={() => props.onNavigate({ type: "landing" })}
       />
     );
   }

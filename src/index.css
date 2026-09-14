@@ -1,6 +1,4 @@
 @import "tailwindcss";
-
-@import "./kente-system.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -119,9 +117,6 @@
   --animate-zoom-in: zoom-in 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   --animate-slide-up: slide-up 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   --animate-slide-down: slide-down 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-
-  /* Gentle sheen that travels along kente accents */
-  --animate-kente-shimmer: kente-shimmer 9s ease-in-out infinite;
 }
 
 @layer base {
@@ -153,6 +148,14 @@
 
   :where(section[id]) {
     scroll-margin-top: 5rem;
+  }
+
+  /* Tailwind v4 preflight sets buttons to `cursor: default`; restore the
+     pointer so every interactive element (incl. the mobile bottom nav)
+     reads as clickable. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
@@ -269,30 +272,14 @@
 
   /* ═══ GOLD TREATMENTS ══════════════════════════════════════════════════ */
 
-  /* Gold gradient — softer, more steps */
+  /* Gold text — flat solid accent (no gradient clipping) */
   .gold-gradient-text {
-    background: linear-gradient(
-      120deg,
-      #a4881f 0%,
-      #c29e2e 20%,
-      #d4af37 40%,
-      #e9d483 60%,
-      #d4af37 80%,
-      #c29e2e 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #c29e2e;
   }
 
-  /* Gold gradient background — for buttons */
+  /* Gold surface — flat solid fill (no gradient, no glow) */
   .gold-gradient-bg {
-    background: linear-gradient(
-      180deg,
-      #e9d483 0%,
-      #d4af37 50%,
-      #c29e2e 100%
-    );
+    background: #d4af37;
   }
 
   /* ═══ DIVIDERS ═════════════════════════════════════════════════════════ */
@@ -663,18 +650,6 @@ button:where(a) {
 @keyframes slide-down {
   from { opacity: 0; transform: translateY(-8px) scale(0.99); }
   to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* Slow sheen drifting across kente accents */
-@keyframes kente-shimmer {
-  0%, 100% {
-    background-size: 28px 28px, 28px 28px, 100% 100%;
-    opacity: 0.9;
-  }
-  50% {
-    background-size: 28px 28px, 28px 28px, 140% 100%;
-    opacity: 1;
-  }
 }
 
 .loader-dot {

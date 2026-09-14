@@ -19,7 +19,7 @@ interface MobileNavDrawerProps {
  * Mobile navigation sheet that slides up from the bottom of the screen.
  *
  * It is opened from the toolbar (hamburger) button in the sticky header and
- * behaves like a clean bottom sheet: rounded top corners, kente gutter, and
+ * behaves like a clean bottom sheet: rounded top corners, hairline gutter, and
  * a backdrop that dismisses it. Scroll is locked on the page body while open.
  */
 export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
@@ -46,7 +46,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
 
   return (
     <div
-      className="md:hidden fixed inset-0 z-50"
+      className="lg:hidden fixed inset-0 z-50"
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
@@ -73,9 +73,6 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({
           open ? "translate-y-0" : "translate-y-full pointer-events-none"
         )}
       >
-        {/* Kente gutter along the top edge of the sheet */}
-        <div className="relative w-full h-1.5 kente-band flex-shrink-0" aria-hidden="true" />
-
         {/* Grab handle */}
         <div className="flex justify-center pt-2.5 flex-shrink-0" aria-hidden="true">
           <div className="w-10 h-1.5 rounded-full bg-black/15 dark:bg-white/20" />

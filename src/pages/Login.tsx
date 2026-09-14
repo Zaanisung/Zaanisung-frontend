@@ -10,12 +10,14 @@ export interface LoginProps {
   onLogin: (user: CustomerUser) => void;
   onNavigateToRegister: () => void;
   onContinueAsGuest: () => void;
+  onReturnToLanding: () => void;
 }
 
 export const Login: React.FC<LoginProps> = ({
   onLogin,
   onNavigateToRegister,
   onContinueAsGuest,
+  onReturnToLanding,
 }) => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -64,6 +66,7 @@ export const Login: React.FC<LoginProps> = ({
         "Fast Delivery Across Ghana",
         "Secure Payment Options",
       ]}
+      onBack={onReturnToLanding}
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (

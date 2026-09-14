@@ -262,7 +262,7 @@ export const AddPaymentMethodModal: React.FC<AddPaymentMethodModalProps> = ({
         <div className="flex items-center gap-3 pt-2">
           <button
             type="submit"
-            className="flex-1 min-h-[48px] rounded-lg px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+            className="flex-1 min-h-[48px] rounded-lg px-5 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
           >
             Add Payment Method
           </button>

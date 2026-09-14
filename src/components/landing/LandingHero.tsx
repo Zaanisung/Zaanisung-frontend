@@ -48,7 +48,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
           <h1 className="font-brand-serif text-[3.15rem] leading-[0.96] sm:text-6xl lg:text-6xl xl:text-[4.9rem] font-normal tracking-[-0.035em] mt-7 text-balance">
             A scent that
-            <span className="gold-gradient-text block mt-1 pb-1 italic">stays with you.</span>
+            <span className="text-gold block mt-1 pb-1 italic">stays with you.</span>
           </h1>
 
           <p className="mt-6 text-base sm:text-lg text-black/70 dark:text-white/80 leading-relaxed max-w-xl">

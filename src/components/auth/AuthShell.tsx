@@ -1,5 +1,6 @@
 import React from "react";
 import { Logo } from "../Logo";
+import { ArrowLeft } from "lucide-react";
 
 export interface AuthShellProps {
   /** Mobile branding + heading for the form side */
@@ -10,6 +11,8 @@ export interface AuthShellProps {
   panelTitle: string;
   panelBody: string;
   features: string[];
+  /** Optional handler that returns to the public homepage. */
+  onBack?: () => void;
   children: React.ReactNode;
 }
 
@@ -26,6 +29,7 @@ export const AuthShell: React.FC<AuthShellProps> = ({
   panelTitle,
   panelBody,
   features,
+  onBack,
   children,
 }) => {
   return (
@@ -50,10 +54,6 @@ export const AuthShell: React.FC<AuthShellProps> = ({
 
       {/* Left Side - Branding & Imagery (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative z-10">
-        {/* Kente trim along the inner edge */}
-        <div className="absolute inset-y-0 right-0 kente-divider-auth" aria-hidden="true"></div>
-        <div className="absolute bottom-0 inset-x-0 kente-navbar-border" aria-hidden="true"></div>
-
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-10 xl:p-16 text-cream w-full items-start text-left">
           <div>
@@ -93,6 +93,18 @@ export const AuthShell: React.FC<AuthShellProps> = ({
       {/* Right Side - Form */}
       <div className="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 relative z-10">
         <div className="w-full max-w-md relative z-10">
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              aria-label="Back to Zaanisung home"
+              className="mb-7 inline-flex items-center gap-2 min-h-[44px] -ml-2 px-2 text-[11px] uppercase tracking-widest font-semibold text-cream/70 hover:text-cream transition-colors duration-[400ms]"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Zaanisung
+            </button>
+          )}
+
           {/* Mobile branding */}
           <div className="lg:hidden text-center mb-8 flex flex-col items-center">
             <Logo className="h-14 w-14 mb-3" />
@@ -117,8 +129,6 @@ export const AuthShell: React.FC<AuthShellProps> = ({
           </div>
         </div>
       </div>
-      {/* Bottom kente band */}
-      <div className="absolute bottom-0 inset-x-0 kente-navbar-border pointer-events-none" aria-hidden="true"></div>
     </div>
   );
 };

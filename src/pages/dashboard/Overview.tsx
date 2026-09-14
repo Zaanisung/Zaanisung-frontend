@@ -81,7 +81,7 @@ export const Overview: React.FC<OverviewProps> = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div
           onClick={() => onNavigate("orders")}
-          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
+          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -120,7 +120,7 @@ export const Overview: React.FC<OverviewProps> = ({
 
         <div
           onClick={() => onNavigate("addresses")}
-          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
+          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
         >
           <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
             <span className="text-[10px] uppercase tracking-widest font-bold">
@@ -158,7 +158,7 @@ export const Overview: React.FC<OverviewProps> = ({
             No orders yet. Start shopping to see your orders here.
           </p>
         ) : (
-          <div className="flex flex-col divide-y divide-black/10 dark:divide-white/10">
+          <div className="flex flex-col divide-y divide-transparent">
             {recentOrders.map((o) => (
               <div
                 key={o.id}

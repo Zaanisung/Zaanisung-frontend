@@ -129,7 +129,7 @@ export const Carousel = <T,>({
           <div
             key={keyExtractor(item, index)}
             className={cn(
-              "shrink-0 snap-start w-[74%] min-[480px]:w-[46%] md:w-[31%] lg:w-[30%] xl:w-[23.5%] min-w-[220px]",
+              "shrink-0 snap-start w-[74%] min-[480px]:w-[46%] md:w-[31%] lg:w-[30%] xl:w-[31.5%] min-w-[220px]",
               itemClassName
             )}
           >

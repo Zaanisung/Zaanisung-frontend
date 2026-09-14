@@ -1,6 +1,5 @@
 import React from "react";
 import { Logo } from "../Logo";
-import { NavbarKenteBorder } from "../ui/NavbarKenteBorder";
 import { Menu, ShoppingBag } from "lucide-react";
 
 interface DashboardHeaderProps {
@@ -25,24 +24,25 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             type="button"
             onClick={onOpenMenu}
             aria-label="Open navigation menu"
-            className="min-h-[44px] min-w-[44px] p-2 flex items-center justify-center text-ink/60 dark:text-white/60 hover:text-gold transition-colors md:hidden"
+            className="min-h-[44px] min-w-[44px] p-2 flex items-center justify-center text-ink/60 dark:text-white/60 hover:text-gold transition-colors lg:hidden"
           >
             <Menu className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-2 min-w-0 pl-1">
+          {/* Mobile-only brand — on lg+ the sidebar already carries the logo + wordmark */}
+          <div className="flex items-center gap-2 min-w-0 pl-1 lg:hidden">
             <Logo className="h-8 w-8 shrink-0" />
             <h2 className="font-brand-serif text-base tracking-[0.14em] font-light text-ink dark:text-white hidden min-[380px]:inline leading-none">
               ZAANISUNG
             </h2>
-            {/* Desktop page label */}
-            <span className="hidden md:inline-flex items-center text-[10px] uppercase tracking-widest text-black/50 dark:text-white/60 font-semibold pl-4 border-l border-black/10 dark:border-white/15 min-w-0 truncate">
-              {pageLabel}
-            </span>
             {/* Mobile account chip */}
-            <span className="text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0 md:hidden">
+            <span className="text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0 lg:hidden">
               ACCOUNT
             </span>
           </div>
+          {/* Page label (desktop) */}
+          <span className="hidden lg:inline-flex items-center text-[10px] uppercase tracking-widest text-black/50 dark:text-white/60 font-semibold pl-1 min-w-0 truncate">
+            {pageLabel}
+          </span>
         </div>
 
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -61,7 +61,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </button>
         </div>
       </div>
-      <NavbarKenteBorder className="mt-2" />
     </header>
   );
 };

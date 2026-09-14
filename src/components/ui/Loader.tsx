@@ -158,7 +158,7 @@ export const PageLoader: React.FC<{
   </div>
 );
 
-/** Full-viewport centered Kente loader shown while the whole app boots. */
+/** Full-viewport centered loader shown while the whole app boots. */
 export const FullPageLoader: React.FC = () => (
   <div
     className="min-h-screen w-full flex items-center justify-center bg-cream-50 dark:bg-ink-950 relative overflow-hidden"
@@ -166,24 +166,10 @@ export const FullPageLoader: React.FC = () => (
     aria-label="Loading"
   >
     <div className="relative z-10">
-      <div 
-        className="w-24 h-24 rounded-full border-[8px] border-transparent animate-spin"
-        style={{
-          animationDuration: '1.5s',
-          borderTopColor: 'rgba(212, 175, 55, 0.95)',
-          borderRightColor: 'rgba(206, 17, 38, 0.85)',
-          borderBottomColor: 'rgba(0, 107, 63, 0.8)',
-          borderLeftColor: 'rgba(252, 209, 22, 0.95)'
-        }}
-      />
-      <div 
-        className="absolute inset-3 rounded-full animate-pulse"
-        style={{
-          animationDuration: '2s',
-          background: 'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%)'
-        }}
+      <div
+        className="w-24 h-24 rounded-full border-[8px] border-gold/15 border-t-gold animate-spin"
+        style={{ animationDuration: "1.1s" }}
       />
     </div>
-    <div className="absolute bottom-0 left-0 right-0 kente-navbar-border" aria-hidden="true" />
   </div>
 );

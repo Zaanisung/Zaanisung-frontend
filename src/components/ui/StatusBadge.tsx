@@ -10,10 +10,10 @@ export interface StatusBadgeProps {
 }
 
 const STATUS_TONES: Record<OrderBadgeStatus, string> = {
-  PENDING: "bg-gold/90 text-ink border border-gold/30 shadow-[0_0_0_1px_rgba(212,175,55,0.15)]",
+  PENDING: "bg-gold/90 text-ink border border-gold/30",
   CONFIRMED: "surface-glass-strong text-ink dark:text-cream border border-black/15 dark:border-white/20",
   SHIPPED: "bg-ink dark:bg-cream text-cream dark:text-ink border border-ink/80 dark:border-cream/80",
-  DELIVERED: "bg-gold/90 text-ink border border-gold/30 shadow-[0_0_0_1px_rgba(212,175,55,0.15)]",
+  DELIVERED: "bg-gold/90 text-ink border border-gold/30",
   CANCELLED: "bg-red-950/80 text-red-300 border border-red-800/60 backdrop-blur-sm",
 };
 

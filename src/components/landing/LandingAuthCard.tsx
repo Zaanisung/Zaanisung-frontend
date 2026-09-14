@@ -57,7 +57,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
       transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
       className="relative flex flex-col lg:max-w-lg w-full justify-self-end lg:justify-self-center"
     >
-      <div className="surface-glass-strong rounded-2xl kente-frame p-7 sm:p-9 flex flex-col justify-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+      <div className="surface-glass-strong rounded-2xl p-7 sm:p-9 flex flex-col justify-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
         {showForm ? (
           <>
             <div className="mb-6">

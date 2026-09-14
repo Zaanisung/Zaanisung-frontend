@@ -137,7 +137,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, onSuccess }
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl surface-glass-strong kente-frame shadow-lift animate-zoom-in">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl surface-glass-strong shadow-lift animate-zoom-in">
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
 
         <div className="flex items-start justify-between p-5 pb-0">

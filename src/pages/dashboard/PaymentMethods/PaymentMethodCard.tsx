@@ -34,7 +34,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
   };
 
   return (
-    <div className="surface-glass-strong rounded-xl border border-black/10 dark:border-white/15 p-5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5">
+    <div className="surface-glass-strong rounded-xl border border-black/10 dark:border-white/15 p-5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-0.5">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <PaymentMethodLogo

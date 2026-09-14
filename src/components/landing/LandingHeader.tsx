@@ -3,7 +3,6 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
-import { NavbarKenteBorder } from "../ui/NavbarKenteBorder";
 import { navLinks } from "./constants";
 
 interface LandingHeaderProps {
@@ -103,7 +102,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
           </button>
         </nav>
       )}
-      <NavbarKenteBorder />
     </header>
   );
 };

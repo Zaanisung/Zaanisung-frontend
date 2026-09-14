@@ -82,7 +82,7 @@ export const Modal: React.FC<ModalProps> = ({
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="kente-frame surface-glass-strong rounded-2xl shadow-lift-lg border border-white/20 dark:border-white/10 overflow-hidden">
+        <div className="surface-glass-strong rounded-2xl shadow-lift-lg border border-white/20 dark:border-white/10 overflow-hidden">
           {/* Gold hairline crown */}
           <div className="absolute top-0 inset-x-0 hairline-gold" aria-hidden="true" />
 

@@ -43,7 +43,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`rounded-xl relative overflow-hidden surface-glass-strong hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25)] hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group ${t.base} ${
+      className={`rounded-xl relative overflow-hidden surface-glass-strong hover:-translate-y-0.5 p-4 sm:p-5 flex flex-col justify-between cursor-pointer transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group ${t.base} ${
         active ? t.active : ""
       } ${className ?? ""}`}
     >

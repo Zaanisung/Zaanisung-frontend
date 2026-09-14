@@ -1,7 +1,6 @@
 import React from "react";
 import { AdminTab } from "../types";
 import { Logo } from "../components/Logo";
-import { NavbarKenteBorder } from "../components/ui/NavbarKenteBorder";
 import { ErrorBoundary } from "../components/ui/Fallback";
 import {
   LayoutDashboard,
@@ -47,9 +46,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   return (
     <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
       {/* Desktop sidebar — deep ink console surface */}
-      <aside className="relative hidden md:flex flex-col w-[260px] lg:w-[280px] bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 min-h-screen sticky top-0 h-screen p-6 overflow-y-auto scrollbar-none">
-        {/* Kente crown — woven Ghanaian trim along the top edge */}
-        <div className="absolute top-0 inset-x-0 h-[6px] kente-band z-20" aria-hidden="true" />
+      <aside className="relative hidden lg:flex flex-col w-[260px] xl:w-[280px] bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 min-h-screen sticky top-0 h-screen p-6 overflow-y-auto scrollbar-none">
         <div className="relative">
           <div className="absolute -top-24 -right-16 w-56 h-56 orb orb-gold-faint" aria-hidden="true" />
 
@@ -57,7 +54,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="relative pb-6 border-b border-white/10">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-[3px] bg-gradient-to-b from-gold to-gold-700">
+                <div className="p-[3px] bg-gold">
                   <div className="bg-ink p-[3px]">
                     <Logo className="h-8 w-8" />
                   </div>
@@ -90,7 +87,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     className={cn(
                       "rounded-lg relative w-full min-w-0 min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center justify-between gap-2",
                       isActive
-                        ? "bg-gold text-ink font-bold shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_4px_16px_-4px_rgba(212,175,55,0.3)]"
+                        ? "bg-gold text-ink font-bold"
                         : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
                     )}
                   >
@@ -167,7 +164,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       {/* Main admin column */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
-        <header className="md:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex flex-col flex-nowrap">
+        <header className="lg:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex flex-col flex-nowrap">
           <div className="flex items-center justify-between gap-2 flex-nowrap">
             <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
               <Logo className="h-8 w-8 shrink-0" />
@@ -190,11 +187,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               </button>
             </div>
           </div>
-          <NavbarKenteBorder className="mt-2" />
         </header>
 
         {/* Mobile fast-action pills */}
-        <div className="md:hidden bg-white/60 dark:bg-black/40 px-3 py-3 flex items-center gap-2 overflow-x-auto scrollbar-none backdrop-blur-sm">
+        <div className="lg:hidden bg-white/60 dark:bg-black/40 px-3 py-3 flex items-center gap-2 overflow-x-auto scrollbar-none backdrop-blur-sm">
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
@@ -222,7 +218,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-32 md:pb-12">
+        <main className="flex-1 px-4 sm:px-8 xl:px-12 py-6 sm:py-8 pb-28 lg:pb-12">
           <ErrorBoundary>{children}</ErrorBoundary>
         </main>
       </div>
@@ -230,7 +226,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       {/* Mobile bottom nav */}
       <nav
         id="admin-bottom-nav"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 dark:bg-black/75 border-t border-black/10 dark:border-white/15 pb-safe backdrop-blur-xl"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 dark:bg-black/75 border-t border-black/10 dark:border-white/15 pb-safe backdrop-blur-xl"
         aria-label="Admin Mobile Navigation"
       >
         <div className="grid grid-cols-4 h-16 max-w-md mx-auto px-1">

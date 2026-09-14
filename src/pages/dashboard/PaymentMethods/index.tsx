@@ -36,7 +36,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="min-h-[44px] rounded-lg px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-2 shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+          className="min-h-[44px] rounded-lg px-4 py-2 text-xs uppercase tracking-wider font-bold text-ink bg-gold hover:bg-gold-600 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           <span>Add Method</span>

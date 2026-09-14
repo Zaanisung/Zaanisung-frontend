@@ -40,7 +40,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               "placeholder-ink/35 dark:placeholder-white/35",
               "border border-black/10 dark:border-white/15",
               "focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold/50",
-              "focus:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.25)]",
               "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               prefixIcon ? "pl-10" : undefined,

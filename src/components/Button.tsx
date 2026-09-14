@@ -26,26 +26,23 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantStyles = {
-    // Luxury gold CTA — soft gradient with diffused glow
+    // Luxury gold CTA — flat solid fill, no gradient or glow
     primary: cn(
-      "btn-kente",
-      "gold-gradient-bg text-ink font-bold border border-gold-600/30",
-      "shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_8px_32px_-8px_rgba(212,175,55,0.25),0_4px_16px_-4px_rgba(212,175,55,0.2)]",
-      "hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_12px_40px_-10px_rgba(212,175,55,0.35),0_6px_20px_-6px_rgba(212,175,55,0.25)]",
-      "hover:scale-[1.02] active:scale-[0.98]",
-      "hover:brightness-[1.03]"
+      "bg-gold text-ink font-bold border border-gold-600/40",
+      "hover:bg-gold-600 hover:border-gold-700",
+      "hover:scale-[1.01] active:scale-[0.98]"
     ),
     // Glassmorphic secondary
     secondary: cn(
       "surface-glass-strong text-ink dark:text-white",
       "border border-black/10 dark:border-white/15",
-      "hover:border-gold/40 hover:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08)]",
+      "hover:border-gold/40",
       "hover:scale-[1.01] active:scale-[0.99]"
     ),
     // Dark luxury surface
     dark: cn(
       "bg-ink text-cream border border-ink/80",
-      "hover:bg-ink-800 hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)]",
+      "hover:bg-ink-800",
       "dark:bg-white dark:text-ink dark:border-white/80",
       "dark:hover:bg-cream",
       "hover:scale-[1.01] active:scale-[0.99]"
@@ -66,7 +63,7 @@ export const Button: React.FC<ButtonProps> = ({
     // Danger (destructive)
     danger: cn(
       "bg-red-600 text-white font-bold border border-red-700/50",
-      "hover:bg-red-700 hover:shadow-[0_8px_32px_-8px_rgba(220,38,38,0.4)]",
+      "hover:bg-red-700",
       "hover:scale-[1.01] active:scale-[0.99]"
     ),
   };

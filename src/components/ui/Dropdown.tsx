@@ -85,7 +85,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
           disabled
             ? "opacity-50 cursor-not-allowed"
-            : "hover:border-gold hover:shadow-[0_0_0_1px_rgba(212,175,55,0.2)] cursor-pointer"
+            : "hover:border-gold cursor-pointer"
         )}
       >
         <span className="flex items-center gap-2 min-w-0">

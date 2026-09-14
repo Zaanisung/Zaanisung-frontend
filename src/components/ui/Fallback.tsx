@@ -85,7 +85,7 @@ export class ErrorBoundary extends React.Component<
       if (this.props.fallback) return this.props.fallback;
       return (
         <div className="w-full min-h-[50vh] flex items-center justify-center px-4">
-          <div className="relative overflow-hidden w-full max-w-md py-14 px-6 surface-glass-strong rounded-2xl kente-frame text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+          <div className="relative overflow-hidden w-full max-w-md py-14 px-6 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
             <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
             <div className="relative w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-4 border border-gold/40 rounded-xl">
               <ShieldAlert className="w-6 h-6" />

@@ -25,7 +25,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
           <span className="eyebrow text-gold">Our Story</span>
           <h2 className="font-brand-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-light mt-3 leading-snug text-balance">
             Born in the North.
-            <span className="gold-gradient-text block mt-1 pb-1">Worn everywhere.</span>
+            <span className="text-gold block mt-1 pb-1">Worn everywhere.</span>
           </h2>
           <p className="mt-6 text-black/70 dark:text-white/75 leading-relaxed max-w-lg">
             Zaanisung is an artisanal fragrance house rooted in Tamale, Ghana.
@@ -66,7 +66,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
             <div
               key={i}
               className={cn(
-                "surface-glass rounded-xl p-6 sm:p-7 flex flex-col justify-center min-h-[210px] lg:min-h-[240px] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-1 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.15),0_12px_40px_-10px_rgba(212,175,55,0.25)]",
+                "surface-glass rounded-xl p-6 sm:p-7 flex flex-col justify-center min-h-[210px] lg:min-h-[240px] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-1",
                 i % 2 === 1 && "lg:translate-y-8 lg:hover:translate-y-7"
               )}
             >

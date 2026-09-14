@@ -10,11 +10,13 @@ import { getErrorMessage } from "../services";
 export interface RegisterProps {
   onRegister: (user: CustomerUser) => void;
   onNavigateToLogin: () => void;
+  onReturnToLanding: () => void;
 }
 
 export const Register: React.FC<RegisterProps> = ({
   onRegister,
   onNavigateToLogin,
+  onReturnToLanding,
 }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -82,6 +84,7 @@ export const Register: React.FC<RegisterProps> = ({
         "Track Orders in Real-Time",
         "Save Your Favorite Scents",
       ]}
+      onBack={onReturnToLanding}
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (

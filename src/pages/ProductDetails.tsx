@@ -48,7 +48,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
         Back to Fragrances
       </button>
 
-      <div className="relative overflow-hidden surface-glass-strong rounded-2xl kente-frame shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch w-full min-w-0">
+      <div className="relative overflow-hidden surface-glass-strong rounded-2xl shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch w-full min-w-0">
         {/* Large Prominent Perfume Image Frame */}
         <div className="relative aspect-[4/3] md:aspect-auto md:h-full w-full flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none min-w-0">
           <img
@@ -64,7 +64,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 Sold Out
               </span>
             ) : isLowStock ? (
-              <span className="rounded-lg bg-gold text-ink text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_8px_32px_-8px_rgba(212,175,55,0.35)]">
+              <span className="rounded-lg bg-gold text-ink text-[10px] px-3 py-1.5 uppercase tracking-widest font-bold">
                 Only {product.stock} Left in Stock
               </span>
             ) : (

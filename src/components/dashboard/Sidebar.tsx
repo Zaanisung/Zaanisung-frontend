@@ -12,9 +12,8 @@ interface SidebarProps {
 }
 
 /**
- * Desktop icon-rail sidebar for the account dashboard.
- * Active state is shown purely by the gold background — no text labels,
- * no side indicator bar, and it never scrolls (fits the viewport).
+ * Desktop navigation keeps labels visible so account tasks do not depend on
+ * remembering an icon legend.
  */
 export const Sidebar: React.FC<SidebarProps> = ({
   activePage,
@@ -23,25 +22,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <aside
-      className="hidden md:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen w-[78px] overflow-hidden"
+      className="hidden lg:flex flex-col bg-ink text-cream/75 flex-shrink-0 sticky top-0 h-screen w-[236px] overflow-hidden"
       aria-label="Dashboard sidebar"
     >
-      {/* Kente crown — woven Ghanaian trim along the top edge */}
-      <div className="absolute top-0 inset-x-0 h-[6px] kente-band z-20" aria-hidden="true" />
-      <div className="relative flex flex-col flex-1 py-5 px-2.5">
+      {/* Gold hairline along the top edge */}
+      <div className="absolute top-0 inset-x-0 h-[2px] bg-gold z-20" aria-hidden="true" />
+      <div className="relative flex flex-col flex-1 py-7 px-3">
         <div
           className="absolute -top-24 -right-24 w-44 h-44 orb orb-gold-faint"
           aria-hidden="true"
         />
 
         {/* Header */}
-        <div className="relative pb-4 border-b border-white/10 flex flex-col items-center gap-3">
+        <div className="relative pb-5 border-b border-white/10 flex items-center gap-3 px-2">
           <Logo className="h-8 w-8 flex-shrink-0" />
+          <span className="font-brand-serif tracking-[0.12em] text-base text-cream">ZAANISUNG</span>
         </div>
 
         {/* Nav */}
         <nav
-          className="flex flex-col gap-1 py-4"
+          className="flex flex-col gap-1 py-5"
           aria-label="Dashboard Navigation"
         >
           {ACCOUNT_NAV.map((group) => (
@@ -54,22 +54,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     key={item.id}
                     type="button"
                     onClick={() => onNavigate(item.id)}
-                    title={item.label}
                     aria-label={item.label}
                     className={cn(
-                      "rounded-lg w-full min-w-0 min-h-[46px] flex items-center justify-center px-0 py-2",
+                      "rounded-xl w-full min-w-0 min-h-[46px] flex items-center gap-3 px-3 py-2 text-left",
                       "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                       active
-                        ? "bg-gold text-ink shadow-[0_0_0_1px_rgba(212,175,55,0.2),0_4px_16px_-4px_rgba(212,175,55,0.3)]"
+                        ? "bg-gold text-ink shadow-[0_4px_16px_-8px_rgba(212,175,55,0.38)]"
                         : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
                     )}
-                  >
+                    >
                     <Icon
                       className={cn(
                         "w-[18px] h-[18px] flex-shrink-0",
                         active && "stroke-[2.2]"
                       )}
                     />
+                    <span className="text-xs font-semibold tracking-wide">{item.label}</span>
                   </button>
                 );
               })}
@@ -82,21 +82,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={() => onNavigate("shop")}
-            title="Browse Fragrances"
             aria-label="Browse Fragrances"
-            className="rounded-lg w-full min-w-0 min-h-[46px] flex items-center justify-center px-0 py-2 text-cream/60 hover:text-cream hover:bg-white/[0.06] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-xl w-full min-w-0 min-h-[46px] flex items-center gap-3 px-3 py-2 text-cream/60 hover:text-cream hover:bg-white/[0.06] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
 >
             <Store className="w-[18px] h-[18px] text-gold flex-shrink-0" />
+            <span className="text-xs font-semibold tracking-wide">Browse fragrances</span>
           </button>
 
           <button
             type="button"
             onClick={onReturnToStorefront}
-            title="Public Store"
             aria-label="Public Store"
-            className="rounded-lg w-full min-w-0 min-h-[46px] flex items-center justify-center px-0 py-2 text-cream/60 hover:text-cream hover:bg-white/[0.06] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-xl w-full min-w-0 min-h-[46px] flex items-center gap-3 px-3 py-2 text-cream/60 hover:text-cream hover:bg-white/[0.06] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <Globe className="w-[18px] h-[18px] flex-shrink-0" />
+            <span className="text-xs font-semibold tracking-wide">Public store</span>
           </button>
         </div>
       </div>

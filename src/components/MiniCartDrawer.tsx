@@ -79,8 +79,8 @@ export const MiniCartDrawer: React.FC<MiniCartDrawerProps> = ({
           open ? "translate-x-0" : "translate-x-full pointer-events-none"
         )}
       >
-        {/* Kente crown */}
-        <div className="absolute top-0 inset-x-0 h-1.5 kente-band z-10" aria-hidden="true" />
+        {/* Gold hairline crown */}
+        <div className="absolute top-0 inset-x-0 hairline-gold z-10" aria-hidden="true" />
 
         {/* Header */}
         <div className="relative flex items-center justify-between px-5 pt-6 pb-4 border-b border-black/10 dark:border-white/10">

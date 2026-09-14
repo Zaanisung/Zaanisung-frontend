@@ -39,7 +39,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
+    <div className="min-h-screen text-ink dark:text-white flex flex-col lg:flex-row bg-cream dark:bg-black">
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
@@ -56,7 +56,7 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
         />
 
         {/* Page content */}
-        <main className="flex-1 px-4 sm:px-8 lg:px-12 py-6 sm:py-8 pb-32 md:pb-12">
+        <main className="flex-1 px-4 sm:px-8 xl:px-12 py-6 sm:py-8 pb-28 lg:pb-12">
           {loading ? (
             <div className="flex items-center justify-center py-20" role="status">
               <Loader variant="ring" size="lg" />
