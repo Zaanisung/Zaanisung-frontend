@@ -130,13 +130,6 @@ function dashboardNavView(page: DashboardNavPage): AppView {
   }
 }
 
-/** Small centered message used whenever a route needs a product/order it can't find. */
-const NotFound: React.FC<{ label?: string }> = ({ label }) => (
-  <div className="flex items-center justify-center min-h-[50vh]">
-    <div className="py-12 text-center text-black/50 dark:text-white/50">{label ?? "Not found."}</div>
-  </div>
-);
-
 /**
  * Single top-level view dispatcher for the whole app.
  *
@@ -276,7 +269,15 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
       {view.page === "product-details" &&
         (() => {
           const product = props.products.find((p) => p.id === view.productId);
-          if (!product) return <NotFound label="Fragrance not found." />;
+          if (!product)
+            return (
+              <NotFoundPage
+                title="Fragrance not found"
+                hint="The fragrance you're looking for is no longer available."
+                onBack={() => props.onCustomerTabChange("shop")}
+                onHome={() => props.onNavigate({ type: "landing" })}
+              />
+            );
           return (
             <ProductDetails
               product={product}
@@ -314,7 +315,15 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
       {view.page === "order-confirmation" &&
         (() => {
           const order = props.orders.find((o) => o.id === view.orderId) || props.lastConfirmedOrder;
-          if (!order) return <NotFound label="No order found." />;
+          if (!order)
+            return (
+              <NotFoundPage
+                title="Order not found"
+                hint="We couldn't find that order. It may have been removed."
+                onBack={() => props.onCustomerTabChange("orders")}
+                onHome={() => props.onNavigate({ type: "landing" })}
+              />
+            );
           return (
             <OrderConfirmation
               order={order}
@@ -391,7 +400,15 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
       {view.page === "product-details" &&
         (() => {
           const product = props.products.find((p) => p.id === view.productId);
-          if (!product) return <NotFound label="Fragrance not found." />;
+          if (!product)
+            return (
+              <NotFoundPage
+                title="Fragrance not found"
+                hint="The fragrance you're looking for is no longer available."
+                onBack={() => props.onNavigate({ type: "dashboard", page: "shop" })}
+                onHome={() => props.onNavigate({ type: "landing" })}
+              />
+            );
           return (
             <ProductDetails
               product={product}
@@ -429,7 +446,15 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
       {view.page === "order-confirmation" &&
         (() => {
           const order = props.orders.find((o) => o.id === view.orderId) || props.lastConfirmedOrder;
-          if (!order) return <NotFound label="No order found." />;
+          if (!order)
+            return (
+              <NotFoundPage
+                title="Order not found"
+                hint="We couldn't find that order. It may have been removed."
+                onBack={() => props.onNavigate({ type: "dashboard", page: "orders" })}
+                onHome={() => props.onNavigate({ type: "landing" })}
+              />
+            );
           return (
             <OrderConfirmation
               order={order}
@@ -552,7 +577,15 @@ const AdminPortal: React.FC<AppRouterProps & { activeTab: AdminTab }> = (props) 
       {view.page === "edit-product" &&
         (() => {
           const prodToEdit = props.products.find((p) => p.id === view.productId);
-          if (!prodToEdit) return <NotFound label="Perfume not found." />;
+          if (!prodToEdit)
+            return (
+              <NotFoundPage
+                title="Perfume not found"
+                hint="This perfume has been removed or doesn't exist."
+                onBack={() => props.onAdminTabChange("inventory")}
+                onHome={() => props.onNavigate({ type: "landing" })}
+              />
+            );
           return (
             <EditProduct
               product={prodToEdit}
@@ -583,6 +616,8 @@ const AdminPortal: React.FC<AppRouterProps & { activeTab: AdminTab }> = (props) 
       {view.page === "orders" && (
         <AdminOrders orders={props.orders} onUpdateStatus={props.onUpdateOrderStatus} />
       )}
+
+      {view.page === "users" && <UserManagement />}
 
       {view.page === "account" && (
         <AdminAccount
@@ -661,5 +696,7 @@ import { RecordSale } from "../pages/admin/RecordSale";
 import { Restock } from "../pages/admin/Restock";
 import { AdminOrders } from "../pages/admin/Orders";
 import { AdminAccount } from "../pages/admin/Account";
+import { UserManagement } from "../pages/admin/Users";
 import { MiniCartDrawer } from "../components/MiniCartDrawer";
 import { AuthModal } from "../components/auth/AuthModal";
+import { NotFoundPage } from "../components/ui/NotFoundPage";
