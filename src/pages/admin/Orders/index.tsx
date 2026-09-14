@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import type { Order, OrderStatus } from "../../../types";
 import { SearchInput } from "../../../components/ui/SearchInput";
+import { ListRowSkeleton } from "../../../components/ui/Skeleton";
 import { OrderCard } from "./OrderCard";
 import { OrderStatusFilter } from "./OrderStatusFilter";
 import type { OrderSourceFilter } from "./OrderStatusFilter";
 
 export interface AdminOrdersProps {
   orders: Order[];
+  isLoadingOrders?: boolean;
   onUpdateStatus: (orderId: string, newStatus: OrderStatus) => void;
 }
 
@@ -20,6 +22,7 @@ const ORDER_STATUSES: OrderStatus[] = [
 
 export const AdminOrders: React.FC<AdminOrdersProps> = ({
   orders,
+  isLoadingOrders = false,
   onUpdateStatus,
 }) => {
   const [filterSource, setFilterSource] = useState<OrderSourceFilter>("ALL");
@@ -62,25 +65,36 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
         className="w-full max-w-md"
       />
 
-      {filteredOrders.length === 0 && (
-        <div className="relative overflow-hidden surface-glass-strong p-6 text-center py-14 shadow-lift">
-          <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
-          <p className="relative text-sm text-black/45 dark:text-white/45">
-            No sales or orders match the current criteria.
-          </p>
+      {isLoadingOrders ? (
+        <div className="space-y-3">
+          <ListRowSkeleton lines={2} />
+          <ListRowSkeleton lines={2} />
+          <ListRowSkeleton lines={2} />
+          <ListRowSkeleton lines={2} />
         </div>
-      )}
+      ) : (
+        <>
+          {filteredOrders.length === 0 && (
+            <div className="relative overflow-hidden surface-glass-strong p-6 text-center py-14 shadow-lift">
+              <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
+              <p className="relative text-sm text-black/45 dark:text-white/45">
+                No sales or orders match the current criteria.
+              </p>
+            </div>
+          )}
 
-      <div className="space-y-3">
-        {filteredOrders.map((order) => (
-          <OrderCard
-            key={order.id}
-            order={order}
-            statuses={ORDER_STATUSES}
-            onUpdateStatus={onUpdateStatus}
-          />
-        ))}
-      </div>
+          <div className="space-y-3">
+            {filteredOrders.map((order) => (
+              <OrderCard
+                key={order.id}
+                order={order}
+                statuses={ORDER_STATUSES}
+                onUpdateStatus={onUpdateStatus}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

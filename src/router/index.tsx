@@ -42,6 +42,7 @@ export interface AppRouterProps {
   customerTab: CustomerTab;
   adminTab: AdminTab;
   isLoadingProducts: boolean;
+  isLoadingOrders: boolean;
   productsError: string | null;
   recentlyAddedId: string | null;
   lastConfirmedOrder: Order | null;
@@ -334,7 +335,11 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
         })()}
 
       {view.page === "orders" && (
-        <Orders orders={props.orders} onContinueShopping={() => props.onCustomerTabChange("shop")} />
+        <Orders
+          orders={props.orders}
+          isLoadingOrders={props.isLoadingOrders}
+          onContinueShopping={() => props.onCustomerTabChange("shop")}
+        />
       )}
 
       {view.page === "account" && (
@@ -374,6 +379,8 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
           user={props.customerUser}
           orders={props.orders}
           products={props.products}
+          isLoadingProducts={props.isLoadingProducts}
+          isLoadingOrders={props.isLoadingOrders}
           onNavigate={navigate}
           onSelectProduct={(p) =>
             props.onNavigate({ type: "dashboard", page: "product-details", productId: p.id })
@@ -467,6 +474,7 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
       {view.page === "orders" && (
         <Orders
           orders={props.orders}
+          isLoadingOrders={props.isLoadingOrders}
           onContinueShopping={() => props.onNavigate({ type: "dashboard", page: "shop" })}
         />
       )}
@@ -549,6 +557,8 @@ const AdminPortal: React.FC<AppRouterProps & { activeTab: AdminTab }> = (props) 
         <Dashboard
           products={props.products}
           orders={props.orders}
+          isLoadingProducts={props.isLoadingProducts}
+          isLoadingOrders={props.isLoadingOrders}
           onNavigateTo={(target) => {
             if (target === "inventory") props.onAdminTabChange("inventory");
             else if (target === "orders") props.onAdminTabChange("orders");
@@ -562,6 +572,7 @@ const AdminPortal: React.FC<AppRouterProps & { activeTab: AdminTab }> = (props) 
       {view.page === "inventory" && (
         <Inventory
           products={props.products}
+          isLoadingProducts={props.isLoadingProducts}
           onAddProduct={() => props.onNavigate({ type: "admin", page: "add-product" })}
           onEditProduct={(id) => props.onNavigate({ type: "admin", page: "edit-product", productId: id })}
           onRemoveProduct={props.onRemoveProduct}
@@ -614,7 +625,11 @@ const AdminPortal: React.FC<AppRouterProps & { activeTab: AdminTab }> = (props) 
       )}
 
       {view.page === "orders" && (
-        <AdminOrders orders={props.orders} onUpdateStatus={props.onUpdateOrderStatus} />
+        <AdminOrders
+          orders={props.orders}
+          isLoadingOrders={props.isLoadingOrders}
+          onUpdateStatus={props.onUpdateOrderStatus}
+        />
       )}
 
       {view.page === "users" && <UserManagement />}

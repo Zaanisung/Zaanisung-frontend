@@ -122,14 +122,19 @@
 @layer base {
   :root {
     color-scheme: light;
+    --skeleton-base: #e8e4da;
+    --skeleton-highlight: #f5f2ea;
   }
 
   :root.dark {
     color-scheme: dark;
+    --skeleton-base: #232323;
+    --skeleton-highlight: #2f2f2f;
   }
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   body {
@@ -140,6 +145,7 @@
     padding: 0;
     background-color: #f7f4ee;
     text-rendering: optimizeLegibility;
+    overflow-x: clip;
   }
 
   .dark body {

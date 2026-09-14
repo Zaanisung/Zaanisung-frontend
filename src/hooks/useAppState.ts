@@ -88,6 +88,7 @@ export function useAppState() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [lastConfirmedOrder, setLastConfirmedOrder] = useState<Order | null>(null);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
   const [productsError, setProductsError] = useState<string | null>(null);
 
   // ─── Guest checkout gate ────────────────────────────────────────────
@@ -219,6 +220,7 @@ export function useAppState() {
   }, [fetchProducts]);
 
   const refreshOrders = useCallback(async () => {
+    setIsLoadingOrders(true);
     try {
       const isAdmin = customerUser?.role === "ADMIN" || isAdminLoggedIn;
       const data = isAdmin ? await api.getAllOrders() : await api.getMyOrders();
@@ -240,6 +242,8 @@ export function useAppState() {
       setOrders(mapped);
     } catch {
       /* silent */
+    } finally {
+      setIsLoadingOrders(false);
     }
   }, [customerUser, isAdminLoggedIn]);
 
@@ -696,6 +700,7 @@ try {
     customerTab,
     adminTab,
     isLoadingProducts,
+    isLoadingOrders,
     productsError,
     recentlyAddedId,
     lastConfirmedOrder,

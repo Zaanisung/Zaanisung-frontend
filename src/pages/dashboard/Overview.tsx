@@ -4,6 +4,7 @@ import type { Order } from "../../types/order";
 import type { Product } from "../../types/product";
 import type { DashboardNavPage } from "../../types/nav";
 import { ProductCard } from "../../components/ProductCard";
+import { Skeleton, ProductCardSkeleton, ListRowSkeleton } from "../../components/ui/Skeleton";
 import {
   MapPin,
   CreditCard,
@@ -19,6 +20,8 @@ export interface OverviewProps {
   user: FullUser | null;
   orders: Order[];
   products: Product[];
+  isLoadingProducts?: boolean;
+  isLoadingOrders?: boolean;
   onNavigate: (page: DashboardNavPage) => void;
   onSelectProduct?: (product: Product) => void;
   onAddToCart?: (product: Product, e: React.MouseEvent) => void;
@@ -29,6 +32,8 @@ export const Overview: React.FC<OverviewProps> = ({
   user,
   orders,
   products,
+  isLoadingProducts = false,
+  isLoadingOrders = false,
   onNavigate,
   onSelectProduct,
   onAddToCart = () => {},
@@ -79,62 +84,78 @@ export const Overview: React.FC<OverviewProps> = ({
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div
-          onClick={() => onNavigate("orders")}
-          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
-        >
-          <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
-            <span className="text-[10px] uppercase tracking-widest font-bold">
-              Total Orders
-            </span>
-            <Package className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
-            {orders.length}
-          </div>
-        </div>
+        {isLoadingOrders || isLoadingProducts ? (
+          <>
+            {[0, 1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between"
+              >
+                <Skeleton width={96} height={12} />
+                <Skeleton width={40} height={28} className="mt-3" />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <div
+              onClick={() => onNavigate("orders")}
+              className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
+            >
+              <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
+                <span className="text-[10px] uppercase tracking-widest font-bold">
+                  Total Orders
+                </span>
+                <Package className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
+                {orders.length}
+              </div>
+            </div>
 
-        <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
-            <span className="text-[10px] uppercase tracking-widest font-bold">
-              Active / Pending
-            </span>
-            <Clock className="w-4 h-4 text-gold" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-gold">
-            {activeOrders.length + pendingOrders.length}
-          </div>
-        </div>
+            <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
+                <span className="text-[10px] uppercase tracking-widest font-bold">
+                  Active / Pending
+                </span>
+                <Clock className="w-4 h-4 text-gold" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-mono font-bold text-gold">
+                {activeOrders.length + pendingOrders.length}
+              </div>
+            </div>
 
-        <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
-            <span className="text-[10px] uppercase tracking-widest font-bold">
-              Products Available
-            </span>
-            <Store className="w-4 h-4 text-black/45 dark:text-white/45" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
-            {products.length}
-          </div>
-        </div>
+            <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
+                <span className="text-[10px] uppercase tracking-widest font-bold">
+                  Products Available
+                </span>
+                <Store className="w-4 h-4 text-black/45 dark:text-white/45" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
+                {products.length}
+              </div>
+            </div>
 
-        <div
-          onClick={() => onNavigate("addresses")}
-          className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
-        >
-          <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
-            <span className="text-[10px] uppercase tracking-widest font-bold">
-              Saved Info
-            </span>
-            <MapPin className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
-            {user?.addresses?.length ?? 0}
-            <span className="text-xs text-black/45 dark:text-white/45 font-sans font-normal ml-1">
-              addr
-            </span>
-          </div>
-        </div>
+            <div
+              onClick={() => onNavigate("addresses")}
+              className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-gold/60 hover:-translate-y-0.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
+            >
+              <div className="flex items-center justify-between text-black/50 dark:text-white/50 mb-2">
+                <span className="text-[10px] uppercase tracking-widest font-bold">
+                  Saved Info
+                </span>
+                <MapPin className="w-4 h-4 text-black/45 dark:text-white/45 group-hover:text-gold transition-colors" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-mono font-bold text-black dark:text-white">
+                {user?.addresses?.length ?? 0}
+                <span className="text-xs text-black/45 dark:text-white/45 font-sans font-normal ml-1">
+                  addr
+                </span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-5 sm:p-6">
@@ -153,7 +174,13 @@ export const Overview: React.FC<OverviewProps> = ({
           )}
         </div>
 
-        {recentOrders.length === 0 ? (
+        {isLoadingOrders ? (
+          <div className="space-y-3">
+            <ListRowSkeleton />
+            <ListRowSkeleton />
+            <ListRowSkeleton />
+          </div>
+        ) : recentOrders.length === 0 ? (
           <p className="text-sm text-black/50 dark:text-white/50 py-4">
             No orders yet. Start shopping to see your orders here.
           </p>
@@ -209,30 +236,40 @@ export const Overview: React.FC<OverviewProps> = ({
         </div>
       </div>
 
-      {featuredProducts.length > 0 && (
+      {(isLoadingProducts ? [1, 2, 3] : featuredProducts).length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 font-bold">
               Featured Fragrances
             </h3>
-            <button
-              type="button"
-              onClick={() => onNavigate("shop")}
-              className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold min-h-[44px] flex items-center transition-colors duration-[400ms]"
-            >
-              View all ({products.length}) →
-            </button>
+            {!isLoadingProducts && (
+              <button
+                type="button"
+                onClick={() => onNavigate("shop")}
+                className="text-xs text-gold hover:underline uppercase tracking-wider font-semibold min-h-[44px] flex items-center transition-colors duration-[400ms]"
+              >
+                View all ({products.length}) →
+              </button>
+            )}
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 xl:gap-5">
-            {featuredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onSelect={onSelectProduct || (() => {})}
-                onAddToCart={onAddToCart}
-                isAdded={recentlyAddedId === product.id}
-              />
-            ))}
+          <div className="grid grid-cols-1 min-[460px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 xl:gap-5">
+            {isLoadingProducts ? (
+              <>
+                <ProductCardSkeleton />
+                <ProductCardSkeleton />
+                <ProductCardSkeleton />
+              </>
+            ) : (
+              featuredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onSelect={onSelectProduct || (() => {})}
+                  onAddToCart={onAddToCart}
+                  isAdded={recentlyAddedId === product.id}
+                />
+              ))
+            )}
           </div>
         </div>
       )}

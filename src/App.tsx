@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppState } from "./hooks/useAppState";
 import { AppRouter } from "./router";
 import { FullPageLoader } from "./components/ui/Loader";
@@ -69,6 +69,19 @@ export default function App() {
       alive = false;
     };
   }, [state.isBootstrapping]);
+
+  // Every navigation to a new page scrolls the window back to the top so a
+  // fresh route never opens mid-scroll. Landing-section deep links skip this
+  // and let the Landing page scrollIntoView its target section instead.
+  const prevView = useRef(state.view);
+  useEffect(() => {
+    const prev = prevView.current;
+    prevView.current = state.view;
+    if (prev.type === "landing" && state.view.type === "landing" && state.view.section) {
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [state.view]);
 
   if (phase === "booting") {
     return <FullPageLoader />;

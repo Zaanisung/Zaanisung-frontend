@@ -1,5 +1,6 @@
 import React from "react";
 import type { Product, Order } from "../../../types";
+import { Skeleton, ListRowSkeleton } from "../../../components/ui/Skeleton";
 import {
   Boxes,
   AlertTriangle,
@@ -16,6 +17,8 @@ import { RecentOrdersCard } from "./RecentOrdersCard";
 export interface DashboardProps {
   products: Product[];
   orders: Order[];
+  isLoadingProducts?: boolean;
+  isLoadingOrders?: boolean;
   onNavigateTo: (page: "inventory" | "orders" | "add-product" | "record-sale" | "restock") => void;
 }
 
@@ -35,6 +38,8 @@ const isToday = (value?: string | Date | null): boolean => {
 export const Dashboard: React.FC<DashboardProps> = ({
   products,
   orders,
+  isLoadingProducts = false,
+  isLoadingOrders = false,
   onNavigateTo,
 }) => {
   const totalProducts = products.length;
@@ -88,7 +93,29 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+      {isLoadingProducts || isLoadingOrders ? (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="relative overflow-hidden surface-glass-strong p-6 shadow-lift rounded-[18px]"
+              >
+                <Skeleton width={96} height={12} />
+                <Skeleton width={48} height={28} className="mt-4" />
+                <Skeleton width={72} height={12} className="mt-3" />
+              </div>
+            ))}
+          </div>
+          <div className="space-y-3">
+            <ListRowSkeleton />
+            <ListRowSkeleton />
+            <ListRowSkeleton />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
         <StatCard
           label="Total Perfumes"
           value={totalProducts}
@@ -152,6 +179,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
         orders={orders}
         onViewAll={() => onNavigateTo("orders")}
       />
+        </>
+      )}
     </div>
   );
 };

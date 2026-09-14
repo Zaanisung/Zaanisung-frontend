@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <h3
             className={cn(
               "font-brand-serif font-medium text-ink dark:text-white leading-snug line-clamp-1",
-              "text-base sm:text-lg transition-colors duration-[400ms]",
+              "text-[15px] sm:text-lg transition-colors duration-[400ms]",
               "group-hover:text-gold"
             )}
             title={product.name}
@@ -103,7 +103,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         <div className="mt-auto flex items-center justify-between pt-1">
-          <span className="font-bold font-mono text-gold text-base sm:text-lg">
+          <span className="font-bold font-mono text-gold text-[15px] sm:text-lg">
             ₵{product.price.toFixed(2)}
           </span>
           <span className="text-[9px] uppercase tracking-wider text-black/45 dark:text-white/55">
@@ -120,9 +120,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             if (!isOutOfStock) onAddToCart(product, e);
           }}
           className={cn(
-            "w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-4 rounded-xl",
-            "text-[11px] sm:text-xs uppercase tracking-widest font-bold",
-            "flex items-center justify-center gap-2",
+            "w-full min-h-[40px] sm:min-h-[46px] py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl",
+            "text-[10px] sm:text-xs uppercase tracking-widest font-bold",
+            "flex items-center justify-center gap-1.5 sm:gap-2",
             "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
             "select-none active:scale-[0.98]",
             isOutOfStock
@@ -136,13 +136,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span>Sold Out</span>
           ) : isAdded ? (
             <>
-              <Check className="w-4 h-4 stroke-[2.5]" />
-              <span>Added to Cart</span>
+              <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+              <span>Added</span>
             </>
           ) : (
             <>
-              <Plus className="w-4 h-4 stroke-[2.5]" />
-              <span>Add to Cart</span>
+              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+              <span>Add</span>
             </>
           )}
         </button>

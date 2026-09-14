@@ -3,22 +3,43 @@ import { Order } from "../types";
 import { Button } from "../components/Button";
 import { StatusBadge } from "../components/ui/StatusBadge";
 import { EmptyState } from "../components/ui/EmptyState";
+import { ListRowSkeleton } from "../components/ui/Skeleton";
 import { ReceiptText, ChevronRight, ArrowLeft } from "lucide-react";
 
 export interface OrdersProps {
   orders: Order[];
   onContinueShopping: () => void;
   selectedOrderId?: string | null;
+  isLoadingOrders?: boolean;
 }
 
 export const Orders: React.FC<OrdersProps> = ({
   orders,
   onContinueShopping,
   selectedOrderId: initialSelectedId = null,
+  isLoadingOrders = false,
 }) => {
   const [selectedId, setSelectedId] = useState<string | null>(initialSelectedId);
 
   const selectedOrder = orders.find((o) => o.id === selectedId);
+
+  if (isLoadingOrders && orders.length === 0) {
+    return (
+      <div className="w-full max-w-2xl mx-auto">
+        <div className="flex items-baseline justify-between pb-4 mb-6">
+          <h2 className="text-2xl font-light text-black dark:text-white font-brand-serif">
+            My Orders
+          </h2>
+        </div>
+        <div className="space-y-3">
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+          <ListRowSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   if (orders.length === 0) {
     return (
@@ -173,7 +194,7 @@ export const Orders: React.FC<OrdersProps> = ({
           >
             <div className="flex-1 min-w-0 pr-4">
               <div className="flex items-center space-x-2">
-                <span className="font-mono text-sm font-bold text-black dark:text-white">
+                <span className="font-mono text-sm font-bold text-black dark:text-white truncate min-w-0">
                   {order.id}
                 </span>
                 {order.source && (

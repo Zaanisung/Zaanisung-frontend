@@ -58,7 +58,7 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
         {isLoadingProducts ? (
           <div className="flex gap-5 overflow-hidden">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="shrink-0 w-[74%] min-[480px]:w-[46%] md:w-[31%] aspect-square animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-2xl" />
+              <div key={i} className="shrink-0 w-full min-[460px]:w-[46%] md:w-[31%] aspect-square animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-2xl" />
             ))}
           </div>
         ) : featured.length === 0 ? (

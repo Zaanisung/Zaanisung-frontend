@@ -4,6 +4,7 @@ import { getAllUsers, deleteUser } from "../../../services/admin.service";
 import { getErrorMessage } from "../../../services/apiClient";
 import { Button } from "../../../components/Button";
 import { SearchInput } from "../../../components/ui/SearchInput";
+import { Skeleton } from "../../../components/ui/Skeleton";
 import { Users, Trash2, Mail, Phone } from "lucide-react";
 import { cn } from "../../../utils/cn";
 
@@ -123,8 +124,25 @@ export const UserManagement: React.FC = () => {
       )}
 
       {!error && loading && users.length === 0 && (
-        <div className="relative overflow-hidden rounded-xl surface-glass-strong p-10 text-center py-16">
-          <p className="text-sm text-black/45 dark:text-white/45">Loading customers…</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {[0, 1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="relative overflow-hidden rounded-xl surface-glass-strong p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]"
+            >
+              <div className="flex items-center gap-3">
+                <Skeleton circle width={44} height={44} />
+                <div className="space-y-2 flex-1">
+                  <Skeleton width="55%" height={14} />
+                  <Skeleton width="35%" height={12} />
+                </div>
+              </div>
+              <div className="mt-4 space-y-2">
+                <Skeleton width="80%" height={12} />
+                <Skeleton width="65%" height={12} />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
