@@ -38,6 +38,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
     <nav
       className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-cream/90 dark:bg-black/85 border-t border-black/10 dark:border-white/15 pb-safe backdrop-blur-xl"
       aria-label="Dashboard Mobile Navigation"
+      data-tour="dash-mobile-nav"
     >
       {/* Tap-through backdrop while the More menu is open */}
       {moreOpen && (

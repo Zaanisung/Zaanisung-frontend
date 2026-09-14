@@ -5,7 +5,6 @@ import {
   ClipboardList,
   LayoutDashboard,
   Package,
-  Search,
   ShoppingBag,
   SlidersHorizontal,
   Sparkles,
@@ -15,7 +14,7 @@ import {
 } from "lucide-react";
 import type { AdminTab } from "../types/nav";
 
-export type OnboardingTourId = "buyer-landing" | "buyer-shop" | "admin";
+export type OnboardingTourId = "buyer-dashboard" | "admin";
 
 export interface OnboardingStep {
   id: string;
@@ -35,74 +34,56 @@ export interface OnboardingTour {
   steps: OnboardingStep[];
 }
 
-export const BUYER_LANDING_TOUR: OnboardingTour = {
-  id: "buyer-landing",
-  storageKey: "zaanisung-tour-buyer-landing-v1",
-  title: "Welcome to Zaanisung",
+/**
+ * Buyer onboarding lives inside the signed-in account dashboard only — the
+ * public landing page and storefront are deliberately tour-free.
+ */
+export const BUYER_DASHBOARD_TOUR: OnboardingTour = {
+  id: "buyer-dashboard",
+  storageKey: "zaanisung-tour-buyer-dashboard-v1",
+  title: "Welcome to your dashboard",
   steps: [
     {
       id: "nav",
-      title: "Find your way around",
-      body: "Browse the sections above — Collections, About and The Craft — or jump straight into the store with “Enter Store”.",
+      title: "Your account hub",
+      body: "Everything about your account lives here — Orders, Addresses, Payment Methods, Notifications and Settings. Use these tabs to move between them.",
+      icon: LayoutDashboard,
+      selector: "[data-tour='dash-nav']",
+    },
+    {
+      id: "stats",
+      title: "At a glance",
+      body: "This snapshot shows your order totals, pending activity, what’s in the shop and how many addresses you’ve saved.",
+      icon: TrendingUp,
+      selector: "[data-tour='dash-overview-stats']",
+    },
+    {
+      id: "orders",
+      title: "Track your orders",
+      body: "Your latest purchases appear here with their live status. “View all” opens the full order history.",
+      icon: ClipboardList,
+      selector: "[data-tour='dash-recent-orders']",
+    },
+    {
+      id: "quick-links",
+      title: "Jump to any section",
+      body: "One tap takes you straight to Addresses, Payment Methods, Settings or Notifications.",
       icon: Sparkles,
-      selector: "[data-tour='landing-nav']",
-    },
-    {
-      id: "hero",
-      title: "A scent that stays with you",
-      body: "Zaanisung is an extrait perfume house from Tamale. Hit “Explore fragrances” to see the full collection whenever you’re ready.",
-      icon: Sparkles,
-      selector: "[data-tour='landing-hero']",
-    },
-    {
-      id: "collections",
-      title: "Signature Collection",
-      body: "These are our most requested extraits. Swipe or drag the row — tap any card to open its details.",
-      icon: Package,
-      selector: "[data-tour='landing-collections']",
-    },
-    {
-      id: "cta",
-      title: "Ready when you are",
-      body: "Join Zaanisung for account features like order tracking, addresses and saved payments — or shop instantly as a guest.",
-      icon: BadgeCheck,
-      selector: "[data-tour='landing-cta']",
-    },
-  ],
-};
-
-export const BUYER_SHOP_TOUR: OnboardingTour = {
-  id: "buyer-shop",
-  storageKey: "zaanisung-tour-buyer-shop-v1",
-  title: "Shopping made simple",
-  steps: [
-    {
-      id: "search",
-      title: "Search the catalog",
-      body: "Type a fragrance name here and the collection filters instantly as you type.",
-      icon: Search,
-      selector: "[data-tour='shop-search']",
-    },
-    {
-      id: "filters",
-      title: "Quick filters",
-      body: "Use these chips to show only in-stock scents or narrow the range by price.",
-      icon: SlidersHorizontal,
-      selector: "[data-tour='shop-filters']",
-    },
-    {
-      id: "grid",
-      title: "Tap a card, or add straight away",
-      body: "Open a card for the full scent profile, or press “Add” to drop it into your bag in one tap.",
-      icon: ShoppingBag,
-      selector: "[data-tour='shop-grid']",
+      selector: "[data-tour='dash-quick-links']",
     },
     {
       id: "cart",
-      title: "Your bag, always one tap away",
-      body: "The bag icon stays right here on every page — check it any time to review or checkout your order.",
+      title: "Your bag, one tap away",
+      body: "The bag icon stays at the top of every account page — review your items or checkout anytime.",
       icon: ShoppingBag,
       selector: "[data-tour='shop-cart']",
+    },
+    {
+      id: "mobile-nav",
+      title: "On mobile, same tabs",
+      body: "On small screens the same sections live in this bar at the bottom of the page.",
+      icon: LayoutDashboard,
+      selector: "[data-tour='dash-mobile-nav']",
     },
   ],
 };
@@ -204,7 +185,6 @@ export const ADMIN_TOUR: OnboardingTour = {
 };
 
 export const TOURS: Record<OnboardingTourId, OnboardingTour> = {
-  "buyer-landing": BUYER_LANDING_TOUR,
-  "buyer-shop": BUYER_SHOP_TOUR,
+  "buyer-dashboard": BUYER_DASHBOARD_TOUR,
   admin: ADMIN_TOUR,
 };

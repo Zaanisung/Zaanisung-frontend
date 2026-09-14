@@ -1,11 +1,10 @@
 import React from "react";
-import { ArrowRight, CircleHelp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
 import { navLinks } from "./constants";
 import { FullscreenToggle } from "../ui/FullscreenToggle";
-import { startOnboarding } from "../../onboarding/onboardingBus";
 
 interface LandingHeaderProps {
   isLoggedIn: boolean;
@@ -33,7 +32,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
           wordmarkClassName="hidden min-[480px]:inline text-base sm:text-lg tracking-[0.16em]"
         />
 
-        <nav className="hidden md:flex items-center space-x-9 text-xs uppercase tracking-[0.18em] font-semibold text-black/55 dark:text-white/55" data-tour="landing-nav">
+        <nav className="hidden md:flex items-center space-x-9 text-xs uppercase tracking-[0.18em] font-semibold text-black/55 dark:text-white/55">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -55,15 +54,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <button
-            type="button"
-            onClick={() => startOnboarding("buyer-landing")}
-            aria-label="Replay the site walkthrough"
-            title="Replay walkthrough"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-black/45 dark:text-white/50 hover:text-gold border border-transparent hover:border-gold/40 transition-colors"
-          >
-            <CircleHelp className="w-5 h-5" />
-          </button>
           <FullscreenToggle />
           {isLoggedIn ? (
             <>

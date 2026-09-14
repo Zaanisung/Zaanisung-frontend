@@ -111,23 +111,11 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
       return;
     }
 
-    if (view.type === "landing") {
-      const key = TOURS["buyer-landing"].storageKey;
-      if (!readFlag(key) && !autoStarted.current.has("buyer-landing")) {
-        autoStarted.current.add("buyer-landing");
-        start("buyer-landing");
-      }
-      return;
-    }
-
-    if (
-      (view.type === "customer" || view.type === "dashboard") &&
-      view.page === "shop"
-    ) {
-      const key = TOURS["buyer-shop"].storageKey;
-      if (!readFlag(key) && !autoStarted.current.has("buyer-shop")) {
-        autoStarted.current.add("buyer-shop");
-        start("buyer-shop");
+    if (view.type === "dashboard" && view.page === "overview") {
+      const key = TOURS["buyer-dashboard"].storageKey;
+      if (!readFlag(key) && !autoStarted.current.has("buyer-dashboard")) {
+        autoStarted.current.add("buyer-dashboard");
+        start("buyer-dashboard");
       }
       return;
     }

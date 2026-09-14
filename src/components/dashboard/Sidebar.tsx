@@ -42,6 +42,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <nav
           className="flex flex-col gap-1 py-5"
           aria-label="Dashboard Navigation"
+          data-tour="dash-nav"
         >
           {ACCOUNT_NAV.map((group) => (
             <div key={group.group} className="flex flex-col gap-1">

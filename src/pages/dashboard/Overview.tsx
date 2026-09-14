@@ -5,6 +5,7 @@ import type { Product } from "../../types/product";
 import type { DashboardNavPage } from "../../types/nav";
 import { ProductCard } from "../../components/ProductCard";
 import { Skeleton, ProductCardSkeleton, ListRowSkeleton } from "../../components/ui/Skeleton";
+import { startOnboarding } from "../../onboarding/onboardingBus";
 import {
   MapPin,
   CreditCard,
@@ -14,6 +15,7 @@ import {
   Package,
   Clock,
   Store,
+  CircleHelp,
 } from "lucide-react";
 
 export interface OverviewProps {
@@ -71,19 +73,30 @@ export const Overview: React.FC<OverviewProps> = ({
 
   return (
     <div className="w-full space-y-8">
-      <div>
-        <p className="eyebrow text-black/45 dark:text-white/45 mb-1">
-          Welcome Back
-        </p>
-        <h2 className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif">
-          Hello{user?.name ? `, ${user.name.split(" ")[0]}` : ""}
-        </h2>
-        <p className="text-xs text-black/50 dark:text-white/50 mt-1">
-          Here is a snapshot of your account activity.
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="eyebrow text-black/45 dark:text-white/45 mb-1">
+            Welcome Back
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif">
+            Hello{user?.name ? `, ${user.name.split(" ")[0]}` : ""}
+          </h2>
+          <p className="text-xs text-black/50 dark:text-white/50 mt-1">
+            Here is a snapshot of your account activity.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => startOnboarding("buyer-dashboard")}
+          aria-label="Replay the dashboard walkthrough"
+          title="Replay walkthrough"
+          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-black/45 dark:text-white/50 hover:text-gold border border-transparent hover:border-gold/40 transition-colors"
+        >
+          <CircleHelp className="w-5 h-5" />
+        </button>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" data-tour="dash-overview-stats">
         {isLoadingOrders || isLoadingProducts ? (
           <>
             {[0, 1, 2, 3].map((i) => (
@@ -158,7 +171,7 @@ export const Overview: React.FC<OverviewProps> = ({
         )}
       </div>
 
-      <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-5 sm:p-6">
+      <div className="rounded-xl border border-black/10 dark:border-white/15 surface-glass p-5 sm:p-6" data-tour="dash-recent-orders">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold">
             Recent Orders
@@ -217,7 +230,7 @@ export const Overview: React.FC<OverviewProps> = ({
         <h3 className="text-xs uppercase tracking-widest text-black/45 dark:text-white/45 font-bold mb-4">
           Quick Links
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" data-tour="dash-quick-links">
           {quickLinks.map((link) => (
             <button
               key={link.label}
