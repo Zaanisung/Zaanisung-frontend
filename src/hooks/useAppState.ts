@@ -70,9 +70,14 @@ export function useAppState() {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   // ─── Theme ──────────────────────────────────────────────────────────
-  // Appearance (light/dark/system + accent color) comes from the signed-in
-  // user's saved Settings. Guests fall back to the "system" scheme.
-  useTheme(customerUser?.appearance);
+  // There is no manual theme toggle: the theme always follows the host
+  // system (`prefers-color-scheme`). Only the brand accent color is taken
+  // from the signed-in user's saved Settings.
+  useTheme(
+    customerUser?.appearance?.accentColor
+      ? { accentColor: customerUser.appearance.accentColor }
+      : undefined
+  );
 
   // ─── UI / navigation state ──────────────────────────────────────────
   const [view, setView] = useState<AppView>({ type: "landing" });
@@ -436,7 +441,6 @@ export function useAppState() {
   };
 
   const handleUpdateAppearance = async (data: {
-    theme?: "light" | "dark" | "system";
     accentColor?: string;
   }) => {
     setProfileError(null);

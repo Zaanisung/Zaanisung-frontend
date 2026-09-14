@@ -66,19 +66,9 @@
 /* Navbar & footer border band (6px height) — runs the full width along the
    bottom of the site header and the top of the footer. */
 .kente-navbar-border {
-  height: 6px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(212, 175, 55, 0.98) 0px,
-    rgba(212, 175, 55, 0.98) 8px,
-    rgba(10, 10, 10, 0.92) 8px,
-    rgba(10, 10, 10, 0.92) 12px,
-    rgba(206, 17, 38, 0.9) 12px,
-    rgba(206, 17, 38, 0.9) 18px,
-    rgba(0, 107, 63, 0.85) 18px,
-    rgba(0, 107, 63, 0.85) 23px
-  );
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.12);
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.55) 12%, rgba(212, 175, 55, 0.9) 50%, rgba(212, 175, 55, 0.55) 88%, transparent 100%);
+  box-shadow: none;
 }
 
 /* Vertical divider band (6px width) for auth / split panels */
@@ -267,18 +257,8 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 4px;
-  background: repeating-linear-gradient(
-    135deg,
-    rgba(212, 175, 55, 0.98) 0px,
-    rgba(212, 175, 55, 0.98) 6px,
-    rgba(10, 10, 10, 0.75) 6px,
-    rgba(10, 10, 10, 0.75) 11px,
-    rgba(206, 17, 38, 0.7) 11px,
-    rgba(206, 17, 38, 0.7) 16px,
-    rgba(0, 107, 63, 0.6) 16px,
-    rgba(0, 107, 63, 0.6) 21px
-  );
+  padding: 1px;
+  background: rgba(212, 175, 55, 0.38);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -303,20 +283,8 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 2.5px;
-  background: repeating-linear-gradient(
-    135deg,
-    rgba(212, 175, 55, 0.98) 0px,
-    rgba(212, 175, 55, 0.98) 8px,
-    rgba(10, 10, 10, 0.9) 8px,
-    rgba(10, 10, 10, 0.9) 12px,
-    rgba(206, 17, 38, 0.85) 12px,
-    rgba(206, 17, 38, 0.85) 20px,
-    rgba(252, 209, 22, 0.95) 20px,
-    rgba(252, 209, 22, 0.95) 30px,
-    rgba(0, 107, 63, 0.8) 30px,
-    rgba(0, 107, 63, 0.8) 37px
-  );
+  padding: 1px;
+  background: rgba(113, 82, 18, 0.45);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -390,4 +358,3 @@
   box-shadow: 3px 0 8px -1px rgba(212, 175, 55, 0.3);
   z-index: 10;
 }
-

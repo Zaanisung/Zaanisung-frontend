@@ -96,7 +96,7 @@ export interface AppRouterProps {
   onAddPaymentMethod: (data: Omit<PaymentMethod, "_id" | "isDefault"> & { isDefault?: boolean }) => void;
   onDeletePaymentMethod: (id: string) => void;
   onSetDefaultPaymentMethod: (id: string) => void;
-  onUpdateAppearance: (data: { theme?: "light" | "dark" | "system"; accentColor?: string }) => void;
+  onUpdateAppearance: (data: { accentColor?: string }) => void;
   onUpdateNotificationPrefs: (data: { orderUpdates?: boolean; promotions?: boolean; sms?: boolean; email?: boolean }) => void;
   onMarkNotificationRead: (id: string) => void;
   onMarkAllNotificationsRead: () => void;

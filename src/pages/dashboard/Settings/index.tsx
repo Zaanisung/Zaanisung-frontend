@@ -24,7 +24,6 @@ export interface SettingsProps {
     newPassword: string;
   }) => void;
   onUpdateAppearance: (data: {
-    theme?: "light" | "dark" | "system";
     accentColor?: string;
   }) => void;
   onUpdateNotificationPrefs: (data: {
@@ -78,7 +77,7 @@ export const Settings: React.FC<SettingsProps> = ({
       />
 
       <AppearanceCard
-        key={`appearance|${user?.appearance?.theme ?? ""}|${user?.appearance?.accentColor ?? ""}`}
+        key={`appearance|${user?.appearance?.accentColor ?? ""}`}
         user={user}
         onUpdateAppearance={onUpdateAppearance}
       />

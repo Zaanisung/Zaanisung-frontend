@@ -14,11 +14,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
       (function () {
-        var stored = null;
-        try { stored = localStorage.getItem("zaanisung-theme"); } catch (e) {}
-        var dark =
-          stored === "dark" ||
-          (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        // The theme is always the host system theme — there is no manual
+        // toggle and no stored override.
+        var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         document.documentElement.classList.toggle("dark", dark);
       })();
     </script>

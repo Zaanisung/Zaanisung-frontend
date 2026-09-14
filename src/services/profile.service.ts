@@ -65,7 +65,6 @@ export async function deletePaymentMethod(methodId: string): Promise<FullUserRes
 }
 
 export async function updateAppearance(data: {
-  theme?: "light" | "dark" | "system";
   accentColor?: string;
 }): Promise<FullUserResponse> {
   return request("/me/appearance", {

@@ -15,7 +15,6 @@ const accentSwatches = [
 interface AppearanceCardProps {
   user: FullUser | null;
   onUpdateAppearance: (data: {
-    theme?: "light" | "dark" | "system";
     accentColor?: string;
   }) => void;
 }
@@ -24,9 +23,6 @@ export const AppearanceCard: React.FC<AppearanceCardProps> = ({
   user,
   onUpdateAppearance,
 }) => {
-  const [theme, setTheme] = useState<"light" | "dark" | "system">(
-    user?.appearance?.theme ?? "system"
-  );
   const [accentColor, setAccentColor] = useState(
     user?.appearance?.accentColor ?? "#d4af37"
   );
@@ -34,31 +30,6 @@ export const AppearanceCard: React.FC<AppearanceCardProps> = ({
   return (
     <SectionCard icon={<Palette className="w-4 h-4 text-gold" />} title="Appearance">
       <div className="space-y-5">
-        <div>
-          <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-2">
-            Theme
-          </label>
-          <div className="flex gap-2">
-            {(["light", "dark", "system"] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setTheme(t);
-                  onUpdateAppearance({ theme: t });
-                }}
-                className={`min-h-[44px] px-4 text-[10px] uppercase tracking-wider font-bold transition-colors ${
-                  theme === t
-                    ? "text-ink bg-gold border border-gold-700/70"
-                    : "text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <div>
           <label className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-2">
             Accent Color
@@ -83,6 +54,10 @@ export const AppearanceCard: React.FC<AppearanceCardProps> = ({
             ))}
           </div>
         </div>
+        <p className="text-[10px] leading-relaxed text-black/45 dark:text-white/45">
+          Theme follows your device (light/dark) automatically — there is no
+          manual light/dark switch.
+        </p>
       </div>
     </SectionCard>
   );
