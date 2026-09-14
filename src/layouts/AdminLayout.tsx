@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Boxes,
   ClipboardList,
+  Users,
   UserCheck,
   PlusCircle,
   TrendingUp,
@@ -36,123 +37,84 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
     { id: "inventory" as AdminTab, label: "Inventory", icon: Boxes },
     {
       id: "orders" as AdminTab,
-      label: "Sales/Orders",
+      label: "Orders",
       icon: ClipboardList,
       badge: pendingOrdersCount,
     },
+    { id: "users" as AdminTab, label: "Customers", icon: Users },
     { id: "account" as AdminTab, label: "Account", icon: UserCheck },
   ];
 
   return (
     <div className="min-h-screen text-ink dark:text-white flex flex-col md:flex-row bg-cream dark:bg-black">
-      {/* Desktop sidebar — deep ink console surface */}
-      <aside className="relative hidden lg:flex flex-col w-[260px] xl:w-[280px] bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 min-h-screen sticky top-0 h-screen p-6 overflow-y-auto scrollbar-none">
-        <div className="relative">
-          <div className="absolute -top-24 -right-16 w-56 h-56 orb orb-gold-faint" aria-hidden="true" />
+      {/* Desktop sidebar — deep ink console surface. Compact enough to never scroll. */}
+      <aside
+        className="relative hidden lg:flex flex-col w-[240px] bg-ink text-cream/75 border-r border-white/10 flex-shrink-0 sticky top-0 h-screen overflow-hidden"
+        aria-label="Admin sidebar"
+      >
+        <div className="absolute top-0 inset-x-0 h-[2px] bg-gold z-20" aria-hidden="true" />
+        <div className="relative flex flex-col flex-1 min-h-0 px-3 pt-6 pb-5">
+          <div
+            className="absolute -top-24 -right-24 w-56 h-56 orb orb-gold-faint"
+            aria-hidden="true"
+          />
 
-          {/* Admin header */}
-          <div className="relative pb-6 border-b border-white/10">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-[3px] bg-gold">
-                  <div className="bg-ink p-[3px]">
-                    <Logo className="h-8 w-8" />
-                  </div>
-                </div>
-                <div>
-                  <h2 className="font-brand-serif text-lg tracking-[0.14em] font-light text-cream leading-none">
-                    ZAANISUNG
-                  </h2>
-                  <span className="text-[9px] uppercase tracking-widest text-gold mt-1 block font-semibold">
-                    Admin Panel
-                  </span>
-                </div>
-              </div>
-            </div>
-            <p className="eyebrow text-cream/40 mt-4">Inventory & Sales Portal</p>
+          {/* Brand — logo only, no text, no frame. Transparent PNG on its own. */}
+          <div className="relative flex items-center justify-center pb-6 px-2">
+            <Logo className="h-9 w-9" />
           </div>
 
           {/* Primary nav */}
-          <nav className="flex flex-col py-5" aria-label="Admin Navigation">
-            <div className="eyebrow text-cream/40 px-3 pb-2.5">Management</div>
-            <div className="flex flex-col gap-1">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => onChangeTab(item.id)}
-                    className={cn(
-                      "rounded-lg relative w-full min-w-0 min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center justify-between gap-2",
-                      isActive
-                        ? "bg-gold text-ink font-bold"
-                        : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
-                    )}
-                  >
-                    {isActive && (
-                      <span className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full" aria-hidden="true" />
-                    )}
-                    <div className="flex items-center gap-3 min-w-0">
-                      <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "stroke-[2.2]")} />
-                      <span className="truncate min-w-0">{item.label}</span>
-                    </div>
-                    {typeof item.badge === "number" && item.badge > 0 && (
-                      <span
-                        className={cn(
-                          "rounded-full min-w-[20px] h-[20px] px-1.5 text-[10px] font-bold inline-flex items-center justify-center",
-                          isActive ? "bg-ink text-gold" : "bg-gold text-ink"
-                        )}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Rapid operations */}
-            <div className="pt-6 mt-5 border-t border-white/10">
-              <div className="eyebrow text-cream/40 px-3 pb-2.5">Fast Actions</div>
-              <div className="flex flex-col gap-2">
+          <nav
+            className="relative flex flex-col gap-1 min-h-0"
+            aria-label="Admin Navigation"
+          >
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
                 <button
+                  key={item.id}
                   type="button"
-                  onClick={() => onNavigateTo("record-sale")}
-                  className="rounded-lg w-full min-w-0 min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+                  onClick={() => onChangeTab(item.id)}
+                  className={cn(
+                    "rounded-lg relative w-full min-w-0 min-h-[44px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex items-center justify-between gap-2",
+                    isActive
+                      ? "bg-gold text-ink font-bold"
+                      : "text-cream/55 hover:text-cream hover:bg-white/[0.06]"
+                  )}
                 >
-                  <TrendingUp className="w-4 h-4 text-gold flex-shrink-0" />
-                  <span className="truncate min-w-0">Record Sale</span>
+                  {isActive && (
+                    <span
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-ink/30 rounded-full"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Icon className={cn("w-4 h-4 flex-shrink-0", isActive && "stroke-[2.2]")} />
+                    <span className="truncate min-w-0">{item.label}</span>
+                  </div>
+                  {typeof item.badge === "number" && item.badge > 0 && (
+                    <span
+                      className={cn(
+                        "rounded-full min-w-[20px] h-[20px] px-1.5 text-[10px] font-bold inline-flex items-center justify-center",
+                        isActive ? "bg-ink text-gold" : "bg-gold text-ink"
+                      )}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
-
-                <button
-                  type="button"
-                  onClick={() => onNavigateTo("restock")}
-                  className="rounded-lg w-full min-w-0 min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-bold text-gold bg-white/[0.04] hover:bg-white/[0.08] border border-gold/30 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                >
-                  <RefreshCw className="w-4 h-4 text-gold flex-shrink-0" />
-                  <span className="truncate min-w-0">Restock</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => onNavigateTo("add-product")}
-                  className="rounded-lg w-full min-w-0 min-h-[46px] px-3.5 py-2 text-xs uppercase tracking-wider font-semibold text-cream/70 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                >
-                  <PlusCircle className="w-4 h-4 text-gold flex-shrink-0" />
-                  <span className="truncate min-w-0">+ Add Perfume</span>
-                </button>
-              </div>
-            </div>
+              );
+            })}
           </nav>
 
-          {/* Storefront */}
-          <div className="pt-5 mt-2 border-t border-white/10">
+          {/* Storefront — pinned to the bottom */}
+          <div className="relative mt-auto pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={onReturnToStorefront}
-              className="rounded-lg w-full min-w-0 min-h-[46px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              className="rounded-lg w-full min-w-0 min-h-[44px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-cream/60 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <Store className="w-4 h-4 text-gold flex-shrink-0" />
               <span className="truncate min-w-0">Storefront</span>
@@ -163,34 +125,29 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
       {/* Main admin column */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile header */}
-        <header className="lg:hidden sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-white/75 dark:bg-black/60 backdrop-blur-xl px-3 py-3 flex flex-col flex-nowrap">
-          <div className="flex items-center justify-between gap-2 flex-nowrap">
-            <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
-              <Logo className="h-8 w-8 shrink-0" />
-              <h2 className="font-brand-serif text-base tracking-[0.14em] font-light text-ink dark:text-white hidden min-[420px]:inline">
-                ZAANISUNG
-              </h2>
-              <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
-                ADMIN
-              </span>
-            </div>
+        {/* Mobile header — transparent, scrolls with the page */}
+        <header className="lg:hidden px-3 pt-3 flex items-center justify-between gap-2 flex-nowrap">
+          <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+            <Logo className="h-8 w-8 shrink-0" />
+            <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
+              ADMIN
+            </span>
+          </div>
 
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button
-                type="button"
-                onClick={onReturnToStorefront}
-                className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-              >
-                <Store className="w-3.5 h-3.5 text-gold" />
-                <span>Store</span>
-              </button>
-            </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              type="button"
+              onClick={onReturnToStorefront}
+              className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            >
+              <Store className="w-3.5 h-3.5 text-gold" />
+              <span>Store</span>
+            </button>
           </div>
         </header>
 
         {/* Mobile fast-action pills */}
-        <div className="lg:hidden bg-white/60 dark:bg-black/40 px-3 py-3 flex items-center gap-2 overflow-x-auto scrollbar-none backdrop-blur-sm">
+        <div className="lg:hidden px-3 py-3 flex items-center gap-2 overflow-x-auto scrollbar-none">
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
@@ -217,8 +174,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </button>
         </div>
 
-        {/* Page content */}
-        <main className="flex-1 px-4 sm:px-8 xl:px-12 py-6 sm:py-8 pb-28 lg:pb-12">
+        {/* Page content — top padding matches sidebar so both headers align */}
+        <main className="flex-1 px-4 sm:px-8 xl:px-12 py-6 pb-28 lg:pb-12">
           <ErrorBoundary>{children}</ErrorBoundary>
         </main>
       </div>
@@ -229,7 +186,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 dark:bg-black/75 border-t border-black/10 dark:border-white/15 pb-safe backdrop-blur-xl"
         aria-label="Admin Mobile Navigation"
       >
-        <div className="grid grid-cols-4 h-16 max-w-md mx-auto px-1">
+        <div className="grid grid-cols-5 h-16 max-w-md mx-auto px-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -253,7 +210,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                 </div>
                 <span
                   className={cn(
-                    "text-[10px] uppercase tracking-widest mt-1",
+                    "text-[10px] uppercase tracking-widest mt-1 truncate max-w-full px-0.5",
                     isActive ? "text-gold font-bold" : "text-black/45 dark:text-white/45"
                   )}
                 >

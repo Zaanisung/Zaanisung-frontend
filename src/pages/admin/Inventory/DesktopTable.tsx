@@ -24,7 +24,7 @@ export const DesktopTable: React.FC<DesktopTableProps> = ({
   onRemoveProduct,
 }) => {
   return (
-    <div className="relative hidden md:block rounded-xl surface-glass-strong overflow-hidden shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+    <div className="relative hidden lg:block rounded-xl surface-glass-strong overflow-hidden shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
       <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
       <table className="relative w-full text-left text-xs sm:text-sm">
         <thead className="bg-cream dark:bg-white/10 text-black/45 dark:text-white/45 uppercase tracking-widest text-[10px]">

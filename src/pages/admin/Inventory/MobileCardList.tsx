@@ -40,7 +40,7 @@ export const MobileCardList: React.FC<MobileCardListProps> = ({
   onRemoveProduct,
 }) => {
   return (
-    <div className="md:hidden space-y-3">
+    <div className="lg:hidden space-y-3">
       {products.map((p) => {
         const kind = getStockStatus(p.stock);
         return (
