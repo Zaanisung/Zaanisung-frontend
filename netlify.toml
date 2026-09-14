@@ -1,0 +1,9 @@
+# Zaanisung frontend — Netlify build configuration.
+# VITE_DEMO_MODE=true lets the site run fully on in-memory data with no backend.
+# Flip it to "false" to point the production build at the real backend again.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  VITE_DEMO_MODE = "true"
