@@ -58,6 +58,23 @@ export const Carousel = <T,>({
     return () => observer.disconnect();
   }, [updateState]);
 
+  // Vertical wheel over the carousel must scroll the PAGE, never the track.
+  // Without this the browser consumes vertical wheel as horizontal carousel
+  // movement, which makes scrolling past the section feel stuck. Horizontal
+  // scrolling stays available via drag/swipe, the arrows and Shift+wheel.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (e.shiftKey) return;
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      window.scrollBy({ top: e.deltaY });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   const scrollByUnit = useCallback((dir: 1 | -1) => {
     const el = trackRef.current;
     if (!el) return;
