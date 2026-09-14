@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Product } from "../types";
 import { Plus, Check } from "lucide-react";
 import { cn } from "../utils/cn";
+import { resolveApiUrl } from "../services/apiClient";
 
 export interface ProductCardProps {
   product: Product;
@@ -9,6 +10,18 @@ export interface ProductCardProps {
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
   isAdded?: boolean;
 }
+
+/** Minimal monogram placeholder shown while/when no real product image is available. */
+const ImageFallback: React.FC<{ name: string }> = ({ name }) => (
+  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#ece6da] dark:bg-white/5">
+    <span className="font-brand-serif text-4xl font-light text-gold select-none">
+      {name.trim().charAt(0).toUpperCase() || "Z"}
+    </span>
+    <span className="text-[9px] uppercase tracking-[0.3em] text-black/40 dark:text-white/50 select-none">
+      Zaanisung
+    </span>
+  </div>
+);
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
@@ -18,13 +31,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const isOutOfStock = product.stock <= 0;
   const isLowStock = product.stock > 0 && product.stock <= 3;
+  const [imgFailed, setImgFailed] = useState(false);
+  const hasImage = Boolean(product.imageUrl) && !imgFailed;
 
   return (
     <article
       id={`product-card-${product.id}`}
       onClick={() => onSelect(product)}
       className={cn(
-        "group relative flex flex-col h-full cursor-pointer overflow-hidden",
+        "group relative flex h-full cursor-pointer flex-col overflow-hidden",
         "bg-[#fffdf9] dark:bg-[#171717] rounded-[18px] border border-black/10 dark:border-white/10",
         "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
         "hover:shadow-[0_18px_36px_-24px_rgba(22,19,14,0.45)]",
@@ -34,16 +49,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Product image */}
       <div className="relative w-full aspect-[4/5] overflow-hidden rounded-t-[18px] flex-shrink-0 bg-[#ece6da]">
-        <img
-          src={product.imageUrl}
-          alt={product.name}
-          loading="lazy"
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover object-center",
-            "transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
-            "group-hover:scale-105"
-          )}
-        />
+        {hasImage ? (
+          <img
+            src={resolveApiUrl(product.imageUrl)}
+            alt={product.name}
+            loading="lazy"
+            onError={() => setImgFailed(true)}
+            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[600ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105"
+          />
+        ) : (
+          <ImageFallback name={product.name} />
+        )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
 
@@ -70,21 +86,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             100 ml
           </span>
         </div>
-
       </div>
 
       {/* Product information */}
-      <div className="flex flex-col flex-1 gap-3 p-4 sm:p-5">
-        <div className="flex flex-col gap-2 flex-1">
-          <span className="eyebrow text-gold/90 block">
-            Extrait de parfum
-          </span>
+      <div className="flex flex-col gap-2.5 p-4 flex-1">
+        <div className="flex flex-col gap-1">
           <h3
             className={cn(
               "font-brand-serif font-medium text-ink dark:text-white leading-snug line-clamp-1",
-              "transition-colors duration-[400ms]",
-              "group-hover:text-gold",
-              "text-base sm:text-lg"
+              "text-base sm:text-lg transition-colors duration-[400ms]",
+              "group-hover:text-gold"
             )}
             title={product.name}
           >
@@ -92,22 +103,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </h3>
 
           {product.description && (
-            <p className="text-xs text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+            <p className="text-[11px] text-black/50 dark:text-white/50 leading-relaxed line-clamp-1">
               {product.description}
             </p>
           )}
         </div>
 
-        <div className="flex items-baseline justify-between">
+        <div className="mt-auto flex items-center justify-between pt-1">
           <span className="font-bold font-mono text-gold text-base sm:text-lg">
             ₵{product.price.toFixed(2)}
           </span>
-          <span className="text-[10px] uppercase tracking-wider text-black/45 dark:text-white/55">
+          <span className="text-[9px] uppercase tracking-wider text-black/45 dark:text-white/55">
             100 ml
           </span>
         </div>
 
-        {/* Action button with mist-inspired styling */}
+        {/* Action button */}
         <button
           type="button"
           disabled={isOutOfStock}
@@ -116,7 +127,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             if (!isOutOfStock) onAddToCart(product, e);
           }}
           className={cn(
-            "w-full min-h-[48px] py-3 px-4 rounded-xl",
+            "w-full min-h-[46px] py-2.5 px-4 rounded-xl",
             "text-[11px] sm:text-xs uppercase tracking-widest font-bold",
             "flex items-center justify-center gap-2",
             "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
