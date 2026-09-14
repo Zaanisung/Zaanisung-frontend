@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "../../utils/cn";
+import { resolveApiUrl } from "../../services/apiClient";
 
 export interface ProductImageProps {
   src?: string;
@@ -15,7 +16,13 @@ export const ProductImage: React.FC<ProductImageProps> = ({
   fallback = "Z",
 }) => {
   if (src) {
-    return <img src={src} alt={alt} className={cn("object-cover object-center", className)} />;
+    return (
+      <img
+        src={resolveApiUrl(src)}
+        alt={alt}
+        className={cn("object-cover object-center", className)}
+      />
+    );
   }
 
   return (

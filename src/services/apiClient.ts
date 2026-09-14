@@ -5,6 +5,28 @@ const API_BASE: string =
 export const IS_DEMO_MODE: boolean =
   (import.meta.env.VITE_DEMO_MODE as string | undefined) === "true";
 
+/**
+ * Resolve a media URL (product image, avatar, …) returned by the backend.
+ *
+ * Absolute URLs (`https://…`, `data:`, `blob:`) pass through untouched.
+ * Relative paths like `/uploads/perfume.webp` are served from the backend,
+ * so they are resolved against VITE_API_URL (the dev proxy target) instead of
+ * the frontend server where they would 404.
+ */
+export function resolveApiUrl(url?: string): string {
+  if (!url) return "";
+  if (/^(https?:)?\/\//i.test(url) || url.startsWith("data:") || url.startsWith("blob:")) {
+    return url;
+  }
+  if (url.startsWith("/")) {
+    const backend = (import.meta.env.VITE_API_URL as string | undefined) || "";
+    if (backend) {
+      return `${backend.replace(/\/$/, "")}${url}`;
+    }
+  }
+  return url;
+}
+
 interface ApiError {
   statusCode: number;
   message: string;
@@ -22,7 +44,7 @@ export function getErrorMessage(err: unknown, fallback: string): string {
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   if (IS_DEMO_MODE) {
     const { demoRequest } = await import("./demo/api");
-    return demoRequest<T>(path, options, API_BASE);
+    return demoRequest<T>(path, options);
   }
 
   const res = await fetch(`${API_BASE}${path}`, {

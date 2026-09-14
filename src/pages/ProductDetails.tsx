@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Product } from "../types";
 import { Button } from "../components/Button";
 import { QuantityStepper } from "../components/ui/QuantityStepper";
+import { resolveApiUrl } from "../services/apiClient";
 import { ArrowLeft, Check, Sparkles, Droplet, ShieldCheck, Truck } from "lucide-react";
 
 export interface ProductDetailsProps {
@@ -52,10 +53,22 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
         {/* Large Prominent Perfume Image Frame */}
         <div className="relative aspect-[4/3] md:aspect-auto md:h-full w-full flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none min-w-0">
           <img
-            src={product.imageUrl}
+            src={resolveApiUrl(product.imageUrl)}
             alt={product.name}
+            loading="lazy"
+            onError={(e) => {
+              const target = e.currentTarget;
+              target.style.display = "none";
+            }}
             className="absolute inset-0 w-full h-full max-h-full object-cover object-center"
           />
+          {!product.imageUrl && (
+            <div className="absolute inset-0 flex items-center justify-center gap-3 bg-[#ece6da] dark:bg-white/5">
+              <span className="font-brand-serif text-5xl font-light text-gold">
+                {product.name.trim().charAt(0).toUpperCase() || "Z"}
+              </span>
+            </div>
+          )}
 
           {/* Stock Badge */}
           <div className="absolute top-4 right-4 z-10">
