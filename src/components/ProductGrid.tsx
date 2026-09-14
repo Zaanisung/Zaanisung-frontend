@@ -103,7 +103,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               onClick={() => setActiveFilter(opt.id)}
               aria-pressed={activeFilter === opt.id}
               className={cn(
-                "min-h-[44px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border rounded-full",
+                "shrink-0 min-h-[44px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap max-w-full transition-all border rounded-full",
                 activeFilter === opt.id
                   ? "bg-ink text-cream border-ink dark:bg-gold dark:text-ink dark:border-gold"
                   : "bg-white/60 dark:bg-white/[0.05] text-black/60 dark:text-white/65 border-black/15 dark:border-white/15 hover:border-gold hover:text-ink dark:hover:text-white"

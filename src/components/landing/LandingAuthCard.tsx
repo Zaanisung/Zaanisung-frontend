@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { CustomerUser } from "../../types";
 import { Input } from "../Input";
 import { Button } from "../Button";
+import { DemoAuthNote } from "../auth/DemoAuthNote";
+import { IS_DEMO_MODE } from "../../services/apiClient";
 import { cn } from "../../utils/cn";
 
 export type AuthMode = "signup" | "login";
@@ -27,6 +29,7 @@ interface LandingAuthCardProps {
   onStartShopping: () => void;
   onBrowseShop: () => void;
   onOpenDashboard?: () => void;
+  onDemoAccount?: (user: CustomerUser) => void;
 }
 
 export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
@@ -48,6 +51,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
   onStartShopping,
   onBrowseShop,
   onOpenDashboard,
+  onDemoAccount,
 }) => {
   return (
     <motion.div
@@ -83,7 +87,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
                   type="button"
                   onClick={() => onModeChange(m)}
                   className={cn(
-                    "min-h-[38px] px-4 text-[10px] uppercase tracking-wider font-bold transition-colors rounded-full",
+                    "min-h-[44px] px-4 text-[10px] uppercase tracking-wider font-bold transition-colors rounded-full",
                     mode === m
                       ? "bg-ink text-cream dark:bg-gold dark:text-ink"
                       : "text-black/50 dark:text-white/50 hover:text-ink dark:hover:text-white"
@@ -136,6 +140,12 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
                 {mode === "signup" ? "Create Account" : "Sign In"}
               </Button>
             </form>
+
+            {IS_DEMO_MODE && onDemoAccount && (
+              <div className="mt-4">
+                <DemoAuthNote compact onSuccess={onDemoAccount} />
+              </div>
+            )}
 
             <button
               type="button"

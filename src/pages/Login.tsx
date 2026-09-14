@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { AuthShell } from "../components/auth/AuthShell";
+import { DemoAuthNote } from "../components/auth/DemoAuthNote";
 import { CustomerUser } from "../types";
 import * as api from "../services";
 import { getErrorMessage, IS_DEMO_MODE } from "../services/apiClient";
@@ -70,10 +71,7 @@ export const Login: React.FC<LoginProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         {IS_DEMO_MODE && (
-          <div className="rounded-xl p-3 bg-gold/10 border border-gold/40 text-[11px] text-ink/80 dark:text-cream/80 font-medium leading-relaxed">
-            <strong className="text-gold">Demo mode</strong> — enter any email/phone and password.
-            Include <strong>admin</strong> in the email to sign in as a seller.
-          </div>
+          <DemoAuthNote onSuccess={onLogin} />
         )}
 
         {error && (

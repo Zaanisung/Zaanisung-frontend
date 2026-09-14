@@ -31,7 +31,7 @@ export const OrderStatusFilter: React.FC<OrderStatusFilterProps> = ({
           onClick={() => onChange(opt.value)}
           aria-pressed={value === opt.value}
           className={cn(
-            "flex-1 sm:flex-none min-h-[44px] px-3.5 sm:px-4 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-bold",
+            "flex-1 sm:flex-none min-h-[44px] px-3.5 sm:px-4 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-bold whitespace-nowrap",
             "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
             value === opt.value
               ? "bg-gold text-black shadow-[0_6px_16px_-8px_rgba(212,175,55,0.6)]"

@@ -1,10 +1,11 @@
 /**
  * Demo (dummy) data used when VITE_DEMO_MODE=true is set.
  *
- * The whole data set lives in memory so every operation the UI supports
- * (cart, checkout, orders, addresses, inventory, restock, sales, payments)
- * actually mutates this state for the duration of the session — no backend
- * required. Restarting the app resets everything.
+ * In demo mode the app runs against a fake backend whose entire database is
+ * persisted in localStorage. Accounts, orders, product edits and stock
+ * movements therefore survive page reloads — no real backend required, and
+ * every UI flow (registering, signing in, checkout, admin actions) can be
+ * exercised end-to-end.
  */
 
 import type {
@@ -38,6 +39,31 @@ export interface DemoProduct {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface DemoOrder {
+  _id: string;
+  id: string;
+  items: { product: string; name: string; price: number; quantity: number }[];
+  total: number;
+  status: "PENDING" | "CONFIRMED" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+  source: "ONLINE" | "PHYSICAL";
+  customer: { _id: string; name: string; email?: string; phone?: string };
+  delivery: { address: string; city: string; phone: string; digitalAddress?: string };
+  payment: { method: string; reference?: string };
+  createdAt: string;
+}
+
+export interface DemoAccount {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  password: string;
+  role: "CUSTOMER" | "ADMIN";
+  createdAt: string;
+  /** The signed-in user's full profile (addresses, payments, prefs). */
+  profile: FullUser;
 }
 
 const day = 24 * 60 * 60 * 1000;
@@ -138,7 +164,33 @@ export function seedProducts(): DemoProduct[] {
   ];
 }
 
-export function seedFullUser(): FullUser {
+/** A brand-new account gets a clean slate profile. */
+export function createEmptyProfile(account: {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  role: string;
+}): FullUser {
+  return {
+    id: account.id,
+    name: account.name,
+    email: account.email,
+    phone: account.phone || "",
+    role: account.role,
+    isEmailVerified: false,
+    isPhoneVerified: false,
+    passwordMustChange: false,
+    addresses: [],
+    paymentMethods: [],
+    appearance: { accentColor: "#d4af37", theme: "system" },
+    notificationPrefs: { orderUpdates: true, promotions: false, sms: true, email: true },
+  };
+}
+
+/** The one-tap "demo account" — a rich customer account that showcases the
+ *  full experience (saved addresses, payment methods and past orders). */
+export function seedShowcaseAccount(): DemoAccount {
   const addresses: Address[] = [
     {
       _id: "demo-addr-1",
@@ -183,27 +235,51 @@ export function seedFullUser(): FullUser {
   ];
 
   return {
-    id: "demo-user-1",
+    id: "demo-customer-1",
     name: "Aisha Mohammed",
     email: "aisha@demo.zaanisung.com",
     phone: "+233 24 555 1234",
+    password: "Demo@12345",
     role: "CUSTOMER",
-    isEmailVerified: true,
-    isPhoneVerified: true,
-    passwordMustChange: false,
-    addresses,
-    paymentMethods,
-    appearance: { accentColor: "#d4af37", theme: "system" },
-    notificationPrefs: {
-      orderUpdates: true,
-      promotions: false,
-      sms: true,
-      email: true,
+    createdAt: iso(90),
+    profile: {
+      id: "demo-customer-1",
+      name: "Aisha Mohammed",
+      email: "aisha@demo.zaanisung.com",
+      phone: "+233 24 555 1234",
+      role: "CUSTOMER",
+      isEmailVerified: true,
+      isPhoneVerified: true,
+      passwordMustChange: false,
+      addresses,
+      paymentMethods,
+      appearance: { accentColor: "#d4af37", theme: "system" },
+      notificationPrefs: {
+        orderUpdates: true,
+        promotions: false,
+        sms: true,
+        email: true,
+      },
     },
   };
 }
 
-export function seedNotifications(): AppNotification[] {
+/** Seeded admin (seller) account used by the admin portal login. */
+export function seedAdminAccount(): DemoAccount {
+  const account = {
+    id: "demo-admin-1",
+    name: "Zaanisung Manager",
+    email: "admin@zaanisung.demo",
+    phone: "+233 20 000 0000",
+    password: "Admin@12345",
+    role: "ADMIN" as const,
+    createdAt: iso(90),
+  };
+  return { ...account, profile: createEmptyProfile(account) };
+}
+
+export function seedNotifications(showcaseUserId: string): AppNotification[] {
+  const forUser = (userId: string) => ({ userId });
   return [
     {
       _id: "demo-not-1",
@@ -212,6 +288,7 @@ export function seedNotifications(): AppNotification[] {
       title: "Order shipped",
       body: "Your order ZA-1042 has left our studio and is on its way.",
       status: "SENT",
+      data: forUser(showcaseUserId),
       createdAt: iso(2),
     },
     {
@@ -222,6 +299,7 @@ export function seedNotifications(): AppNotification[] {
       body: "We hope you love Noir Intense. Rate your purchase in My Orders.",
       status: "SENT",
       readAt: iso(2),
+      data: forUser(showcaseUserId),
       createdAt: iso(3),
     },
     {
@@ -231,14 +309,15 @@ export function seedNotifications(): AppNotification[] {
       title: "New arrival",
       body: "Ember Oud is now in the collection — warm, smoky and unmistakable.",
       status: "SENT",
+      data: forUser(showcaseUserId),
       createdAt: iso(1),
     },
   ];
 }
 
 /**
- * Dummy customer records for the admin user-management view. Aisha is the
- * signed-in demo account, so she is intentionally not in this list.
+ * Extra customer records that pre-exist the demo (they are not loggable
+ * accounts — they simply fill out the admin's user-management view).
  */
 export function seedAdminCustomers(): AdminUser[] {
   return [
@@ -285,8 +364,7 @@ export function seedAdminCustomers(): AdminUser[] {
   ];
 }
 
-export function seedOrders(user: FullUser) {
-  const customer = { _id: user.id, name: user.name, email: user.email, phone: user.phone };
+export function seedOrders(customer: { _id: string; name: string; email?: string; phone?: string }): DemoOrder[] {
   return [
     {
       _id: "ORD-1042",
@@ -296,8 +374,8 @@ export function seedOrders(user: FullUser) {
         { product: "demo-p-3", name: "Sahara Nights", price: 520, quantity: 1 },
       ],
       total: 970,
-      status: "SHIPPED" as const,
-      source: "ONLINE" as const,
+      status: "SHIPPED",
+      source: "ONLINE",
       customer,
       delivery: { address: "12 Lamashegu Road", city: "Tamale", phone: "+233 24 555 1234", digitalAddress: "NT-0000-1234" },
       payment: { method: "Mobile Money (MTN MoMo)", reference: "MOMO-8821" },
@@ -310,10 +388,10 @@ export function seedOrders(user: FullUser) {
         { product: "demo-p-6", name: "Velvet Bloom", price: 410, quantity: 2 },
       ],
       total: 820,
-      status: "PENDING" as const,
-      source: "ONLINE" as const,
+      status: "PENDING",
+      source: "ONLINE",
       customer,
-      delivery: { address: "Suìte 4, Zongo Junction", city: "Tamale", phone: "+233 24 555 1234" },
+      delivery: { address: "Suite 4, Zongo Junction", city: "Tamale", phone: "+233 24 555 1234" },
       payment: { method: "Cash on Delivery" },
       createdAt: iso(1),
     },
@@ -324,8 +402,8 @@ export function seedOrders(user: FullUser) {
         { product: "demo-p-2", name: "Amber Royale", price: 380, quantity: 1 },
       ],
       total: 380,
-      status: "DELIVERED" as const,
-      source: "ONLINE" as const,
+      status: "DELIVERED",
+      source: "ONLINE",
       customer,
       delivery: { address: "12 Lamashegu Road", city: "Tamale", phone: "+233 24 555 1234" },
       payment: { method: "Paystack (Card)", reference: "PAY-99112" },

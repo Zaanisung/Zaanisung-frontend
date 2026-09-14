@@ -123,6 +123,12 @@ export const Landing: React.FC<LandingProps> = ({
   const isLoggedIn = !!currentUser;
   const showForm = !isLoggedIn && !justCreated;
 
+  const handleDemoAccount = (user: CustomerUser) => {
+    sessionStorage.setItem(SESSION_KEY, "signed");
+    setJustCreated(true);
+    onCreateAccount(user);
+  };
+
   const scrollToAuth = () =>
     document.getElementById("auth-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
 
@@ -175,6 +181,7 @@ export const Landing: React.FC<LandingProps> = ({
             onStartShopping={onStartShopping}
             onBrowseShop={onBrowseShop}
             onOpenDashboard={onOpenDashboard}
+            onDemoAccount={handleDemoAccount}
           />
         }
       />

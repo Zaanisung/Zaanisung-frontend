@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
+import { DemoAuthNote } from "../../components/auth/DemoAuthNote";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../services";
 import { getErrorMessage, IS_DEMO_MODE } from "../../services/apiClient";
@@ -78,9 +79,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
           <form onSubmit={handleSubmit} className="relative space-y-4">
             {IS_DEMO_MODE && (
-              <div className="p-3 bg-gold/10 border border-gold/40 text-[11px] text-ink/80 dark:text-cream/80 font-medium rounded-xl leading-relaxed">
-                <strong className="text-gold">Demo mode</strong> — enter any email containing <strong>admin</strong> (e.g. admin@demo.de) and any password to access the seller portal.
-              </div>
+              <DemoAuthNote role="ADMIN" onSuccess={() => onLoginSuccess()} />
             )}
 
             {error && (
