@@ -2,8 +2,7 @@ import React from "react";
 import { ArrowRight, Star } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "../Button";
-import { cn } from "../../utils/cn";
-import { storyStats, testimonials } from "./constants";
+import { storyStats } from "./constants";
 
 interface AboutSectionProps {
   onGoToLogin: () => void;
@@ -60,29 +59,18 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 gap-4 sm:gap-5 auto-rows-fr"
+          className="surface-glass rounded-xl p-8 sm:p-10 flex flex-col items-center justify-center text-center min-h-[210px] lg:min-h-[240px]"
         >
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className={cn(
-                "surface-glass rounded-xl p-6 sm:p-7 flex flex-col justify-center min-h-[210px] lg:min-h-[240px] transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:-translate-y-1",
-                i % 2 === 1 && "lg:translate-y-8 lg:hover:translate-y-7"
-              )}
-            >
-              <div className="flex items-center gap-0.5 text-gold mb-3">
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <Star key={s} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-              <p className="font-brand-serif text-sm sm:text-[0.9375rem] text-ink/85 dark:text-white/85 leading-relaxed">
-                "{t.q}"
-              </p>
-              <p className="mt-5 text-xs text-black/45 dark:text-white/45">
-                — <span className="text-ink dark:text-white font-semibold">{t.a}</span>, {t.role}
-              </p>
-            </div>
-          ))}
+          <div className="w-12 h-12 flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold mb-5">
+            <Star className="w-5 h-5" />
+          </div>
+          <h3 className="font-brand-serif text-xl sm:text-2xl font-light text-ink dark:text-white">
+            Customer Reviews — Coming Soon
+          </h3>
+          <p className="mt-3 text-sm text-black/60 dark:text-white/70 leading-relaxed max-w-md">
+            We're collecting real, verified feedback from shoppers across Ghana.
+            Genuine reviews will appear here soon.
+          </p>
         </motion.div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BadgeCheck, CheckCircle2, ArrowRight, Star } from "lucide-react";
+import { BadgeCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { CustomerUser } from "../../types";
 import { Input } from "../Input";
@@ -185,14 +185,6 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
             </button>
           </div>
         )}
-      </div>
-
-      {/* Floating rating chip */}
-      <div className="hidden lg:flex absolute -bottom-6 -left-7 items-center gap-2.5 surface-glass px-4 py-3 shadow-lift">
-        <Star className="w-4 h-4 fill-gold text-gold" />
-        <span className="text-xs text-black/60 dark:text-white/60">
-          Rated <span className="text-ink dark:text-white font-bold">4.9/5</span> by shoppers across Ghana
-        </span>
       </div>
     </motion.div>
   );

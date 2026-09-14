@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { Sparkles, ArrowRight, ArrowDown } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "../Button";
-import { trustBadges } from "./constants";
 
 interface LandingHeroProps {
   showForm: boolean;
@@ -61,26 +60,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               Explore fragrances <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
             {showForm ? <Button variant="ghost" size="lg" onClick={onScrollToAuth}>Create an account</Button> : <Button variant="ghost" size="lg" onClick={onStartShopping}>{isLoggedIn ? "My account" : "Continue shopping"}</Button>}
-          </div>
-
-          {/* Trust badges */}
-          <div className="mt-10 max-w-xl grid grid-cols-3 divide-x divide-black/10 dark:divide-white/10">
-            {trustBadges.map((badge) => {
-              const Icon = badge.icon;
-              return (
-                <div key={badge.label} className="flex flex-col items-center sm:items-start px-2 first:pl-0 sm:px-4 sm:first:pl-0">
-                  <div className="w-9 h-9 text-gold flex items-center justify-center mb-2.5">
-                    <Icon className="w-4 h-4 text-gold" />
-                  </div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-ink dark:text-white">
-                    {badge.label}
-                  </p>
-                  <p className="text-[10px] text-black/65 dark:text-white/70 mt-0.5">
-                    {badge.sub}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </motion.div>
 

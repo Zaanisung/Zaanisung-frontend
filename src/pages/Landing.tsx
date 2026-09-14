@@ -3,6 +3,7 @@ import { Product, CustomerUser } from "../types";
 import * as api from "../services";
 import { getErrorMessage } from "../services";
 import { Footer } from "../components/Footer";
+import { LandingBottomNav } from "../components/landing/LandingBottomNav";
 import { LandingHeader } from "../components/landing/LandingHeader";
 import { LandingHero } from "../components/landing/LandingHero";
 import { LandingAuthCard } from "../components/landing/LandingAuthCard";
@@ -211,6 +212,18 @@ export const Landing: React.FC<LandingProps> = ({
             onGoToLogin();
           }
         }}
+      />
+
+      {/* Bottom nav for the marketing page (mobile/tablet) + spacer so the
+          fixed bar never covers the footer content */}
+      <div
+        aria-hidden="true"
+        className="lg:hidden bg-ink"
+        style={{ height: "calc(4rem + env(safe-area-inset-bottom))" }}
+      />
+      <LandingBottomNav
+        onHome={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onShop={onBrowseShop}
       />
     </div>
   );
