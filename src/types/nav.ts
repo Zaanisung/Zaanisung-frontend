@@ -1,5 +1,5 @@
 export type CustomerTab = "shop" | "orders" | "cart" | "account";
-export type AdminTab = "dashboard" | "inventory" | "orders" | "account";
+export type AdminTab = "dashboard" | "inventory" | "orders" | "users" | "account";
 
 export type DashboardPage =
   | "overview"
@@ -60,4 +60,5 @@ export type AppView =
   | { type: "admin"; page: "record-sale"; initialProductId?: string }
   | { type: "admin"; page: "restock"; initialProductId?: string }
   | { type: "admin"; page: "orders" }
+  | { type: "admin"; page: "users" }
   | { type: "admin"; page: "account" };

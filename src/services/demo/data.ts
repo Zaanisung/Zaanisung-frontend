@@ -12,6 +12,7 @@ import type {
   PaymentMethod,
   FullUser,
   AppNotification,
+  AdminUser,
 } from "../../types";
 
 /** Solid-colour (gradient-free) perfume art placeholder. */
@@ -231,6 +232,55 @@ export function seedNotifications(): AppNotification[] {
       body: "Ember Oud is now in the collection — warm, smoky and unmistakable.",
       status: "SENT",
       createdAt: iso(1),
+    },
+  ];
+}
+
+/**
+ * Dummy customer records for the admin user-management view. Aisha is the
+ * signed-in demo account, so she is intentionally not in this list.
+ */
+export function seedAdminCustomers(): AdminUser[] {
+  return [
+    {
+      id: "demo-u-2",
+      name: "Kwame Mensah",
+      email: "kwame@demo.zaanisung.com",
+      phone: "+233 20 811 2244",
+      role: "CUSTOMER",
+      isEmailVerified: true,
+      isPhoneVerified: false,
+      createdAt: iso(12),
+    },
+    {
+      id: "demo-u-3",
+      name: "Akosua Owusu",
+      email: "akosua@demo.zaanisung.com",
+      phone: "+233 24 900 5511",
+      role: "CUSTOMER",
+      isEmailVerified: false,
+      isPhoneVerified: true,
+      createdAt: iso(28),
+    },
+    {
+      id: "demo-u-4",
+      name: "Ibrahim Sulemana",
+      email: "ibrahim@demo.zaanisung.com",
+      phone: "+233 55 470 8890",
+      role: "CUSTOMER",
+      isEmailVerified: true,
+      isPhoneVerified: true,
+      createdAt: iso(45),
+    },
+    {
+      id: "demo-u-5",
+      name: "Efua Baidoo",
+      email: "efua@demo.zaanisung.com",
+      phone: "+233 27 663 2001",
+      role: "CUSTOMER",
+      isEmailVerified: true,
+      isPhoneVerified: false,
+      createdAt: iso(60),
     },
   ];
 }

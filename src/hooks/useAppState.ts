@@ -257,6 +257,7 @@ export function useAppState() {
     if (tab === "dashboard") setView({ type: "admin", page: "dashboard" });
     else if (tab === "inventory") setView({ type: "admin", page: "inventory" });
     else if (tab === "orders") setView({ type: "admin", page: "orders" });
+    else if (tab === "users") setView({ type: "admin", page: "users" });
     else if (tab === "account") setView({ type: "admin", page: "account" });
   };
 

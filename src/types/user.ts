@@ -6,6 +6,22 @@ export type CustomerUser = {
   role: string;
 };
 
+/**
+ * The safe user projection the admin (seller) sees in the user-management
+ * view. Kept deliberately minimal — password hashes and full profile data
+ * are never exposed to the frontend.
+ */
+export type AdminUser = {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  role: "CUSTOMER" | "ADMIN";
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
+  createdAt: string;
+};
+
 export type GhanaRegion =
   | "Ahafo"
   | "Ashanti"

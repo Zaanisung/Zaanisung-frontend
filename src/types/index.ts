@@ -1,5 +1,6 @@
 export type { CustomerUser } from "./user";
 export type {
+  AdminUser,
   GhanaRegion,
   Address,
   PaymentMethodType,

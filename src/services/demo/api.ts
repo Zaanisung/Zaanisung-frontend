@@ -12,12 +12,13 @@
  *     logs in with the ADMIN role.
  */
 
-import type { Address, PaymentMethod, FullUser, AppNotification } from "../../types";
+import type { Address, PaymentMethod, FullUser, AppNotification, AdminUser } from "../../types";
 import {
   seedProducts,
   seedFullUser,
   seedNotifications,
   seedOrders,
+  seedAdminCustomers,
 } from "./data";
 import type { DemoProduct } from "./data";
 
@@ -38,6 +39,7 @@ class DemoError extends Error {
 const products: DemoProduct[] = seedProducts();
 const fullUser: FullUser = seedFullUser();
 const notifications: AppNotification[] = seedNotifications();
+const customers: AdminUser[] = seedAdminCustomers();
 const customerLookup = {
   _id: fullUser.id,
   name: fullUser.name,
@@ -444,6 +446,21 @@ const ROUTES: Route[] = [
   },
   {
     method: "GET",
+    path: ["admin", "users"],
+    handler: () => ({ users: clone(customers) }),
+  },
+  {
+    method: "DELETE",
+    path: ["admin", "users", ":id"],
+    handler: ([id]) => {
+      const index = customers.findIndex((u) => u.id === id);
+      if (index === -1) throw new DemoError(404, "User not found.");
+      const [removed] = customers.splice(index, 1);
+      return { message: "Account removed.", user: removed };
+    },
+  },
+  {
+    method: "GET",
     path: ["admin", "dashboard"],
     handler: () => {
       const today = new Date().toDateString();
@@ -575,12 +592,11 @@ function matchRoute(method: string, pathname: string) {
  */
 export async function demoRequest<T>(
   path: string,
-  options: RequestInit = {},
-  base?: string
+  options: RequestInit = {}
 ): Promise<T> {
   await wait(jitter());
 
-  const url = new URL(path, base || "http://demo.local");
+  const url = new URL(path, "http://local.host");
   const matched = matchRoute((options.method || "GET").toUpperCase(), url.pathname);
   if (!matched) {
     throw new DemoError(404, `Demo mode: no mock for ${options.method || "GET"} ${url.pathname}`);

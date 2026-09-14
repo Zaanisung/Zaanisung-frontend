@@ -1,6 +1,7 @@
 import { request } from "./apiClient";
 import type { Order } from "./order.service";
 import type { StockMovement } from "./inventory.service";
+import type { AdminUser } from "../types";
 
 export async function getAllOrders(): Promise<{ orders: Order[] }> {
   return request("/admin/orders");
@@ -14,6 +15,14 @@ export async function updateOrderStatus(
     method: "PATCH",
     body: JSON.stringify({ status }),
   });
+}
+
+export async function getAllUsers(): Promise<{ users: AdminUser[] }> {
+  return request("/admin/users");
+}
+
+export async function deleteUser(id: string): Promise<{ message: string }> {
+  return request(`/admin/users/${id}`, { method: "DELETE" });
 }
 
 export interface DashboardData {
