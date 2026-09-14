@@ -60,7 +60,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           />
 
           {/* Brand — logo only, no text, no frame. Transparent PNG on its own. */}
-          <div className="relative flex items-center justify-center pb-6 px-2">
+          <div className="relative flex items-center px-2 pb-6">
             <Logo className="h-9 w-9" />
           </div>
 
@@ -129,7 +129,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <header className="lg:hidden px-3 pt-3 flex items-center justify-between gap-2 flex-nowrap">
           <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
             <Logo className="h-8 w-8 shrink-0" />
-            <span className="rounded-md text-[9px] uppercase tracking-widest bg-gold text-ink px-1.5 py-0.5 font-bold shrink-0">
+            <span className="rounded-full text-[9px] uppercase tracking-widest bg-gold text-ink px-2 py-0.5 font-bold shrink-0">
               ADMIN
             </span>
           </div>
@@ -138,7 +138,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <button
               type="button"
               onClick={onReturnToStorefront}
-              className="rounded-lg min-h-[44px] px-3 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              className="rounded-full min-h-[44px] px-4 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <Store className="w-3.5 h-3.5 text-gold" />
               <span>Store</span>
@@ -151,7 +151,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
-            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <TrendingUp className="w-3.5 h-3.5 text-gold" />
             <span>Record Sale</span>
@@ -159,7 +159,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("restock")}
-            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <RefreshCw className="w-3.5 h-3.5 text-gold" />
             <span>Restock</span>
@@ -167,7 +167,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("add-product")}
-            className="rounded-lg min-h-[40px] px-3 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <PlusCircle className="w-3.5 h-3.5 text-gold" />
             <span>+ Add</span>

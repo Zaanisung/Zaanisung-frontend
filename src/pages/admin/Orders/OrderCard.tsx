@@ -49,7 +49,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           <select
             value={order.status}
             onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
-            className="min-h-[36px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-xs uppercase tracking-wider font-semibold text-black dark:text-white px-2 py-1 focus:outline-none focus:border-gold rounded-lg"
+            className="min-h-[38px] bg-white dark:bg-white/5 border border-black/10 dark:border-white/15 text-xs uppercase tracking-wider font-semibold text-black dark:text-white px-2 py-1 focus:outline-none focus:border-gold rounded-full"
           >
             {statuses.map((st) => (
               <option key={st} value={st}>

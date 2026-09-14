@@ -34,7 +34,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         />
 
         {/* Header — logo only, no text, no frame */}
-        <div className="relative flex items-center justify-center px-2 pb-5">
+        <div className="relative flex items-center px-2 pb-5">
           <Logo className="h-9 w-9" />
         </div>
 
