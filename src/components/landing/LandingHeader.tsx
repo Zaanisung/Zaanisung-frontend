@@ -4,6 +4,7 @@ import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
 import { navLinks } from "./constants";
+import { FullscreenToggle } from "../ui/FullscreenToggle";
 
 interface LandingHeaderProps {
   isLoggedIn: boolean;
@@ -53,6 +54,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <FullscreenToggle />
           {isLoggedIn ? (
             <>
               {onOpenDashboard && (

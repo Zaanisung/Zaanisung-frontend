@@ -243,6 +243,11 @@ export function useAppState() {
     }
   }, [customerUser, isAdminLoggedIn]);
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (customerUser || isAdminLoggedIn) refreshOrders();
+  }, [customerUser, isAdminLoggedIn, refreshOrders]);
+
   // ─── Navigation helpers ─────────────────────────────────────────────
   const handleCustomerTabChange = (tab: CustomerTab) => {
     setCustomerTab(tab);

@@ -4,7 +4,7 @@ import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../services";
-import { getErrorMessage } from "../../services";
+import { getErrorMessage, IS_DEMO_MODE } from "../../services/apiClient";
 
 export interface AdminLoginProps {
   onLoginSuccess: () => void;
@@ -77,6 +77,12 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
           <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
           <form onSubmit={handleSubmit} className="relative space-y-4">
+            {IS_DEMO_MODE && (
+              <div className="p-3 bg-gold/10 border border-gold/40 text-[11px] text-ink/80 dark:text-cream/80 font-medium rounded-xl leading-relaxed">
+                <strong className="text-gold">Demo mode</strong> — enter any email containing <strong>admin</strong> (e.g. admin@demo.de) and any password to access the seller portal.
+              </div>
+            )}
+
             {error && (
               <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium rounded-xl">
                 {error}

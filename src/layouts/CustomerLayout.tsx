@@ -4,6 +4,7 @@ import { BottomNav } from "../components/BottomNav";
 import { Logo } from "../components/Logo";
 import { Footer } from "../components/Footer";
 import { ErrorBoundary } from "../components/ui/Fallback";
+import { FullscreenToggle } from "../components/ui/FullscreenToggle";
 import { ShoppingBag } from "lucide-react";
 import { cn } from "../utils/cn";
 
@@ -82,7 +83,8 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+          <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
+            <FullscreenToggle />
             {userName && onOpenDashboard && (
               <button
                 type="button"

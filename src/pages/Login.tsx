@@ -4,7 +4,7 @@ import { Button } from "../components/Button";
 import { AuthShell } from "../components/auth/AuthShell";
 import { CustomerUser } from "../types";
 import * as api from "../services";
-import { getErrorMessage } from "../services";
+import { getErrorMessage, IS_DEMO_MODE } from "../services/apiClient";
 
 export interface LoginProps {
   onLogin: (user: CustomerUser) => void;
@@ -69,6 +69,13 @@ export const Login: React.FC<LoginProps> = ({
       onBack={onReturnToLanding}
     >
       <form onSubmit={handleSubmit} className="space-y-5">
+        {IS_DEMO_MODE && (
+          <div className="rounded-xl p-3 bg-gold/10 border border-gold/40 text-[11px] text-ink/80 dark:text-cream/80 font-medium leading-relaxed">
+            <strong className="text-gold">Demo mode</strong> — enter any email/phone and password.
+            Include <strong>admin</strong> in the email to sign in as a seller.
+          </div>
+        )}
+
         {error && (
           <div className="rounded-xl p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-sm text-red-700 dark:text-red-300 font-medium">
             {error}
