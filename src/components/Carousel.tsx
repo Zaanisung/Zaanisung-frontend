@@ -137,10 +137,10 @@ export const Carousel = <T,>({
         onPointerLeave={handleDragEnd}
         onClick={handleTrackClick}
         className={cn(
-          "flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory scroll-smooth select-none py-1",
+          "flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-proximity scroll-smooth select-none py-1",
           isDragging ? "cursor-grabbing" : "cursor-grab"
         )}
-        style={{ overscrollBehaviorX: "contain", overscrollBehaviorY: "none" }}
+        style={{ overscrollBehaviorX: "contain" }}
       >
         {items.map((item, index) => (
           <div

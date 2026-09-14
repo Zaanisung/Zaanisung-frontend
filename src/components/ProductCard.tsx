@@ -48,7 +48,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       )}
     >
       {/* Product image */}
-      <div className="relative w-full aspect-[4/5] overflow-hidden rounded-t-[18px] flex-shrink-0 bg-[#ece6da]">
+      <div className="relative w-full aspect-square overflow-hidden rounded-t-[18px] flex-shrink-0 bg-[#ece6da]">
         {hasImage ? (
           <img
             src={resolveApiUrl(product.imageUrl)}
@@ -79,17 +79,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           )}
         </div>
-
-        {/* Size indicator */}
-        <div className="absolute bottom-3 left-3 z-10">
-          <span className="inline-block rounded-full px-2 py-1 bg-black/65 text-cream/90 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold">
-            100 ml
-          </span>
-        </div>
       </div>
 
       {/* Product information */}
-      <div className="flex flex-col gap-2.5 p-4 flex-1">
+      <div className="flex flex-col gap-2 sm:gap-2.5 p-3 sm:p-4 flex-1">
         <div className="flex flex-col gap-1">
           <h3
             className={cn(
@@ -127,7 +120,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             if (!isOutOfStock) onAddToCart(product, e);
           }}
           className={cn(
-            "w-full min-h-[46px] py-2.5 px-4 rounded-xl",
+            "w-full min-h-[42px] sm:min-h-[46px] py-2 sm:py-2.5 px-4 rounded-xl",
             "text-[11px] sm:text-xs uppercase tracking-widest font-bold",
             "flex items-center justify-center gap-2",
             "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
