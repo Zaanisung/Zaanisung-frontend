@@ -33,10 +33,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           aria-hidden="true"
         />
 
-        {/* Header */}
-        <div className="relative pb-5 border-b border-white/10 flex items-center gap-3 px-2">
-          <Logo className="h-8 w-8 flex-shrink-0" />
-          <span className="font-brand-serif tracking-[0.12em] text-base text-cream">ZAANISUNG</span>
+        {/* Header — logo only, no text, no frame */}
+        <div className="relative flex items-center justify-center px-2 pb-5">
+          <Logo className="h-9 w-9" />
         </div>
 
         {/* Nav */}

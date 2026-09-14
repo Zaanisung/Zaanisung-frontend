@@ -30,12 +30,20 @@ export const ACCOUNT_NAV: { group: string; items: DashboardNavItem[] }[] = [
   },
 ];
 
+/** Primary tabs pinned on the bottom nav bar (fits 5 slots without overflow). */
 export const BOTTOM_NAV: DashboardNavItem[] = [
   { id: "overview", label: "Home", icon: LayoutDashboard },
   { id: "shop", label: "Shop", icon: Store },
   { id: "cart", label: "Cart", icon: ShoppingBag },
   { id: "orders", label: "Orders", icon: Package },
+];
+
+/** Secondary tabs exposed through the "More" drop-up. */
+export const MORE_NAV: DashboardNavItem[] = [
   { id: "settings", label: "Settings", icon: Settings },
+  { id: "addresses", label: "Addresses", icon: MapPin },
+  { id: "payment-methods", label: "Payment Methods", icon: CreditCard },
+  { id: "notifications", label: "Notifications", icon: Bell },
 ];
 
 const ALL_NAV_ITEMS: DashboardNavItem[] = ACCOUNT_NAV.flatMap((g) => g.items);
@@ -50,6 +58,11 @@ export function isNavActive(
   if (page === "cart" && activePage === "checkout") return true;
   if (page === "orders" && activePage === "order-confirmation") return true;
   return false;
+}
+
+/** True while one of the "More" drop-up pages is the active page. */
+export function isMoreNavActive(activePage: DashboardPage): boolean {
+  return MORE_NAV.some((item) => isNavActive(item.id, activePage));
 }
 
 /** Best-effort human label for the current page (used by the mobile header). */
