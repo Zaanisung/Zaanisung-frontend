@@ -120,7 +120,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             if (!isOutOfStock) onAddToCart(product, e);
           }}
           className={cn(
-            "w-full min-h-[40px] sm:min-h-[46px] py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl",
+            "w-full min-h-[44px] sm:min-h-[46px] py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl",
             "text-[10px] sm:text-xs uppercase tracking-widest font-bold",
             "flex items-center justify-center gap-1.5 sm:gap-2",
             "transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",

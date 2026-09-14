@@ -22,7 +22,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   authPanel,
 }) => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" data-tour="landing-hero">
       {/* Ambient backdrop */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="scene-bg scene-hero" />

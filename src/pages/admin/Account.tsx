@@ -76,6 +76,7 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
             size="md"
             onClick={onLogout}
             className="w-full flex items-center justify-center gap-2"
+            data-tour="admin-account"
           >
             <LogOut className="w-4 h-4" />
             <span>Exit Admin Session</span>

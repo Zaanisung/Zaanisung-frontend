@@ -19,7 +19,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({
   onScrollToAuth,
 }) => {
   return (
-    <section className="relative overflow-hidden bg-cream dark:bg-black">
+    <section className="relative overflow-hidden bg-cream dark:bg-black" data-tour="landing-cta">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="scene-bg scene-cta" />

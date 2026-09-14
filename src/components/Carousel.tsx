@@ -178,13 +178,13 @@ export const Carousel = <T,>({
                       onClick={() => scrollToSlide(i)}
                       aria-label={`Go to slide ${i + 1}`}
                       className={cn(
-                        "min-h-[26px] min-w-[14px] flex items-center transition-all focus-visible:outline-none",
-                        activeDot === i ? "min-w-[30px]" : "opacity-40 hover:opacity-80"
+                        "min-h-[44px] min-w-[44px] px-2 inline-flex items-center justify-center transition-all focus-visible:outline-none",
+                        activeDot === i ? "min-w-[56px]" : "opacity-40 hover:opacity-80"
                       )}
                     >
                       <span
                         className={cn(
-                          "h-[2px] w-full transition-colors",
+                          "h-[3px] w-full rounded-full transition-colors",
                           activeDot === i ? "bg-gold" : "bg-black/30 dark:bg-white/30"
                         )}
                       />

@@ -140,7 +140,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://..."
-                  className="w-full px-3 py-1.5 text-xs surface-glass text-black/60 dark:text-white/60 focus:outline-none focus:border-gold"
+                  className="w-full min-h-[44px] px-3 py-1.5 text-xs surface-glass text-black/60 dark:text-white/60 focus:outline-none focus:border-gold"
                 />
               </div>
             </div>

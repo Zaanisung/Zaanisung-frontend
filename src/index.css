@@ -117,6 +117,9 @@
   --animate-zoom-in: zoom-in 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   --animate-slide-up: slide-up 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   --animate-slide-down: slide-down 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+  /* Onboarding spotlight ring breathing */
+  --animate-tour-pulse: tour-pulse 1.8s ease-in-out infinite;
 }
 
 @layer base {
@@ -697,4 +700,14 @@ button:where(a) {
     rgba(255, 255, 255, 0.06) 75%
   );
   background-size: 200% 100%;
+}
+
+/* ── Onboarding spotlight ring breathing ──────────────────────── */
+@keyframes tour-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.tour-ring-pulse {
+  animation: tour-pulse 1.8s ease-in-out infinite;
 }

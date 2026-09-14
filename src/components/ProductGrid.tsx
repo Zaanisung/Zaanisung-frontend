@@ -3,8 +3,9 @@ import { Product } from "../types";
 import { ProductCard } from "./ProductCard";
 import { SearchInput } from "./ui/SearchInput";
 import { Loader } from "./ui/Loader";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, CircleHelp } from "lucide-react";
 import { cn } from "../utils/cn";
+import { startOnboarding } from "../onboarding/onboardingBus";
 
 export interface ProductGridProps {
   products: Product[];
@@ -69,25 +70,40 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
 
         {/* Search */}
-        <SearchInput
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search fragrance name..."
-          ariaLabel="Search perfumes"
-          className="w-full lg:w-80"
-        />
+        <div className="flex items-center gap-2 w-full lg:w-auto" data-tour="shop-search">
+          <SearchInput
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search fragrance name..."
+            ariaLabel="Search perfumes"
+            className="w-full lg:w-80"
+          />
+          <button
+            type="button"
+            onClick={() => startOnboarding("buyer-shop")}
+            aria-label="Replay the catalog walkthrough"
+            title="Replay walkthrough"
+            className="hidden min-[380px]:flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-black/45 dark:text-white/50 hover:text-gold border border-transparent hover:border-gold/40 transition-colors flex-shrink-0"
+          >
+            <CircleHelp className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
       <div className="flex items-center justify-between gap-2 pt-1">
-        <div className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none flex-1">
+        <div
+          className="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none flex-1"
+          data-tour="shop-filters"
+        >
           {filterOptions.map((opt) => (
             <button
               key={opt.id}
               type="button"
               onClick={() => setActiveFilter(opt.id)}
+              aria-pressed={activeFilter === opt.id}
               className={cn(
-                "min-h-[40px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border rounded-full",
+                "min-h-[44px] px-4 py-1.5 text-[11px] uppercase tracking-wider font-semibold whitespace-nowrap transition-all border rounded-full",
                 activeFilter === opt.id
                   ? "bg-ink text-cream border-ink dark:bg-gold dark:text-ink dark:border-gold"
                   : "bg-white/60 dark:bg-white/[0.05] text-black/60 dark:text-white/65 border-black/15 dark:border-white/15 hover:border-gold hover:text-ink dark:hover:text-white"
@@ -173,7 +189,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           </div>
         </div>
       ) : (
-        <div className="grid gap-3 sm:gap-4 xl:gap-5 grid-cols-1 min-[460px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          className="grid gap-3 sm:gap-4 xl:gap-5 grid-cols-1 min-[460px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          data-tour="shop-grid"
+        >
           {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}

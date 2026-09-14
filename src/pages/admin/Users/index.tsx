@@ -158,7 +158,10 @@ export const UserManagement: React.FC = () => {
       )}
 
       {!error && !loading && filteredUsers.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+          data-tour="admin-users"
+        >
           {filteredUsers.map((user) => (
             <div
               key={user.id}
@@ -194,7 +197,7 @@ export const UserManagement: React.FC = () => {
                   disabled={deletingId === user.id || user.role === "ADMIN"}
                   aria-label={`Remove ${user.name}`}
                   className={cn(
-                    "rounded-lg min-h-[40px] min-w-[40px] flex items-center justify-center transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                    "rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                     user.role === "ADMIN"
                       ? "text-black/25 dark:text-white/25 cursor-not-allowed"
                       : "text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-red-500/10"

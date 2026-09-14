@@ -62,7 +62,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
           <button
             type="button"
             onClick={() => onSetDefault(addr._id)}
-            className="min-h-[36px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold border border-gold/40 hover:bg-gold/10 transition-colors flex items-center gap-1 rounded-lg"
+            className="min-h-[44px] px-3 text-[10px] uppercase tracking-wider font-bold text-gold border border-gold/40 hover:bg-gold/10 transition-colors flex items-center gap-1 rounded-lg"
           >
             <Star className="w-3 h-3" />
             Make default
@@ -71,7 +71,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
         <button
           type="button"
           onClick={() => onEdit(addr)}
-          className="min-h-[36px] px-3 text-[10px] uppercase tracking-wider font-bold text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-1 rounded-lg"
+          className="min-h-[44px] px-3 text-[10px] uppercase tracking-wider font-bold text-black/60 dark:text-white/60 border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-1 rounded-lg"
         >
           <Pencil className="w-3 h-3" />
           Edit
@@ -79,7 +79,7 @@ export const AddressCard: React.FC<AddressCardProps> = ({
         <button
           type="button"
           onClick={() => onDelete(addr._id)}
-          className="min-h-[36px] px-3 text-[10px] uppercase tracking-wider font-bold text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors flex items-center gap-1 rounded-lg"
+          className="min-h-[44px] px-3 text-[10px] uppercase tracking-wider font-bold text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors flex items-center gap-1 rounded-lg"
         >
           <Trash2 className="w-3 h-3" />
           Remove

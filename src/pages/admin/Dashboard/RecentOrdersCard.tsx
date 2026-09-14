@@ -25,7 +25,10 @@ export const RecentOrdersCard: React.FC<RecentOrdersCardProps> = ({
   const recent = orders.slice(0, 4);
 
   return (
-    <div className="relative overflow-hidden rounded-[18px] surface-glass-strong p-4 sm:p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
+    <div
+      className="relative overflow-hidden rounded-[18px] surface-glass-strong p-4 sm:p-5 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]"
+      data-tour="admin-recent-orders"
+    >
       <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
       <div className="relative flex flex-wrap items-center justify-between gap-2 mb-2">
         <h3 className="text-xs uppercase tracking-widest text-black dark:text-white font-bold flex items-center gap-2 min-w-0">
@@ -35,7 +38,7 @@ export const RecentOrdersCard: React.FC<RecentOrdersCardProps> = ({
         <button
           type="button"
           onClick={onViewAll}
-          className="inline-flex items-center gap-1 min-h-[36px] px-3 rounded-full text-[10px] text-gold border border-transparent hover:border-gold/40 hover:bg-gold/10 uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+          className="inline-flex items-center gap-1 min-h-[44px] px-3 rounded-full text-[10px] text-gold border border-transparent hover:border-gold/40 hover:bg-gold/10 uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
         >
           View All ({orders.length})
           <ArrowRight className="w-3.5 h-3.5 text-gold" />

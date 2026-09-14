@@ -43,7 +43,10 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({
   });
 
   return (
-    <div className="w-full space-y-6">
+    <div
+          className="w-full space-y-6"
+          data-tour="admin-orders"
+        >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
           <h2 className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif">

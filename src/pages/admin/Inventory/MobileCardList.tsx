@@ -74,7 +74,10 @@ export const MobileCardList: React.FC<MobileCardListProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 pt-3">
+            <div
+              className="grid grid-cols-2 min-[400px]:grid-cols-4 gap-2 pt-3"
+              data-tour="admin-inventory-actions"
+            >
               <button
                 type="button"
                 onClick={() => onQuickSale(p.id)}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAppState } from "./hooks/useAppState";
 import { AppRouter } from "./router";
 import { FullPageLoader } from "./components/ui/Loader";
+import { OnboardingTour } from "./components/onboarding/OnboardingTour";
 import { cn } from "./utils/cn";
 
 type LoaderPhase = "booting" | "fading" | "ready";
@@ -91,6 +92,12 @@ export default function App() {
     <>
       <AppRouter {...state} />
       {phase === "fading" && <FadeOutOverlay />}
+      <OnboardingTour
+        view={state.view}
+        isAdminLoggedIn={state.isAdminLoggedIn}
+        isBootstrapping={state.isBootstrapping}
+        onAdminTabChange={state.onAdminTabChange}
+      />
     </>
   );
 }

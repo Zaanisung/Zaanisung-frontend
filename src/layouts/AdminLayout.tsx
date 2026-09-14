@@ -12,8 +12,10 @@ import {
   TrendingUp,
   RefreshCw,
   Store,
+  CircleHelp,
 } from "lucide-react";
 import { cn } from "../utils/cn";
+import { startOnboarding } from "../onboarding/onboardingBus";
 
 export interface AdminLayoutProps {
   children: React.ReactNode;
@@ -68,6 +70,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <nav
             className="relative flex flex-col gap-1 min-h-0"
             aria-label="Admin Navigation"
+            data-tour="admin-nav"
           >
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -110,7 +113,15 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           </nav>
 
           {/* Storefront — pinned to the bottom */}
-          <div className="relative mt-auto pt-4 border-t border-white/10">
+          <div className="relative mt-auto pt-4 border-t border-white/10 space-y-1">
+            <button
+              type="button"
+              onClick={() => startOnboarding("admin")}
+              className="rounded-lg w-full min-w-0 min-h-[44px] px-3.5 py-2.5 text-xs uppercase tracking-widest font-semibold text-cream/55 hover:text-cream hover:bg-white/[0.06] flex items-center gap-2.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            >
+              <CircleHelp className="w-4 h-4 text-gold flex-shrink-0" />
+              <span className="truncate min-w-0">Replay Walkthrough</span>
+            </button>
             <button
               type="button"
               onClick={onReturnToStorefront}
@@ -137,6 +148,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <div className="flex items-center gap-2 flex-shrink-0">
             <button
               type="button"
+              onClick={() => startOnboarding("admin")}
+              aria-label="Replay walkthrough"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-ink/50 dark:text-white/55 hover:text-gold transition-colors"
+            >
+              <CircleHelp className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
               onClick={onReturnToStorefront}
               className="rounded-full min-h-[44px] px-4 text-xs uppercase tracking-wider font-semibold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
@@ -151,7 +170,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("record-sale")}
-            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[44px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <TrendingUp className="w-3.5 h-3.5 text-gold" />
             <span>Record Sale</span>
@@ -159,7 +178,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("restock")}
-            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[44px] px-4 text-[10px] uppercase tracking-wider font-bold text-gold bg-gold/10 border border-gold/40 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <RefreshCw className="w-3.5 h-3.5 text-gold" />
             <span>Restock</span>
@@ -167,7 +186,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTo("add-product")}
-            className="rounded-full min-h-[40px] px-4 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="rounded-full min-h-[44px] px-4 text-[10px] uppercase tracking-wider font-bold text-ink/60 dark:text-white/60 surface-glass border border-black/10 dark:border-white/15 flex items-center gap-1.5 whitespace-nowrap transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <PlusCircle className="w-3.5 h-3.5 text-gold" />
             <span>+ Add</span>
@@ -185,6 +204,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         id="admin-bottom-nav"
         className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 dark:bg-black/75 border-t border-black/10 dark:border-white/15 pb-safe backdrop-blur-xl"
         aria-label="Admin Mobile Navigation"
+        data-tour="admin-mobile-nav"
       >
         <div className="grid grid-cols-5 h-16 max-w-md mx-auto px-1">
           {navItems.map((item) => {

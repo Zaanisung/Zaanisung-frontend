@@ -25,7 +25,7 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
   const featured = products.slice(0, 8);
 
   return (
-    <section id="collections" className="relative bg-white dark:bg-black">
+    <section id="collections" className="relative bg-white dark:bg-black" data-tour="landing-collections">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="scene-bg scene-collections" aria-hidden="true" />
       <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
