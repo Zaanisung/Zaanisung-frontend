@@ -6,6 +6,7 @@ import type { DashboardNavPage } from "../../types/nav";
 import { ProductCard } from "../../components/ProductCard";
 import { Skeleton, ProductCardSkeleton, ListRowSkeleton } from "../../components/ui/Skeleton";
 import { startOnboarding } from "../../onboarding/onboardingBus";
+import { firstName } from "../../utils/name";
 import {
   MapPin,
   CreditCard,
@@ -79,7 +80,7 @@ export const Overview: React.FC<OverviewProps> = ({
             Welcome Back
           </p>
           <h2 className="text-2xl sm:text-3xl font-light text-black dark:text-white font-brand-serif">
-            Hello{user?.name ? `, ${user.name.split(" ")[0]}` : ""}
+            Hello{firstName(user?.name) ? `, ${firstName(user?.name)}` : ""}
           </h2>
           <p className="text-xs text-black/50 dark:text-white/50 mt-1">
             Here is a snapshot of your account activity.

@@ -6,6 +6,7 @@ import { Input } from "../Input";
 import { Button } from "../Button";
 import { DemoAuthNote } from "../auth/DemoAuthNote";
 import { IS_DEMO_MODE } from "../../services/apiClient";
+import { firstName } from "../../utils/name";
 import { cn } from "../../utils/cn";
 
 export type AuthMode = "signup" | "login";
@@ -166,7 +167,7 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
             </div>
             <h2 className="font-brand-serif text-2xl sm:text-3xl font-light text-ink dark:text-white">
               {isLoggedIn
-                ? `Welcome, ${currentUser?.name.split(" ")[0] ?? ""}`
+                ? `Welcome, ${firstName(currentUser?.name)}`
                 : justCreated
                   ? "You're all set"
                   : "Welcome back"}
