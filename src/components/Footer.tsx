@@ -38,16 +38,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
-              <Logo className="h-10 w-10" />
-              <div>
-                <span className="font-brand-serif text-cream text-xl tracking-[0.16em] font-light block leading-none">
-                  ZAANISUNG
-                </span>
-                <span className="eyebrow text-gold mt-1.5 block">
-                  Fragrance House · Tamale, Ghana
-                </span>
-              </div>
+            <div>
+              <Logo className="h-8 sm:h-9" showWordmark />
+              <span className="eyebrow text-gold mt-2 block">
+                Fragrance House · Tamale, Ghana
+              </span>
             </div>
             <p className="text-sm leading-relaxed max-w-md">
               Zaanisung is an artisanal fragrance house based in Tamale, Ghana.

@@ -198,7 +198,8 @@ export const OnboardingTour: React.FC<OnboardingTourProps> = ({
 
   const rect = target.rect;
   const el = target.el;
-  const borderRadius = window.getComputedStyle(el).borderRadius || "18px";
+  const computedRadius = window.getComputedStyle(el).borderRadius;
+  const borderRadius = computedRadius && computedRadius !== "0px" ? computedRadius : "18px";
 
   const showAbove = rect.bottom + 16 + TOOLTIP_HEIGHT > window.innerHeight && rect.top - TOOLTIP_HEIGHT - 16 >= 12;
   const tooltipTop = showAbove

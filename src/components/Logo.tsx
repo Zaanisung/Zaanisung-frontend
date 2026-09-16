@@ -4,32 +4,22 @@ import { cn } from "../utils/cn";
 export interface LogoProps {
   className?: string;
   showWordmark?: boolean;
-  wordmarkClassName?: string;
 }
 
 export const Logo: React.FC<LogoProps> = ({
-  className = "h-9 w-9",
+  className,
   showWordmark = false,
-  wordmarkClassName = "",
 }) => {
+  const sizeClass = showWordmark ? (className ?? "h-9") : (className ?? "h-9 w-9");
+
   return (
     <div className="flex items-center gap-2">
       <img
-        src="/logo.png"
+        src={showWordmark ? "/assets/logo-full.png" : "/assets/logo-mark.png"}
         alt="Zaanisung"
-        className={`${className} object-contain select-none`}
+        className={cn("object-contain select-none", sizeClass)}
         draggable={false}
       />
-      {showWordmark && (
-        <span
-          className={cn(
-            "text-lg tracking-[0.16em] font-light text-black dark:text-white font-brand-serif",
-            wordmarkClassName
-          )}
-        >
-          ZAANISUNG
-        </span>
-      )}
     </div>
   );
 };

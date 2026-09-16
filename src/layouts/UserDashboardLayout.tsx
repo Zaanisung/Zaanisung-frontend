@@ -5,6 +5,7 @@ import { ErrorBoundary } from "../components/ui/Fallback";
 import { Sidebar } from "../components/dashboard/Sidebar";
 import { DashboardHeader } from "../components/dashboard/DashboardHeader";
 import { MobileBottomNav } from "../components/dashboard/MobileBottomNav";
+import { FullscreenToggle } from "../components/ui/FullscreenToggle";
 
 export interface UserDashboardLayoutProps {
   children: React.ReactNode;
@@ -59,6 +60,8 @@ export const UserDashboardLayout: React.FC<UserDashboardLayoutProps> = ({
         cartCount={cartCount}
         onNavigate={onNavigate}
       />
+
+      <FullscreenToggle className="fixed right-4 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.625rem)] lg:right-6 lg:bottom-6 z-50" />
     </div>
   );
 };

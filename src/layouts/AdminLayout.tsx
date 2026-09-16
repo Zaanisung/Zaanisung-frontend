@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "../utils/cn";
 import { startOnboarding } from "../onboarding/onboardingBus";
+import { FullscreenToggle } from "../components/ui/FullscreenToggle";
 
 export interface AdminLayoutProps {
   children: React.ReactNode;
@@ -242,6 +243,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           })}
         </div>
       </nav>
+
+      <FullscreenToggle className="fixed right-4 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.625rem)] lg:right-6 lg:bottom-6 z-50" />
     </div>
   );
 };

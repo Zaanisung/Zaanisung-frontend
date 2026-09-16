@@ -48,12 +48,7 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
               className="text-left focus:outline-none flex items-center gap-3 shrink-0"
               aria-label="Zaanisung home"
             >
-              <Logo className="h-10 w-10 sm:h-11 sm:w-11" />
-              <span className="hidden sm:block">
-                <span className="font-brand-serif text-xl sm:text-2xl tracking-[0.16em] font-light text-ink dark:text-white hover:text-gold transition-colors block leading-none">
-                  ZAANISUNG
-                </span>
-              </span>
+              <Logo className="h-9 sm:h-10" showWordmark />
             </button>
 
             {/* Desktop nav */}
@@ -84,7 +79,6 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
 
           {/* Right actions */}
           <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-            <FullscreenToggle />
             {userName && onOpenDashboard && (
               <button
                 type="button"
@@ -135,6 +129,8 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
       />
 
       <BottomNav activeTab={activeTab} onChangeTab={onChangeTab} cartCount={cartCount} />
+
+      <FullscreenToggle className="fixed right-4 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.625rem)] lg:right-6 lg:bottom-6 z-50" />
     </div>
   );
 };

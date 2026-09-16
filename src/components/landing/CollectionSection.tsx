@@ -28,13 +28,13 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
     <section id="collections" className="relative bg-white dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="scene-bg scene-collections" aria-hidden="true" />
-      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24">
+      <div className="relative z-10 w-full min-h-screen flex flex-col justify-center py-16 sm:py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10 px-4 sm:px-8 lg:px-12"
         >
           <div>
             <span className="eyebrow text-gold">Selected for you</span>
@@ -56,37 +56,48 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
         </motion.div>
 
         {isLoadingProducts ? (
-          <div className="flex gap-5 overflow-hidden">
+          <div className="relative flex gap-5 overflow-hidden pl-4 sm:pl-8 lg:pl-12 pr-4 sm:pr-8 lg:pr-12">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="shrink-0 w-full min-[460px]:w-[46%] md:w-[31%] aspect-square animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-2xl" />
+              <div key={i} className="shrink-0 w-[86%] min-[460px]:w-[46%] md:w-[31%] aspect-square animate-pulse bg-black/5 dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-2xl" />
             ))}
           </div>
         ) : featured.length === 0 ? (
-          <p className="text-sm text-black/45 dark:text-white/45 py-10 border border-dashed border-black/15 dark:border-white/15 p-6 max-w-md rounded-2xl">
+          <p className="text-sm text-black/45 dark:text-white/45 py-10 border border-dashed border-black/15 dark:border-white/15 p-6 max-w-md rounded-2xl mx-4 sm:mx-8 lg:mx-12">
             New fragrances are being prepared. Check back soon.
           </p>
         ) : (
-          <Carousel
-            items={featured}
-            keyExtractor={(p) => p.id}
-            renderItem={(product, index) => (
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: Math.min(index, 3) * 0.06 }}
-                className="h-full"
-              >
-                <ProductCard
-                  product={product}
-                  onSelect={onSelectProduct}
-                  onAddToCart={onAddToCart}
-                  isAdded={recentlyAddedId === product.id}
-                />
-              </motion.div>
-            )}
-            ariaLabel="Signature collection carousel"
-          />
+          <div className="relative px-4 sm:px-8 lg:px-12">
+            {/* Soft edge merges so cards glide off the screen instead of hard-clipping */}
+            <div
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 sm:w-14 lg:w-20 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-black dark:via-black/80"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 sm:w-14 lg:w-20 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-black dark:via-black/80"
+              aria-hidden="true"
+            />
+            <Carousel
+              items={featured}
+              keyExtractor={(p) => p.id}
+              renderItem={(product, index) => (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: Math.min(index, 3) * 0.06 }}
+                  className="h-full"
+                >
+                  <ProductCard
+                    product={product}
+                    onSelect={onSelectProduct}
+                    onAddToCart={onAddToCart}
+                    isAdded={recentlyAddedId === product.id}
+                  />
+                </motion.div>
+              )}
+              ariaLabel="Signature collection carousel"
+            />
+          </div>
         )}
       </div>
     </section>

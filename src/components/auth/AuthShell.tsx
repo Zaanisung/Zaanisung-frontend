@@ -57,11 +57,8 @@ export const AuthShell: React.FC<AuthShellProps> = ({
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-10 xl:p-16 text-cream w-full items-start text-left">
           <div>
-            <Logo className="h-16 w-16 mb-6" />
-            <h1 className="text-5xl xl:text-6xl font-light tracking-widest font-brand-serif mb-3">
-              ZAANISUNG
-            </h1>
-            <p className="text-sm uppercase tracking-[0.25em] text-gold-300 font-semibold">
+            <Logo className="h-10 sm:h-12" showWordmark />
+            <p className="text-sm uppercase tracking-[0.25em] text-gold-300 font-semibold mt-3">
               {brandStatement}
             </p>
           </div>
@@ -107,11 +104,8 @@ export const AuthShell: React.FC<AuthShellProps> = ({
 
           {/* Mobile branding */}
           <div className="lg:hidden text-center mb-8 flex flex-col items-center">
-            <Logo className="h-14 w-14 mb-3" />
-            <h2 className="text-2xl font-light tracking-widest text-ink dark:text-cream font-brand-serif">
-              ZAANISUNG
-            </h2>
-            <p className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mt-1">
+            <Logo className="h-8 sm:h-9" showWordmark />
+            <p className="text-xs uppercase tracking-[0.2em] text-gold font-semibold mt-2">
               Exclusive Fragrances
             </p>
           </div>

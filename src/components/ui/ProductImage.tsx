@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "../../utils/cn";
 import { resolveApiUrl } from "../../services/apiClient";
 
@@ -15,11 +15,14 @@ export const ProductImage: React.FC<ProductImageProps> = ({
   className,
   fallback = "Z",
 }) => {
-  if (src) {
+  const [failed, setFailed] = useState(false);
+
+  if (src && !failed) {
     return (
       <img
         src={resolveApiUrl(src)}
         alt={alt}
+        onError={() => setFailed(true)}
         className={cn("object-cover object-center", className)}
       />
     );

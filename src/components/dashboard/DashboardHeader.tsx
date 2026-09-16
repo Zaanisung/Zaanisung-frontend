@@ -1,7 +1,6 @@
 import React from "react";
 import { Logo } from "../Logo";
 import { ShoppingBag } from "lucide-react";
-import { FullscreenToggle } from "../ui/FullscreenToggle";
 
 interface DashboardHeaderProps {
   cartCount: number;
@@ -27,7 +26,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
-        <FullscreenToggle />
         <button
           type="button"
           onClick={onOpenCart}

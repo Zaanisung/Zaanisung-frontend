@@ -13,7 +13,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
     <section id="about" className="relative overflow-hidden bg-cream dark:bg-black">
       <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="scene-bg scene-about" aria-hidden="true" />
-      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 w-full min-h-screen px-4 sm:px-8 lg:px-12 py-16 sm:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}

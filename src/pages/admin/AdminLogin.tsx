@@ -61,13 +61,8 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         </button>
 
         <div className="text-center mb-8 flex flex-col items-center">
-          <Logo className="h-14 w-14 mb-3" />
-          <h1
-            className="text-2xl font-light tracking-[0.2em] text-black dark:text-white font-brand-serif"
-          >
-            ZAANISUNG
-          </h1>
-          <div className="inline-block rounded-lg bg-gold text-black text-[9px] uppercase tracking-widest px-2 py-0.5 font-bold mt-2">
+          <Logo className="h-8 sm:h-9" showWordmark />
+          <div className="inline-block rounded-lg bg-gold text-black text-[9px] uppercase tracking-widest px-2 py-0.5 font-bold mt-3">
             Admin Inventory Portal
           </div>
           <p className="text-xs text-black/50 dark:text-white/50 mt-2">

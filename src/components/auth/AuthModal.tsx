@@ -143,16 +143,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, onSuccess }
         <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true" />
 
         <div className="flex items-start justify-between p-5 pb-0">
-          <div className="flex items-center gap-2.5">
-            <Logo className="h-8 w-8" />
-            <div>
-              <span className="block font-brand-serif tracking-[0.18em] text-ink dark:text-white text-sm font-light leading-none">
-                ZAANISUNG
-              </span>
-              <span className="eyebrow text-gold mt-1 flex items-center gap-1">
-                <Lock className="w-2.5 h-2.5" /> Secure Checkout
-              </span>
-            </div>
+          <div className="flex-1 min-w-0">
+            <Logo className="h-6 sm:h-7" showWordmark />
+            <span className="eyebrow text-gold mt-1 flex items-center gap-1">
+              <Lock className="w-2.5 h-2.5" /> Secure Checkout
+            </span>
           </div>
           <button
             type="button"

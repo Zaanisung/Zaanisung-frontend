@@ -4,7 +4,6 @@ import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
 import { navLinks } from "./constants";
-import { FullscreenToggle } from "../ui/FullscreenToggle";
 
 interface LandingHeaderProps {
   isLoggedIn: boolean;
@@ -26,11 +25,7 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-[#fffdf9]/95 dark:bg-black/90 backdrop-blur-xl">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-[72px] flex items-center justify-between gap-3 flex-nowrap">
-        <Logo
-          className="h-9 w-9 sm:h-10 sm:w-10 shrink-0"
-          showWordmark
-          wordmarkClassName="hidden min-[480px]:inline text-base sm:text-lg tracking-[0.16em]"
-        />
+        <Logo className="h-9 sm:h-10 shrink-0" showWordmark />
 
         <nav className="hidden md:flex items-center space-x-9 text-xs uppercase tracking-[0.18em] font-semibold text-black/55 dark:text-white/55">
           {navLinks.map((link) => (
@@ -54,7 +49,6 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <FullscreenToggle />
           {isLoggedIn ? (
             <>
               {onOpenDashboard && (

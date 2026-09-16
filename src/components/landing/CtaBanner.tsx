@@ -26,7 +26,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({
         <div className="orb orb-gold w-[560px] h-[560px] -top-48 left-1/2 -translate-x-1/2 opacity-70" />
       </div>
 
-      <div className="relative z-10 w-full px-4 sm:px-8 lg:px-12 py-20 sm:py-28 text-center">
+      <div className="relative z-10 w-full min-h-screen px-4 sm:px-8 lg:px-12 py-20 sm:py-24 text-center flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

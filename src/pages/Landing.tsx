@@ -12,6 +12,7 @@ import { CollectionSection } from "../components/landing/CollectionSection";
 import { AboutSection } from "../components/landing/AboutSection";
 import { CraftSection } from "../components/landing/CraftSection";
 import { CtaBanner } from "../components/landing/CtaBanner";
+import { FullscreenToggle } from "../components/ui/FullscreenToggle";
 import { SESSION_KEY } from "../components/landing/constants";
 
 export interface LandingProps {
@@ -232,6 +233,8 @@ export const Landing: React.FC<LandingProps> = ({
         onHome={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         onShop={onBrowseShop}
       />
+
+      <FullscreenToggle className="fixed right-4 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.625rem)] lg:right-6 lg:bottom-6 z-50" />
     </div>
   );
 };

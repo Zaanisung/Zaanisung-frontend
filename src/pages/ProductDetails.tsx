@@ -20,6 +20,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
 
   const isOutOfStock = product.stock <= 0;
   const isLowStock = product.stock > 0 && product.stock <= 3;
@@ -52,20 +53,21 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
       <div className="relative overflow-hidden surface-glass-strong rounded-2xl shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch w-full min-w-0">
         {/* Large Prominent Perfume Image Frame */}
         <div className="relative aspect-[4/3] md:aspect-auto md:h-full w-full flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-black/10 dark:border-white/15 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none min-w-0">
-          <img
-            src={resolveApiUrl(product.imageUrl)}
-            alt={product.name}
-            loading="lazy"
-            onError={(e) => {
-              const target = e.currentTarget;
-              target.style.display = "none";
-            }}
-            className="absolute inset-0 w-full h-full max-h-full object-cover object-center"
-          />
-          {!product.imageUrl && (
-            <div className="absolute inset-0 flex items-center justify-center gap-3 bg-[#ece6da] dark:bg-white/5">
+          {product.imageUrl && !imgFailed ? (
+            <img
+              src={resolveApiUrl(product.imageUrl)}
+              alt={product.name}
+              loading="lazy"
+              onError={() => setImgFailed(true)}
+              className="absolute inset-0 w-full h-full max-h-full object-cover object-center"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center flex-col gap-3 bg-[#ece6da] dark:bg-white/5">
               <span className="font-brand-serif text-5xl font-light text-gold">
                 {product.name.trim().charAt(0).toUpperCase() || "Z"}
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-black/40 dark:text-white/50">
+                Zaanisung
               </span>
             </div>
           )}
