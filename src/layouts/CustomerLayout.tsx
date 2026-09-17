@@ -128,6 +128,14 @@ export const CustomerLayout: React.FC<CustomerLayoutProps> = ({
         }}
       />
 
+      {/* Spacer so the fixed bottom nav never covers the footer's last row
+          on mobile/tablet (mirrors the landing page's spacer). */}
+      <div
+        aria-hidden="true"
+        className="lg:hidden bg-ink"
+        style={{ height: "calc(4rem + env(safe-area-inset-bottom))" }}
+      />
+
       <BottomNav activeTab={activeTab} onChangeTab={onChangeTab} cartCount={cartCount} />
 
       <FullscreenToggle className="fixed right-4 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.625rem)] lg:right-6 lg:bottom-6 z-50" />

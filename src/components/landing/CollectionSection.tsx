@@ -67,15 +67,6 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
           </p>
         ) : (
           <div className="relative px-4 sm:px-8 lg:px-12">
-            {/* Soft edge merges so cards glide off the screen instead of hard-clipping */}
-            <div
-              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 sm:w-14 lg:w-20 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-black dark:via-black/80"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 sm:w-14 lg:w-20 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-black dark:via-black/80"
-              aria-hidden="true"
-            />
             <Carousel
               items={featured}
               keyExtractor={(p) => p.id}
