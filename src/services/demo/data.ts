@@ -29,6 +29,23 @@ export function placeholderArt(hex: string, name: string): string {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
+/**
+ * Demo stand-in for an AI-standardized product image the backend would return
+ * from the OpenAI service. Deterministic SVG keeps the demo self-contained.
+ */
+export function standardizedPlaceholder(name: string): string {
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024">` +
+    `<rect width="1024" height="1024" fill="#f4f1ea"/>` +
+    `<circle cx="512" cy="420" r="150" fill="#e6dcc8" opacity="0.7"/>` +
+    `<rect x="430" y="430" width="164" height="330" rx="26" fill="#3b3227"/>` +
+    `<rect x="454" y="452" width="116" height="286" rx="16" fill="none" stroke="#d4af37" stroke-opacity="0.6" stroke-width="3"/>` +
+    `<rect x="470" y="700" width="84" height="12" rx="6" fill="#d4af37" opacity="0.7"/>` +
+    `<text x="512" y="870" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#3b3227" opacity="0.7">${name}</text>` +
+    `</svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
 export interface DemoProduct {
   _id: string;
   name: string;
@@ -37,6 +54,15 @@ export interface DemoProduct {
   imageUrl?: string;
   stock: number;
   isActive: boolean;
+  imageStandardization?: {
+    status: string;
+    originalImageUrl?: string | null;
+    generatedImageUrl?: string | null;
+    approvedImageUrl?: string | null;
+    requestedImageUrl?: string | null;
+    lastError?: string | null;
+    updatedAt?: string | null;
+  };
   createdAt: string;
   updatedAt: string;
 }

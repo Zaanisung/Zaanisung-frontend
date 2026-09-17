@@ -26,4 +26,9 @@ export interface NewProductData {
   price: number;
   imageUrl: string;
   stock: number;
+  /**
+   * When the product is created from an AI-standardized image, this is the
+   * pre-standardization upload (preserved server-side as the "original").
+   */
+  originalImageUrl?: string;
 }

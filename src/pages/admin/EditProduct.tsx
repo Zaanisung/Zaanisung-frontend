@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import type { Product } from "../../types";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { AiImageStandardization } from "../../components/admin/AiImageStandardization";
 import { ArrowLeft, Upload, Image as ImageIcon } from "lucide-react";
 import { compressImage } from "../../utils/image";
 
@@ -146,6 +147,14 @@ export const EditProduct: React.FC<EditProductProps> = ({
               </div>
             </div>
           </div>
+
+          {/* AI Standardization (hidden automatically when not configured) */}
+          <AiImageStandardization
+            productId={product.id}
+            imageUrl={imageUrl}
+            existing={product.imageStandardization}
+            onStandardized={setImageUrl}
+          />
 
           {/* Name */}
           <Input

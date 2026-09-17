@@ -169,4 +169,71 @@ describe("demo backend (persisted)", () => {
     const mine = await demoRequest<{ orders: unknown[] }>("/orders");
     expect(mine.orders.length).toBe(0);
   });
+
+  it("admin AI standardize → approve → regenerate → reject preserves the live image", async () => {
+    await demoRequest<{ user: ApiUser }>("/auth/demo", {
+      method: "POST",
+      body: JSON.stringify({ role: "ADMIN" }),
+    });
+
+    const status = await demoRequest<{ enabled: boolean }>("/admin/ai-image/status");
+    expect(status.enabled).toBe(true);
+
+    const { product: firstGen } = await demoRequest<{
+      product: {
+        imageUrl: string;
+        imageStandardization: { status: string; originalImageUrl?: string; generatedImageUrl: string };
+      };
+    }>("/admin/ai-image/products/demo-p-1/standardize", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    expect(firstGen.imageStandardization.status).toBe("needs_review");
+    expect(firstGen.imageStandardization.generatedImageUrl).toContain("image/svg+xml");
+    const original = firstGen.imageStandardization.originalImageUrl;
+    expect(original).toBeTruthy();
+
+    const { product: approved } = await demoRequest<{
+      product: {
+        imageUrl: string;
+        imageStandardization: { status: string; approvedImageUrl?: string; originalImageUrl?: string };
+      };
+    }>("/admin/ai-image/products/demo-p-1/approve", { method: "POST" });
+    expect(approved.imageStandardization.status).toBe("approved");
+    expect(approved.imageUrl).toBe(approved.imageStandardization.approvedImageUrl);
+    // The original is preserved even after approval.
+    expect(approved.imageStandardization.originalImageUrl).toBe(original);
+
+    // Approving again with nothing pending → 400.
+    await expect(
+      demoRequest("/admin/ai-image/products/demo-p-1/approve", { method: "POST" })
+    ).rejects.toMatchObject({ statusCode: 400 });
+
+    // Regenerate then reject leaves the (approved) live image untouched.
+    const { product: gen2 } = await demoRequest<{ product: { imageUrl: string } }>(
+      "/admin/ai-image/products/demo-p-1/standardize",
+      { method: "POST" }
+    );
+    const liveBeforeReject = gen2.imageUrl;
+
+    const { product: rejected } = await demoRequest<{
+      product: { imageUrl: string; imageStandardization: { status: string; originalImageUrl?: string } };
+    }>("/admin/ai-image/products/demo-p-1/reject", { method: "POST" });
+    expect(rejected.imageStandardization.status).toBe("rejected");
+    expect(rejected.imageUrl).toBe(liveBeforeReject);
+    expect(rejected.imageStandardization.originalImageUrl).toBe(original);
+
+    // Standalone generic endpoint (used by the add-product form).
+    const standalone = await demoRequest<{ imageUrl: string }>(
+      "/admin/ai-image/standardize",
+      { method: "POST", body: JSON.stringify({ imageUrl: "data:image/png;base64,AAAA" }) }
+    );
+    expect(standalone.imageUrl).toContain("image/svg+xml");
+
+    // Non-admins are rejected.
+    await demoRequest("/auth/demo", { method: "POST", body: JSON.stringify({}) });
+    await expect(
+      demoRequest("/admin/ai-image/products/demo-p-2/standardize", { method: "POST" })
+    ).rejects.toMatchObject({ statusCode: 403 });
+  });
 });

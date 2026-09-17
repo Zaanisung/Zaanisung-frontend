@@ -26,6 +26,7 @@ import {
   seedNotifications,
   seedOrders,
   createEmptyProfile,
+  standardizedPlaceholder,
 } from "./data";
 import type { DemoAccount, DemoOrder, DemoProduct } from "./data";
 
@@ -304,6 +305,96 @@ const ROUTES: Route[] = [
       const [removed] = db.products.splice(index, 1);
       saveDb();
       return { message: "Product removed.", product: clone({ ...removed, id: removed._id }) };
+    },
+  },
+
+  // ── Admin: AI product-image standardization ──────────────────────────
+  // Demo mode simulates the real OpenAI workflow locally with a deterministic
+  // "standardized" placeholder, so the approve / reject / regenerate flow can
+  // be exercised end-to-end without any API key.
+  {
+    method: "GET",
+    path: ["admin", "ai-image", "status"],
+    handler: () => requireAdmin() && { enabled: true },
+  },
+  {
+    method: "POST",
+    path: ["admin", "ai-image", "standardize"],
+    handler: (_p, body) => {
+      requireAdmin();
+      if (typeof body.imageUrl !== "string" || !body.imageUrl) {
+        throw new DemoError(400, "A valid image URL is required.");
+      }
+      return { imageUrl: standardizedPlaceholder("Zaanisung") };
+    },
+  },
+  {
+    method: "POST",
+    path: ["admin", "ai-image", "products", ":id", "standardize"],
+    handler: ([id], body) => {
+      requireAdmin();
+      const product = findProduct(id);
+      const requested = typeof body.imageUrl === "string" ? body.imageUrl : product.imageUrl;
+      const prev = product.imageStandardization;
+      product.imageStandardization = {
+        status: "needs_review",
+        originalImageUrl: prev?.originalImageUrl ?? requested,
+        generatedImageUrl: standardizedPlaceholder(product.name),
+        approvedImageUrl: prev?.approvedImageUrl ?? null,
+        requestedImageUrl: requested,
+        lastError: null,
+        updatedAt: new Date().toISOString(),
+      };
+      product.updatedAt = new Date().toISOString();
+      saveDb();
+      return { product: clone({ ...product, id: product._id }) };
+    },
+  },
+  {
+    method: "POST",
+    path: ["admin", "ai-image", "products", ":id", "approve"],
+    handler: ([id]) => {
+      requireAdmin();
+      const product = findProduct(id);
+      const state = product.imageStandardization;
+      const candidate = state?.generatedImageUrl;
+      if (state?.status !== "needs_review" || !candidate) {
+        throw new DemoError(400, "No AI-generated image is awaiting approval.");
+      }
+      product.imageUrl = candidate;
+      product.imageStandardization = {
+        status: "approved",
+        originalImageUrl: state?.originalImageUrl ?? product.imageUrl,
+        generatedImageUrl: candidate,
+        approvedImageUrl: candidate,
+        requestedImageUrl: state?.requestedImageUrl ?? null,
+        lastError: null,
+        updatedAt: new Date().toISOString(),
+      };
+      product.updatedAt = new Date().toISOString();
+      saveDb();
+      return { product: clone({ ...product, id: product._id }) };
+    },
+  },
+  {
+    method: "POST",
+    path: ["admin", "ai-image", "products", ":id", "reject"],
+    handler: ([id]) => {
+      requireAdmin();
+      const product = findProduct(id);
+      const state = product.imageStandardization;
+      if (state?.status !== "needs_review" || !state.generatedImageUrl) {
+        throw new DemoError(400, "No AI-generated image is awaiting review.");
+      }
+      product.imageStandardization = {
+        ...state,
+        status: "rejected",
+        lastError: null,
+        updatedAt: new Date().toISOString(),
+      };
+      product.updatedAt = new Date().toISOString();
+      saveDb();
+      return { product: clone({ ...product, id: product._id }) };
     },
   },
 

@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Product } from "../../types";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { AiImageStandardization } from "../../components/admin/AiImageStandardization";
 import { ArrowLeft, Upload, Image as ImageIcon } from "lucide-react";
 import { compressImage } from "../../utils/image";
 
@@ -18,6 +19,7 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
   const [imageUrl, setImageUrl] = useState(
     "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80"
   );
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -62,6 +64,9 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
       price: numPrice,
       stock: numStock,
       imageUrl: imageUrl.trim() || "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80",
+      ...(originalImageUrl && originalImageUrl !== imageUrl
+        ? { originalImageUrl }
+        : {}),
     });
   };
 
@@ -145,6 +150,15 @@ export const AddProduct: React.FC<AddProductProps> = ({ onBack, onSave }) => {
               </div>
             </div>
           </div>
+
+          {/* AI Standardization (hidden automatically when not configured) */}
+          <AiImageStandardization
+            imageUrl={imageUrl}
+            onStandardized={setImageUrl}
+            onStandardizeStart={(src) => {
+              if (!originalImageUrl) setOriginalImageUrl(src);
+            }}
+          />
 
           {/* Name */}
           <Input
