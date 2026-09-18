@@ -14,6 +14,7 @@ import { CraftSection } from "../components/landing/CraftSection";
 import { CtaBanner } from "../components/landing/CtaBanner";
 import { FullscreenToggle } from "../components/ui/FullscreenToggle";
 import { SESSION_KEY } from "../components/landing/constants";
+import { VALIDATION, PASSWORD_REGEX, PASSWORD_RULE_MESSAGE } from "../constants";
 
 export interface LandingProps {
   products: Product[];
@@ -29,6 +30,8 @@ export interface LandingProps {
   onSelectProduct: (product: Product) => void;
   onAddToCart: (product: Product, e: React.MouseEvent) => void;
   recentlyAddedId?: string | null;
+  onCartOpen: () => void;
+  cartCount?: number;
 }
 
 export const Landing: React.FC<LandingProps> = ({
@@ -45,6 +48,8 @@ export const Landing: React.FC<LandingProps> = ({
   onSelectProduct,
   onAddToCart,
   recentlyAddedId,
+  onCartOpen,
+  cartCount,
 }) => {
   const [mode, setMode] = useState<AuthMode>(() =>
     typeof window !== "undefined" && window.sessionStorage.getItem(SESSION_KEY) === "signed"
@@ -80,6 +85,14 @@ export const Landing: React.FC<LandingProps> = ({
     }
     if (!identifier.trim() || !password.trim()) {
       setError("Please fill in all required fields.");
+      return;
+    }
+    if (mode === "signup" && password.length < VALIDATION.PASSWORD_MIN_LENGTH) {
+      setError(`Please enter a secure password (at least ${VALIDATION.PASSWORD_MIN_LENGTH} characters).`);
+      return;
+    }
+    if (mode === "signup" && !PASSWORD_REGEX.test(password)) {
+      setError(PASSWORD_RULE_MESSAGE);
       return;
     }
 
@@ -124,12 +137,6 @@ export const Landing: React.FC<LandingProps> = ({
   const isLoggedIn = !!currentUser;
   const showForm = !isLoggedIn && !justCreated;
 
-  const handleDemoAccount = (user: CustomerUser) => {
-    sessionStorage.setItem(SESSION_KEY, "signed");
-    setJustCreated(true);
-    onCreateAccount(user);
-  };
-
   const scrollToAuth = () =>
     document.getElementById("auth-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
 
@@ -142,6 +149,8 @@ export const Landing: React.FC<LandingProps> = ({
         onGoToLogin={onGoToLogin}
         onStartShopping={onStartShopping}
         onOpenDashboard={onOpenDashboard}
+        onCartOpen={onCartOpen}
+        cartCount={cartCount}
       />
 
       <LandingHero
@@ -182,7 +191,6 @@ export const Landing: React.FC<LandingProps> = ({
             onStartShopping={onStartShopping}
             onBrowseShop={onBrowseShop}
             onOpenDashboard={onOpenDashboard}
-            onDemoAccount={handleDemoAccount}
           />
         }
       />

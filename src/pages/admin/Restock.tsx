@@ -59,7 +59,6 @@ export const Restock: React.FC<RestockProps> = ({
 
       <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl">
         <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
-        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         <div className="relative pb-2 mb-6">
           <div className="flex items-center space-x-2 text-gold mb-1">

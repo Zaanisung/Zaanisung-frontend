@@ -292,7 +292,6 @@ export const Overview: React.FC<OverviewProps> = ({
         onClick={() => onNavigate("shop")}
         className="relative overflow-hidden rounded-xl border border-gold/40 surface-glass-tint p-6 sm:p-8 cursor-pointer hover:bg-gold/12 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group"
       >
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-gold/10 blur-3xl pointer-events-none animate-mist-pulse" />
         <div className="relative flex items-center justify-between">
           <div>
             <h3 className="text-sm sm:text-base font-brand-serif text-black dark:text-white font-light">

@@ -1,7 +1,4 @@
 {
-  "env": {
-    "VITE_DEMO_MODE": "true"
-  },
   "buildCommand": "npm run build",
   "outputDirectory": "dist"
 }

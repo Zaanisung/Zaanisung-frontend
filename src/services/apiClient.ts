@@ -1,10 +1,6 @@
 const API_BASE: string =
   (import.meta.env.VITE_API_BASE_URL as string | undefined) || "/api";
 
-/** Set VITE_DEMO_MODE=true to run the frontend against in-memory dummy data. */
-export const IS_DEMO_MODE: boolean =
-  (import.meta.env.VITE_DEMO_MODE as string | undefined) === "true";
-
 /**
  * Resolve a media URL (product image, avatar, …) returned by the backend.
  *
@@ -42,11 +38,6 @@ export function getErrorMessage(err: unknown, fallback: string): string {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  if (IS_DEMO_MODE) {
-    const { demoRequest } = await import("./demo/api");
-    return demoRequest<T>(path, options);
-  }
-
   const res = await fetch(`${API_BASE}${path}`, {
     credentials: "include",
     headers: {

@@ -28,11 +28,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Gold hairline along the top edge */}
       <div className="absolute top-0 inset-x-0 h-[2px] bg-gold z-20" aria-hidden="true" />
       <div className="relative flex flex-col flex-1 py-7 px-3">
-        <div
-          className="absolute -top-24 -right-24 w-44 h-44 orb orb-gold-faint"
-          aria-hidden="true"
-        />
-
         {/* Header — logo only, no text, no frame */}
         <div className="relative flex items-center px-2 pb-5">
           <Logo className="h-9 w-9" />

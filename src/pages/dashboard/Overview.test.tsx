@@ -17,7 +17,7 @@ const baseProps = {
 describe("dashboard Overview", () => {
   it("renders the greeting without crashing when the user has no name", () => {
     // Regresses: `Cannot read properties of undefined (reading 'split')` in the
-    // dashboard hello line for name-less demo accounts.
+    // dashboard hello line for name-less accounts.
     const user = {
       id: "u1",
       name: undefined as unknown as string,

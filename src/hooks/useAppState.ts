@@ -20,6 +20,8 @@ import type {
   PhysicalSaleData,
   NewProductData,
 } from "../router";
+import { STORAGE_KEYS } from "../constants";
+import { useLocalStorage } from "./useLocalStorage";
 import { useTheme } from "./useTheme";
 
 function normalizeFullUser(user: FullUser): FullUser {
@@ -64,7 +66,8 @@ export function useAppState() {
   // ─── Core data ──────────────────────────────────────────────────────
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [cart, setCart] = useState<OrderItem[]>([]);
+  // Cart is persisted to localStorage (F-05) so the bag survives page reloads.
+  const [cart, setCart] = useLocalStorage<OrderItem[]>(STORAGE_KEYS.CART, []);
   const [customerUser, setCustomerUser] = useState<FullUser | null>(null);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -564,8 +567,9 @@ try {
           products: productsPayload,
           delivery: {
             address: orderData.deliveryAddress,
-            city: "Tamale",
+            city: orderData.deliveryCity || "Tamale",
             phone: orderData.customerPhone,
+            ...(orderData.customerName ? { recipientName: orderData.customerName } : {}),
             ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
           },
           payment: {
@@ -573,6 +577,9 @@ try {
             ...(orderData.paymentReference
               ? { reference: orderData.paymentReference }
               : {}),
+            ...(orderData.momoNumber ? { momoNumber: orderData.momoNumber } : {}),
+            ...(orderData.momoNetwork ? { momoNetwork: orderData.momoNetwork } : {}),
+            ...(orderData.billingEmail ? { email: orderData.billingEmail } : {}),
           },
         });
 
@@ -594,7 +601,13 @@ try {
       setOrders((prev) => [newOrder, ...prev]);
       setCart([]);
       setLastConfirmedOrder(newOrder);
-      setView({ type: "customer", page: "order-confirmation", orderId: order._id });
+      // Route the confirmation to the surface the checkout started from
+      // (storefront vs dashboard), never bouncing the buyer across shells.
+      setView(
+        view.type === "dashboard"
+          ? { type: "dashboard", page: "order-confirmation", orderId: order._id }
+          : { type: "customer", page: "order-confirmation", orderId: order._id }
+      );
 
       // Refresh products to update stock
       fetchProducts();

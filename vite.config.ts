@@ -23,6 +23,28 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [
+            {
+              name: "vendor-react",
+              test: /node_modules[\\/](react|react-dom|scheduler)/,
+            },
+            {
+              name: "vendor-icons",
+              test: /node_modules[\\/]lucide-react/,
+            },
+            {
+              name: "vendor",
+              test: /node_modules[\\/]/,
+            },
+          ],
+        },
+      },
+    },
+  },
   test: {
     environment: "jsdom",
     globals: true,

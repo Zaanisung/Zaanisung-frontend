@@ -11,6 +11,8 @@ export interface OrdersProps {
   onContinueShopping: () => void;
   selectedOrderId?: string | null;
   isLoadingOrders?: boolean;
+  isGuest?: boolean;
+  onSignIn?: () => void;
 }
 
 export const Orders: React.FC<OrdersProps> = ({
@@ -18,6 +20,8 @@ export const Orders: React.FC<OrdersProps> = ({
   onContinueShopping,
   selectedOrderId: initialSelectedId = null,
   isLoadingOrders = false,
+  isGuest = false,
+  onSignIn,
 }) => {
   const [selectedId, setSelectedId] = useState<string | null>(initialSelectedId);
 
@@ -46,18 +50,34 @@ export const Orders: React.FC<OrdersProps> = ({
       <div className="flex items-center justify-center min-h-[50vh]">
         <EmptyState
           icon={<ReceiptText className="w-6 h-6 stroke-[1.5]" />}
-          title="No orders yet"
-          message="When you purchase perfumes, your receipts and order updates will appear here."
+          title={isGuest ? "Sign in to track your orders" : "No orders yet"}
+          message={
+            isGuest
+              ? "Your receipts, order updates and status will appear here once you sign in."
+              : "When you purchase perfumes, your receipts and order updates will appear here."
+          }
           action={
-            <Button
-              type="button"
-              variant="primary"
-              size="lg"
-              onClick={onContinueShopping}
-              className="w-full font-bold"
-            >
-              Browse Perfumes
-            </Button>
+            isGuest && onSignIn ? (
+              <Button
+                type="button"
+                variant="primary"
+                size="lg"
+                onClick={onSignIn}
+                className="w-full font-bold"
+              >
+                Sign In
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                variant="primary"
+                size="lg"
+                onClick={onContinueShopping}
+                className="w-full font-bold"
+              >
+                Browse Perfumes
+              </Button>
+            )
           }
         />
       </div>
@@ -79,7 +99,6 @@ export const Orders: React.FC<OrdersProps> = ({
 
         <div className="relative overflow-hidden surface-glass-strong p-6 sm:p-8 shadow-lift rounded-2xl">
           <div className="absolute top-0 left-0 right-0 hairline-gold" aria-hidden="true"></div>
-          <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
           <div className="relative flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 gap-2">
             <div>
@@ -187,10 +206,11 @@ export const Orders: React.FC<OrdersProps> = ({
 
       <div className="space-y-3">
         {orders.map((order) => (
-          <div
+          <button
             key={order.id}
+            type="button"
             onClick={() => setSelectedId(order.id)}
-            className="p-4 sm:p-5 surface-glass-strong hover:border-gold/60 hover:shadow-lift cursor-pointer flex items-center justify-between transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 min-h-[56px]"
+            className="w-full text-left p-4 sm:p-5 surface-glass-strong hover:border-gold/60 hover:shadow-lift cursor-pointer flex items-center justify-between transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 min-h-[56px]"
           >
             <div className="flex-1 min-w-0 pr-4">
               <div className="flex items-center space-x-2">
@@ -225,7 +245,7 @@ export const Orders: React.FC<OrdersProps> = ({
               </div>
               <ChevronRight className="w-4 h-4 text-black/45 dark:text-white/45" />
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

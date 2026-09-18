@@ -1,65 +1,90 @@
-import React, { useState } from "react";
-import { OrderItem } from "../types";
+import React, { useEffect, useState } from "react";
+import { OrderItem, Product } from "../types";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { PaymentMethodLogo } from "../components/PaymentMethodLogo";
-import { GHANA_PHONE_REGEX } from "../constants";
+import { GHANA_PHONE_REGEX, STORAGE_KEYS } from "../constants";
+import type { PlaceOrderData } from "../router/types";
 import * as api from "../services";
 import { getErrorMessage } from "../services";
-import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard, Landmark, ExternalLink, RotateCw } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ShieldCheck, Smartphone, Banknote, CreditCard, Landmark, ExternalLink, RotateCw, Info } from "lucide-react";
 
 export interface CheckoutProps {
   items: OrderItem[];
   defaultName?: string;
   defaultPhone?: string;
+  defaultCity?: string;
+  products?: Product[];
   onBackToCart: () => void;
-  onPlaceOrder: (orderData: {
-    items: OrderItem[];
-    total: number;
-    customerName: string;
-    customerPhone: string;
-    deliveryAddress: string;
-    digitalAddress?: string;
-    paymentMethod: string;
-    paymentReference?: string;
-  }) => Promise<void>;
+  onPlaceOrder: (orderData: PlaceOrderData) => Promise<void>;
 }
 
 export const Checkout: React.FC<CheckoutProps> = ({
   items,
   defaultName = "",
   defaultPhone = "",
+  defaultCity = "",
+  products = [],
   onBackToCart,
   onPlaceOrder,
 }) => {
   const [name, setName] = useState(defaultName);
   const [phone, setPhone] = useState(defaultPhone);
   const [address, setAddress] = useState("");
+  const [city, setCity] = useState(defaultCity);
   const [digitalAddress, setDigitalAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState<"Mobile Money" | "Cash on Delivery" | "Bank / Transfer" | "Paystack (Card)">("Mobile Money");
   const [momoNumber, setMomoNumber] = useState(defaultPhone);
-  const [momoNetwork, setMomoNetwork] = useState("MTN MoMo");
+  const [momoNetwork, setMomoNetwork] = useState("MTN");
   const [paystackEmail, setPaystackEmail] = useState("");
   const [pendingPayment, setPendingPayment] = useState<{
     reference: string;
     authorizationUrl: string;
     dummy: boolean;
-  } | null>(null);
+  } | null>(() => {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEYS.PENDING_PAYMENT);
+      return raw ? (JSON.parse(raw) as { reference: string; authorizationUrl: string; dummy: boolean }) : null;
+    } catch {
+      return null;
+    }
+  });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Survives a refresh with the same payment reference, so "Re-Open Pay"
+  // cannot initialize a second (duplicate) transaction for the same order.
+  useEffect(() => {
+    if (pendingPayment) {
+      sessionStorage.setItem(STORAGE_KEYS.PENDING_PAYMENT, JSON.stringify(pendingPayment));
+    } else {
+      sessionStorage.removeItem(STORAGE_KEYS.PENDING_PAYMENT);
+    }
+  }, [pendingPayment]);
 
-  const buildOrderData = (paymentReference?: string) => ({
+  // Use the live catalog price wherever known so the charged amount matches the
+  // server-recomputed total (guards against stale captured cart prices, F-16).
+  const total = items.reduce(
+    (sum, item) =>
+      sum +
+      (products.find((p) => p.id === item.productId || p.name === item.name)?.price ?? item.price) *
+        item.quantity,
+    0
+  );
+
+  const buildOrderData = (paymentReference?: string): PlaceOrderData => ({
     items,
     total,
     customerName: name.trim(),
     customerPhone: phone.trim(),
     deliveryAddress: address.trim(),
+    deliveryCity: city.trim(),
     digitalAddress: digitalAddress.trim() ? digitalAddress.trim().toUpperCase() : undefined,
     paymentMethod:
       paymentMethod === "Mobile Money" ? `${paymentMethod} (${momoNetwork})` : paymentMethod,
     paymentReference,
+    ...(paymentMethod === "Mobile Money" ? { momoNumber: momoNumber.trim(), momoNetwork } : {}),
+    ...(paymentMethod === "Paystack (Card)" ? { billingEmail: paystackEmail.trim() } : {}),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,6 +105,10 @@ export const Checkout: React.FC<CheckoutProps> = ({
       setError("Please provide your delivery address (House/Street/Location).");
       return;
     }
+    if (!city.trim()) {
+      setError("Please provide your delivery city or town.");
+      return;
+    }
     if (digitalAddress.trim() && !/^[A-Za-z]{2}-\d{4}-\d{4}$/.test(digitalAddress.trim())) {
       setError("Please enter a valid Ghana digital address, e.g. NT-0000-0000.");
       return;
@@ -92,6 +121,10 @@ export const Checkout: React.FC<CheckoutProps> = ({
       setError("Please provide your card billing email address.");
       return;
     }
+    if (items.length === 0) {
+      setError("Your bag is empty. Please add a fragrance before checking out.");
+      return;
+    }
 
     setIsSubmitting(true);
     setError(null);
@@ -102,7 +135,11 @@ export const Checkout: React.FC<CheckoutProps> = ({
         const init = await api.initializePayment({
           amount: total,
           currency: "GHS",
-          meta: { customerPhone: phone.trim(), customerName: name.trim() },
+          meta: {
+            customerPhone: phone.trim(),
+            customerName: name.trim(),
+            ...(paystackEmail.trim() ? { billingEmail: paystackEmail.trim() } : {}),
+          },
         });
         const payment = {
           reference: init.reference,
@@ -112,9 +149,10 @@ export const Checkout: React.FC<CheckoutProps> = ({
         setPendingPayment(payment);
 
         if (payment.dummy) {
-          // Demo mode simulates the whole flow: "payment" succeeds instantly.
+          // Paystack sandbox (test) mode: verification succeeds instantly.
           await api.verifyPayment(payment.reference);
           await onPlaceOrder(buildOrderData(payment.reference));
+          setPendingPayment(null);
           return;
         }
 
@@ -143,6 +181,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
         return;
       }
       await onPlaceOrder(buildOrderData(pendingPayment.reference));
+      setPendingPayment(null);
     } catch (err) {
       setError(getErrorMessage(err, "Could not verify your payment. Please try again."));
     } finally {
@@ -167,7 +206,6 @@ export const Checkout: React.FC<CheckoutProps> = ({
       </button>
 
       <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-5 sm:p-8 shadow-lift">
-        <div className="absolute -top-28 -right-28 w-72 h-72 orb orb-gold-faint" aria-hidden="true"></div>
 
         <div className="relative pb-2 mb-6">
           <h2
@@ -251,6 +289,16 @@ export const Checkout: React.FC<CheckoutProps> = ({
             </div>
 
             <Input
+              label="City / Town"
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="e.g. Tamale, Kumasi, Accra"
+              helperText="Your order is routed to the correct delivery hub based on this"
+              required
+            />
+
+            <Input
               label="Ghana Digital Address (optional)"
               type="text"
               value={digitalAddress}
@@ -328,35 +376,54 @@ export const Checkout: React.FC<CheckoutProps> = ({
               })}
             </div>
 
+            {/* Payment instructions so the buyer knows what happens next */}
+            {paymentMethod !== "Paystack (Card)" && (
+              <div className="flex gap-2.5 p-3.5 rounded-xl surface-glass-tint text-[12px] text-black/60 dark:text-white/70">
+                <Info className="w-4 h-4 shrink-0 mt-0.5 text-gold" />
+                <span>
+                  {paymentMethod === "Mobile Money" &&
+                    "You'll receive a USSD prompt on your line to approve the payment. Keep this phone near you while completing your order."}
+                  {paymentMethod === "Cash on Delivery" &&
+                    "Pay the delivery courier in cash when your order arrives. Exact change is appreciated."}
+                  {paymentMethod === "Bank / Transfer" &&
+                    "We'll contact you with our bank details to complete your transfer. Your order is confirmed once the payment reflects."}
+                </span>
+              </div>
+            )}
+
             {paymentMethod === "Mobile Money" && (
               <div className="p-4 surface-glass-tint mt-3 space-y-3">
                 <label className="text-[11px] uppercase tracking-widest text-gold font-bold block">
                   Select Mobile Money Network
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {["MTN MoMo", "Telecel Cash", "AT Money"].map((net) => (
+                  {([
+                    { value: "MTN", label: "MTN MoMo" },
+                    { value: "Telecel", label: "Telecel Cash" },
+                    { value: "AT", label: "AT Money" },
+                  ] as const).map(({ value, label }) => (
                     <button
-                      key={net}
+                      key={value}
                       type="button"
-                      onClick={() => setMomoNetwork(net)}
+                      onClick={() => setMomoNetwork(value)}
                       className={`min-h-[52px] py-2 px-2 text-[11px] uppercase tracking-wider font-bold border rounded-xl transition-all flex flex-col items-center justify-center gap-1.5 ${
-                        momoNetwork === net
+                        momoNetwork === value
                           ? "border-gold bg-gold/5 shadow-xs"
                           : "border-black/10 dark:border-white/15 bg-white dark:bg-white/5 text-black/70 dark:text-white/80"
                       }`}
                     >
                       <PaymentMethodLogo
                         className="w-10 h-6 object-contain"
-                        provider={net}
+                        provider={label}
                       />
-                      <span className={momoNetwork === net ? "text-black dark:text-white" : ""}>
-                        {net}
+                      <span className={momoNetwork === value ? "text-black dark:text-white" : ""}>
+                        {label}
                       </span>
                     </button>
                   ))}
                 </div>
                 <Input
-                  label={`${momoNetwork} Account Number`}
+                  label={`${momoNetwork || "MoMo"} Account Number`}
                   type="tel"
                   value={momoNumber}
                   onChange={(e) => setMomoNumber(e.target.value)}
@@ -382,7 +449,7 @@ export const Checkout: React.FC<CheckoutProps> = ({
 
                 {pendingPayment?.dummy ? (
                   <div className="rounded-xl p-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-700 dark:text-emerald-300">
-                    Demo mode: your test payment succeeded. Placing your order…
+                    Test payment successful. Placing your order…
                   </div>
                 ) : pendingPayment ? (
                   <div className="space-y-3">

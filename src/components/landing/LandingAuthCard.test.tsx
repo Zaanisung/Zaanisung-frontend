@@ -23,8 +23,8 @@ const baseProps = {
 
 describe("LandingAuthCard", () => {
   it("renders the signed-in success panel without crashing when name is missing", () => {
-    // Regresses: `Cannot read properties of undefined (reading 'split')` when a
-    // demo account profile surfaced without a name.
+    // Regresses: `Cannot read properties of undefined (reading 'split')` when an
+    // account profile surfaced without a name.
     const currentUser = { id: "u1", name: undefined as unknown as string, role: "CUSTOMER" } as CustomerUser;
     render(<LandingAuthCard {...baseProps} isLoggedIn currentUser={currentUser} />);
     expect(screen.getByText(/^Welcome,$/)).toBeInTheDocument();

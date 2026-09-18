@@ -22,7 +22,15 @@ export const Cart: React.FC<CartProps> = ({
   onProceedToCheckout,
   onContinueShopping,
 }) => {
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // Recompute from the *live* catalog price wherever the product is known so
+  // the displayed total matches what the backend will charge at checkout.
+  const total = items.reduce(
+    (sum, item) =>
+      sum +
+      (products.find((p) => p.id === item.productId || p.name === item.name)?.price ?? item.price) *
+        item.quantity,
+    0
+  );
 
   if (items.length === 0) {
     return (
@@ -78,6 +86,7 @@ export const Cart: React.FC<CartProps> = ({
                 item={item}
                 imageUrl={product?.imageUrl}
                 maxStock={maxStock}
+                priceOverride={product?.price}
                 onUpdateQuantity={(q) => onUpdateQuantity(item.productId || product?.id || "", q)}
                 onRemove={() => onRemoveItem(item.productId || product?.id || "")}
               />

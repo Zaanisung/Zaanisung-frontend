@@ -107,7 +107,7 @@
   --ease-mist: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Soft, vapor-like */
 
   /* ─── MOTION TOKENS ────────────────────────────────────────────────── */
-  /* Slow drifting vapor for ambient orbs */
+  /* Soft, vapor-like drifting motion */
   --animate-mist-drift: mist-drift 10s ease-in-out infinite;
   --animate-mist-float: mist-float 12s ease-in-out infinite;
   --animate-mist-pulse: mist-pulse 7s ease-in-out infinite;
@@ -710,4 +710,17 @@ button:where(a) {
 
 .tour-ring-pulse {
   animation: tour-pulse 1.8s ease-in-out infinite;
+}
+
+/* Respect the user's motion preference: collapse decorative CSS animations
+   and smooth-scroll behaviour for visitors who request reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

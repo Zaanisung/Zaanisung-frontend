@@ -124,10 +124,6 @@ function dashboardNavView(page: DashboardNavPage): AppView {
       return { type: "dashboard", page: "notifications" };
     case "settings":
       return { type: "dashboard", page: "settings" };
-    case "profile":
-      return { type: "dashboard", page: "profile" };
-    case "security":
-      return { type: "dashboard", page: "security" };
   }
 }
 
@@ -159,6 +155,12 @@ export const AppRouter: React.FC<AppRouterProps> = (props) => {
     return (
       <>
         <LandingPage {...props} initialSection={view.section} />
+        <MiniCartLayer
+          {...props}
+          cartView={{ type: "customer", page: "cart" }}
+          checkoutView={{ type: "customer", page: "checkout" }}
+          shopView={{ type: "customer", page: "shop" }}
+        />
         <AppOverlays {...props} />
       </>
     );
@@ -214,6 +216,8 @@ const LandingPage: React.FC<AppRouterProps & { initialSection?: "collections" | 
       }
       onAddToCart={(p) => props.onAddToCart(p, 1)}
       recentlyAddedId={props.recentlyAddedId}
+      cartCount={props.totalCartCount}
+      onCartOpen={props.onCartOpen}
     />
   );
 };
@@ -308,6 +312,7 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
           items={props.cart}
           defaultName={props.customerUser?.name || ""}
           defaultPhone={props.customerUser?.phone || ""}
+          products={props.products}
           onBackToCart={() => props.onNavigate({ type: "customer", page: "cart" })}
           onPlaceOrder={props.onPlaceOrder}
         />
@@ -338,6 +343,8 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
         <Orders
           orders={props.orders}
           isLoadingOrders={props.isLoadingOrders}
+          isGuest={!props.customerUser}
+          onSignIn={() => props.onNavigate({ type: "customer", page: "login" })}
           onContinueShopping={() => props.onCustomerTabChange("shop")}
         />
       )}
@@ -423,7 +430,7 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
               onAddToCart={(p, qty) => props.onAddToCart(p, qty)}
               onBuyNow={(p, qty) => {
                 props.onAddToCart(p, qty);
-                props.onNavigate({ type: "dashboard", page: "cart" });
+                props.onNavigate({ type: "dashboard", page: "checkout" });
               }}
             />
           );
@@ -445,6 +452,7 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
           items={props.cart}
           defaultName={props.customerUser?.name || ""}
           defaultPhone={props.customerUser?.phone || ""}
+          products={props.products}
           onBackToCart={() => props.onNavigate({ type: "dashboard", page: "cart" })}
           onPlaceOrder={props.onPlaceOrder}
         />

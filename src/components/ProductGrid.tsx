@@ -34,7 +34,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     return products.filter((p) => {
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
-        if (!p.name.toLowerCase().includes(q)) return false;
+        const inName = p.name.toLowerCase().includes(q);
+        const inDescription = (p.description || "").toLowerCase().includes(q);
+        if (!inName && !inDescription) return false;
       }
 
       if (activeFilter === "UNDER_400") return p.price < 400;
@@ -111,10 +113,13 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           </strong>{" "}
           {filteredProducts.length === 1 ? "perfume" : "perfumes"}
         </span>
-        {activeFilter !== "ALL" && (
+        {(activeFilter !== "ALL" || searchQuery.trim()) && (
           <button
             type="button"
-            onClick={() => setActiveFilter("ALL")}
+            onClick={() => {
+              setActiveFilter("ALL");
+              setSearchQuery("");
+            }}
             className="text-gold hover:underline uppercase text-[10px] tracking-wider font-bold"
           >
             Reset Filters
@@ -147,7 +152,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       ) : filteredProducts.length === 0 ? (
         <div className="py-16 flex items-center justify-center">
           <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-14 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-            <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
             <div className="relative w-12 h-12 rounded-xl border border-gold/40 surface-glass-tint flex items-center justify-center text-gold mb-4">
               <span className="font-brand-serif text-xl font-light">Z</span>
             </div>

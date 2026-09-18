@@ -4,8 +4,6 @@ import { motion } from "motion/react";
 import { CustomerUser } from "../../types";
 import { Input } from "../Input";
 import { Button } from "../Button";
-import { DemoAuthNote } from "../auth/DemoAuthNote";
-import { IS_DEMO_MODE } from "../../services/apiClient";
 import { firstName } from "../../utils/name";
 import { cn } from "../../utils/cn";
 
@@ -30,7 +28,6 @@ interface LandingAuthCardProps {
   onStartShopping: () => void;
   onBrowseShop: () => void;
   onOpenDashboard?: () => void;
-  onDemoAccount?: (user: CustomerUser) => void;
 }
 
 export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
@@ -52,7 +49,6 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
   onStartShopping,
   onBrowseShop,
   onOpenDashboard,
-  onDemoAccount,
 }) => {
   return (
     <motion.div
@@ -141,12 +137,6 @@ export const LandingAuthCard: React.FC<LandingAuthCardProps> = ({
                 {mode === "signup" ? "Create Account" : "Sign In"}
               </Button>
             </form>
-
-            {IS_DEMO_MODE && onDemoAccount && (
-              <div className="mt-4">
-                <DemoAuthNote compact onSuccess={onDemoAccount} />
-              </div>
-            )}
 
             <button
               type="button"

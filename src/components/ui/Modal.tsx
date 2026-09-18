@@ -68,12 +68,6 @@ export const Modal: React.FC<ModalProps> = ({
         aria-hidden="true"
       />
 
-      {/* Floating mist orbs in background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="orb orb-gold-faint animate-mist-float absolute top-1/4 left-1/4 w-64 h-64 opacity-30" />
-        <div className="orb orb-gold-faint animate-mist-drift absolute bottom-1/3 right-1/4 w-48 h-48 opacity-20" />
-      </div>
-
       {/* Modal content */}
       <div
         className={cn(

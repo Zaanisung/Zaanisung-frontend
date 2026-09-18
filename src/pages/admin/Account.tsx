@@ -26,7 +26,6 @@ export const AdminAccount: React.FC<AdminAccountProps> = ({
 
       <div className="relative overflow-hidden surface-glass-strong p-6 shadow-lift space-y-6 rounded-2xl">
         <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
-        <div className="absolute -top-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         <div className="relative flex items-center space-x-4 pb-6">
           <div className="w-14 h-14 bg-gold text-black flex items-center justify-center font-bold text-xl rounded-xl">

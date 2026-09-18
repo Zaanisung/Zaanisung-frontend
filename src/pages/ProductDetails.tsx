@@ -3,6 +3,7 @@ import { Product } from "../types";
 import { Button } from "../components/Button";
 import { QuantityStepper } from "../components/ui/QuantityStepper";
 import { resolveApiUrl } from "../services/apiClient";
+import { LOW_STOCK_THRESHOLD } from "../constants";
 import { ArrowLeft, Check, Sparkles, Droplet, ShieldCheck, Truck } from "lucide-react";
 
 export interface ProductDetailsProps {
@@ -23,7 +24,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
   const [imgFailed, setImgFailed] = useState(false);
 
   const isOutOfStock = product.stock <= 0;
-  const isLowStock = product.stock > 0 && product.stock <= 3;
+  const isLowStock = product.stock > 0 && product.stock <= LOW_STOCK_THRESHOLD;
   const maxAvailable = Math.max(0, product.stock);
 
   const handleAddToCart = () => {
@@ -123,46 +124,23 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                 {product.price.toFixed(2)} GHS
               </span>
               <span className="text-xs uppercase tracking-wider text-black/50 dark:text-white/60">
-                • 100ml Extrait de Parfum
+                Per bottle
               </span>
-            </div>
-
-            <p className="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed pt-2">
-              Distilled in small, artisanal batches with aged agarwood oils, rare florals, and botanical resinous bases. Formulated for long-lasting sillage that endures throughout West African climates.
-            </p>
-
-            {/* Fragrance Accords Chips */}
-            <div className="pt-2">
-              <span className="text-[10px] uppercase tracking-widest text-black/45 dark:text-white/45 font-bold block mb-2">
-                Olfactory Profile
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {["Smoky Oud", "Warm Amber", "French Damascena", "Dry Woods", "Golden Vanilla"].map(
-                  (accord) => (
-                    <span
-                      key={accord}
-                      className="px-2.5 py-1 rounded-full bg-gold/8 dark:bg-gold/10 text-black/70 dark:text-gold-100 text-[11px] border border-gold/30"
-                    >
-                      {accord}
-                    </span>
-                  )
-                )}
-              </div>
             </div>
 
             {/* Luxury Assurance Highlights */}
             <div className="grid grid-cols-2 gap-3 pt-4 text-[11px] text-black/50 dark:text-white/60">
-              <div className="flex items-center space-x-2">
-                <Droplet className="w-3.5 h-3.5 text-gold" />
-                <span>35% Pure Perfume Oil</span>
-              </div>
               <div className="flex items-center space-x-2">
                 <Truck className="w-3.5 h-3.5 text-gold" />
                 <span>Express Ghana Delivery</span>
               </div>
               <div className="flex items-center space-x-2">
                 <ShieldCheck className="w-3.5 h-3.5 text-gold" />
-                <span>100% Authentic Batch</span>
+                <span>Authentic, Sealed Bottle</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Droplet className="w-3.5 h-3.5 text-gold" />
+                <span>Scent-Tested by Zaanisung</span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 rounded-full bg-gold/100"></span>

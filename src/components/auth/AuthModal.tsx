@@ -3,11 +3,9 @@ import { Logo } from "../Logo";
 import { Input } from "../Input";
 import { Button } from "../Button";
 import { CustomerUser } from "../../types";
-import { VALIDATION } from "../../constants";
+import { VALIDATION, PASSWORD_REGEX, PASSWORD_RULE_MESSAGE } from "../../constants";
 import * as api from "../../services";
 import { getErrorMessage } from "../../services";
-import { IS_DEMO_MODE } from "../../services/apiClient";
-import { DemoAuthNote } from "./DemoAuthNote";
 import { cn } from "../../utils/cn";
 import { X, Lock } from "lucide-react";
 
@@ -75,6 +73,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, onSuccess }
       }
       if (!password.trim() || password.length < VALIDATION.PASSWORD_MIN_LENGTH) {
         setError(`Please enter a secure password (at least ${VALIDATION.PASSWORD_MIN_LENGTH} characters).`);
+        return;
+      }
+      if (!PASSWORD_REGEX.test(password)) {
+        setError(PASSWORD_RULE_MESSAGE);
         return;
       }
     } else {
@@ -191,10 +193,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ open, onClose, onSuccess }
             <div className="rounded-xl p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-xs text-red-700 dark:text-red-300 font-medium">
               {error}
             </div>
-          )}
-
-          {IS_DEMO_MODE && (
-            <DemoAuthNote compact role="CUSTOMER" onSuccess={onSuccess} />
           )}
 
           {tab === "register" && (

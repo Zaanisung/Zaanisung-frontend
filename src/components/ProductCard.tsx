@@ -3,6 +3,7 @@ import { Product } from "../types";
 import { Plus, Check } from "lucide-react";
 import { cn } from "../utils/cn";
 import { resolveApiUrl } from "../services/apiClient";
+import { LOW_STOCK_THRESHOLD } from "../constants";
 
 export interface ProductCardProps {
   product: Product;
@@ -30,7 +31,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isAdded = false,
 }) => {
   const isOutOfStock = product.stock <= 0;
-  const isLowStock = product.stock > 0 && product.stock <= 3;
+  const isLowStock = product.stock > 0 && product.stock <= LOW_STOCK_THRESHOLD;
   const [imgFailed, setImgFailed] = useState(false);
   const hasImage = Boolean(product.imageUrl) && !imgFailed;
 
@@ -104,10 +105,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         <div className="mt-auto flex items-center justify-between pt-1">
           <span className="font-bold font-mono text-gold text-[15px] sm:text-lg">
-            ₵{product.price.toFixed(2)}
+            {product.price.toFixed(2)} GHS
           </span>
           <span className="text-[9px] uppercase tracking-wider text-black/45 dark:text-white/55">
-            100 ml
+            Per bottle
           </span>
         </div>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Instagram,
   Facebook,
@@ -8,6 +8,7 @@ import {
   MapPin,
   Clock,
   ArrowUpRight,
+  CheckCircle2,
 } from "lucide-react";
 import { Logo } from "./Logo";
 
@@ -29,6 +30,21 @@ export interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<
+    "idle" | "subscribed" | "error"
+  >("idle");
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = newsletterEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNewsletterStatus("error");
+      return;
+    }
+    setNewsletterStatus("subscribed");
+  };
+
   return (
     <footer className="relative bg-ink text-cream/70 mt-auto">
       {/* Gold hairline crown */}
@@ -115,23 +131,43 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Newsletter */}
           <div className="lg:col-span-3">
             <h3 className="eyebrow text-cream mb-5">Stay in the loop</h3>
-            <p className="text-sm text-cream/60 mb-4">
-              Be first to know about new drops and exclusive offers.
-            </p>
-            <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="you@email.com"
-                aria-label="Email address"
-                className="flex-1 min-w-0 px-3.5 py-2.5 text-sm rounded-lg bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-              />
-              <button
-                type="submit"
-                className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Join
-              </button>
-            </form>
+            {newsletterStatus === "subscribed" ? (
+              <div className="flex items-center gap-2 text-sm text-gold font-medium">
+                <CheckCircle2 className="w-4 h-4" />
+                You&apos;re on the list. Welcome!
+              </div>
+            ) : (
+              <>
+                <p className="text-sm text-cream/60 mb-4">
+                  Be first to know about new drops and exclusive offers.
+                </p>
+                <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
+                  <input
+                    type="email"
+                    value={newsletterEmail}
+                    onChange={(e) => {
+                      setNewsletterEmail(e.target.value);
+                      if (newsletterStatus === "error") setNewsletterStatus("idle");
+                    }}
+                    placeholder="you@email.com"
+                    aria-label="Email address"
+                    aria-invalid={newsletterStatus === "error"}
+                    className="flex-1 min-w-0 px-3.5 py-2.5 text-sm rounded-lg bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+                  />
+                  <button
+                    type="submit"
+                    className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Join
+                  </button>
+                </form>
+                {newsletterStatus === "error" && (
+                  <p className="mt-2 text-xs text-red-400">
+                    Please enter a valid email address.
+                  </p>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

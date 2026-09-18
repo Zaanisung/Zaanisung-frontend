@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Logo } from "../../components/Logo";
-import { DemoAuthNote } from "../../components/auth/DemoAuthNote";
 import { ArrowLeft } from "lucide-react";
 import * as api from "../../services";
-import { getErrorMessage, IS_DEMO_MODE } from "../../services/apiClient";
+import { getErrorMessage } from "../../services/apiClient";
 
 export interface AdminLoginProps {
   onLoginSuccess: () => void;
@@ -47,9 +46,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
-    <div className="absolute top-20 right-24 w-72 h-72 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
-    <div className="absolute -bottom-24 left-1/4 w-80 h-80 orb orb-gold-faint animate-mist-float" aria-hidden="true"></div>
-
     <div className="relative w-full max-w-sm z-10">
         <button
           type="button"
@@ -73,10 +69,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-6 sm:p-8 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
           <div className="absolute top-0 left-0 right-0 hairline-gold"></div>
           <form onSubmit={handleSubmit} className="relative space-y-4">
-            {IS_DEMO_MODE && (
-              <DemoAuthNote role="ADMIN" onSuccess={() => onLoginSuccess()} />
-            )}
-
             {error && (
               <div className="p-3 bg-red-950/40 border border-red-800/60 text-xs text-red-300 font-medium rounded-xl">
                 {error}

@@ -1,9 +1,7 @@
 # Zaanisung frontend — Netlify build configuration.
-# VITE_DEMO_MODE=true lets the site run fully on in-memory data with no backend.
-# Flip it to "false" to point the production build at the real backend again.
+# The production build points at the real backend. Configure the backend
+# origin via VITE_API_URL / VITE_API_BASE_URL in the Netlify environment
+# (e.g. https://api.zaanisung.com) when the API is hosted separately.
 [build]
   command = "npm run build"
   publish = "dist"
-
-[build.environment]
-  VITE_DEMO_MODE = "true"

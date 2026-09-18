@@ -8,6 +8,8 @@ export interface CartItemProps {
   item: OrderItem;
   imageUrl?: string;
   maxStock?: number;
+  /** Current catalog price — overrides the price captured in the cart item. */
+  priceOverride?: number;
   onUpdateQuantity: (newQuantity: number) => void;
   onRemove: () => void;
 }
@@ -16,10 +18,12 @@ export const CartItem: React.FC<CartItemProps> = ({
   item,
   imageUrl,
   maxStock = 99,
+  priceOverride,
   onUpdateQuantity,
   onRemove,
 }) => {
   const isMaxReached = item.quantity >= maxStock;
+  const price = priceOverride ?? item.price;
 
   return (
     <div className="flex items-start sm:items-center gap-3.5 sm:gap-5 py-5 sm:py-6">
@@ -41,12 +45,12 @@ export const CartItem: React.FC<CartItemProps> = ({
               {item.name}
             </h4>
             <p className="text-xs text-black/50 dark:text-white/50 mt-0.5">
-              {item.price.toFixed(2)} GHS each
+              {price.toFixed(2)} GHS each
             </p>
           </div>
 
           <span className="text-sm sm:text-base font-bold font-mono text-black dark:text-white flex-shrink-0">
-            {(item.price * item.quantity).toFixed(2)} GHS
+            {(price * item.quantity).toFixed(2)} GHS
           </span>
         </div>
 

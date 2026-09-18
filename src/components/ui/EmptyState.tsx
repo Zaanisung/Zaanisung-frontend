@@ -26,7 +26,6 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       )}
       role="status"
     >
-      <div className="absolute -bottom-20 -left-20 w-56 h-56 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
 
       {icon && (
         <div

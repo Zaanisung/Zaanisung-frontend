@@ -57,11 +57,6 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       >
         <div className="absolute top-0 inset-x-0 h-[2px] bg-gold z-20" aria-hidden="true" />
         <div className="relative flex flex-col flex-1 min-h-0 px-3 pt-6 pb-5">
-          <div
-            className="absolute -top-24 -right-24 w-56 h-56 orb orb-gold-faint"
-            aria-hidden="true"
-          />
-
           {/* Brand — logo only, no text, no frame. Transparent PNG on its own. */}
           <div className="relative flex items-center px-2 pb-6">
             <Logo className="h-9 w-9" />

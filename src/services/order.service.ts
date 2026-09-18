@@ -16,11 +16,15 @@ export interface Order {
     address: string;
     city: string;
     phone: string;
+    recipientName?: string;
     digitalAddress?: string;
   };
   payment: {
     method: string;
     reference?: string;
+    momoNumber?: string;
+    momoNetwork?: string;
+    email?: string;
   };
   status: "PENDING" | "CONFIRMED" | "SHIPPED" | "DELIVERED" | "CANCELLED";
   createdAt: string;
@@ -29,8 +33,8 @@ export interface Order {
 
 export async function placeOrder(data: {
   products: { productId: string; quantity: number }[];
-  delivery: { address: string; city: string; phone: string; digitalAddress?: string };
-  payment: { method: string; reference?: string };
+  delivery: { address: string; city: string; phone: string; recipientName?: string; digitalAddress?: string };
+  payment: { method: string; reference?: string; momoNumber?: string; momoNetwork?: string; email?: string };
 }): Promise<{ order: Order }> {
   return request("/orders", {
     method: "POST",

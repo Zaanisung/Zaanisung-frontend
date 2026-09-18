@@ -18,8 +18,6 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto py-6 px-4">
       <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-6 sm:p-10 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)] text-center">
-        <div className="absolute -top-28 -left-24 w-72 h-72 orb orb-gold-faint animate-mist-pulse" aria-hidden="true"></div>
-        <div className="absolute -bottom-24 -right-24 w-64 h-64 orb orb-gold-faint" aria-hidden="true"></div>
 
         {/* Geometric Check Icon Frame */}
         <div className="relative w-16 h-16 bg-gold/15 border border-gold/40 flex items-center justify-center mx-auto mb-6 rounded-xl">
@@ -59,6 +57,33 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             </div>
           )}
         </div>
+
+        {(order.paymentMethod || "").startsWith("Mobile Money") && (
+          <div className="relative surface-glass-tint p-4 mb-6 text-left text-xs text-black/70 dark:text-white/75">
+            <span className="text-gold font-bold uppercase tracking-wider text-[10px] block mb-1.5">
+              Next: Approve Payment
+            </span>
+            You&apos;ll receive a USSD prompt on your phone to approve the payment. If the prompt
+            doesn&apos;t appear, reply to the order notification and we&apos;ll resend the request.
+          </div>
+        )}
+        {(order.paymentMethod || "").startsWith("Bank") && (
+          <div className="relative surface-glass-tint p-4 mb-6 text-left text-xs text-black/70 dark:text-white/75">
+            <span className="text-gold font-bold uppercase tracking-wider text-[10px] block mb-1.5">
+              Next: Complete Transfer
+            </span>
+            We&apos;ll contact you with our bank details to complete your transfer. Your order is
+            confirmed once the payment reflects in our account.
+          </div>
+        )}
+        {(order.paymentMethod || "").startsWith("Cash") && (
+          <div className="relative surface-glass-tint p-4 mb-6 text-left text-xs text-black/70 dark:text-white/75">
+            <span className="text-gold font-bold uppercase tracking-wider text-[10px] block mb-1.5">
+              Next: Pay on Delivery
+            </span>
+            Pay the courier in cash when your order arrives. Exact change is appreciated.
+          </div>
+        )}
 
         {/* Actions */}
         <div className="relative space-y-3">

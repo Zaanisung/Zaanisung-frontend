@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import { CustomerUser } from "../../types";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
@@ -12,6 +12,8 @@ interface LandingHeaderProps {
   onGoToLogin: () => void;
   onStartShopping: () => void;
   onOpenDashboard?: () => void;
+  onCartOpen: () => void;
+  cartCount?: number;
 }
 
 export const LandingHeader: React.FC<LandingHeaderProps> = ({
@@ -21,6 +23,8 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
   onGoToLogin,
   onStartShopping,
   onOpenDashboard,
+  onCartOpen,
+  cartCount = 0,
 }) => {
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 dark:border-white/15 bg-[#fffdf9]/95 dark:bg-black/90 backdrop-blur-xl">
@@ -49,6 +53,21 @@ export const LandingHeader: React.FC<LandingHeaderProps> = ({
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <button
+            type="button"
+            onClick={onCartOpen}
+            aria-label={`Open bag (${cartCount} ${cartCount === 1 ? "item" : "items"})`}
+            title="Open bag"
+            className="relative h-11 w-11 flex items-center justify-center rounded-full border border-black/10 dark:border-white/15 text-ink dark:text-white hover:border-gold hover:text-gold transition-colors"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            {cartCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black text-[10px] font-bold flex items-center justify-center">
+                {cartCount > 99 ? "99+" : cartCount}
+              </span>
+            )}
+          </button>
+
           {isLoggedIn ? (
             <>
               {onOpenDashboard && (

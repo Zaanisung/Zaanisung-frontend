@@ -64,7 +64,7 @@ export const PAYMENT_METHOD_LABELS: Record<PaymentMethodType, string> = {
 
 export const ORDER_STATUSES = [
   "PENDING",
-  "PROCESSING",
+  "CONFIRMED",
   "SHIPPED",
   "DELIVERED",
   "CANCELLED",
@@ -73,7 +73,7 @@ export type OrderStatus = (typeof ORDER_STATUSES)[number];
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   PENDING: "Pending",
-  PROCESSING: "Processing",
+  CONFIRMED: "Confirmed",
   SHIPPED: "Shipped",
   DELIVERED: "Delivered",
   CANCELLED: "Cancelled",
@@ -81,7 +81,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 
 export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
   PENDING: "text-gold bg-gold/10 border-gold/30",
-  PROCESSING: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800",
+  CONFIRMED: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800",
   SHIPPED: "text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/30 border-purple-200 dark:border-purple-800",
   DELIVERED: "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800",
   CANCELLED: "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800",
@@ -150,7 +150,7 @@ export const PRODUCT_CATEGORY_LABELS: Record<ProductCategory, string> = {
 // INVENTORY
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const LOW_STOCK_THRESHOLD = 3;
+export const LOW_STOCK_THRESHOLD = 5;
 export const OUT_OF_STOCK_THRESHOLD = 0;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -251,6 +251,8 @@ export const VALIDATION = {
 } as const;
 
 export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+export const PASSWORD_RULE_MESSAGE =
+  "Password must be at least 8 characters with an uppercase letter, a lowercase letter, a number and a special character.";
 export const GHANA_PHONE_REGEX = /^(\+233|0)[2-5]\d{8}$/;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -262,6 +264,7 @@ export const STORAGE_KEYS = {
   CART: "zaanisung-cart",
   LANDING_SESSION: "zaanisung_landing",
   SIDEBAR_COLLAPSED: "zaanisung-dash-sidebar-collapsed",
+  PENDING_PAYMENT: "zaanisung-pending-payment",
 } as const;
 
 // ─────────────────────────────────────────────────────────────────────────────

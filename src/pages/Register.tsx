@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { AuthShell } from "../components/auth/AuthShell";
-import { DemoAuthNote } from "../components/auth/DemoAuthNote";
 import { CustomerUser } from "../types";
 import { VALIDATION, PASSWORD_REGEX } from "../constants";
 import * as api from "../services";
-import { getErrorMessage, IS_DEMO_MODE } from "../services/apiClient";
+import { getErrorMessage } from "../services/apiClient";
 
 export interface RegisterProps {
   onRegister: (user: CustomerUser) => void;
@@ -92,10 +91,6 @@ export const Register: React.FC<RegisterProps> = ({
           <div className="rounded-xl p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-sm text-red-700 dark:text-red-300 font-medium">
             {error}
           </div>
-        )}
-
-        {IS_DEMO_MODE && (
-          <DemoAuthNote onSuccess={onRegister} />
         )}
 
         <Input

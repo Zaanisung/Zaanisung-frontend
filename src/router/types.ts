@@ -6,10 +6,15 @@ export interface PlaceOrderData {
   customerName: string;
   customerPhone: string;
   deliveryAddress: string;
+  deliveryCity: string;
   digitalAddress?: string;
   paymentMethod: string;
   /** Reference returned by initializePayment when checkout used Paystack. */
   paymentReference?: string;
+  momoNumber?: string;
+  momoNetwork?: string;
+  /** Billing email for card receipts. */
+  billingEmail?: string;
 }
 
 export interface PhysicalSaleData {

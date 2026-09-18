@@ -37,3 +37,21 @@ export async function logoutUser(): Promise<{ message: string }> {
 export async function getMe(): Promise<{ user: AuthUser }> {
   return request("/auth/me");
 }
+
+export async function requestPasswordResetOtp(identifier: string): Promise<{ message: string; expiresInMinutes: number }> {
+  return request("/auth/otp/request", {
+    method: "POST",
+    body: JSON.stringify({ identifier, purpose: "PASSWORD_RESET", channel: "SMS" }),
+  });
+}
+
+export async function resetPasswordWithOtp(
+  identifier: string,
+  code: string,
+  newPassword: string
+): Promise<{ message: string }> {
+  return request("/auth/otp/reset-password", {
+    method: "POST",
+    body: JSON.stringify({ identifier, code, newPassword }),
+  });
+}

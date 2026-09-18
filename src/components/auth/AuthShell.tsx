@@ -45,12 +45,6 @@ export const AuthShell: React.FC<AuthShellProps> = ({
         className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/55 to-ink/85"
         aria-hidden="true"
       ></div>
-      {/* Atmospheric mist */}
-      <div className="absolute inset-0 opacity-25 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-24 left-16 w-96 h-96 orb orb-gold-soft animate-mist-float"></div>
-        <div className="absolute bottom-24 right-24 w-80 h-80 orb orb-cream animate-mist-float [animation-delay:2s]"></div>
-        <div className="absolute top-1/2 left-1/3 w-72 h-72 orb orb-gold-faint animate-mist-drift"></div>
-      </div>
 
       {/* Left Side - Branding & Imagery (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-[55%] relative z-10">

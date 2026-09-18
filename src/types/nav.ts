@@ -12,9 +12,7 @@ export type DashboardPage =
   | "addresses"
   | "payment-methods"
   | "notifications"
-  | "settings"
-  | "profile"
-  | "security";
+  | "settings";
 
 /**
  * Dashboard pages that are reachable directly from navigation links.
@@ -40,8 +38,6 @@ export type AppView =
   | { type: "customer"; page: "orders" }
   | { type: "customer"; page: "account" }
   | { type: "dashboard"; page: "overview" }
-  | { type: "dashboard"; page: "profile" }
-  | { type: "dashboard"; page: "security" }
   | { type: "dashboard"; page: "settings" }
   | { type: "dashboard"; page: "addresses" }
   | { type: "dashboard"; page: "payment-methods" }

@@ -26,8 +26,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       {/* Ambient backdrop */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="scene-bg scene-hero" />
-        <div className="orb orb-gold w-[520px] h-[520px] -top-48 -right-36 animate-mist-float" />
-        <div className="orb orb-gold-faint w-[420px] h-[420px] -bottom-56 -left-40 animate-mist-drift" />
       </div>
 
       {/* Soft blend into the next section */}
