@@ -26,7 +26,6 @@ export const CollectionSection: React.FC<CollectionSectionProps> = ({
 
   return (
     <section id="collections" className="relative bg-white dark:bg-black">
-      <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="scene-bg scene-collections" aria-hidden="true" />
       <div className="relative z-10 w-full min-h-screen flex flex-col justify-center py-16 sm:py-20">
         <motion.div

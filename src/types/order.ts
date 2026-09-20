@@ -4,6 +4,12 @@ export type OrderItem = {
   quantity: number;
   productId?: string;
   product?: string;
+  /**
+   * Snapshot of the product image captured when the item was added to the bag.
+   * Used as a fallback so the product visual survives the bag flow even before
+   * the catalog has loaded, or if the product is later removed from inventory.
+   */
+  imageUrl?: string;
 };
 
 export type OrderStatus = "PENDING" | "CONFIRMED" | "SHIPPED" | "DELIVERED" | "CANCELLED";

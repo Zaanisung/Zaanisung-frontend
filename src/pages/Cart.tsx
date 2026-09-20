@@ -75,7 +75,7 @@ export const Cart: React.FC<CartProps> = ({
       </div>
 
       <div className="relative overflow-hidden surface-glass-strong rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-        <div className="flex flex-col divide-y divide-black/10 dark:divide-white/10">
+        <div className="flex flex-col">
           {items.map((item) => {
             const product = products.find((p) => p.id === item.productId || p.name === item.name);
             const maxStock = product ? product.stock : 99;
@@ -84,7 +84,7 @@ export const Cart: React.FC<CartProps> = ({
               <CartItem
                 key={item.productId || item.name}
                 item={item}
-                imageUrl={product?.imageUrl}
+                imageUrl={product?.imageUrl || item.imageUrl}
                 maxStock={maxStock}
                 priceOverride={product?.price}
                 onUpdateQuantity={(q) => onUpdateQuantity(item.productId || product?.id || "", q)}
@@ -95,8 +95,7 @@ export const Cart: React.FC<CartProps> = ({
         </div>
 
         {/* Summary & Checkout Action */}
-        <div className="mt-8 flex flex-col gap-1">
-          <div className="w-full hairline-black mb-2" aria-hidden="true"></div>
+        <div className="mt-6 flex flex-col gap-1">
           <div className="flex items-center justify-between mb-2 text-xs uppercase tracking-wider text-black/50 dark:text-white/60">
             <span>Subtotal</span>
             <span className="font-mono">{total.toFixed(2)} GHS</span>

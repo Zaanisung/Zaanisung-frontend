@@ -137,7 +137,7 @@ export const MiniCartDrawer: React.FC<MiniCartDrawerProps> = ({
                 return (
                   <li key={item.productId || item.name} className="py-4 flex gap-3">
                     <div className="w-16 h-20 flex-shrink-0 surface-glass border border-black/10 dark:border-white/15 overflow-hidden relative rounded-lg">
-                      <ProductImage src={product?.imageUrl} alt={item.name} className="w-full h-full" />
+                      <ProductImage src={product?.imageUrl || item.imageUrl} alt={item.name} className="w-full h-full" />
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col">
                       <div className="flex items-start justify-between gap-2">

@@ -59,7 +59,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   return (
     <div className="w-full flex flex-col gap-6">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 border-b border-black/10 dark:border-white/10 pb-6">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-4">
         <div>
           <span className="eyebrow text-gold">The Collection</span>
           <h2 className="font-brand-serif text-3xl sm:text-4xl md:text-[2.75rem] font-light leading-tight text-ink dark:text-white mt-2">
@@ -134,8 +134,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : error ? (
         <div className="py-16 flex items-center justify-center">
-          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-12 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-            <div className="w-12 h-12 rounded-xl surface-glass-tint flex items-center justify-center text-gold mb-4 border border-gold/40">
+          <div className="relative w-full max-w-md mx-auto px-6 py-12 text-center flex flex-col items-center">
+            <div className="w-12 h-12 rounded-xl surface-glass-tint flex items-center justify-center text-gold mb-4">
               <AlertCircle className="w-6 h-6" />
             </div>
             <p className="text-sm text-black/70 dark:text-white/70 font-medium mb-5">{error}</p>
@@ -151,8 +151,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="py-16 flex items-center justify-center">
-          <div className="relative overflow-hidden w-full max-w-md mx-auto px-6 py-14 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]">
-            <div className="relative w-12 h-12 rounded-xl border border-gold/40 surface-glass-tint flex items-center justify-center text-gold mb-4">
+          <div className="relative w-full max-w-md mx-auto px-6 py-14 text-center flex flex-col items-center">
+            <div className="relative w-12 h-12 rounded-xl surface-glass-tint flex items-center justify-center text-gold mb-4">
               <span className="font-brand-serif text-xl font-light">Z</span>
             </div>
             <h3 className="relative font-brand-serif text-lg font-normal text-ink dark:text-white mb-1">

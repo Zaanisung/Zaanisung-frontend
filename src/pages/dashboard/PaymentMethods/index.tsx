@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { PaymentMethod } from "../../../types/user";
 import { EmptyState } from "../../../components/ui/EmptyState";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import { Plus, CreditCard } from "lucide-react";
 import { PaymentMethodCard } from "./PaymentMethodCard";
 import { AddPaymentMethodModal } from "./AddPaymentMethodModal";
@@ -21,6 +22,7 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
   onSetDefaultPaymentMethod,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<PaymentMethod | null>(null);
 
   return (
     <div className="w-full space-y-6">
@@ -64,12 +66,35 @@ export const PaymentMethods: React.FC<PaymentMethodsProps> = ({
             <PaymentMethodCard
               key={pm._id}
               pm={pm}
-              onDelete={onDeletePaymentMethod}
+              onDelete={(id) => {
+                const target = paymentMethods.find((x) => x._id === id);
+                if (target) setPendingDelete(target);
+              }}
               onSetDefault={onSetDefaultPaymentMethod}
             />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={pendingDelete !== null}
+        title="Remove this payment method?"
+        message={
+          <>
+            <span className="font-semibold text-black dark:text-white">
+              {pendingDelete?.type}
+            </span>{" "}
+            will be removed from your saved payment methods.
+          </>
+        }
+        confirmLabel="Remove Method"
+        confirmVariant="danger"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) onDeletePaymentMethod(pendingDelete._id);
+          setPendingDelete(null);
+        }}
+      />
 
       <AddPaymentMethodModal
         open={showModal}

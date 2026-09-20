@@ -3,6 +3,7 @@ import { OrderItem, Product } from "../types";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { PaymentMethodLogo } from "../components/PaymentMethodLogo";
+import { ProductImage } from "../components/ui/ProductImage";
 import { GHANA_PHONE_REGEX, STORAGE_KEYS } from "../constants";
 import type { PlaceOrderData } from "../router/types";
 import * as api from "../services";
@@ -230,17 +231,34 @@ export const Checkout: React.FC<CheckoutProps> = ({
             <h3 className="text-xs uppercase tracking-widest text-black/50 dark:text-white/50 font-bold mb-3">
               Order Summary ({items.length} {items.length === 1 ? "Fragrance" : "Fragrances"})
             </h3>
-            <div className="space-y-2 text-sm">
-              {items.map((i, idx) => (
-                <div key={idx} className="flex justify-between text-xs sm:text-sm">
-                  <span className="text-black/70 dark:text-white/80">
-                    {i.quantity}x {i.name}
-                  </span>
-                  <span className="font-semibold text-black dark:text-white font-mono">
-                    {(i.price * i.quantity).toFixed(2)} GHS
-                  </span>
-                </div>
-              ))}
+            <div className="space-y-3 text-sm">
+              {items.map((i, idx) => {
+                const product = products.find(
+                  (p) => p.id === i.productId || p.name === i.name
+                );
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between gap-3 text-xs sm:text-sm"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="relative w-11 h-14 flex-shrink-0 overflow-hidden rounded-lg border border-black/10 dark:border-white/15">
+                        <ProductImage
+                          src={product?.imageUrl || i.imageUrl}
+                          alt={i.name}
+                          className="w-full h-full"
+                        />
+                      </div>
+                      <span className="text-black/70 dark:text-white/80 truncate">
+                        {i.quantity}&times; {i.name}
+                      </span>
+                    </div>
+                    <span className="font-semibold text-black dark:text-white font-mono flex-shrink-0">
+                      {(i.price * i.quantity).toFixed(2)} GHS
+                    </span>
+                  </div>
+                );
+              })}
               <div className="pt-3 flex justify-between font-bold text-sm sm:text-base">
                 <span className="uppercase tracking-wider text-black dark:text-white">Total Due</span>
                 <span className="text-gold font-mono">{total.toFixed(2)} GHS</span>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import type { Address } from "../../../types/user";
 import { EmptyState } from "../../../components/ui/EmptyState";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import { MapPin, Plus } from "lucide-react";
 import { AddressCard } from "./AddressCard";
 import { AddressForm } from "./AddressForm";
@@ -24,6 +25,7 @@ export const Addresses: React.FC<AddressesProps> = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<Address | null>(null);
 
   const editingAddress = editingId
     ? addresses.find((a) => a._id === editingId) ?? null
@@ -104,12 +106,35 @@ export const Addresses: React.FC<AddressesProps> = ({
                 setEditingId(a._id);
                 setShowForm(true);
               }}
-              onDelete={onDeleteAddress}
+              onDelete={(id) => {
+                const target = addresses.find((a) => a._id === id);
+                if (target) setPendingDelete(target);
+              }}
               onSetDefault={onSetDefaultAddress}
             />
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={pendingDelete !== null}
+        title="Remove this address?"
+        message={
+          <>
+            <span className="font-semibold text-black dark:text-white">
+              {pendingDelete?.label}
+            </span>{" "}
+            will be removed from your saved delivery addresses.
+          </>
+        }
+        confirmLabel="Remove Address"
+        confirmVariant="danger"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) onDeleteAddress(pendingDelete._id);
+          setPendingDelete(null);
+        }}
+      />
     </div>
   );
 };

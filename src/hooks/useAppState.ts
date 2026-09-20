@@ -400,7 +400,6 @@ export function useAppState() {
   };
 
   const handleDeleteAddress = async (id: string) => {
-    if (!window.confirm("Remove this address?")) return;
     setProfileError(null);
     try {
       const { user } = await api.deleteAddress(id);
@@ -433,7 +432,6 @@ export function useAppState() {
   };
 
   const handleDeletePaymentMethod = async (id: string) => {
-    if (!window.confirm("Remove this payment method?")) return;
     setProfileError(null);
     try {
       const { user } = await api.deletePaymentMethod(id);
@@ -518,6 +516,9 @@ export function useAppState() {
           price: product.price,
           quantity: Math.min(product.stock, quantity),
           productId: product.id,
+          // Snapshot the image with the item so it survives a reload and
+          // renders correctly even before/without the live catalog lookup.
+          imageUrl: product.imageUrl || "",
         },
       ];
     });
@@ -674,14 +675,14 @@ try {
   };
 
   // ─── Admin: Remove Product ──────────────────────────────────────────
+  // Confirmation is handled by the calling UI (ConfirmDialog) so this fires
+  // only after the admin has explicitly confirmed the removal.
   const handleRemoveProduct = async (productId: string) => {
-    if (window.confirm("Are you sure you want to remove this perfume from inventory?")) {
-      try {
-        await api.deleteProduct(productId);
-        fetchProducts();
-      } catch (err) {
-        alert(getErrorMessage(err, "Failed to remove product"));
-      }
+    try {
+      await api.deleteProduct(productId);
+      fetchProducts();
+    } catch (err) {
+      alert(getErrorMessage(err, "Failed to remove product"));
     }
   };
 

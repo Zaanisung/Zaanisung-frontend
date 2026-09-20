@@ -5,7 +5,6 @@ import { craftFeatures } from "./constants";
 export const CraftSection: React.FC = () => {
   return (
     <section id="craft" className="relative bg-white dark:bg-black">
-      <div className="absolute top-0 inset-x-0 hairline-black" aria-hidden="true" />
       <div className="scene-bg scene-craft" aria-hidden="true" />
       <div className="relative z-10 w-full min-h-screen px-4 sm:px-8 lg:px-12 py-16 sm:py-20 flex flex-col justify-center">
         <motion.div

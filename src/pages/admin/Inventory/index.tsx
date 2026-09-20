@@ -3,6 +3,7 @@ import type { Product } from "../../../types";
 import { Button } from "../../../components/Button";
 import { SearchInput } from "../../../components/ui/SearchInput";
 import { ListRowSkeleton } from "../../../components/ui/Skeleton";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import { PlusCircle } from "lucide-react";
 import { DesktopTable } from "./DesktopTable";
 import { MobileCardList } from "./MobileCardList";
@@ -27,6 +28,7 @@ export const Inventory: React.FC<InventoryProps> = ({
   onQuickRestock,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [pendingDelete, setPendingDelete] = useState<Product | null>(null);
 
   const filteredProducts = useMemo(() => {
     if (!searchQuery.trim()) return products;
@@ -100,7 +102,10 @@ export const Inventory: React.FC<InventoryProps> = ({
             onQuickSale={onQuickSale}
             onQuickRestock={onQuickRestock}
             onEditProduct={onEditProduct}
-            onRemoveProduct={onRemoveProduct}
+            onRemoveProduct={(id) => {
+              const target = filteredProducts.find((p) => p.id === id);
+              if (target) setPendingDelete(target);
+            }}
           />
 
           <MobileCardList
@@ -108,10 +113,33 @@ export const Inventory: React.FC<InventoryProps> = ({
             onQuickSale={onQuickSale}
             onQuickRestock={onQuickRestock}
             onEditProduct={onEditProduct}
-            onRemoveProduct={onRemoveProduct}
+            onRemoveProduct={(id) => {
+              const target = filteredProducts.find((p) => p.id === id);
+              if (target) setPendingDelete(target);
+            }}
           />
         </>
       )}
+
+      <ConfirmDialog
+        isOpen={pendingDelete !== null}
+        title="Remove this perfume?"
+        message={
+          <>
+            <span className="font-semibold text-black dark:text-white">
+              {pendingDelete?.name}
+            </span>{" "}
+            will be removed from the inventory catalog. This cannot be undone.
+          </>
+        }
+        confirmLabel="Remove Perfume"
+        confirmVariant="danger"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) onRemoveProduct(pendingDelete.id);
+          setPendingDelete(null);
+        }}
+      />
     </div>
   );
 };
