@@ -259,13 +259,63 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
       userName={props.customerUser?.name || ""}
       onOpenDashboard={props.onOpenDashboard}
     >
+<StorefrontPages
+        {...props}
+        view={view}
+        onSelectedProduct={(p) => props.onNavigate({ type: "customer", page: "product-details", productId: p.id })}
+        onBackToShop={() => props.onNavigate({ type: "customer", page: "shop" })}
+        onBackToCart={() => props.onNavigate({ type: "customer", page: "cart" })}
+        onCheckout={() => props.onNavigate({ type: "customer", page: "checkout" })}
+        onShop={() => props.onNavigate({ type: "customer", page: "shop" })}
+        onOrders={() => props.onNavigate({ type: "customer", page: "orders" })}
+      />
+
+      {view.page === "account" && (
+        <Account
+          user={props.customerUser}
+          onLogout={props.onCustomerLogout}
+          onNavigateToLogin={props.onGoToLogin}
+          onOpenDashboard={props.onOpenDashboard}
+        />
+      )}
+    </CustomerLayout>
+  );
+};
+
+/**
+ * Storefront pages shared verbatim by the guest/customer shell and the account
+ * dashboard. Handlers are injected by the caller so navigation always lands in
+ * the right namespace ("customer" vs "dashboard").
+ */
+
+/** Picks the buyer's saved default delivery address (first as a fallback). */
+function selectDeliveryAddress(addresses: Address[] | undefined) {
+  if (!addresses || addresses.length === 0) return undefined;
+  return addresses.find((a) => a.isDefault) || addresses[0];
+}
+
+const StorefrontPages: React.FC<
+  AppRouterProps & {
+    view: Extract<AppView, { type: "customer" }> | Extract<AppView, { type: "dashboard" }>;
+    onSelectedProduct: (p: Product) => void;
+    onBackToShop: () => void;
+    onBackToCart: () => void;
+    onCheckout: () => void;
+    onShop: () => void;
+    onOrders: () => void;
+  }
+> = (props) => {
+  const { view, onSelectedProduct, onBackToShop, onBackToCart, onCheckout, onShop, onOrders } = props;
+
+  return (
+    <>
       {view.page === "shop" && (
         <Shop
           products={props.products}
           isLoading={props.isLoadingProducts}
           error={props.productsError}
           onRetry={props.onRetryProducts}
-          onSelectProduct={(p) => props.onNavigate({ type: "customer", page: "product-details", productId: p.id })}
+          onSelectProduct={onSelectedProduct}
           onAddToCart={(p) => props.onAddToCart(p, 1)}
           recentlyAddedId={props.recentlyAddedId}
         />
@@ -279,18 +329,18 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
               <NotFoundPage
                 title="Fragrance not found"
                 hint="The fragrance you're looking for is no longer available."
-                onBack={() => props.onCustomerTabChange("shop")}
+                onBack={onBackToShop}
                 onHome={() => props.onNavigate({ type: "landing" })}
               />
             );
           return (
             <ProductDetails
               product={product}
-              onBack={() => props.onNavigate({ type: "customer", page: "shop" })}
+              onBack={onBackToShop}
               onAddToCart={(p, qty) => props.onAddToCart(p, qty)}
               onBuyNow={(p, qty) => {
                 props.onAddToCart(p, qty);
-                props.onNavigate({ type: "customer", page: "checkout" });
+                onCheckout();
               }}
             />
           );
@@ -302,8 +352,8 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
           products={props.products}
           onUpdateQuantity={props.onUpdateCartQuantity}
           onRemoveItem={props.onRemoveCartItem}
-          onProceedToCheckout={() => props.onNavigate({ type: "customer", page: "checkout" })}
-          onContinueShopping={() => props.onCustomerTabChange("shop")}
+          onProceedToCheckout={onCheckout}
+          onContinueShopping={onShop}
         />
       )}
 
@@ -312,8 +362,9 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
           items={props.cart}
           defaultName={props.customerUser?.name || ""}
           defaultPhone={props.customerUser?.phone || ""}
+          savedAddress={props.customerUser ? selectDeliveryAddress(props.customerUser.addresses) : undefined}
           products={props.products}
-          onBackToCart={() => props.onNavigate({ type: "customer", page: "cart" })}
+          onBackToCart={onBackToCart}
           onPlaceOrder={props.onPlaceOrder}
         />
       )}
@@ -326,15 +377,15 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
               <NotFoundPage
                 title="Order not found"
                 hint="We couldn't find that order. It may have been removed."
-                onBack={() => props.onCustomerTabChange("orders")}
+                onBack={onOrders}
                 onHome={() => props.onNavigate({ type: "landing" })}
               />
             );
           return (
             <OrderConfirmation
               order={order}
-              onViewOrder={() => props.onCustomerTabChange("orders")}
-              onContinueShopping={() => props.onCustomerTabChange("shop")}
+              onViewOrder={onOrders}
+              onContinueShopping={onShop}
             />
           );
         })()}
@@ -345,19 +396,10 @@ const CustomerStore: React.FC<AppRouterProps & { activeTab: CustomerTab }> = (pr
           isLoadingOrders={props.isLoadingOrders}
           isGuest={!props.customerUser}
           onSignIn={() => props.onNavigate({ type: "customer", page: "login" })}
-          onContinueShopping={() => props.onCustomerTabChange("shop")}
+          onContinueShopping={onShop}
         />
       )}
-
-      {view.page === "account" && (
-        <Account
-          user={props.customerUser}
-          onLogout={props.onCustomerLogout}
-          onNavigateToLogin={props.onGoToLogin}
-          onOpenDashboard={props.onOpenDashboard}
-        />
-      )}
-    </CustomerLayout>
+    </>
   );
 };
 
@@ -397,95 +439,18 @@ const UserDashboard: React.FC<AppRouterProps> = (props) => {
         />
       )}
 
-      {view.page === "shop" && (
-        <Shop
-          products={props.products}
-          isLoading={props.isLoadingProducts}
-          error={props.productsError}
-          onRetry={props.onRetryProducts}
-          onSelectProduct={(p) =>
-            props.onNavigate({ type: "dashboard", page: "product-details", productId: p.id })
-          }
-          onAddToCart={(p) => props.onAddToCart(p, 1)}
-          recentlyAddedId={props.recentlyAddedId}
-        />
-      )}
-
-      {view.page === "product-details" &&
-        (() => {
-          const product = props.products.find((p) => p.id === view.productId);
-          if (!product)
-            return (
-              <NotFoundPage
-                title="Fragrance not found"
-                hint="The fragrance you're looking for is no longer available."
-                onBack={() => props.onNavigate({ type: "dashboard", page: "shop" })}
-                onHome={() => props.onNavigate({ type: "landing" })}
-              />
-            );
-          return (
-            <ProductDetails
-              product={product}
-              onBack={() => props.onNavigate({ type: "dashboard", page: "shop" })}
-              onAddToCart={(p, qty) => props.onAddToCart(p, qty)}
-              onBuyNow={(p, qty) => {
-                props.onAddToCart(p, qty);
-                props.onNavigate({ type: "dashboard", page: "checkout" });
-              }}
-            />
-          );
-        })()}
-
-      {view.page === "cart" && (
-        <Cart
-          items={props.cart}
-          products={props.products}
-          onUpdateQuantity={props.onUpdateCartQuantity}
-          onRemoveItem={props.onRemoveCartItem}
-          onProceedToCheckout={() => props.onNavigate({ type: "dashboard", page: "checkout" })}
-          onContinueShopping={() => props.onNavigate({ type: "dashboard", page: "shop" })}
-        />
-      )}
-
-      {view.page === "checkout" && (
-        <Checkout
-          items={props.cart}
-          defaultName={props.customerUser?.name || ""}
-          defaultPhone={props.customerUser?.phone || ""}
-          products={props.products}
-          onBackToCart={() => props.onNavigate({ type: "dashboard", page: "cart" })}
-          onPlaceOrder={props.onPlaceOrder}
-        />
-      )}
-
-      {view.page === "order-confirmation" &&
-        (() => {
-          const order = props.orders.find((o) => o.id === view.orderId) || props.lastConfirmedOrder;
-          if (!order)
-            return (
-              <NotFoundPage
-                title="Order not found"
-                hint="We couldn't find that order. It may have been removed."
-                onBack={() => props.onNavigate({ type: "dashboard", page: "orders" })}
-                onHome={() => props.onNavigate({ type: "landing" })}
-              />
-            );
-          return (
-            <OrderConfirmation
-              order={order}
-              onViewOrder={() => props.onNavigate({ type: "dashboard", page: "orders" })}
-              onContinueShopping={() => props.onNavigate({ type: "dashboard", page: "shop" })}
-            />
-          );
-        })()}
-
-      {view.page === "orders" && (
-        <Orders
-          orders={props.orders}
-          isLoadingOrders={props.isLoadingOrders}
-          onContinueShopping={() => props.onNavigate({ type: "dashboard", page: "shop" })}
-        />
-      )}
+      <StorefrontPages
+        {...props}
+        view={view}
+        onSelectedProduct={(p) =>
+          props.onNavigate({ type: "dashboard", page: "product-details", productId: p.id })
+        }
+        onBackToShop={() => props.onNavigate({ type: "dashboard", page: "shop" })}
+        onBackToCart={() => props.onNavigate({ type: "dashboard", page: "cart" })}
+        onCheckout={() => props.onNavigate({ type: "dashboard", page: "checkout" })}
+        onShop={() => props.onNavigate({ type: "dashboard", page: "shop" })}
+        onOrders={() => props.onNavigate({ type: "dashboard", page: "orders" })}
+      />
 
       {view.page === "addresses" && (
         <Addresses

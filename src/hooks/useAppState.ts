@@ -23,6 +23,7 @@ import type {
 import { STORAGE_KEYS } from "../constants";
 import { useLocalStorage } from "./useLocalStorage";
 import { useTheme } from "./useTheme";
+import { showErrorToast } from "../utils/toast";
 
 function normalizeFullUser(user: FullUser): FullUser {
   return {
@@ -565,14 +566,14 @@ export function useAppState() {
 
 try {
       const { order } = await api.placeOrder({
-          products: productsPayload,
-          delivery: {
-            address: orderData.deliveryAddress,
-            city: orderData.deliveryCity || "Tamale",
-            phone: orderData.customerPhone,
-            ...(orderData.customerName ? { recipientName: orderData.customerName } : {}),
-            ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
-          },
+        products: productsPayload,
+        delivery: {
+          address: orderData.deliveryAddress,
+          city: orderData.deliveryCity || "Tamale",
+          phone: orderData.customerPhone,
+          ...(orderData.customerName ? { recipientName: orderData.customerName } : {}),
+          ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
+        },
           payment: {
             method: orderData.paymentMethod,
             ...(orderData.paymentReference
@@ -630,7 +631,7 @@ try {
       fetchProducts();
       refreshOrders();
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to record sale"));
+      showErrorToast(getErrorMessage(err, "Failed to record sale"));
     }
   };
 
@@ -640,7 +641,7 @@ try {
       await api.restockProduct(productId, quantityAdded);
       fetchProducts();
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to restock"));
+      showErrorToast(getErrorMessage(err, "Failed to restock"));
     }
   };
 
@@ -652,7 +653,7 @@ try {
       setView({ type: "admin", page: "inventory" });
       setAdminTab("inventory");
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to add product"));
+      showErrorToast(getErrorMessage(err, "Failed to add product"));
     }
   };
 
@@ -670,7 +671,7 @@ try {
       setView({ type: "admin", page: "inventory" });
       setAdminTab("inventory");
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to update product"));
+      showErrorToast(getErrorMessage(err, "Failed to update product"));
     }
   };
 
@@ -682,7 +683,7 @@ try {
       await api.deleteProduct(productId);
       fetchProducts();
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to remove product"));
+      showErrorToast(getErrorMessage(err, "Failed to remove product"));
     }
   };
 
@@ -694,7 +695,7 @@ try {
         prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
       );
     } catch (err) {
-      alert(getErrorMessage(err, "Failed to update order status"));
+      showErrorToast(getErrorMessage(err, "Failed to update order status"));
     }
   };
 

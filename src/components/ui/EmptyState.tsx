@@ -10,6 +10,11 @@ export interface EmptyStateProps {
   className?: string;
 }
 
+/**
+ * Static empty-state panel. Deliberately NOT a live region — nothing here
+ * changes dynamically, so announcing it via `role="status"` would let screen
+ * readers interrupt users for content that never updates.
+ */
 export const EmptyState: React.FC<EmptyStateProps> = ({
   icon,
   title,
@@ -24,7 +29,6 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         "relative overflow-hidden w-full max-w-md mx-auto py-16 px-6 surface-glass-strong rounded-2xl text-center flex flex-col items-center shadow-[0_0_0_1px_rgba(212,175,55,0.1),0_12px_40px_-10px_rgba(0,0,0,0.15)]",
         className
       )}
-      role="status"
     >
 
       {icon && (

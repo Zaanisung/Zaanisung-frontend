@@ -42,10 +42,16 @@ export async function placeOrder(data: {
   });
 }
 
-export async function getMyOrders(): Promise<{ orders: Order[] }> {
-  return request("/orders");
-}
-
-export async function getMyOrder(id: string): Promise<{ order: Order }> {
-  return request(`/orders/${id}`);
+export async function getMyOrders(opts?: {
+  page?: number;
+  limit?: number;
+}): Promise<{
+  orders: Order[];
+  pagination?: { total: number; page: number; limit: number; totalPages: number };
+}> {
+  const query = new URLSearchParams();
+  if (opts?.page) query.set("page", String(opts.page));
+  if (opts?.limit) query.set("limit", String(opts.limit));
+  const qs = query.toString();
+  return request(`/orders${qs ? `?${qs}` : ""}`);
 }

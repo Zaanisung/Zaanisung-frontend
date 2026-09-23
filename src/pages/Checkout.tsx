@@ -15,6 +15,14 @@ export interface CheckoutProps {
   defaultName?: string;
   defaultPhone?: string;
   defaultCity?: string;
+  /** Signed-in buyer's saved delivery address used to prefill the form. */
+  savedAddress?: {
+    recipientName?: string;
+    phone?: string;
+    streetAddress?: string;
+    city?: string;
+    digitalAddress?: string;
+  };
   products?: Product[];
   onBackToCart: () => void;
   onPlaceOrder: (orderData: PlaceOrderData) => Promise<void>;
@@ -25,15 +33,16 @@ export const Checkout: React.FC<CheckoutProps> = ({
   defaultName = "",
   defaultPhone = "",
   defaultCity = "",
+  savedAddress,
   products = [],
   onBackToCart,
   onPlaceOrder,
 }) => {
-  const [name, setName] = useState(defaultName);
-  const [phone, setPhone] = useState(defaultPhone);
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState(defaultCity);
-  const [digitalAddress, setDigitalAddress] = useState("");
+  const [name, setName] = useState(savedAddress?.recipientName || defaultName);
+  const [phone, setPhone] = useState(savedAddress?.phone || defaultPhone);
+  const [address, setAddress] = useState(savedAddress?.streetAddress || "");
+  const [city, setCity] = useState(savedAddress?.city || defaultCity);
+  const [digitalAddress, setDigitalAddress] = useState(savedAddress?.digitalAddress || "");
   const [paymentMethod, setPaymentMethod] = useState<"Mobile Money" | "Cash on Delivery" | "Bank / Transfer" | "Paystack (Card)">("Mobile Money");
   const [momoNumber, setMomoNumber] = useState(defaultPhone);
   const [momoNetwork, setMomoNetwork] = useState("MTN");
@@ -400,11 +409,11 @@ export const Checkout: React.FC<CheckoutProps> = ({
                 <Info className="w-4 h-4 shrink-0 mt-0.5 text-gold" />
                 <span>
                   {paymentMethod === "Mobile Money" &&
-                    "You'll receive a USSD prompt on your line to approve the payment. Keep this phone near you while completing your order."}
+                    "After you place your order, our team will text this number to arrange payment. Keep your phone reachable."}
                   {paymentMethod === "Cash on Delivery" &&
                     "Pay the delivery courier in cash when your order arrives. Exact change is appreciated."}
                   {paymentMethod === "Bank / Transfer" &&
-                    "We'll contact you with our bank details to complete your transfer. Your order is confirmed once the payment reflects."}
+                    "We'll text or email you our bank details within 24 hours. Your order is confirmed once the payment reflects."}
                 </span>
               </div>
             )}

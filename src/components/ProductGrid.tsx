@@ -18,6 +18,10 @@ export interface ProductGridProps {
 
 type PriceFilter = "ALL" | "UNDER_400" | "400_450" | "OVER_450" | "IN_STOCK";
 
+// Named pricing thresholds for the storefront filter bands (GH¢).
+const PRICE_BAND_LOW = 400;
+const PRICE_BAND_HIGH = 450;
+
 export const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   isLoading = false,
@@ -39,9 +43,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         if (!inName && !inDescription) return false;
       }
 
-      if (activeFilter === "UNDER_400") return p.price < 400;
-      if (activeFilter === "400_450") return p.price >= 400 && p.price <= 450;
-      if (activeFilter === "OVER_450") return p.price > 450;
+      if (activeFilter === "UNDER_400") return p.price < PRICE_BAND_LOW;
+      if (activeFilter === "400_450")
+        return p.price >= PRICE_BAND_LOW && p.price <= PRICE_BAND_HIGH;
+      if (activeFilter === "OVER_450") return p.price > PRICE_BAND_HIGH;
       if (activeFilter === "IN_STOCK") return p.stock > 0;
 
       return true;
@@ -51,9 +56,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   const filterOptions: { id: PriceFilter; label: string }[] = [
     { id: "ALL", label: "All Perfumes" },
     { id: "IN_STOCK", label: "In Stock" },
-    { id: "UNDER_400", label: "Under 400 GHS" },
-    { id: "400_450", label: "400 - 450 GHS" },
-    { id: "OVER_450", label: "450+ GHS" },
+    { id: "UNDER_400", label: `Under ${PRICE_BAND_LOW} GHS` },
+    { id: "400_450", label: `${PRICE_BAND_LOW} - ${PRICE_BAND_HIGH} GHS` },
+    { id: "OVER_450", label: `${PRICE_BAND_HIGH}+ GHS` },
   ];
 
   return (

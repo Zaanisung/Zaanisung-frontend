@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { StatCard } from "./StatCard";
 import { StockAlertsCard } from "./StockAlertsCard";
+import { LOW_STOCK_THRESHOLD } from "../../../constants";
 import { RecentOrdersCard } from "./RecentOrdersCard";
 
 export interface DashboardProps {
@@ -43,7 +44,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onNavigateTo,
 }) => {
   const totalProducts = products.length;
-  const lowStockProducts = products.filter((p) => p.stock > 0 && p.stock <= 3);
+  const lowStockProducts = products.filter(
+    (p) => p.stock > 0 && p.stock <= LOW_STOCK_THRESHOLD
+  );
   const outOfStockProducts = products.filter((p) => p.stock <= 0);
 
   const todayOrders = orders.filter((o) => isToday(o.createdAt));

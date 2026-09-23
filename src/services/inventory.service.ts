@@ -30,21 +30,3 @@ export async function recordPhysicalSale(
     body: JSON.stringify({ productId, quantity }),
   });
 }
-
-export async function adjustStock(
-  productId: string,
-  quantity: number,
-  reason: string
-): Promise<{ message: string; product: Product }> {
-  return request("/admin/inventory/adjust", {
-    method: "POST",
-    body: JSON.stringify({ productId, quantity, reason }),
-  });
-}
-
-export async function getStockHistory(
-  productId?: string
-): Promise<{ movements: StockMovement[] }> {
-  const query = productId ? `?productId=${productId}` : "";
-  return request(`/admin/inventory/history${query}`);
-}

@@ -14,12 +14,18 @@ export interface Product {
   updatedAt: string;
 }
 
-export async function getProducts(): Promise<{ products: Product[] }> {
-  return request("/products");
-}
-
-export async function getProduct(id: string): Promise<{ product: Product }> {
-  return request(`/products/${id}`);
+export async function getProducts(opts?: {
+  page?: number;
+  limit?: number;
+}): Promise<{
+  products: Product[];
+  pagination?: { total: number; page: number; limit: number; totalPages: number };
+}> {
+  const query = new URLSearchParams();
+  if (opts?.page) query.set("page", String(opts.page));
+  if (opts?.limit) query.set("limit", String(opts.limit));
+  const qs = query.toString();
+  return request(`/products${qs ? `?${qs}` : ""}`);
 }
 
 export async function createProduct(data: {

@@ -45,7 +45,13 @@ export const Login: React.FC<LoginProps> = ({
     setRecInfo(null);
     try {
       const res = await api.requestPasswordResetOtp(recIdentifier.trim());
-      setRecInfo(`A verification code has been sent to your phone or email. It expires in ${res.expiresInMinutes} minutes.`);
+      const devHint =
+        import.meta.env.DEV && res.devCode
+          ? ` (dev code: ${res.devCode} — SMS/email gateway not configured)`
+          : "";
+      setRecInfo(
+        `A verification code has been sent to your phone or email. It expires in ${res.expiresInMinutes} minutes.${devHint}`
+      );
       setRecoveryStep("reset");
     } catch (err) {
       setRecError(getErrorMessage(err, "Could not send a reset code. Please try again."));

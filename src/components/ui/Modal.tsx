@@ -23,6 +23,9 @@ export const Modal: React.FC<ModalProps> = ({
   closeOnOverlayClick = true,
   closeOnEscape = true,
 }) => {
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const previouslyFocused = React.useRef<HTMLElement | null>(null);
+
   // Handle ESC key
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return;
@@ -45,6 +48,47 @@ export const Modal: React.FC<ModalProps> = ({
     return () => {
       document.body.style.overflow = "";
     };
+  }, [isOpen]);
+
+  // Focus first focusable element on open; restore focus on close.
+  useEffect(() => {
+    if (!isOpen) return;
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    const node = dialogRef.current;
+    const focusable = node?.querySelector<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    (focusable || node)?.focus();
+    return () => {
+      previouslyFocused.current?.focus?.();
+    };
+  }, [isOpen]);
+
+  // Keep Tab focus inside the dialog while open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const node = dialogRef.current;
+      if (!node) return;
+      const focusable = Array.from(
+        node.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => el.offsetParent !== null);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -70,8 +114,13 @@ export const Modal: React.FC<ModalProps> = ({
 
       {/* Modal content */}
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        tabIndex={-1}
         className={cn(
-          "relative w-full animate-zoom-in",
+          "relative w-full animate-zoom-in focus:outline-none",
           sizeClasses[size]
         )}
         onClick={(e) => e.stopPropagation()}

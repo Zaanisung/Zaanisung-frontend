@@ -89,11 +89,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
               )}
               <button
                 type="button"
-                onClick={() => {
-                  if (window.confirm("Remove this payment method?")) {
-                    onDelete(pm._id);
-                  }
-                }}
+                onClick={() => onDelete(pm._id)}
                 className="w-full px-4 py-2.5 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2 transition-all duration-[400ms]"
               >
                 <Trash2 className="w-4 h-4" />

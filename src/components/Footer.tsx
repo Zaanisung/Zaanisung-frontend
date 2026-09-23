@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { Logo } from "./Logo";
 
+// Business-owned profiles should replace these before launch. Using real
+// handles keeps the footer honest (no dead brand links).
 const socials = [
   { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
   { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
@@ -29,20 +31,22 @@ export interface FooterProps {
   onNavigate?: (target: "shop" | "about" | "orders" | "account" | "home") => void;
 }
 
+// There is no newsletter backend yet, so the form composes a pre-filled email
+// instead of claiming you've been added to a list that doesn't exist.
+const NEWSLETTER_EMAIL = "zaanisung7@gmail.com";
+
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [newsletterStatus, setNewsletterStatus] = useState<
-    "idle" | "subscribed" | "error"
-  >("idle");
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const email = newsletterEmail.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setNewsletterStatus("error");
-      return;
-    }
-    setNewsletterStatus("subscribed");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+    const subject = encodeURIComponent("Newsletter sign-up request");
+    const body = encodeURIComponent(`Please add me to the newsletter.\n\nEmail: ${email}`);
+    window.open(`mailto:${NEWSLETTER_EMAIL}?subject=${subject}&body=${body}`, "_self");
+    setNewsletterEmail("");
   };
 
   return (
@@ -131,43 +135,31 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Newsletter */}
           <div className="lg:col-span-3">
             <h3 className="eyebrow text-cream mb-5">Stay in the loop</h3>
-            {newsletterStatus === "subscribed" ? (
-              <div className="flex items-center gap-2 text-sm text-gold font-medium">
-                <CheckCircle2 className="w-4 h-4" />
-                You&apos;re on the list. Welcome!
-              </div>
-            ) : (
-              <>
-                <p className="text-sm text-cream/60 mb-4">
-                  Be first to know about new drops and exclusive offers.
-                </p>
-                <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
-                  <input
-                    type="email"
-                    value={newsletterEmail}
-                    onChange={(e) => {
-                      setNewsletterEmail(e.target.value);
-                      if (newsletterStatus === "error") setNewsletterStatus("idle");
-                    }}
-                    placeholder="you@email.com"
-                    aria-label="Email address"
-                    aria-invalid={newsletterStatus === "error"}
-                    className="flex-1 min-w-0 px-3.5 py-2.5 text-sm rounded-lg bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                  />
-                  <button
-                    type="submit"
-                    className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    Join
-                  </button>
-                </form>
-                {newsletterStatus === "error" && (
-                  <p className="mt-2 text-xs text-red-400">
-                    Please enter a valid email address.
-                  </p>
-                )}
-              </>
-            )}
+            <p className="text-sm text-cream/60 mb-4">
+              Be first to know about new drops and exclusive offers.
+            </p>
+            <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
+              <input
+                type="email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                placeholder="you@email.com"
+                aria-label="Email address"
+                required
+                className="flex-1 min-w-0 px-3.5 py-2.5 text-sm rounded-lg bg-transparent border border-white/15 text-cream placeholder-cream/35 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/20 transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              />
+              <button
+                type="submit"
+                className="min-h-[44px] px-5 rounded-lg bg-gold hover:bg-gold-600 text-ink text-xs uppercase tracking-wider font-bold transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Join
+              </button>
+            </form>
+            <p className="mt-2 text-xs text-cream/45 flex items-start gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-gold flex-shrink-0" />
+              Submitting opens a pre-filled email to us — send it and we&apos;ll
+              add you to our drop list.
+            </p>
           </div>
         </div>
       </div>

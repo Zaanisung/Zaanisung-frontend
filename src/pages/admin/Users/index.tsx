@@ -3,6 +3,7 @@ import type { AdminUser } from "../../../types";
 import { getAllUsers, deleteUser } from "../../../services/admin.service";
 import { getErrorMessage } from "../../../services/apiClient";
 import { Button } from "../../../components/Button";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import { SearchInput } from "../../../components/ui/SearchInput";
 import { Skeleton } from "../../../components/ui/Skeleton";
 import { Users, Trash2, Mail, Phone } from "lucide-react";
@@ -25,6 +26,7 @@ export const UserManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<AdminUser | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
 
   const emptyMessage = "Could not load the customer list. Please try again.";
@@ -72,8 +74,10 @@ export const UserManagement: React.FC = () => {
     );
   }, [users, searchQuery]);
 
-  const handleDelete = async (user: AdminUser) => {
-    if (!window.confirm(`Remove ${user.name}'s account? This cannot be undone.`)) return;
+  const handleDeleteConfirm = async () => {
+    if (!pendingDelete) return;
+    const user = pendingDelete;
+    setPendingDelete(null);
     setDeletingId(user.id);
     setFeedback(null);
     try {
@@ -193,7 +197,7 @@ export const UserManagement: React.FC = () => {
 
                 <button
                   type="button"
-                  onClick={() => void handleDelete(user)}
+                  onClick={() => setPendingDelete(user)}
                   disabled={deletingId === user.id || user.role === "ADMIN"}
                   aria-label={`Remove ${user.name}`}
                   className={cn(
@@ -225,6 +229,21 @@ export const UserManagement: React.FC = () => {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={pendingDelete !== null}
+        title="Remove this account?"
+        message={
+          <>
+            Remove <span className="font-semibold text-black dark:text-white">{pendingDelete?.name}</span>
+            &apos;s account? This will permanently delete their orders, addresses and saved details. This cannot be undone.
+          </>
+        }
+        confirmLabel="Remove Account"
+        confirmVariant="danger"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => void handleDeleteConfirm()}
+      />
     </div>
   );
 };

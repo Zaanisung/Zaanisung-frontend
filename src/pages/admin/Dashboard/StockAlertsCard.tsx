@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { Product } from "../../../types";
 import { resolveApiUrl } from "../../../services/apiClient";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { LOW_STOCK_THRESHOLD } from "../../../constants";
 
 interface StockAlertsCardProps {
   lowStock: Product[];
@@ -118,7 +119,7 @@ export const StockAlertsCard: React.FC<StockAlertsCardProps> = ({
               All perfumes are sufficiently stocked
             </p>
             <p className="text-[11px] text-black/45 dark:text-white/45">
-              Hearths rise here the moment a scent dips to 3 bottles or fewer.
+              {LOW_STOCK_THRESHOLD} bottles or fewer triggers a low-stock alert.
             </p>
           </div>
         </div>

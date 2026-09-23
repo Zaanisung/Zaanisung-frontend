@@ -1,6 +1,9 @@
 import { Gem, ShieldCheck, RefreshCcw, Heart } from "lucide-react";
+import { STORAGE_KEYS } from "../../constants";
 
-export const SESSION_KEY = "zaanisung_landing";
+// The landing "signed" session marker lives on the shared storage-keys list so
+// the app never has two spellings of the same key.
+export const SESSION_KEY = STORAGE_KEYS.LANDING_SESSION;
 
 export const navLinks = [
   { label: "Collections", href: "#collections" },
@@ -10,8 +13,8 @@ export const navLinks = [
 
 export const storyStats = [
   { value: "100%", label: "Artisanal Blends" },
-  { value: "24H+", label: "Long-Lasting" },
-  { value: "500+", label: "Happy Customers" },
+  { value: "24H+", label: "Long-Lasting Wear" },
+  { value: "Tamale", label: "Proudly Ghanaian" },
 ];
 
 export const craftFeatures = [

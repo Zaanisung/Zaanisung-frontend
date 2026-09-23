@@ -3,6 +3,7 @@ import { useAppState } from "./hooks/useAppState";
 import { AppRouter } from "./router";
 import { FullPageLoader } from "./components/ui/Loader";
 import { OnboardingTour } from "./components/onboarding/OnboardingTour";
+import { ToastHost } from "./components/Toast";
 import { cn } from "./utils/cn";
 
 type LoaderPhase = "booting" | "fading" | "ready";
@@ -51,18 +52,18 @@ export default function App() {
           window.addEventListener("load", () => resolve(), { once: true });
         });
         const maxWait = new Promise<void>((resolve) =>
-          setTimeout(resolve, 2500)
+          setTimeout(resolve, 1500)
         );
         await Promise.race([onLoad, maxWait]);
       }
-      // Give the app a beat to mount and paint its core sections first.
-      await wait(700);
+      // Give the app a brief beat to mount and paint its core sections first.
+      await wait(250);
       await nextPaint();
       if (!alive) return;
 
       // Mount the router behind a fading overlay, then unhook the loader.
       setPhase("fading");
-      await wait(700);
+      await wait(500);
       if (alive) setPhase("ready");
     })();
 
@@ -92,6 +93,7 @@ export default function App() {
     <>
       <AppRouter {...state} />
       {phase === "fading" && <FadeOutOverlay />}
+      <ToastHost />
       <OnboardingTour
         view={state.view}
         isAdminLoggedIn={state.isAdminLoggedIn}

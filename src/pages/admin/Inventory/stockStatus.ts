@@ -1,8 +1,10 @@
+import { LOW_STOCK_THRESHOLD } from "../../../constants";
+
 export type StockStatusKind = "out" | "low" | "in";
 
 export const getStockStatus = (stock: number): StockStatusKind => {
   if (stock <= 0) return "out";
-  if (stock <= 3) return "low";
+  if (stock <= LOW_STOCK_THRESHOLD) return "low";
   return "in";
 };
 

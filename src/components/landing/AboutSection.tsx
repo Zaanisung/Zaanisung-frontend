@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, MapPin, Phone, Mail, BadgeCheck } from "lucide-react";
 import { motion } from "motion/react";
 import { Button } from "../Button";
 import { storyStats } from "./constants";
@@ -58,18 +58,40 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onGoToLogin }) => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="surface-glass rounded-xl p-8 sm:p-10 flex flex-col items-center justify-center text-center min-h-[210px] lg:min-h-[240px]"
+          className="surface-glass rounded-xl p-8 sm:p-10 flex flex-col items-start justify-center text-left min-h-[210px] lg:min-h-[240px]"
         >
-          <div className="w-12 h-12 flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold mb-5">
-            <Star className="w-5 h-5" />
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-11 h-11 flex items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold">
+              <BadgeCheck className="w-5 h-5" />
+            </div>
+            <h3 className="font-brand-serif text-xl sm:text-2xl font-light text-ink dark:text-white">
+              Shop with Confidence
+            </h3>
           </div>
-          <h3 className="font-brand-serif text-xl sm:text-2xl font-light text-ink dark:text-white">
-            Customer Reviews — Coming Soon
-          </h3>
-          <p className="mt-3 text-sm text-black/60 dark:text-white/70 leading-relaxed max-w-md">
-            We're collecting real, verified feedback from shoppers across Ghana.
-            Genuine reviews will appear here soon.
-          </p>
+          <ul className="space-y-4 text-sm text-black/70 dark:text-white/75">
+            <li className="flex items-start gap-3">
+              <MapPin className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+              <span>Crafted and dispatched from Tamale, Northern Region.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Phone className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+              <span>
+                Nationwide delivery · Order or enquire on{" "}
+                <a href="tel:+233530660355" className="text-gold hover:underline whitespace-nowrap">
+                  +233 53 066 0355
+                </a>
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Mail className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+              <span>
+                Questions? Email{" "}
+                <a href="mailto:zaanisung7@gmail.com" className="text-gold hover:underline">
+                  zaanisung7@gmail.com
+                </a>
+              </span>
+            </li>
+          </ul>
         </motion.div>
       </div>
     </section>

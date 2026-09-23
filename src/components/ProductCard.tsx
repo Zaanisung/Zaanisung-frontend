@@ -43,8 +43,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <article
       id={`product-card-${product.id}`}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${product.name}`}
       onClick={() => onSelect(product)}
-      className="group relative flex h-full cursor-pointer flex-col"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(product);
+        }
+      }}
+      className="group relative flex h-full cursor-pointer flex-col focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
     >
       {/* Product image — the focus of the composition */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-[#f1ece2] dark:bg-white/5">

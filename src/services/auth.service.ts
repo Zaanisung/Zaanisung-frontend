@@ -34,11 +34,12 @@ export async function logoutUser(): Promise<{ message: string }> {
   return request("/auth/logout", { method: "POST" });
 }
 
-export async function getMe(): Promise<{ user: AuthUser }> {
-  return request("/auth/me");
-}
-
-export async function requestPasswordResetOtp(identifier: string): Promise<{ message: string; expiresInMinutes: number }> {
+export async function requestPasswordResetOtp(identifier: string): Promise<{
+  message: string;
+  expiresInMinutes: number;
+  /** Present only outside production when no SMS/EMAIL gateway is configured. */
+  devCode?: string;
+}> {
   return request("/auth/otp/request", {
     method: "POST",
     body: JSON.stringify({ identifier, purpose: "PASSWORD_RESET", channel: "SMS" }),
