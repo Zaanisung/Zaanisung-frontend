@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppState } from "./hooks/useAppState";
+import { useHashRouter } from "./hooks/useHashRouter";
 import { AppRouter } from "./router";
 import { FullPageLoader } from "./components/ui/Loader";
 import { OnboardingTour } from "./components/onboarding/OnboardingTour";
@@ -8,7 +9,6 @@ import { cn } from "./utils/cn";
 
 type LoaderPhase = "booting" | "fading" | "ready";
 
-const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const nextPaint = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
 
 /** Full-viewport loader that fades out on mount so the freshly-mounted
@@ -39,6 +39,16 @@ export default function App() {
   const state = useAppState();
   const [phase, setPhase] = useState<LoaderPhase>("booting");
 
+  // Two-way URL sync: deep-links (#/shop, #/product/:id, #/dashboard/:page)
+  // restore their view on load, and every view change is mirrored back into
+  // the fragment so links are shareable and back/forward works.
+  useHashRouter({
+    view: state.view,
+    isBootstrapping: state.isBootstrapping,
+    customerUser: state.customerUser,
+    onNavigate: state.onNavigate,
+  });
+
   useEffect(() => {
     if (state.isBootstrapping) return;
     let alive = true;
@@ -56,14 +66,17 @@ export default function App() {
         );
         await Promise.race([onLoad, maxWait]);
       }
-      // Give the app a brief beat to mount and paint its core sections first.
-      await wait(250);
+      // Paint the freshly-mounted app behind the overlay, then reveal it once
+      // the overlay's CSS fade has completed (no artificial extra delay).
       await nextPaint();
       if (!alive) return;
 
-      // Mount the router behind a fading overlay, then unhook the loader.
       setPhase("fading");
-      await wait(500);
+      await nextPaint();
+      const fadeDone = new Promise<void>((resolve) =>
+        window.setTimeout(resolve, 500)
+      );
+      await fadeDone;
       if (alive) setPhase("ready");
     })();
 

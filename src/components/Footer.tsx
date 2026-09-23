@@ -12,13 +12,58 @@ import {
 } from "lucide-react";
 import { Logo } from "./Logo";
 
-// Business-owned profiles should replace these before launch. Using real
-// handles keeps the footer honest (no dead brand links).
+// Business-owned profiles are configured via VITE_SOCIAL_* (see .env.example)
+// so the footer links point at the real brand accounts at launch. When
+// unset, the links fall back to the platform roots rather than dead
+// placeholder URLs.
 const socials = [
-  { label: "Instagram", icon: Instagram, href: "https://instagram.com" },
-  { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
-  { label: "Twitter / X", icon: Twitter, href: "https://x.com" },
+  {
+    label: "Instagram",
+    icon: Instagram,
+    href:
+      (import.meta.env.VITE_SOCIAL_INSTAGRAM as string | undefined) ||
+      "https://instagram.com",
+  },
+  {
+    label: "Facebook",
+    icon: Facebook,
+    href:
+      (import.meta.env.VITE_SOCIAL_FACEBOOK as string | undefined) ||
+      "https://facebook.com",
+  },
+  {
+    label: "Twitter / X",
+    icon: Twitter,
+    href: (import.meta.env.VITE_SOCIAL_X as string | undefined) || "https://x.com",
+  },
 ];
+
+// Storefront hours are fictionalised honestly: the shop keeps Ghana hours
+// (Mon–Sat 09:00–18:00, Africa/Accra). The footer reports whether the store
+// is open right now instead of hardcoding "Store Open".
+const OPEN_LABEL = "Open · Mon–Sat 9am–6pm";
+const OPEN_NOW_PATTERN = /^open/i;
+
+function getStoreStatusLabel(): string {
+  try {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Africa/Accra",
+      weekday: "short",
+      hour: "numeric",
+      hourCycle: "h23",
+    }).formatToParts(now);
+    const day = parts.find((p) => p.type === "weekday")?.value;
+    const hour = Number(parts.find((p) => p.type === "hour")?.value);
+    const isOpen = hour >= 9 && hour < 18;
+    if (isOpen && day !== "Sun") return OPEN_LABEL;
+    if (day === "Sun") return "Closed · Opens Mon 9am";
+    return hour >= 18 ? "Closed · Opens tomorrow 9am" : "Closed · Opens today 9am";
+  } catch {
+    // Intl without the timezone database falls back to a safe, honest label.
+    return OPEN_LABEL;
+  }
+}
 
 const quickLinks = [
   { label: "Shop Perfumes", action: "shop" as const },
@@ -170,9 +215,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <span>&copy; {new Date().getFullYear()} Zaanisung Fragrance House. All rights reserved.</span>
           <div className="flex items-center gap-6">
             <span>Tamale, Ghana</span>
-            <div className="flex items-center gap-2 text-gold">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
-              <span>Store Open</span>
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  OPEN_NOW_PATTERN.test(getStoreStatusLabel())
+                    ? "bg-emerald-400 animate-pulse"
+                    : "bg-cream/30"
+                }`}
+                aria-hidden="true"
+              />
+              <span className={OPEN_NOW_PATTERN.test(getStoreStatusLabel()) ? "text-gold" : "text-cream/50"}>
+                {getStoreStatusLabel()}
+              </span>
             </div>
           </div>
         </div>

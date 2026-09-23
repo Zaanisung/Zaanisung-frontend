@@ -16,5 +16,6 @@ export type {
   AdminTab,
   DashboardPage,
   DashboardNavPage,
+  LandingSection,
   AppView,
 } from "./nav";

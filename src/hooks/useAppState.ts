@@ -2,16 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import type {
   Product,
   Order,
-  OrderItem,
   OrderStatus,
   CustomerUser,
   CustomerTab,
   AdminTab,
   AppView,
   FullUser,
-  AppNotification,
-  Address,
-  PaymentMethod,
 } from "../types";
 import * as api from "../services";
 import { getErrorMessage } from "../services";
@@ -20,57 +16,27 @@ import type {
   PhysicalSaleData,
   NewProductData,
 } from "../router";
-import { STORAGE_KEYS } from "../constants";
-import { useLocalStorage } from "./useLocalStorage";
+import { normalizeFullUser, toFullUser } from "../utils/user";
 import { useTheme } from "./useTheme";
 import { showErrorToast } from "../utils/toast";
-
-function normalizeFullUser(user: FullUser): FullUser {
-  return {
-    ...user,
-    phone: user.phone || "",
-    addresses: Array.isArray(user.addresses) ? user.addresses : [],
-    paymentMethods: Array.isArray(user.paymentMethods) ? user.paymentMethods : [],
-    notificationPrefs: user.notificationPrefs || {
-      orderUpdates: true,
-      promotions: false,
-      sms: true,
-      email: true,
-    },
-  };
-}
-
-function toFullUser(u: CustomerUser): FullUser {
-  return normalizeFullUser({
-    id: u.id,
-    name: u.name,
-    email: u.email,
-    phone: u.phone || "",
-    role: u.role,
-    isEmailVerified: false,
-    isPhoneVerified: false,
-    passwordMustChange: false,
-    addresses: [],
-    paymentMethods: [],
-  });
-}
+import { useCatalogData } from "./state/useCatalogData";
+import { useOrdersData } from "./state/useOrdersData";
+import { useCartData } from "./state/useCartData";
+import { useNotificationData } from "./state/useNotificationData";
+import { useProfileActions } from "./state/useProfileActions";
 
 /**
  * Central application state hook.
  *
- * Owns every piece of cross-cutting UI state (auth session, cart, catalog,
- * orders, notifications, profile mutations, admin operations) and returns the
- * props needed by <AppRouter />. Keeping this out of the component tree makes
- * it unit-testable and gives future developers a single place to add state.
+ * Composes the domain slices (catalog, orders, cart, notifications, profile
+ * mutations) with the genuinely cross-cutting state that ties them together:
+ * the auth session, navigation/view routing, the guest-checkout gate, order
+ * placement and the admin operations. Kept out of the component tree so it is
+ * unit-testable and gives future developers a single place to add state.
  */
 export function useAppState() {
-  // ─── Core data ──────────────────────────────────────────────────────
-  const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
-  // Cart is persisted to localStorage (F-05) so the bag survives page reloads.
-  const [cart, setCart] = useLocalStorage<OrderItem[]>(STORAGE_KEYS.CART, []);
+  // ─── Session ────────────────────────────────────────────────────────
   const [customerUser, setCustomerUser] = useState<FullUser | null>(null);
-  const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   // ─── Theme ──────────────────────────────────────────────────────────
@@ -83,17 +49,64 @@ export function useAppState() {
       : undefined
   );
 
+  // ─── Domain slices (state/*) ────────────────────────────────────────
+  const {
+    products,
+    isLoadingProducts,
+    productsError,
+    fetchProducts,
+  } = useCatalogData();
+
+  const { orders, setOrders, isLoadingOrders, refreshOrders } = useOrdersData(
+    customerUser,
+    isAdminLoggedIn
+  );
+
+  const {
+    cart,
+    setCart,
+    recentlyAddedId,
+    isCartOpen,
+    onAddToCart,
+    onUpdateCartQuantity,
+    onRemoveCartItem,
+    onCartOpen,
+    onCartClose,
+  } = useCartData(products);
+
+  const {
+    notifications,
+    setNotifications,
+    onMarkNotificationRead,
+    onMarkAllNotificationsRead,
+  } = useNotificationData(customerUser);
+
+  const {
+    updatingProfile,
+    changingPassword,
+    profileError,
+    profileMessage,
+    passwordError,
+    passwordMessage,
+    onUpdateProfile,
+    onChangePassword,
+    onAddAddress,
+    onUpdateAddress,
+    onDeleteAddress,
+    onSetDefaultAddress,
+    onAddPaymentMethod,
+    onDeletePaymentMethod,
+    onSetDefaultPaymentMethod,
+    onUpdateAppearance,
+    onUpdateNotificationPrefs,
+  } = useProfileActions(setCustomerUser);
+
   // ─── UI / navigation state ──────────────────────────────────────────
   const [view, setView] = useState<AppView>({ type: "landing" });
   const [isBootstrapping, setIsBootstrapping] = useState(true);
   const [customerTab, setCustomerTab] = useState<CustomerTab>("shop");
   const [adminTab, setAdminTab] = useState<AdminTab>("dashboard");
-  const [recentlyAddedId, setRecentlyAddedId] = useState<string | null>(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [lastConfirmedOrder, setLastConfirmedOrder] = useState<Order | null>(null);
-  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-  const [isLoadingOrders, setIsLoadingOrders] = useState(false);
-  const [productsError, setProductsError] = useState<string | null>(null);
 
   // ─── Guest checkout gate ────────────────────────────────────────────
   // Checkout requires a signed-in account (the backend refuses unauthenticated
@@ -102,14 +115,6 @@ export function useAppState() {
   // visited so the bag / checkout intent is never lost.
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [checkoutTarget, setCheckoutTarget] = useState<AppView | null>(null);
-
-  // ─── Profile mutation feedback ──────────────────────────────────────
-  const [updatingProfile, setUpdatingProfile] = useState(false);
-  const [changingPassword, setChangingPassword] = useState(false);
-  const [profileError, setProfileError] = useState<string | null>(null);
-  const [profileMessage, setProfileMessage] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
 
   // ─── Navigation ─────────────────────────────────────────────────────
   const isCheckoutView = (v: AppView): boolean =>
@@ -176,85 +181,6 @@ export function useAppState() {
       .catch(() => {})
       .finally(() => setIsBootstrapping(false));
   }, []);
-
-  // ─── Notifications ──────────────────────────────────────────────────
-  const fetchNotifications = useCallback(async () => {
-    try {
-      const { notifications: items } = await api.getNotifications();
-      setNotifications(Array.isArray(items) ? items : []);
-    } catch {
-      /* silent */
-    }
-  }, []);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (customerUser) fetchNotifications();
-  }, [customerUser, fetchNotifications]);
-
-  // ─── Products ───────────────────────────────────────────────────────
-  const fetchProducts = useCallback(async () => {
-    setIsLoadingProducts(true);
-    setProductsError(null);
-    try {
-      const { products: apiProducts } = await api.getProducts();
-      const mapped: Product[] = apiProducts.map((p) => ({
-        _id: p._id,
-        id: p._id,
-        name: p.name,
-        description: p.description,
-        price: p.price,
-        imageUrl: p.imageUrl || "",
-        stock: p.stock,
-        isActive: p.isActive,
-        createdAt: p.createdAt,
-        updatedAt: p.updatedAt,
-      }));
-      setProducts(mapped);
-    } catch (err) {
-      setProductsError(getErrorMessage(err, "Failed to load products"));
-    } finally {
-      setIsLoadingProducts(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchProducts();
-  }, [fetchProducts]);
-
-  const refreshOrders = useCallback(async () => {
-    setIsLoadingOrders(true);
-    try {
-      const isAdmin = customerUser?.role === "ADMIN" || isAdminLoggedIn;
-      const data = isAdmin ? await api.getAllOrders() : await api.getMyOrders();
-      const mapped: Order[] = data.orders.map((o) => ({
-        _id: o._id,
-        id: o._id,
-        items: o.items,
-        total: o.total,
-        status: o.status,
-        createdAt: o.createdAt,
-        customer: o.customer,
-        delivery: o.delivery,
-        payment: o.payment,
-        customerName: typeof o.customer === "object" && o.customer ? o.customer.name : undefined,
-        customerPhone: o.delivery?.phone || (typeof o.customer === "object" && o.customer ? o.customer.phone : undefined),
-        deliveryAddress: o.delivery ? `${o.delivery.address}, ${o.delivery.city}` : undefined,
-        paymentMethod: o.payment?.method,
-      }));
-      setOrders(mapped);
-    } catch {
-      /* silent */
-    } finally {
-      setIsLoadingOrders(false);
-    }
-  }, [customerUser, isAdminLoggedIn]);
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (customerUser || isAdminLoggedIn) refreshOrders();
-  }, [customerUser, isAdminLoggedIn, refreshOrders]);
 
   // ─── Navigation helpers ─────────────────────────────────────────────
   const handleCustomerTabChange = (tab: CustomerTab) => {
@@ -338,220 +264,6 @@ export function useAppState() {
     setView({ type: "dashboard", page: "overview" });
   };
 
-  // ─── Profile mutations ──────────────────────────────────────────────
-  const handleUpdateProfile = async (data: {
-    name?: string;
-    phone?: string;
-    email?: string;
-  }) => {
-    setUpdatingProfile(true);
-    setProfileError(null);
-    setProfileMessage(null);
-    try {
-      const { user } = await api.updateProfile(data);
-      setCustomerUser(normalizeFullUser(user));
-      setProfileMessage("Changes saved.");
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not update your profile."));
-    } finally {
-      setUpdatingProfile(false);
-    }
-  };
-
-  const handleChangePassword = async (data: {
-    currentPassword: string;
-    newPassword: string;
-  }) => {
-    setChangingPassword(true);
-    setPasswordError(null);
-    setPasswordMessage(null);
-    setProfileError(null);
-    setProfileMessage(null);
-    try {
-      const { user } = await api.changePassword(data);
-      setCustomerUser(normalizeFullUser(user));
-      setPasswordMessage("Password updated.");
-    } catch (err) {
-      setPasswordError(getErrorMessage(err, "Could not update your password."));
-    } finally {
-      setChangingPassword(false);
-    }
-  };
-
-  const handleAddAddress = async (
-    data: Omit<Address, "_id" | "isDefault"> & { isDefault?: boolean }
-  ) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.addAddress(data);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not add the address."));
-    }
-  };
-
-  const handleUpdateAddress = async (id: string, data: Partial<Omit<Address, "_id">>) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.updateAddress(id, data);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not update the address."));
-    }
-  };
-
-  const handleDeleteAddress = async (id: string) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.deleteAddress(id);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not remove the address."));
-    }
-  };
-
-  const handleSetDefaultAddress = async (id: string) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.setDefaultAddress(id);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not set the default address."));
-    }
-  };
-
-  const handleAddPaymentMethod = async (
-    data: Omit<PaymentMethod, "_id" | "isDefault"> & { isDefault?: boolean }
-  ) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.addPaymentMethod(data);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not add the payment method."));
-    }
-  };
-
-  const handleDeletePaymentMethod = async (id: string) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.deletePaymentMethod(id);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not remove the payment method."));
-    }
-  };
-
-  const handleSetDefaultPaymentMethod = async (id: string) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.setDefaultPaymentMethod(id);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not set the default payment method."));
-    }
-  };
-
-  const handleUpdateAppearance = async (data: {
-    accentColor?: string;
-  }) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.updateAppearance(data);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not update your appearance."));
-    }
-  };
-
-  const handleUpdateNotificationPrefs = async (data: {
-    orderUpdates?: boolean;
-    promotions?: boolean;
-    sms?: boolean;
-    email?: boolean;
-  }) => {
-    setProfileError(null);
-    try {
-      const { user } = await api.updateNotificationPrefs(data);
-      setCustomerUser(normalizeFullUser(user));
-    } catch (err) {
-      setProfileError(getErrorMessage(err, "Could not update your preferences."));
-    }
-  };
-
-  const handleMarkNotificationRead = async (id: string) => {
-    try {
-      const { notification } = await api.markNotificationRead(id);
-      setNotifications((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, readAt: notification.readAt } : n))
-      );
-    } catch {
-      /* silent */
-    }
-  };
-
-  const handleMarkAllNotificationsRead = async () => {
-    try {
-      await api.markAllNotificationsRead();
-      setNotifications((prev) => prev.map((n) => ({ ...n, readAt: n.readAt || new Date().toISOString() })));
-    } catch {
-      /* silent */
-    }
-  };
-
-  // ─── Cart ───────────────────────────────────────────────────────────
-  const handleAddToCart = (product: Product, quantity = 1) => {
-    if (product.stock <= 0) return;
-    setCart((prev) => {
-      const existing = prev.find((item) => item.productId === product.id);
-      if (existing) {
-        const newQty = Math.min(product.stock, existing.quantity + quantity);
-        return prev.map((item) =>
-          item.productId === product.id ? { ...item, quantity: newQty } : item
-        );
-      }
-      return [
-        ...prev,
-        {
-          name: product.name,
-          price: product.price,
-          quantity: Math.min(product.stock, quantity),
-          productId: product.id,
-          // Snapshot the image with the item so it survives a reload and
-          // renders correctly even before/without the live catalog lookup.
-          imageUrl: product.imageUrl || "",
-        },
-      ];
-    });
-    setRecentlyAddedId(product.id);
-    setTimeout(() => setRecentlyAddedId(null), 1500);
-    setIsCartOpen(true);
-  };
-
-  const handleUpdateCartQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      handleRemoveCartItem(productId);
-      return;
-    }
-    const product = products.find((p) => p.id === productId);
-    const maxStock = product ? product.stock : 99;
-    setCart((prev) =>
-      prev.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: Math.min(maxStock, quantity) }
-          : item
-      )
-    );
-  };
-
-  const handleRemoveCartItem = (productId: string) => {
-    setCart((prev) => prev.filter((item) => item.productId !== productId));
-  };
-
-  const handleCartOpen = useCallback(() => setIsCartOpen(true), []);
-
-  const handleCartClose = useCallback(() => setIsCartOpen(false), []);
-
   // ─── Order placement ────────────────────────────────────────────────
   const statusCodeOf = (err: unknown): number | undefined =>
     typeof err === "object" && err !== null && "statusCode" in err
@@ -564,7 +276,7 @@ export function useAppState() {
       quantity: item.quantity,
     }));
 
-try {
+    try {
       const { order } = await api.placeOrder({
         products: productsPayload,
         delivery: {
@@ -574,16 +286,16 @@ try {
           ...(orderData.customerName ? { recipientName: orderData.customerName } : {}),
           ...(orderData.digitalAddress ? { digitalAddress: orderData.digitalAddress } : {}),
         },
-          payment: {
-            method: orderData.paymentMethod,
-            ...(orderData.paymentReference
-              ? { reference: orderData.paymentReference }
-              : {}),
-            ...(orderData.momoNumber ? { momoNumber: orderData.momoNumber } : {}),
-            ...(orderData.momoNetwork ? { momoNetwork: orderData.momoNetwork } : {}),
-            ...(orderData.billingEmail ? { email: orderData.billingEmail } : {}),
-          },
-        });
+        payment: {
+          method: orderData.paymentMethod,
+          ...(orderData.paymentReference
+            ? { reference: orderData.paymentReference }
+            : {}),
+          ...(orderData.momoNumber ? { momoNumber: orderData.momoNumber } : {}),
+          ...(orderData.momoNetwork ? { momoNetwork: orderData.momoNetwork } : {}),
+          ...(orderData.billingEmail ? { email: orderData.billingEmail } : {}),
+        },
+      });
 
       const newOrder: Order = {
         _id: order._id,
@@ -754,11 +466,11 @@ try {
     // data / refresh
     onRetryProducts: fetchProducts,
     // cart
-    onAddToCart: handleAddToCart,
-    onUpdateCartQuantity: handleUpdateCartQuantity,
-    onRemoveCartItem: handleRemoveCartItem,
-    onCartOpen: handleCartOpen,
-    onCartClose: handleCartClose,
+    onAddToCart,
+    onUpdateCartQuantity,
+    onRemoveCartItem,
+    onCartOpen,
+    onCartClose,
     onPlaceOrder: handlePlaceOrder,
     // admin
     onConfirmPhysicalSale: handleConfirmPhysicalSale,
@@ -768,18 +480,18 @@ try {
     onRemoveProduct: handleRemoveProduct,
     onUpdateOrderStatus: handleUpdateOrderStatus,
     // profile
-    onUpdateProfile: handleUpdateProfile,
-    onChangePassword: handleChangePassword,
-    onAddAddress: handleAddAddress,
-    onUpdateAddress: handleUpdateAddress,
-    onDeleteAddress: handleDeleteAddress,
-    onSetDefaultAddress: handleSetDefaultAddress,
-    onAddPaymentMethod: handleAddPaymentMethod,
-    onDeletePaymentMethod: handleDeletePaymentMethod,
-    onSetDefaultPaymentMethod: handleSetDefaultPaymentMethod,
-    onUpdateAppearance: handleUpdateAppearance,
-    onUpdateNotificationPrefs: handleUpdateNotificationPrefs,
-    onMarkNotificationRead: handleMarkNotificationRead,
-    onMarkAllNotificationsRead: handleMarkAllNotificationsRead,
+    onUpdateProfile,
+    onChangePassword,
+    onAddAddress,
+    onUpdateAddress,
+    onDeleteAddress,
+    onSetDefaultAddress,
+    onAddPaymentMethod,
+    onDeletePaymentMethod,
+    onSetDefaultPaymentMethod,
+    onUpdateAppearance,
+    onUpdateNotificationPrefs,
+    onMarkNotificationRead,
+    onMarkAllNotificationsRead,
   };
 }
