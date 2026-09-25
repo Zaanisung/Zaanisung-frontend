@@ -15,8 +15,9 @@ import type { ImageStandardization } from "../../types/product";
 /**
  * Admin "standardize with AI" workflow.
  *
- * When the backend has not been configured with an OpenAI key the whole control
- * is hidden (fail-safe) — the form keeps working exactly as before.
+ * When the backend has not been configured with an AI provider (no Puter
+ * auth token) the whole control is hidden (fail-safe) — the form keeps
+ * working exactly as before.
  *
  * Flow: generate → review candidate (clearly badged as AI-generated) →
  * approve (becomes the product image) / reject (current image untouched) /

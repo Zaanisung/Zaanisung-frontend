@@ -82,13 +82,17 @@ Test files live next to the code they cover:
 - `src/pages/dashboard/Addresses.test.tsx` — address book UI
 - `src/pages/dashboard/Notifications.test.tsx` — notification list/read actions
 
-19 tests currently pass.
+44 tests currently pass (9 test files).
 
 ## Environment Variables
 
-| Variable            | Required | Description                     |
+| Variable | Required | Description |
 | ------------------- | -------- | ------------------------------- |
-| `VITE_API_URL`      | Yes      | Base URL of the backend API     |
+| `VITE_API_BASE_URL` | No | Full API base path used by every request. Defaults to `"/api"`. Set it (e.g. `https://api.zaanisung.com/api`) only when the backend lives on a separate origin. |
+| `VITE_API_URL` | Dev | Backend origin used solely to resolve relative media paths (`/uploads/...`) returned by the API. Dev: `http://localhost:5000`. Production (any setup): leave blank. |
+| `VITE_SOCIAL_INSTAGRAM` | No | Business Instagram handle shown in the footer (blank → platform root). |
+| `VITE_SOCIAL_FACEBOOK` | No | Business Facebook handle shown in the footer (blank → platform root). |
+| `VITE_SOCIAL_X` | No | Business X/Twitter handle shown in the footer (blank → `https://x.com`). |
 
 Copy `.env.example` to `.env` and fill in values. `.env` is git-ignored.
 
@@ -150,6 +154,14 @@ Brand logomark, wordmark, and color usage live under `public/`. Keep the gold
   `ErrorFallback` shows a generic message and an optional retry action.
 - **Ghana digital address** — optional `NT-0000-0000` field on checkout and the
   address book, threaded through to the order's `delivery.digitalAddress`.
+
+## Deployment
+
+Builds to a static `dist/` folder — host it anywhere (Vercel, Netlify,
+Cloudflare Pages, or nginx behind the same domain as the API). See
+[`../zaanisung-backend/PRODUCTION_DEPLOYMENT.md`](../zaanisung-backend/PRODUCTION_DEPLOYMENT.md)
+for the full go-live checklist and the `VITE_*` values to set at build time.
+`vercel.json` / `netlify.toml` already contain the SPA fallback rewrites.
 
 ## License
 
