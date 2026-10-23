@@ -1,0 +1,6 @@
+{
+  "name": "ZAANISUNG | Luxury Fragrance Boutique",
+  "description": "Ghana's premier luxury perfume boutique e-commerce experience and commerce management system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

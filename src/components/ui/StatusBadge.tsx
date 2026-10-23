@@ -1,44 +1,43 @@
-import React from "react";
-import { cn } from "../../utils/cn";
+import React from 'react';
+import { FulfillmentStatus, PaymentStatus } from '../../types';
+import { StockStatus } from '../../utils/inventory';
 
-export type OrderBadgeStatus = "PENDING" | "CONFIRMED" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+/**
+ * Status indicator compliant with Universal Frontend Design Constitution (Zero-Pill Rule).
+ * Renders quiet, refined typographic status indicators without garish colored pill capsules.
+ */
 
-export interface StatusBadgeProps {
-  status: OrderBadgeStatus;
-  size?: "sm" | "md";
-  className?: string;
+interface StatusBadgeProps {
+  status: FulfillmentStatus | PaymentStatus | StockStatus | string;
+  type?: 'fulfillment' | 'payment' | 'stock' | 'general';
 }
 
-const STATUS_TONES: Record<OrderBadgeStatus, string> = {
-  PENDING: "bg-gold/90 text-ink border border-gold/30",
-  CONFIRMED: "surface-glass-strong text-ink dark:text-cream border border-black/15 dark:border-white/20",
-  SHIPPED: "bg-ink dark:bg-cream text-cream dark:text-ink border border-ink/80 dark:border-cream/80",
-  DELIVERED: "bg-gold/90 text-ink border border-gold/30",
-  CANCELLED: "bg-red-950/80 text-red-300 border border-red-800/60 backdrop-blur-sm",
-};
+export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type = 'general' }) => {
+  const formatText = (text: string) => {
+    return text.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  };
 
-const SIZE_CLASSES: Record<NonNullable<StatusBadgeProps["size"]>, string> = {
-  sm: "px-2.5 py-1 text-[10px] tracking-wider rounded-lg",
-  md: "px-3 py-1.5 text-xs tracking-widest rounded-xl",
-};
+  let textColor = 'text-[#716C64]';
+  let indicatorColor = 'bg-[#716C64]';
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({
-  status,
-  size = "sm",
-  className,
-}) => {
-  const tone = STATUS_TONES[status] ?? STATUS_TONES.PENDING;
+  if (status === 'delivered' || status === 'paid' || status === 'in_stock') {
+    textColor = 'text-emerald-900';
+    indicatorColor = 'bg-emerald-700';
+  } else if (status === 'processing' || status === 'pending' || status === 'low_stock') {
+    textColor = 'text-[#92733C]';
+    indicatorColor = 'bg-[#B69A59]';
+  } else if (status === 'shipped') {
+    textColor = 'text-stone-800';
+    indicatorColor = 'bg-stone-700';
+  } else if (status === 'cancelled' || status === 'failed' || status === 'out_of_stock') {
+    textColor = 'text-red-900';
+    indicatorColor = 'bg-red-800';
+  }
 
   return (
-    <span
-      className={cn(
-        "inline-block uppercase font-bold text-center",
-        SIZE_CLASSES[size],
-        tone,
-        className
-      )}
-    >
-      {status}
+    <span className={`inline-flex items-center gap-1.5 text-xs font-medium tracking-wide ${textColor} whitespace-nowrap`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${indicatorColor} shrink-0`} aria-hidden="true" />
+      <span>{formatText(status)}</span>
     </span>
   );
 };

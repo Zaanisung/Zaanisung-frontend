@@ -1,0 +1,1267 @@
+# ZAANISUNG | COMPLETE E-COMMERCE UI REDESIGN
+## Master Frontend Generation Prompt for Google AI Studio
+
+### 1. YOUR ROLE
+
+Act as a senior product designer, luxury-commerce UX specialist, frontend architect, and experienced React/TypeScript developer.
+
+Design and generate a complete, cohesive, production-oriented frontend for **ZAANISUNG**, a Ghana-focused perfume e-commerce business.
+
+This is a full redesign of an existing application, not a request to create another generic online store.
+
+The goal is to replace the entire existing visual interface with a beautiful, polished, intuitive, minimal, premium, responsive product experience while retaining the application's existing functional requirements.
+
+The application includes:
+
+- A public perfume storefront.
+- Product discovery and product detail pages.
+- Shopping cart and checkout.
+- Authentication and account management.
+- Customer orders, notifications, and profile management.
+- An administrator dashboard.
+- Product and inventory management.
+- Order and customer management.
+
+Design these as parts of one coherent commercial product, with shared design tokens, components, navigation rules, interaction patterns, and typography.
+
+Do not deliver a collection of unrelated mockups. Deliver a unified frontend system.
+
+---
+
+## 2. PROJECT CONTEXT
+
+Brand: ZAANISUNG
+
+Industry: Perfume and fragrance retail.
+
+Market: Ghana, with prices displayed in Ghanaian cedis (GHS) where appropriate.
+
+Existing frontend technology:
+
+- React 19.
+- TypeScript.
+- Vite.
+- Tailwind CSS v4.
+- Custom application routing and state-management hooks.
+- A custom API client and domain-specific service modules.
+- Lucide React icons.
+- Existing theme support.
+
+Existing backend technology:
+
+- Express and TypeScript.
+- MongoDB with Mongoose.
+- JWT-based authentication using HTTP-only cookies.
+- Role-based customer and administrator access.
+- Zod request validation.
+- Paystack payment integration.
+
+These details come from the current project audit. The actual source code and package manifests remain authoritative if any version or architectural detail differs.
+
+### Important architectural distinction
+
+You are generating a new frontend experience for an existing application.
+
+You are not being asked to invent a replacement backend.
+
+The generated interface must be designed so that another developer can connect it to the existing backend and frontend service layer without rebuilding the application's business functionality.
+
+---
+
+## 3. DESIGN VISION
+
+Create a luxury perfume boutique experience that feels intentional, elegant, trustworthy, contemporary, and commercially realistic.
+
+The design should communicate:
+
+- Sophistication.
+- Quality.
+- Confidence.
+- Sensory appeal.
+- Authenticity.
+- Simplicity.
+- Trustworthy shopping.
+- Attention to detail.
+
+The website must feel like a real fragrance brand with a distinct visual identity, not an AI-generated template with perfume pictures inserted into generic cards.
+
+### Design direction
+
+Use a refined editorial aesthetic inspired by premium fragrance packaging, high-end fashion catalogues, minimalist product photography, and carefully typeset print publications.
+
+Do not directly copy any existing brand or website.
+
+Create a distinctive ZAANISUNG identity.
+
+### Visual characteristics
+
+- Generous but purposeful whitespace.
+- Beautiful, large-scale perfume imagery.
+- Strong editorial composition.
+- Elegant serif typography for selected headings.
+- Highly readable sans-serif typography for body text and interface controls.
+- Restrained gold accents.
+- Clean grids and precise alignment.
+- Thin, subtle borders.
+- Carefully controlled image crops.
+- Strong visual hierarchy.
+- Subtle transitions.
+- Excellent mobile layouts.
+- Functional, understated interface elements.
+
+The interface should be stylish without sacrificing usability.
+
+Luxury does not mean making every button tiny, every label cryptic, or every page difficult to navigate.
+
+---
+
+## 4. BRAND DESIGN SYSTEM
+
+Create and consistently apply a documented design system.
+
+### Color palette
+
+Use the following as initial design direction, refining only where it improves consistency and accessibility.
+
+- Primary text: `#171512`
+- Main light background: `#FAF8F4`
+- White surface: `#FFFFFF`
+- Secondary background: `#F0ECE5`
+- Muted text: `#716C64`
+- Primary gold accent: `#B69A59`
+- Deeper gold for emphasis: `#92733C`
+- Borders: `#E4DED3`
+- Dark background for selected editorial sections: `#171512`
+- Dark-background text: `#F8F5EF`
+- Error: an accessible dark red.
+- Success: an accessible green.
+- Focus: a clearly visible, high-contrast focus treatment.
+
+Gold is an accent, not a substitute for readable text contrast. Never use low-contrast gold for important information merely because it looks expensive.
+
+Use the light palette as the primary storefront experience. Introduce dark sections selectively for visual contrast and editorial storytelling.
+
+The admin dashboard may use a more neutral, information-dense interface while sharing the same brand identity.
+
+Do not force a dark theme on every page.
+
+### Typography
+
+Establish a consistent type system using suitable web fonts.
+
+Suggested direction:
+
+- Headings: elegant editorial serif such as Cormorant Garamond or an equivalent.
+- Body and interface: clean sans-serif such as Inter or an equivalent.
+
+Define typography tokens for:
+
+- Display headings.
+- Page headings.
+- Section headings.
+- Product names.
+- Prices.
+- Body copy.
+- Supporting text.
+- Labels.
+- Form controls.
+- Navigation.
+- Tables.
+- Status indicators.
+
+Typography must remain readable on mobile.
+
+Avoid oversized headings that push the actual products below the fold.
+
+### Spacing and geometry
+
+Define a consistent spacing scale based on a 4px or 8px system.
+
+Use:
+
+- Deliberate whitespace.
+- Consistent content widths.
+- Responsive page gutters.
+- Consistent grid gaps.
+- Subtle corner radii.
+- Minimal, purposeful shadows.
+- Thin borders where separation is necessary.
+
+Do not put every element inside a rounded card.
+
+Do not create excessive nested containers, floating panels, pill-shaped controls everywhere, or decorative glassmorphism.
+
+### Icons
+
+Use Lucide icons or a consistent equivalent.
+
+Avoid mixing unrelated icon styles, oversized decorative icons, and emoji in core interface navigation.
+
+---
+
+## 5. PRODUCT PHOTOGRAPHY AND ASSETS
+
+Perfume imagery is central to this design.
+
+The product must look desirable before the customer reads the description.
+
+Use professional-looking fragrance photography with:
+
+- Distinct bottle silhouettes.
+- Realistic glass and liquid.
+- Controlled reflections.
+- Beautiful lighting.
+- Neutral, warm, or dark editorial backgrounds as appropriate.
+- Intentional negative space.
+- Accurate-looking product proportions.
+- Consistent image quality across the catalog.
+
+Avoid:
+
+- Blurry bottle images.
+- Repeated images presented as different products.
+- Random stock photography.
+- Unrelated luxury cars, watches, or mansions.
+- Excessive gold particles.
+- Generic AI-generated luxury clichés.
+- Images with malformed bottle labels.
+- Watermarks.
+- Product imagery that obscures the actual bottle.
+
+### Existing brand assets
+
+The repository includes:
+
+`zaanisung-assets/logo/`
+
+`zaanisung-assets/backgrounds/`
+
+`zaanisung-assets/patterns/`
+
+`zaanisung-assets/sources/`
+
+`zaanisung-assets/zaanisung-backgrounds/`
+
+It also contains other brand image files.
+
+The existing assets should be reviewed when they are available to the implementation workflow.
+
+Use the actual ZAANISUNG logo if supplied. Do not invent a replacement logo or alter the brand name.
+
+If you cannot access the repository assets in your generation environment, use clearly identified temporary placeholders and document which images and logo files need replacing.
+
+Keep asset usage centralized so actual brand assets can be substituted easily.
+
+Do not generate fake product photography that is presented as verified photography of the client's real inventory.
+
+---
+
+## 6. GLOBAL STOREFRONT STRUCTURE
+
+Create a consistent storefront shell shared across public customer pages.
+
+### Announcement bar
+
+Design an optional, restrained announcement bar for genuine promotions, delivery information, or store announcements.
+
+Do not invent claims such as free nationwide delivery, guaranteed authenticity, or discounts unless they are explicitly supplied.
+
+The bar must be dismissible if included and must not dominate the page.
+
+### Header
+
+Create a premium, responsive navigation header with:
+
+- ZAANISUNG logo.
+- Home.
+- Shop or Fragrances.
+- About.
+- Contact.
+- Search access.
+- Account access.
+- Shopping cart with an item count.
+
+Use a clear desktop layout and a genuinely usable mobile navigation menu.
+
+The mobile header must not become crowded with tiny icons.
+
+Ensure that account and cart controls are accessible and have understandable labels.
+
+Keep the header consistent across storefront pages.
+
+### Footer
+
+Create a restrained, complete footer containing:
+
+- Brand identity and a short brand description.
+- Shop navigation.
+- Customer account links.
+- Contact information placeholders.
+- Relevant legal links.
+- Delivery and returns information only where supported.
+- Copyright information.
+- Social links only where actual destinations are supplied.
+
+Do not invent telephone numbers, addresses, social media accounts, or company claims.
+
+---
+
+## 7. HOMEPAGE
+
+The homepage should immediately communicate the brand and help customers discover products.
+
+### Section 1: Hero
+
+Design an elegant editorial hero with:
+
+- A strong fragrance-focused headline.
+- A concise supporting statement.
+- One primary call to action, such as “Explore Fragrances”.
+- One optional secondary action, such as “Discover ZAANISUNG”.
+- A high-quality perfume visual.
+- Excellent text-to-image balance.
+
+The hero must feel designed for this particular perfume brand.
+
+Avoid generic headings such as “Welcome to Our Website” and exaggerated claims about being the best fragrance store.
+
+Use restrained, memorable copy.
+
+On desktop, consider an asymmetric split layout or an editorial image composition. On mobile, ensure the headline, imagery, and CTA remain prominent without excessive scrolling.
+
+### Section 2: Shop fragrances
+
+Show a curated selection of actual or clearly identified sample products.
+
+Each product card should include:
+
+- Product image.
+- Product name.
+- Brand or fragrance house, if applicable.
+- Price in GHS where appropriate.
+- Available size or volume, when supported by product data.
+- A clear product-detail action.
+- An add-to-cart action when supported by available stock and existing functionality.
+
+Avoid excessive badges, decorative labels, and duplicated buttons.
+
+### Section 3: Editorial brand moment
+
+Create a visually distinctive section communicating the experience of fragrance through imagery, composition, and concise copy.
+
+Do not invent the company's founding story, manufacturing process, or history.
+
+### Section 4: Featured fragrances
+
+Create a clean product grid or carefully composed editorial product row.
+
+It must be reusable with actual catalog data.
+
+### Section 5: Brand reassurance
+
+Create a restrained area for genuine store policies, payment information, customer support, and delivery details.
+
+Only display claims supported by the actual business requirements.
+
+### Section 6: Footer
+
+Finish with the shared storefront footer.
+
+The homepage should not become an endless sequence of promotional sections.
+
+Every section must have a clear purpose.
+
+---
+
+## 8. PRODUCT CATALOG / SHOP PAGE
+
+Design a dedicated fragrance-shopping experience.
+
+Include:
+
+- Page heading and brief introduction.
+- Search.
+- Product grid.
+- Sorting controls where supported.
+- Filters only where product data supports them.
+- Clear product pricing.
+- Product availability indicators where reliable.
+- Pagination or another appropriate catalog navigation pattern if needed.
+- Loading state.
+- Empty catalog state.
+- No-search-results state.
+- Error state.
+- Responsive layouts.
+
+Potential filters may include fragrance brand, price range, fragrance family, concentration, or volume, but only present a filter as functional when the corresponding data and filtering behavior are supported.
+
+Do not create fake filtering controls that do nothing.
+
+The catalog must adapt from a multi-column desktop layout to a comfortable mobile layout.
+
+Ensure product cards align consistently even when names or descriptions differ in length.
+
+---
+
+## 9. PRODUCT DETAILS PAGE
+
+Design a complete product page that helps a customer decide whether to buy.
+
+Include:
+
+- Main product image.
+- Supporting images or thumbnails when available.
+- Product name.
+- Brand or fragrance house when known.
+- Price.
+- Product description.
+- Available sizes or volumes where supported.
+- Stock availability.
+- Quantity selection where appropriate.
+- Add-to-cart button.
+- Clear unavailable or out-of-stock behavior.
+- Product information sections.
+- Related products only when meaningful catalog data is available.
+- Breadcrumbs or another clear route back to the catalog.
+
+The add-to-cart action must provide understandable feedback.
+
+Avoid inventing reviews, ratings, ingredient lists, longevity claims, fragrance notes, or product certifications.
+
+If these fields are not provided by the actual product data, use neutral placeholders in sample content and document them as optional future content rather than verified facts.
+
+Design loading, unavailable-product, and error states.
+
+---
+
+## 10. SEARCH, CART, AND SHOPPING INTERACTIONS
+
+### Search
+
+Design an accessible search field or search overlay.
+
+Include:
+
+- Clear input.
+- Search submission.
+- Empty query behavior.
+- No-results state.
+- Loading state if search is asynchronous.
+- Keyboard accessibility.
+
+Do not require a complicated full-screen experience for a simple search.
+
+### Cart
+
+Design the cart as a proper shopping interface.
+
+Include:
+
+- Product thumbnail.
+- Product name.
+- Selected quantity.
+- Unit price.
+- Line total.
+- Quantity adjustment.
+- Remove item action.
+- Subtotal.
+- Delivery or additional charge information only where calculated or configured.
+- Checkout CTA.
+- Empty cart state.
+- Loading and error states where appropriate.
+
+If a cart drawer is included, it must supplement, not replace, the full cart page.
+
+The cart must work with the application's existing state-management and persistence mechanisms when integrated.
+
+Do not invent a separate incompatible cart system.
+
+### Checkout
+
+Design a clear, low-friction checkout experience.
+
+Include the appropriate existing fields for:
+
+- Customer information.
+- Delivery address.
+- Delivery instructions if supported.
+- Order summary.
+- Selected payment method.
+- Payment initiation.
+- Validation errors.
+- Processing state.
+- Payment failure.
+- Payment cancellation where applicable.
+- Successful completion.
+
+Support the existing Paystack payment integration.
+
+Never display raw payment secrets or request customers to enter private credentials that belong to Paystack.
+
+Use a clear, trustworthy layout with a visible order summary.
+
+On mobile, avoid forcing users to navigate a cramped desktop-style two-column form.
+
+### Order confirmation
+
+Design a clear confirmation page that can display:
+
+- Successful order status.
+- Order reference.
+- Order summary.
+- Payment status where verified.
+- Delivery information where available.
+- Link to order history.
+- Continue-shopping action.
+
+Do not show an order as paid merely because the customer returned from an external payment page.
+
+The actual verified order and payment state must come from the backend.
+
+---
+
+## 11. AUTHENTICATION AND ACCOUNT EXPERIENCE
+
+Design a consistent set of authentication screens.
+
+### Login
+
+Include:
+
+- Email or the identifier required by the existing authentication API.
+- Password.
+- Password visibility control.
+- Validation feedback.
+- Loading and failure states.
+- Password recovery link.
+- Registration link.
+
+### Registration
+
+Include the fields required by the actual registration contract.
+
+Provide:
+
+- Clear labels.
+- Validation feedback.
+- Password requirements where supported.
+- Submission state.
+- Duplicate-account or registration-failure feedback where applicable.
+- Link to login.
+
+### Password recovery
+
+Support the existing OTP-based recovery workflow.
+
+Design each applicable state:
+
+1. Request password reset.
+2. Explain that a verification code was requested without exposing whether private account details exist beyond the existing API's intended response.
+3. Enter verification code.
+4. Enter and confirm a new password.
+5. Show success or actionable error feedback.
+
+Match the actual backend flow. Do not invent extra verification stages.
+
+### Account dashboard
+
+Design a clean customer account overview showing useful information such as:
+
+- Profile summary.
+- Recent orders.
+- Order status.
+- Account shortcuts.
+- Address management.
+- Notifications.
+
+Use actual account data when connected.
+
+Provide useful empty states for new customers.
+
+### Profile settings
+
+Design profile editing with:
+
+- Existing profile fields.
+- Validation.
+- Save and cancel actions.
+- Loading and success states.
+- Error feedback.
+
+### Address management
+
+Support the existing address data model.
+
+Include:
+
+- Address list.
+- Add address.
+- Edit address.
+- Delete address with confirmation.
+- Default address handling if supported.
+- Empty state.
+- Validation.
+
+### Payment methods
+
+First determine what the existing backend actually stores.
+
+If the system stores payment preferences or references rather than reusable card credentials, design the interface accordingly.
+
+Never design a form that implies the application securely stores full payment card numbers or CVVs unless the existing, compliant architecture explicitly supports the relevant flow.
+
+### Order history
+
+Include:
+
+- Order list.
+- Order reference.
+- Date.
+- Total.
+- Status.
+- Detail access.
+- Empty state.
+- Loading and error states.
+
+### Notifications
+
+Design a readable notification center with:
+
+- Notification list.
+- Read/unread states where supported.
+- Relevant timestamps.
+- Empty state.
+- Loading and error states.
+
+Do not show interactive controls for operations that the existing API does not support.
+
+---
+
+## 12. ABOUT, CONTACT, AND LEGAL PAGES
+
+### About
+
+Create an elegant editorial brand page with suitable imagery and a clear layout.
+
+Use placeholders for company history, mission, and brand claims that have not been provided.
+
+Do not fabricate the company's origins or credentials.
+
+### Contact
+
+Create a clear contact page with:
+
+- Contact information placeholders.
+- Contact form only if a supported submission mechanism exists or can be explicitly documented for later integration.
+- Form validation.
+- Submission feedback.
+- Useful support guidance.
+
+Do not invent real contact details.
+
+### Legal
+
+Create a clean, readable layout for applicable:
+
+- Terms and conditions.
+- Privacy policy.
+- Relevant delivery, returns, and refund policies.
+
+Legal content must be supplied or reviewed by the business. Do not present fabricated legal terms as approved policy.
+
+Use placeholder content where necessary and clearly identify it as requiring replacement.
+
+---
+
+## 13. ADMIN DASHBOARD
+
+The administrator interface must feel like a genuine commerce management application, not the storefront with a sidebar added.
+
+Create a consistent administrative shell with:
+
+- Sidebar navigation on desktop.
+- Appropriate mobile navigation.
+- Page title and contextual actions.
+- Account controls.
+- Clear information hierarchy.
+- Tables and forms designed for real work.
+- Consistent status indicators.
+- Responsive layouts.
+
+Suggested navigation:
+
+- Dashboard.
+- Products / Inventory.
+- Orders.
+- Customers / Users.
+- Settings, if supported.
+
+Only include additional navigation items when backed by the existing application.
+
+### Dashboard overview
+
+Design information panels for metrics the backend actually exposes, such as:
+
+- Order counts.
+- Sales totals.
+- Pending orders.
+- Low-stock products.
+- Recent orders.
+- Inventory summaries.
+
+Do not invent analytics endpoints or pretend sample metrics are live data.
+
+If data is unavailable, show an appropriate loading, unavailable, or empty state.
+
+Use restrained visualizations only when meaningful.
+
+### Inventory management
+
+Design a product management table with:
+
+- Product image.
+- Name.
+- Product identifier where available.
+- Price.
+- Stock.
+- Status.
+- Relevant actions.
+
+Include:
+
+- Search.
+- Supported filters.
+- Sorting.
+- Pagination if appropriate.
+- Empty state.
+- Loading and error states.
+- Clear destructive-action confirmation.
+
+### Add product
+
+Create a well-organized product form that reflects the actual product schema.
+
+Potential fields include:
+
+- Name.
+- Description.
+- Price.
+- Stock quantity.
+- Image URL or the supported image mechanism.
+- Active/inactive status.
+- Other fields only if confirmed by the actual schema.
+
+Provide clear validation, field-level errors, save states, and navigation after successful submission.
+
+Do not introduce AI image standardization fields or workflows. That feature was removed and must remain out of the redesigned interface unless a later requirement explicitly restores it.
+
+### Edit product
+
+Reuse the add-product form architecture where practical.
+
+Support existing product data, validation, save feedback, cancellation, and failure states.
+
+### Order management
+
+Design an administrator order list with:
+
+- Order reference.
+- Customer information permitted by the existing authorization model.
+- Order date.
+- Order total.
+- Payment status where supported.
+- Fulfillment/order status.
+- Detail view.
+- Supported status-update controls.
+
+Clearly distinguish payment status from order fulfillment status.
+
+Require confirmation for consequential operations when appropriate.
+
+### User management
+
+Design a clear customer-management interface that reflects existing backend capabilities.
+
+Include appropriate search, pagination, user details, and supported administrative actions.
+
+Respect authorization boundaries.
+
+Do not expose password hashes, authentication tokens, OTP secrets, or other sensitive implementation data.
+
+### Admin settings
+
+Only include actual settings supported by the application.
+
+If settings functionality is limited or unavailable, do not invent a large configuration system. Document what remains unsupported.
+
+---
+
+## 14. SHARED COMPONENT SYSTEM
+
+Build a reusable component system rather than independently styling every page.
+
+Include suitable shared components for:
+
+- Storefront header.
+- Storefront footer.
+- Admin sidebar.
+- Admin header.
+- Buttons and links.
+- Text fields.
+- Password fields.
+- Textareas.
+- Select fields.
+- Checkboxes.
+- Form labels and validation messages.
+- Product cards.
+- Product grids.
+- Product galleries.
+- Price displays.
+- Breadcrumbs.
+- Search controls.
+- Cart item rows.
+- Order summaries.
+- Status badges.
+- Tables.
+- Pagination.
+- Dialogs.
+- Confirmation dialogs.
+- Drawers.
+- Toasts.
+- Loading skeletons.
+- Spinners.
+- Empty states.
+- Error states.
+- Page headings.
+- Responsive navigation.
+- Accessible tabs where needed.
+
+Use consistent component variants and design tokens.
+
+Components should have predictable interfaces and remain easy to integrate with existing business logic.
+
+Avoid excessive abstraction, giant components containing entire pages, duplicated layouts, and multiple implementations of the same button or input.
+
+---
+
+## 15. INTERACTION AND FUNCTIONALITY REQUIREMENTS
+
+The generated interface must not be a collection of static screenshots disguised as an application.
+
+Every visible interactive element must have a defined behavior.
+
+Support the following interactions where relevant:
+
+- Navigation between pages.
+- Search submission.
+- Catalog filtering and sorting when supported.
+- Product-detail navigation.
+- Add to cart.
+- Cart quantity changes.
+- Item removal.
+- Checkout navigation.
+- Form validation.
+- Password visibility.
+- Login and registration form submission.
+- Password recovery steps.
+- Account navigation.
+- Profile and address form interactions.
+- Order-detail navigation.
+- Admin navigation.
+- Product creation and editing forms.
+- Order status controls.
+- Confirmation dialogs.
+- Success and error notifications.
+- Mobile navigation.
+- Keyboard interaction.
+- Loading and disabled states.
+
+If the generation environment cannot connect to the actual API, implement clearly separated presentation-level mock data only where necessary to demonstrate the interface.
+
+Mock data must be isolated from production integration logic.
+
+Clearly identify every mocked operation and do not represent it as a completed backend integration.
+
+Never simulate a successful real payment or persistently claim that a real order has been created when no backend operation occurred.
+
+Use explicit interface contracts for future API integration.
+
+---
+
+## 16. EXISTING APPLICATION INTEGRATION CONSTRAINTS
+
+The current application already contains business functionality.
+
+The future integration developer must be able to preserve and reuse:
+
+- Existing custom routing.
+- API client.
+- API service modules.
+- Authentication mechanisms.
+- State-management hooks.
+- Domain state slices.
+- Product and order types.
+- Backend validation contracts.
+- Cart behavior and persistence.
+- Existing authorization boundaries.
+- Payment handling.
+- Existing database schemas.
+- Tests.
+- Deployment configuration.
+
+Do not assume that your preferred routing library or state-management framework should replace the existing architecture.
+
+Do not require a complete backend rewrite.
+
+If you generate code, prefer React and TypeScript and avoid unnecessary dependencies.
+
+Keep presentation components separate from domain operations.
+
+Prefer this general architectural separation:
+
+1. Page composition.
+2. Shared presentation components.
+3. Design tokens and styles.
+4. Form presentation and validation display.
+5. Existing API/service integration adapters.
+6. Existing business state and domain logic.
+
+This is a design and code-generation guideline, not authorization to modify the original repository.
+
+---
+
+## 17. RESPONSIVE DESIGN
+
+Every page must be intentionally designed for the following viewport widths:
+
+- 360px mobile.
+- 390px mobile.
+- 768px tablet.
+- 1024px laptop.
+- 1440px desktop.
+
+Do not simply shrink the desktop screenshot.
+
+### Mobile requirements
+
+- No horizontal overflow.
+- No clipped buttons.
+- Readable product names and prices.
+- Comfortable touch targets.
+- Clear navigation.
+- Usable cart and checkout.
+- Forms that fit the viewport.
+- Responsive product photography.
+- Tables that adapt through deliberate responsive layouts.
+- Admin navigation that remains usable.
+- Dialogs that fit smaller screens.
+- No critical action hidden outside the viewport.
+
+### Desktop requirements
+
+- Balanced content width.
+- Consistent alignment.
+- Product grids with appropriate spacing.
+- Strong use of imagery.
+- Readable text line lengths.
+- Effective use of negative space.
+- Administrative tables that remain scannable.
+
+Do not make desktop content excessively wide simply to fill available screen space.
+
+---
+
+## 18. ACCESSIBILITY
+
+Follow practical WCAG 2.2 AA-oriented accessibility principles.
+
+Include:
+
+- Semantic HTML.
+- Keyboard navigation.
+- Visible focus indicators.
+- Correct form labels.
+- Useful validation messages.
+- Accessible dialogs and drawers.
+- Appropriate accessible names for icon buttons.
+- Meaningful image alternative text.
+- Sufficient color contrast.
+- Reduced-motion support.
+- Accessible status announcements where appropriate.
+- Clear error identification.
+- Focus management for navigation and dialogs.
+
+Do not communicate status using color alone.
+
+Do not use animation in a way that makes controls difficult to use.
+
+---
+
+## 19. MOTION AND VISUAL POLISH
+
+Motion should support comprehension, not compete with the products.
+
+Appropriate examples:
+
+- Subtle hover changes.
+- Smooth but restrained menu transitions.
+- Lightweight cart feedback.
+- Small product-image transitions.
+- Loading skeletons.
+- Carefully timed dialog transitions.
+
+Avoid:
+
+- Excessive parallax.
+- Continuous animated backgrounds.
+- Floating decorative particles.
+- Large animated text effects.
+- Scroll-jacking.
+- Mandatory intro animations.
+- Heavy animation libraries when CSS is sufficient.
+
+The website must remain fast, accessible, and polished when reduced motion is enabled.
+
+---
+
+## 20. COMPLETE SCREEN INVENTORY
+
+Generate a coherent design for every applicable screen below.
+
+### Public storefront
+
+1. Homepage.
+2. Product catalog.
+3. Search results.
+4. Product details.
+5. Full cart.
+6. Cart drawer, if used.
+7. Checkout.
+8. Order confirmation.
+9. Login.
+10. Registration.
+11. Password recovery.
+12. OTP verification.
+13. Password reset.
+14. Customer account overview.
+15. Profile settings.
+16. Address management.
+17. Payment-method management.
+18. Order history.
+19. Order details where supported.
+20. Notifications.
+21. About.
+22. Contact.
+23. Legal pages.
+24. Global not-found page.
+
+### Administration
+
+25. Admin login behavior, respecting the existing authentication architecture.
+26. Dashboard overview.
+27. Product inventory.
+28. Add product.
+29. Edit product.
+30. Order management.
+31. Order detail view where supported.
+32. User management.
+33. Admin settings where supported.
+34. Admin empty states.
+35. Admin loading and error states.
+
+### Shared system states
+
+36. Initial loading.
+37. Data loading.
+38. Empty catalog.
+39. Empty cart.
+40. No search results.
+41. Form validation failure.
+42. API failure.
+43. Session expiration.
+44. Unauthorized access.
+45. Out-of-stock product.
+46. Payment processing.
+47. Payment failure.
+48. Successful order confirmation.
+49. Destructive-action confirmation.
+50. Responsive mobile navigation.
+
+These are design requirements, not permission to invent unsupported backend features.
+
+When a screen depends on unavailable functionality, document the dependency and provide a presentation design appropriate to the known requirements.
+
+---
+
+## 21. CONTENT AND DATA RULES
+
+Use realistic but clearly identified demonstration products to communicate the visual system.
+
+Use GHS formatting for demonstration prices where suitable.
+
+Keep sample content believable and concise.
+
+Do not invent:
+
+- Actual customer testimonials.
+- Verified ratings.
+- Sales numbers.
+- Company awards.
+- Certifications.
+- Delivery promises.
+- Refund guarantees.
+- Contact details.
+- Product authenticity guarantees.
+- Payment success.
+- Live inventory.
+- Real analytics.
+
+Use placeholders for unknown business-specific information.
+
+Clearly separate demonstration content from real application data.
+
+---
+
+## 22. REQUIRED OUTPUTS
+
+Produce the most complete deliverable supported by the generation platform.
+
+### Deliverable A: Full design system
+
+Document:
+
+- Color palette.
+- Typography.
+- Spacing scale.
+- Layout rules.
+- Breakpoints.
+- Component variants.
+- Border and shadow rules.
+- Icon usage.
+- Interaction conventions.
+- Accessibility decisions.
+
+### Deliverable B: Complete storefront
+
+Generate the homepage, catalog, product details, cart, checkout, authentication, account pages, and informational pages.
+
+### Deliverable C: Complete admin experience
+
+Generate the dashboard, inventory, product forms, order management, customer management, and supported settings screens.
+
+### Deliverable D: Shared components
+
+Use reusable, consistently styled components across the entire application.
+
+### Deliverable E: Responsive designs
+
+Show intentional layouts for mobile, tablet, and desktop.
+
+### Deliverable F: Interaction states
+
+Include loading, empty, error, success, disabled, focus, and confirmation states wherever relevant.
+
+### Deliverable G: Integration documentation
+
+Document:
+
+- Generated file structure.
+- Entry points.
+- Page-to-route mapping.
+- Shared components.
+- Required dependencies.
+- Design tokens.
+- Asset references.
+- API integration points.
+- Required data shapes.
+- Mocked behaviors.
+- Unsupported features.
+- Integration assumptions.
+- Remaining implementation work.
+
+### Deliverable H: Screen coverage matrix
+
+Provide a table with:
+
+| Screen | Designed | Responsive | Interactions specified | API dependency | Remaining work |
+|---|---|---|---|---|---|
+
+Do not mark a screen complete unless it has actually been generated.
+
+---
+
+## 23. IMPLEMENTATION QUALITY
+
+If code generation is supported:
+
+- Use maintainable React and TypeScript.
+- Keep components modular.
+- Use the existing project's stack as the integration target.
+- Avoid unnecessary dependencies.
+- Avoid hardcoding repeated styles.
+- Use design tokens.
+- Avoid duplicated page layouts.
+- Keep mock data separate.
+- Avoid fake API calls presented as real.
+- Do not introduce an unnecessary replacement backend.
+- Do not silently replace the existing application's routing or state management.
+- Document assumptions and incompatibilities.
+
+If the platform cannot generate the entire application at once, prioritize the work in this order:
+
+1. Design system and shared storefront shell.
+2. Homepage and catalog.
+3. Product details and cart.
+4. Checkout and order confirmation.
+5. Authentication and customer account.
+6. Admin shell and dashboard.
+7. Inventory and product management.
+8. Order and user management.
+9. Remaining informational pages.
+10. Responsive and interaction-state coverage.
+
+Keep every stage visually consistent with the same design system.
+
+Do not treat a homepage-only result as completion of the requested redesign.
+
+---
+
+## 24. FINAL QUALITY REVIEW
+
+Before presenting the result, inspect it against the following questions:
+
+1. Does the website look specifically designed for ZAANISUNG?
+2. Is the perfume imagery the visual focus?
+3. Is the interface elegant without being difficult to use?
+4. Are product names, prices, and actions easy to understand?
+5. Does the storefront share a consistent design system?
+6. Does the admin dashboard feel appropriate for real operational work?
+7. Are all required screens represented?
+8. Are the responsive layouts genuinely usable?
+9. Do the interactive elements have defined behaviors?
+10. Are unsupported features and mocked behaviors clearly identified?
+11. Are the existing API and authentication constraints respected?
+12. Have unnecessary gradients, clutter, decorative cards, and excessive animations been avoided?
+13. Are unknown business details represented honestly?
+14. Can another developer understand how to integrate the generated frontend?
+15. Is any screen missing, incomplete, or merely represented by a static placeholder?
+
+Report the gaps honestly.
+
+Do not claim production readiness simply because the interface renders.
+
+---
+
+## 25. FINAL INSTRUCTION
+
+Create a **complete, elegant, minimal, premium, responsive ZAANISUNG perfume e-commerce frontend**, including both the customer-facing shopping experience and the administrative interface.
+
+The result must look like a genuine commercial product that a real customer would trust and that a developer can integrate into the existing application.
+
+Preserve the intended business workflows, avoid unsupported feature invention, and clearly document the boundary between generated presentation code and the existing application's functional systems.
+
+The existing frontend will be replaced visually in a later, controlled integration phase.
+
+**For this stage, your responsibility is to generate the new UI and its integration documentation. Do not modify the original ZAANISUNG repository, do not perform the migration, and do not archive the existing interface.**
+
+Begin with the design system and shared application structure, then build the complete storefront and administrator experience using the same visual language.

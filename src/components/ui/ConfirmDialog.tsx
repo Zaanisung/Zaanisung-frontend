@@ -1,67 +1,52 @@
-import React from "react";
-import { Modal } from "./Modal";
-import { Button } from "../Button";
+import React from 'react';
+import { Modal } from './Modal';
+import { Button } from './Button';
+import { AlertTriangle } from 'lucide-react';
 
 export interface ConfirmDialogProps {
   isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
   title: string;
-  message: React.ReactNode;
+  message: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  confirmVariant?: "danger" | "primary";
+  isDestructive?: boolean;
   isLoading?: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
 }
 
-/**
- * Focused, in-app confirmation dialog for destructive or important actions.
- * Replaces native `window.confirm` so the interaction stays inside the brand
- * UI, remains keyboard-accessible and never blocks the browser.
- */
 export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isOpen,
+  onClose,
+  onConfirm,
   title,
   message,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
-  confirmVariant = "primary",
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
+  isDestructive = false,
   isLoading = false,
-  onConfirm,
-  onCancel,
 }) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onCancel}
-      title={title}
-      size="sm"
-      closeOnOverlayClick={!isLoading}
-      closeOnEscape={!isLoading}
-    >
-      <div className="flex flex-col space-y-6">
-        <p className="text-sm leading-relaxed text-black/70 dark:text-white/75">
-          {message}
-        </p>
-
-        <div className="flex flex-col-reverse gap-3 sm:flex-row">
-          <Button
-            type="button"
-            variant="outline"
-            size="md"
-            onClick={onCancel}
-            disabled={isLoading}
-            className="flex-1"
-          >
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="sm">
+      <div className="text-left">
+        <div className="flex items-center gap-3 mb-3">
+          {isDestructive && (
+            <div className="p-2 rounded-full bg-red-50 text-red-800">
+              <AlertTriangle size={20} />
+            </div>
+          )}
+          <h3 className="font-serif text-lg font-semibold text-[#171512]">{title}</h3>
+        </div>
+        <p className="text-sm text-[#716C64] mb-6 leading-relaxed">{message}</p>
+        <div className="flex items-center justify-end gap-3 pt-2 border-t border-[#E4DED3]">
+          <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>
             {cancelLabel}
           </Button>
           <Button
-            type="button"
-            variant={confirmVariant}
-            size="md"
-            isLoading={isLoading}
+            variant={isDestructive ? 'danger' : 'primary'}
+            size="sm"
             onClick={onConfirm}
-            className="flex-1"
+            isLoading={isLoading}
           >
             {confirmLabel}
           </Button>

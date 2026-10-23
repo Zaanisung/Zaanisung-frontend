@@ -1,118 +1,109 @@
-import { useEffect, useRef, useState } from "react";
-import { useAppState } from "./hooks/useAppState";
-import { useHashRouter } from "./hooks/useHashRouter";
-import { AppRouter } from "./router";
-import { FullPageLoader } from "./components/ui/Loader";
-import { OnboardingTour } from "./components/onboarding/OnboardingTour";
-import { ToastHost } from "./components/Toast";
-import { cn } from "./utils/cn";
+import React from 'react';
+import { AppProvider, useApp } from './context/AppContext';
+import { AnnouncementBar } from './components/storefront/AnnouncementBar';
+import { StorefrontHeader } from './components/storefront/StorefrontHeader';
+import { StorefrontFooter } from './components/storefront/StorefrontFooter';
+import { CartDrawer } from './components/storefront/CartDrawer';
+import { SearchOverlay } from './components/storefront/SearchOverlay';
+import { ToastContainer } from './components/common/ToastContainer';
+import { IntegrationGuideModal } from './components/dev/IntegrationGuideModal';
 
-type LoaderPhase = "booting" | "fading" | "ready";
+// Storefront Pages
+import { HomePage } from './pages/storefront/HomePage';
+import { CatalogPage } from './pages/storefront/CatalogPage';
+import { ProductDetailPage } from './pages/storefront/ProductDetailPage';
+import { CartPage } from './pages/storefront/CartPage';
+import { CheckoutPage } from './pages/storefront/CheckoutPage';
+import { OrderConfirmationPage } from './pages/storefront/OrderConfirmationPage';
+import { AuthPages } from './pages/storefront/AuthPages';
+import { AccountPage } from './pages/storefront/AccountPage';
+import { AboutPage } from './pages/storefront/AboutPage';
+import { ContactPage } from './pages/storefront/ContactPage';
+import { LegalPage } from './pages/storefront/LegalPage';
+import { NotFoundPage } from './pages/storefront/NotFoundPage';
 
-const nextPaint = () => new Promise<void>((r) => requestAnimationFrame(() => r()));
+// Admin Pages & Shell
+import { AdminSidebar } from './components/admin/AdminSidebar';
+import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
+import { AdminProductsPage } from './pages/admin/AdminProductsPage';
+import { AdminProductFormPage } from './pages/admin/AdminProductFormPage';
+import { AdminOrdersPage } from './pages/admin/AdminOrdersPage';
+import { AdminUsersPage } from './pages/admin/AdminUsersPage';
+import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
 
-/** Full-viewport loader that fades out on mount so the freshly-mounted
- *  app behind it is revealed smoothly instead of being hard-swapped. */
-const FadeOutOverlay: React.FC = () => {
-  const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setHidden(true));
-    });
-    return () => cancelAnimationFrame(raf);
-  }, []);
-  if (hidden) return null;
+import { FileCode2 } from 'lucide-react';
+
+const MainRouter: React.FC = () => {
+  const { currentRoute, setIsIntegrationDocsOpen } = useApp();
+
+  const isAdminRoute = currentRoute.startsWith('admin-');
+
   return (
-    <div
-      className={cn(
-        "fixed inset-0 z-[100] pointer-events-none transition-opacity duration-[500ms] ease-out",
-        hidden ? "opacity-0" : "opacity-100"
+    <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#171512] font-sans">
+      {isAdminRoute ? (
+        /* Administrator Experience Shell */
+        <div className="flex flex-1 min-h-screen">
+          <AdminSidebar />
+          <main key={currentRoute} className="flex-1 flex flex-col min-w-0 overflow-y-auto animate-fade-in">
+            {currentRoute === 'admin-dashboard' && <AdminDashboardPage />}
+            {currentRoute === 'admin-products' && <AdminProductsPage />}
+            {currentRoute === 'admin-product-new' && <AdminProductFormPage />}
+            {currentRoute === 'admin-product-edit' && <AdminProductFormPage />}
+            {currentRoute === 'admin-orders' && <AdminOrdersPage />}
+            {currentRoute === 'admin-users' && <AdminUsersPage />}
+            {currentRoute === 'admin-settings' && <AdminSettingsPage />}
+          </main>
+        </div>
+      ) : (
+        /* Storefront Experience Shell */
+        <>
+          <AnnouncementBar />
+          <StorefrontHeader />
+          <main key={currentRoute} className="flex-1 animate-fade-in">
+            {currentRoute === 'home' && <HomePage />}
+            {currentRoute === 'catalog' && <CatalogPage />}
+            {currentRoute === 'product-detail' && <ProductDetailPage />}
+            {currentRoute === 'cart' && <CartPage />}
+            {currentRoute === 'checkout' && <CheckoutPage />}
+            {currentRoute === 'order-confirmation' && <OrderConfirmationPage />}
+            {(currentRoute === 'login' ||
+              currentRoute === 'register' ||
+              currentRoute === 'forgot-password' ||
+              currentRoute === 'verify-otp' ||
+              currentRoute === 'reset-password') && <AuthPages />}
+            {currentRoute === 'account' && <AccountPage />}
+            {currentRoute === 'about' && <AboutPage />}
+            {currentRoute === 'contact' && <ContactPage />}
+            {currentRoute === 'legal' && <LegalPage />}
+            {currentRoute === 'not-found' && <NotFoundPage />}
+          </main>
+          <StorefrontFooter />
+        </>
       )}
-      aria-hidden="true"
-    >
-      <FullPageLoader />
+
+      {/* Global Interactive Overlays */}
+      <CartDrawer />
+      <SearchOverlay />
+      <ToastContainer />
+      <IntegrationGuideModal />
+
+      {/* Floating Developer & Reviewer Specs Trigger (Accessible on all screens) */}
+      <button
+        onClick={() => setIsIntegrationDocsOpen(true)}
+        title="View Integration Architecture & 50-Screen Matrix"
+        className="fixed bottom-4 left-4 z-40 bg-[#171512] hover:bg-[#2A241F] text-[#B69A59] border border-[#B69A59]/40 shadow-lg px-3 py-1.5 rounded-xs text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer backdrop-blur-xs hover:scale-105"
+      >
+        <FileCode2 size={13} />
+        <span>Integration Specs & Matrix</span>
+      </button>
     </div>
   );
 };
 
 export default function App() {
-  const state = useAppState();
-  const [phase, setPhase] = useState<LoaderPhase>("booting");
-
-  // Two-way URL sync: deep-links (#/shop, #/product/:id, #/dashboard/:page)
-  // restore their view on load, and every view change is mirrored back into
-  // the fragment so links are shareable and back/forward works.
-  useHashRouter({
-    view: state.view,
-    isBootstrapping: state.isBootstrapping,
-    customerUser: state.customerUser,
-    onNavigate: state.onNavigate,
-  });
-
-  useEffect(() => {
-    if (state.isBootstrapping) return;
-    let alive = true;
-
-    (async () => {
-      // Hold the loader until every vital resource (fonts, stylesheets,
-      // images including background images) has finished loading — but never
-      // block the page forever if a single resource stalls.
-      if (document.readyState !== "complete") {
-        const onLoad = new Promise<void>((resolve) => {
-          window.addEventListener("load", () => resolve(), { once: true });
-        });
-        const maxWait = new Promise<void>((resolve) =>
-          setTimeout(resolve, 1500)
-        );
-        await Promise.race([onLoad, maxWait]);
-      }
-      // Paint the freshly-mounted app behind the overlay, then reveal it once
-      // the overlay's CSS fade has completed (no artificial extra delay).
-      await nextPaint();
-      if (!alive) return;
-
-      setPhase("fading");
-      await nextPaint();
-      const fadeDone = new Promise<void>((resolve) =>
-        window.setTimeout(resolve, 500)
-      );
-      await fadeDone;
-      if (alive) setPhase("ready");
-    })();
-
-    return () => {
-      alive = false;
-    };
-  }, [state.isBootstrapping]);
-
-  // Every navigation to a new page scrolls the window back to the top so a
-  // fresh route never opens mid-scroll. Landing-section deep links skip this
-  // and let the Landing page scrollIntoView its target section instead.
-  const prevView = useRef(state.view);
-  useEffect(() => {
-    const prev = prevView.current;
-    prevView.current = state.view;
-    if (prev.type === "landing" && state.view.type === "landing" && state.view.section) {
-      return;
-    }
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, [state.view]);
-
-  if (phase === "booting") {
-    return <FullPageLoader />;
-  }
-
   return (
-    <>
-      <AppRouter {...state} />
-      {phase === "fading" && <FadeOutOverlay />}
-      <ToastHost />
-      <OnboardingTour
-        view={state.view}
-        isAdminLoggedIn={state.isAdminLoggedIn}
-        isBootstrapping={state.isBootstrapping}
-        onAdminTabChange={state.onAdminTabChange}
-      />
-    </>
+    <AppProvider>
+      <MainRouter />
+    </AppProvider>
   );
 }
