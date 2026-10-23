@@ -26,13 +26,14 @@ export const StorefrontHeader: React.FC = () => {
     <header className="sticky top-0 z-40 bg-[#FAF8F4]/95 backdrop-blur-md border-b border-[#E4DED3] transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 gap-8">
-          {/* Zone 1: Single element wordmark (Top Bar Contract) */}
+          {/* Zone 1: Logo */}
           <div className="flex items-center shrink-0">
             <button
               onClick={() => navigateTo('home')}
-              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B69A59]"
+              className="text-left group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B69A59] flex items-center gap-2"
             >
-              <span className="font-serif text-2xl sm:text-3xl font-medium tracking-[0.25em] text-[#171512] transition-colors group-hover:text-[#B69A59]">
+              <img src="/assets/logo-mark.png" alt="Zaanisung" className="h-10 w-10 object-contain" />
+              <span className="font-serif text-xl sm:text-2xl font-medium tracking-[0.25em] text-[#171512] transition-colors group-hover:text-[#B69A59]">
                 ZAANISUNG
               </span>
             </button>

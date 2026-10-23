@@ -12,9 +12,12 @@ export const StorefrontFooter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-12 pb-12 border-b border-[#2A241F]">
           {/* Column 1: Brand & Identity */}
           <div className="md:col-span-1">
-            <h4 className="font-serif text-2xl tracking-[0.25em] text-[#F8F5EF] mb-3">
-              ZAANISUNG
-            </h4>
+            <div className="flex items-center gap-3 mb-3">
+              <img src="/assets/logo-mark.png" alt="Zaanisung" className="h-10 w-10 object-contain" />
+              <h4 className="font-serif text-2xl tracking-[0.25em] text-[#F8F5EF]">
+                ZAANISUNG
+              </h4>
+            </div>
             <p className="text-xs text-[#A8A29E] leading-relaxed mb-4">
               Artisanal luxury perfumery rooted in Ghanaian heritage and classical haute distillation. Formulated in Accra and Grasse with rare botanical oils and aged resins.
             </p>
